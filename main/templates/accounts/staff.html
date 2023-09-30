@@ -1,0 +1,206 @@
+{% load static %}
+{% load humanize %}
+{% include 'header/header.html' %}
+  <div class="container-fluid mt-5 pt-4 test_continer ">
+    <h4 class="text-center"><u>STAFF</u></h4>
+    <hr class="my-2" />
+    <div class="card">
+
+        <div class="row mt-2 px-3">
+            <div class="col-2">
+                <div class="nav-wrapperr position-relative end-0">
+                    <ul class="nav  nav-fill bg-transparent" role="tablists">
+                      <li class="nav-item ">
+                        <a href="javascript:void(0);" id="createaccess" class="nav-link mb-0 px-0 btn btn-md py-1"style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);">
+                            <i class="bi bi-dash-circle text-dark" aria-hidden="true"></i>
+                            <span class="ms-1 text-dark">Access Code</span>
+                        </a>
+                       </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-4"></div>
+            <div class="col-6">
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-6">
+                           
+                        </div>
+                        <div class="col-6">
+                            <div class="input-group input-group-merge ">
+                                <button class="input-group-text custom-button py-1" id="basic-addon-search31" type="submit">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                                <input
+                                name="q"
+                                type="text"
+                                class="form-control py-1"
+                                placeholder="Search..."
+                                aria-describedby="basic-addon-search31"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+    
+        </div>
+
+
+
+        <div class="card-body">
+          <div class="table-responsive text-nowrap " >
+            <table class="table table-bordered table-hover text-xls">
+              <thead>
+                <tr style="background-color: #B0E0E6; line-height: 0.5;">
+                    <th>
+                        <a href="/accounts/create-staff" class="fa fa-plus th-style"> Add Staff</a> 
+                    </th>
+                    <th class="text-dark th-style font-weight-bold ">First Name</th>
+                    <th class="text-dark th-style font-weight-bold ">Last Name</th>
+                    <th class="text-dark th-style font-weight-bold ">Email</th>
+                    <th class="text-dark th-style font-weight-bold">Role</th>
+                    <th class="text-dark th-style font-weight-bold ">Username</th>
+                    
+                </tr>
+              </thead>
+              <tbody>
+                {% for user in users %}
+                  <tr >
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                        <div class="nav-wrapperr position-relative end-0">
+                            <ul class="nav  nav-fill p-1 bg-transparent" role="tablists">
+              
+                              <li class="nav-item px-1">
+                                  <a class="nav-link mb-0 px-0 py-1 btn btn-md"style="box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);"  href="/edit_staff/{{user.user.id}}">
+                                      <i class="fa fa-pencil text-warning" ></i>
+                                    <span class="ms-1 text-dark"></span>
+                                  </a>
+                                </li>
+
+                                <li class="nav-item px-1">
+                                    <a class="nav-link mb-0 px-0 py-1 btn btn-md"style="box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);"  href="/deletestaff/{{user.user.id}}">
+                                        <i class="fa fa-trash text-danger" ></i>
+                                      <span class="ms-1 text-dark"></span>
+                                    </a>
+                                  </li>
+                            </ul>
+                        </div>
+                    </td>
+                      <td>
+                        <p class="text-sm font-weight-bold  mb-0 ">{{user.user.firstname}}</p>
+                      </td>
+                      <td>
+                        <span class="text-xs font-weight-bold ">{{user.user.lastname}}</span>
+                      </td>
+                     
+                      <td>
+                        <span class="text-xs font-weight-bold ">{{user.user.email}}</span>
+                      </td>
+
+                      <td>
+                        <span class="text-xs font-weight-bold ">{{user.user.type}}</span>
+                      </td>
+
+                      <td>
+                        <span class="text-xs font-weight-bold ">{{user.user.username}}</span>
+                      </td>
+
+                      
+                    </tr>
+                   
+                {% endfor %}
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+    </div>
+    {% include 'header/footer.html' %}
+
+  <script>
+    document.getElementById('createaccess').addEventListener('click', async function() {
+    const result = await Swal.fire({
+        title: 'Update password',
+        html: `
+            <div class="row" style="margin: 0;">
+                <div class="col-6" style="padding: 5px;">
+                    <input type="text" id="swalFileInput" class="form-control" placeholder="Old password">
+                </div>
+                <div class="col-6" style="padding: 5px;">
+                  <input type="text" id="swalDropdown" class="form-control" placeholder="New password">
+                </div>
+            </div>
+            <div style="margin-top: 1px; display: none;" id="progressContainer">
+                <div class="progress" style="height: 1px;">
+                    <div id="uploadProgressBar" class="progress-bar" role="progressbar" style="width: 0%; background-color: #44a4d4;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+        `,
+        showCancelButton: true,
+        confirmButtonText: 'Upload',
+        allowOutsideClick: false,
+        preConfirm: async () => {
+            const file = document.getElementById('swalFileInput').value;
+            const selectedOption = document.getElementById('swalDropdown').value;
+
+            if (!file) {
+                Swal.showValidationMessage("Please enter old password.");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('password1', file);
+            formData.append('password2', selectedOption);
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            formData.append('csrfmiddlewaretoken', csrfToken);
+
+            const progressContainer = document.getElementById('progressContainer');
+            if (progressContainer) {
+                progressContainer.style.display = 'block'; // Show the progress bar container
+            }
+
+            // Pseudo-progress bar update
+            let progress = 0;
+            const intervalId = setInterval(() => {
+                if (progress < 95) {
+                    progress += 2; // Increase by 2% 
+                    const progressBar = document.getElementById('uploadProgressBar');
+                    if (progressBar) {
+                        progressBar.style.width = progress + '%';
+                        progressBar.setAttribute('aria-valuenow', progress);
+                    }
+                }
+            }, 250); // Update every 250ms
+
+
+            try {
+                const response = await fetch("{% url 'setpassword' %}", {
+                    method: 'POST',
+                    body: formData
+                });
+                clearInterval(intervalId); // Stop the fake progress
+                const progressBar = document.getElementById('uploadProgressBar');
+                if (progressBar) {
+                    progressBar.style.width = '100%';
+                    progressBar.setAttribute('aria-valuenow', 100);
+                }
+
+
+                if (!response.ok) {
+                    const data = await response.json();
+                    throw new Error(data.message || 'There was an error updating password.');
+                }
+
+                location.reload();
+            } catch (error) {
+                clearInterval(intervalId);
+                Swal.showValidationMessage(error.message || 'There was an error updating password.');
+            }
+        }
+    });
+});
+
+
+  </script>

@@ -1,0 +1,114 @@
+{% load static %}
+{% load humanize %}
+{% include 'header/header.html' %}
+
+  <div class="container-fluid mt-5 pt-4 test_continer ">
+    <h4 class="text-center"><u>DISTRIBUTOR</u></h4>
+    <hr class="my-2" />
+
+    <div class="card">
+        <div class="row mt-2 px-3">
+            <div class="col-2">
+                
+            </div>
+
+            <div class="col-2">
+                
+            </div>
+            <div class="col-2"></div>
+
+
+            <div class="col-6">
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-6">
+                           
+                        </div>
+                        <div class="col-6">
+                            <div class="input-group input-group-merge ">
+                                <button class="input-group-text py-1" id="basic-addon-search31" type="submit">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                                <input
+                                name="q"
+                                type="text"
+                                class="form-control py-1"
+                                placeholder="Search..."
+                                aria-describedby="basic-addon-search31"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+    
+        </div>
+        <div class="card-body">
+            <div class="table-responsive text-nowrap ">
+              <table class="table table-bordered table-hover text-xls">
+                <thead>
+                    <tr style="background-color: #B0E0E6; line-height: 0.5; ">
+                        <th>
+                            <a href="{% url 'add_vendor' %}" class="fa fa-plus th-style">Add Distributor</a> 
+                        </th>
+                        <th class="text-dark th-style font-weight-bold">First Name</th>
+                        <th class="text-dark th-style font-weight-bold">Last Name</th>
+                        <th class="text-dark th-style font-weight-bold">Email</th>
+                        <th class="text-dark th-style font-weight-bold">Loation</th>
+                        <th class="text-dark th-style font-weight-bold">Username</th>
+                    </tr>
+                </thead>
+              <tbody>
+                {% for user in form %}
+                <tr>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                        <div class="nav-wrapperr position-relative end-0">
+                            <ul class="nav  nav-fill p-1 bg-transparent" role="tablists">
+              
+                              <li class="nav-item px-1">
+                                  <a class="nav-link mb-0 px-0 py-1 btn btn-md"style="box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);"  href="/edit_vendor/{{user.id}}">
+                                      <i class="fa fa-pencil text-warning" ></i>
+                                    <span class="ms-1 text-dark"></span>
+                                  </a>
+                                </li>
+
+                                <li class="nav-item px-1">
+                                    <a class="nav-link mb-0 px-0 py-1 btn btn-md"style="box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);"  href="/deletevendor/{{user.id}}">
+                                        <i class="fa fa-trash text-danger" ></i>
+                                      <span class="ms-1 text-dark"></span>
+                                    </a>
+                                  </li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td>
+                    <p class="text-dark py-1 custom-letter-spacing  text-xs">{{user.fname}}</p>
+                    </td>
+                    <td>
+                    <span class="text-dark py-1 custom-letter-spacing  text-xs">{{user.lname}}</span>
+                    </td>
+                    
+                    <td>
+                    <span class="text-dark py-1 custom-letter-spacing  text-xs">{{user.email}}</span>
+                    </td>
+
+                    <td>
+                    <span class="text-dark py-1 custom-letter-spacing  text-xs">{{user.location}}</span>
+                    </td>
+
+                    <td>
+                    <span class="text-dark py-1 custom-letter-spacing  text-xs">{{user.username}}</span>
+                    </td>
+                      
+                      <!-- deletecustomer -->
+                    </tr>
+                   {% endfor %}
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+    </div>
+{% include 'header/footer.html' %}
+

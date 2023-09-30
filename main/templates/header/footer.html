@@ -1,0 +1,73 @@
+
+{% load static %}
+{% load humanize %}
+
+
+<script src="{% static 'js/core/popper.min.js' %}"></script>
+<script src="{% static 'js/core/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/plugins/perfect-scrollbar.min.js' %}"></script>
+<script src="{% static 'js/plugins/smooth-scrollbar.min.js' %}"></script>
+<script src="{% static 'js/plugins/chartjs.min.js' %}"></script>
+<script src="{% static 'js/soft-ui-dashboard.min.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+
+<script>
+    (function ($) {
+      $('.clickable-row').css('cursor', 'pointer');
+      $(".clickable-row").click(function () {
+        window.location = $(this).data("href");
+      });
+    })(jQuery)
+
+</script>
+
+
+
+{% if messages %}
+      {% for message in messages %}
+<script type="text/javascript">
+  
+  let messageType = "{{ message.tags }}";
+  switch (messageType) {
+      case "error":
+          iziToast.error({
+              // title: 'Error',
+              message: "{{ message }}",
+              position: 'topRight'
+          });
+          break;
+      case "warning":
+          iziToast.warning({
+              // title: 'Warning',
+              message: "{{ message }}",
+              position: 'topRight'
+          });
+          break;
+      case "info":
+          iziToast.info({
+              // title: 'Info',
+              message: "{{ message }}",
+              position: 'topRight'
+          });
+          break;
+      default:
+          iziToast.success({
+              // title: 'Success',
+              message: "{{ message }}",
+              position: 'topRight'
+          });
+  }
+
+ 
+</script>
+{% endfor %}
+{% endif %}
+
+
+
+
+
+
+    </main>
+</body>

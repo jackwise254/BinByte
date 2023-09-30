@@ -1,0 +1,89 @@
+{% load static %}
+{% load humanize %}
+{% include 'header/header.html' %}
+  <div class="container-fluid mt-5 pt-4 test_continer ">
+    <h4 class="text-center"><u>ADD DISTRIBUTOR</u></h4>
+    <hr class="my-3" />
+    <div class="card">
+
+        <div class="row mt-2 px-3">
+            <div class="col-2">
+                <div class="nav-wrapperr position-relative end-0">
+                    <ul class="nav  nav-fill bg-transparent" role="tablists">
+                      <li class="nav-item ">
+                        <a href="/vendors" id="createaccess" class="nav-link mb-0 px-0 btn btn-md py-2"style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);">
+                            <i class="fa fa-home text-dark" aria-hidden="true"></i>
+                            <span class="ms-1 text-dark">Home</span>
+                        </a>
+                       </li>
+                    </ul>
+                </div>
+            </div>
+
+                
+        </div>
+
+
+
+        <div class="card-body">
+          
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <label for="">Username</label>
+                        <input type="text" name="username" id="" class="form-control py-1" placeholder="Username" required>
+                    </div>
+                    <div class="col-6">
+                        <label for="">Email</label>
+                        <input type="email" name="email" id="" class="form-control py-1" placeholder="user@ttglobal.com" required>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <label for="">First Name</label>
+                        <input type="text" name="fname" id="" class="form-control py-1" placeholder="First name" >
+                    </div>
+                    <div class="col-6">
+                        <label for="">Last name</label>
+                        <input type="text" name="lname" id="" class="form-control py-1" placeholder="Last name" >
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-4">
+                        <label for="">Id</label>
+                        <input type="text" name="id_no" id="" placeholder="id No" class="form-control py-1">
+                    </div>
+                    <div class="col-4">
+                        <label for="">Location</label>
+                        <input type="text" name="location" id="" class="form-control py-1" placeholder="Location" >
+                    </div>
+                    <div class="col-4">
+                        <label for="">Phone</label>
+                        <input type="text" name="phone" id="" class="form-control py-1" placeholder="Phone" >
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-10"></div>
+                        <div class="col-2 float-end">
+                            <div class="nav-wrapperr position-relative end-0">
+                                <ul class="nav  nav-fill bg-transparent" role="tablists">
+                                <li class="nav-item ">
+                                    <button type="submit" class="nav-link mb-0 px-0 btn btn-md py-2"style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);">
+                                        <i class="fa fa-floppy-o text-dark" aria-hidden="true"></i>
+                                        <span class="ms-1 text-dark">Save</span></button>
+                                    
+                                    </li>
+                                </ul>
+                            </div>
+                    </div>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+{% include 'header/footer.html' %}

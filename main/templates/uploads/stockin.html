@@ -1,0 +1,315 @@
+{% load static %}
+{% load humanize %}
+
+{% include 'header/header.html' %}
+
+<style>
+    .button-clicked {
+        box-shadow: none !important;
+    }
+    .elevated {
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3); /* Example shadow for elevation effect */
+}
+
+</style>
+
+<div class="container-fluid mt-5 pt-4 test_continer ">
+    <h4 class="text-center"><u>STOCKIN PANEL</u></h4>
+    <hr class="my-1" />
+    <div class="row px-3 border-bottom">
+        <div class="col-lg-1 col-md-1  ">
+            <div class="nav-wrapperr position-relative end-0" id="hidden-content">
+              <ul class="nav  nav-fill p-2 bg-transparent" role="tablists">
+                <li class="nav-item px-1">
+                    <a class="nav-link mb-0 px-0 py-1 btn btn-md p-2"style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);"  href="/stockin"  aria-selected="false">
+                        <i class="fa fa-home text-dark text-xxs font-weight-bolder opacity-10 text-uppercase" aria-hidden="true"></i>
+                        <span class="ms-1 text-dark text-xxs font-weight-bolder opacity-10 text-uppercase">Home</span>
+                    </a>
+                </li>
+                
+              </ul>
+            </div>
+        </div>
+    </div>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="row mt-2 pt-2">
+            <div class="col-md-5 px-4">
+                <div class="row mb-4">
+                    <div class="col-3">
+                        <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Suppliers</small></label>
+                        <select name="supplier" id=""  class="form-select form-control py-1">
+                            <option disabled>Suppliers</option>
+                            {% for vendor in vendors %}
+                                <option value="{{vendor.username}}">{{vendor.username}}</option>
+                            {%endfor %}
+                        </select>
+                    </div>
+                    <div class="col-3">
+                        <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Naration</small></label>
+                        <input type="text" name="naration" id="" class="form-control py-1" placeholder="Naration">
+                    </div>
+                    <div class="col-2">
+                        <div class="nav-wrapperr position-relative end-0">
+                            <ul class="nav  nav-fill bg-transparent" role="tablists">
+                                <li class="nav-item ">
+                                <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small></small></label>
+                                <button type="submit" class="nav-link mb-0 px-0 btn btn-md py-2"style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);">
+                                    <i class="fa fa-floppy-o text-dark text-xxs font-weight-bolder opacity-10 text-uppercase" aria-hidden="true"></i>
+                                    <span class="ms-1 text-dark text-xxs font-weight-bolder opacity-10 text-uppercase" >Save</span></button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2">
+                        <label for="" class="text-xxs font-weight-bolder opacity-10 text-uppercase">BALANCE:</label>
+                    </div>
+                    <div class="col-md-3">
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" name="" id="" class="form-control py-1" readonly placeholder="KSH 0/=">
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-5">
+
+                <div class="row mb-2">
+                    <div class="col-3">
+                        <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Serial No.</small></label>
+                        <input type="text" class="form-control py-1" name="serialno" id="" placeholder="S/No." autofocus>
+                    </div>
+                    <div class="col-2">
+                        
+                        <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Item</small></label>
+                        <select name="types" class="form-select custom-button py-1 input-group">
+                        <option value="" disabled selected>Item</option>
+                        {% for type in types|dictsort:"type" %}
+                        {{type.type}}
+                                <option value="{{type.type}}" class="text-xxs font-weight-bolder opacity-10 text-uppercase">{{type.type}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-2">
+                        <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Model</small></label>
+                        <input type="text" class="form-control py-1" name="model" id="" placeholder="Model">
+                    </div>
+                    <div class="col-3">
+                        <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Cpu</small></label>
+                        <select name="cpu" id="" class="form-select form-control py-1">
+                            <option disabled>Cpu</option>
+                            {%for cpu in cpus|dictsort:"cpu" %}
+                                <option value="{{cpu.cpu}}">{{cpu.cpu}}</option>
+                            {%endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="col-2">
+                        <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Ram</small></label>
+                        <select name="ram" id="" class="form-select form-control py-1">
+                            <option disabled>Ram</option>
+                            {%for ram in rams|dictsort:"ram" %}
+                                <option value="{{ram.ram}}">{{ram.ram}}</option>
+                            {%endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    
+                    <div class="col-3">
+                        <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Hdd</small></label>
+                        <select name="hdd" id="" class="form-control form-select py-1">
+                            <option disabled>Hdd</option>
+                            {% for hdd in hdds|dictsort:"hdd" %}
+                                <option value="{{hdd.hdd}}">{{hdd.hdd}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="col-3">
+                        <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Price</small></label>
+                        <input type="text" class="form-control py-1" name="price" id="" placeholder="price">
+                    </div>
+                    <div class="col-3">
+                        <div class="nav-wrapperr position-relative end-0">
+                            <ul class="nav  nav-fill bg-transparent" role="tablists">
+                                <li class="nav-item ">
+                                <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small></small></label>
+                                <button type="submit" class="nav-link mb-0 px-0 btn btn-md py-2 scan-more-button" style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);">
+                                    <i class="fa fa-hand-o-right text-dark text-xxs font-weight-bolder opacity-10 text-uppercase" aria-hidden="true"></i>
+                                    <span class="ms-1 text-dark text-xxs font-weight-bolder opacity-10 text-uppercase" >Scan More</span>
+                                </button>
+                                
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-3">
+                        <div class="nav-wrapperr position-relative end-0">
+                            <ul class="nav  nav-fill bg-transparent" role="tablists">
+                                <li class="nav-item ">
+                                <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small></small></label>
+                                <button type="submit" class="nav-link mb-0 px-0 btn btn-md py-2"style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);">
+                                    <i class="fa fa-floppy-o text-dark text-xxs font-weight-bolder opacity-10 text-uppercase" aria-hidden="true"></i>
+                                    <span class="ms-1 text-dark text-xxs font-weight-bolder opacity-10 text-uppercase" >Save</span></button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+
+    <hr class="my-2">
+
+    <div class="card-body">
+        <div class="table-responsive tbl-content text-nowrap tbl-content">
+        <table class="table table-bordered table-responsive table-hover text-xls table-sm ">
+          <thead  style="background-image: linear-gradient(#d4d4d4, #9a9a9a);"
+          >
+            <tr class="my-1 text-align text-xls" >
+                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Item</th>
+                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Serial No.</th>
+                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Model</th>
+                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >CPU</th>
+                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Ram</th>
+                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Hdd</th>
+                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Date Rcvd</th>
+                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Supplier</th>
+                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >% VAT</th>
+                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Unit Price</th>
+                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Sub Total</th>
+            </tr>
+        </thead>
+            <tbody>
+            {% for user in products %}
+                <tr style="font-size: 11px">
+                    <td class ="text-dark custom-letter-spacing  text-xs">
+                        <a href="/delete_templist/{{user.dels}}" class="btn-outline-danger px-2 my-3"  class="overlay" >
+                            <i class="bi bi-trash text-lg opacity-10" aria-hidden="true"></i>
+                        </a>
+                        <a href="/push_templist/{{user.dels}}" class=" btn-outline-success px-2 my-3"  class="overlay" >
+                            <i class="bi bi-upload text-lg opacity-10" aria-hidden="true"></i>
+                        </a>
+                    </td>                        
+                    <td scope="col" class="col-5">{{user.btl |default_if_none:""  }} </td>
+                    <td scope="col" class="col-5">{{user.total |default_if_none:""  }} </td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.type |default_if_none:""  }} </td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.conditions |default_if_none:""  }} </td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.list |default_if_none:""  }} </td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.assetid |default_if_none:""  }} </td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.dels |default_if_none:""  }} </td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.gen |default_if_none:""  }} </td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.brand |default_if_none:""  }} </td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.serialno |default_if_none:""  }} </td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.part |default_if_none:""  }} </td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.modelid |default_if_none:""  }} </td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.model |default_if_none:""  }} </td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.cpu |default_if_none:""  }} </td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.speed |default_if_none:""  }} </td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.ram |default_if_none:""  }} </td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.hdd |default_if_none:""  }} </td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.screen |default_if_none:""  }} </td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.odd |default_if_none:""  }} </td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.comment |default_if_none:""  }} </td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.problem |default_if_none:""  }} </td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.price |default_if_none:""  }} </td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.daterecieved |default_if_none:""  }} </td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.uploaded_by |default_if_none:""  }} </td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.vendor |default_if_none:""  }} </td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.shipno |default_if_none:""  }} </td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.daterepaired |default_if_none:""  }} </td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.barcodes |default_if_none:""  }} </td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.status |default_if_none:""  }} </td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.datedelivered |default_if_none:""  }} </td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.delvno |default_if_none:""  }} </td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.invoice |default_if_none:""  }} </td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.customer |default_if_none:""  }} </td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.created_by |default_if_none:""  }} </td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.mode |default_if_none:""  }} </td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.qty |default_if_none:""  }} </td>
+                    
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+        </div>
+    </div>
+
+
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        // This function will run as soon as the DOM is ready
+        populateFormFromLocalStorage();
+    });
+
+    function populateFormFromLocalStorage() {
+        const types = localStorage.getItem('types');
+        const model = localStorage.getItem('model');
+        const cpu = localStorage.getItem('cpu');
+        const ram = localStorage.getItem('ram');
+        const hdd = localStorage.getItem('hdd');
+        const price = localStorage.getItem('price');
+        console.log(types)
+        if (model) document.querySelector('[name="model"]').value = model;
+        if (types) document.querySelector('[name="types"]').value = types;
+        if (cpu) document.querySelector('[name="cpu"]').value = cpu;
+        if (ram) document.querySelector('[name="ram"]').value = ram;
+        if (hdd) document.querySelector('[name="hdd"]').value = hdd;
+        if (price) document.querySelector('[name="price"]').value = price;
+    }
+
+
+
+    function toggleButtonElevation() {
+        const scanMoreButton = document.querySelector('.scan-more-button');
+
+        if (scanMoreButton.classList.contains('elevated')) {
+            // If the button is already elevated, clear localStorage and remove the class
+            localStorage.clear();
+            scanMoreButton.classList.remove('elevated');
+        } else {
+            // If the button is not elevated, store values in localStorage and add the class
+            saveToLocalStorage();
+            scanMoreButton.classList.add('elevated');
+        }
+    }
+
+    function saveToLocalStorage() {
+        // Fetching values from the form
+        const types = document.querySelector('[name="types"]').value;
+        const model = document.querySelector('[name="model"]').value;
+        const cpu = document.querySelector('[name="cpu"]').value;
+        const ram = document.querySelector('[name="ram"]').value;
+        const hdd = document.querySelector('[name="hdd"]').value;
+        const price = document.querySelector('[name="price"]').value;
+
+        localStorage.setItem('types', types);
+        localStorage.setItem('model', model);
+        localStorage.setItem('cpu', cpu);
+        localStorage.setItem('ram', ram);
+        localStorage.setItem('hdd', hdd);
+        localStorage.setItem('price', price);
+    }
+
+    // Attach the function to the 'Scan More' button
+    const scanMoreButton = document.querySelector('.scan-more-button');
+    scanMoreButton.addEventListener('click', saveToLocalStorage);
+    scanMoreButton.addEventListener('click', toggleButtonElevation);
+</script>
+
+
+{% include 'header/footer.html' %}

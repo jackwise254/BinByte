@@ -45,5 +45,30 @@ def LoginPage(request):
 
 def LogoutView(request):
     user_logout(request)
-    
+
     return redirect('/accounts/login')
+
+def AddStaff(request):
+    '''
+    View for principal to add teachers
+    '''
+    all_type_codes = [type_code for type_code, _ in User.Types.choices]
+
+    context = {
+        'types':all_type_codes,
+    }
+    try:
+        if request.method == 'POST':
+                email = request.POST.get('email')
+                firstname = request.POST.get('firstname')
+                username = request.POST.get('username')
+                lastname = request.POST.get('lastname')
+                password = request.POST.get('password')
+                user_type = request.POST.get('user_type')
+
+                User.objects.create_user(username=username, firstname=firstname, lastname=lastname, email=email, password=password, type=user_type, )
+                return redirect('/staff_member')            
+    except:
+            messages.add_message(request, messages.INFO, 'Something went wrong, try again')
+            return redirect('/staff_member')
+    return render(request, 'accounts/addstaff.html', context)
