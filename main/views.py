@@ -219,7 +219,7 @@ def stockin_view(request):
         'count': lists,
         'master_count': master_count,
         'masterlist': masterlist,
-        'types': types,
+        'items': types,
         'conditions': conditions,
         'names': zip(names, lists),
         'names_stockin': zip(names, lists),
