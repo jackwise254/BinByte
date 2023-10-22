@@ -77,7 +77,6 @@
 
             </div>
             <div class="col-md-2">
-                {{items}}
             </div>
             <div class="col-md-5">
 
@@ -86,17 +85,17 @@
                         <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Serial No.</small></label>
                         <input type="text" class="form-control py-1" name="serialno" id="" placeholder="S/No." autofocus>
                     </div>
+
                     <div class="col-2">
-                        
                         <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Item</small></label>
-                        <select name="types" class="form-select custom-button py-1 input-group">
-                        <option value="" disabled selected>Item</option>
-                        {% for item in items|dictsort:"item" %}
-                        {{t.type}}
-                            <option value="{{item.type}}" class="text-xxs font-weight-bolder opacity-10 text-uppercase">{{item.type }}</option>
-                        {% endfor %}
+                        <select name="item" id="" class="form-select form-control py-1">
+                            <option disabled>Item</option>
+                            {%for cpu in items%}
+                                <option value="{{cpu.type}}">{{cpu.type}}</option>
+                            {%endfor %}
                         </select>
                     </div>
+                    
                     <div class="col-2">
                         <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Model</small></label>
                         <input type="text" class="form-control py-1" name="model" id="" placeholder="Model">
@@ -175,7 +174,7 @@
     <div class="card-body">
         <div class="table-responsive tbl-content text-nowrap tbl-contents" style="height: 45vh;">
         <table class="table table-bordered table-responsive table-hover text-xls table-sm " >
-          <thead  style="background-image: linear-gradient(#d4d4d4, #9a9a9a); "
+          <thead  style="background-color: #849bbf;"
           >
             <tr class="my-1 text-align text-xls" >
                 <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Item</th>
@@ -252,65 +251,68 @@
 
 
 <script>
-    document.addEventListener('DOMContentLoaded', (event) => {
-        // This function will run as soon as the DOM is ready
-        populateFormFromLocalStorage();
+    document.addEventListener('DOMContentLoaded', function () {
+    // Load values from localStorage
+    loadFormValues();
+
+    // Save form values to localStorage whenever they change
+    document.querySelectorAll('input, select').forEach(element => {
+        element.addEventListener('change', saveFormValues);
     });
 
-    function populateFormFromLocalStorage() {
-        const types = localStorage.getItem('types');
-        const model = localStorage.getItem('model');
-        const cpu = localStorage.getItem('cpu');
-        const ram = localStorage.getItem('ram');
-        const hdd = localStorage.getItem('hdd');
-        const price = localStorage.getItem('price');
-        console.log(types)
-        if (model) document.querySelector('[name="model"]').value = model;
-        if (types) document.querySelector('[name="types"]').value = types;
-        if (cpu) document.querySelector('[name="cpu"]').value = cpu;
-        if (ram) document.querySelector('[name="ram"]').value = ram;
-        if (hdd) document.querySelector('[name="hdd"]').value = hdd;
-        if (price) document.querySelector('[name="price"]').value = price;
-    }
-
-
-
-    function toggleButtonElevation() {
-        const scanMoreButton = document.querySelector('.scan-more-button');
-
-        if (scanMoreButton.classList.contains('elevated')) {
-            // If the button is already elevated, clear localStorage and remove the class
-            localStorage.clear();
-            scanMoreButton.classList.remove('elevated');
-        } else {
-            // If the button is not elevated, store values in localStorage and add the class
-            saveToLocalStorage();
-            scanMoreButton.classList.add('elevated');
-        }
-    }
-
-    function saveToLocalStorage() {
-        // Fetching values from the form
-        const types = document.querySelector('[name="types"]').value;
-        const model = document.querySelector('[name="model"]').value;
-        const cpu = document.querySelector('[name="cpu"]').value;
-        const ram = document.querySelector('[name="ram"]').value;
-        const hdd = document.querySelector('[name="hdd"]').value;
-        const price = document.querySelector('[name="price"]').value;
-
-        localStorage.setItem('types', types);
-        localStorage.setItem('model', model);
-        localStorage.setItem('cpu', cpu);
-        localStorage.setItem('ram', ram);
-        localStorage.setItem('hdd', hdd);
-        localStorage.setItem('price', price);
-    }
-
-    // Attach the function to the 'Scan More' button
+    // Setup event listener for 'Scan More' button
     const scanMoreButton = document.querySelector('.scan-more-button');
-    scanMoreButton.addEventListener('click', saveToLocalStorage);
-    scanMoreButton.addEventListener('click', toggleButtonElevation);
-</script>
+    scanMoreButton.addEventListener('click', handleScanMoreButtonClick);
+});
 
+function saveFormValues() {
+    document.querySelectorAll('input, select').forEach(element => {
+        if (element.name) {
+            localStorage.setItem(element.name, element.value);
+        }
+    });
+}
+
+function loadFormValues() {
+    let hasStoredItemValue = false;
+    
+    document.querySelectorAll('input, select').forEach(element => {
+        if (element.name && localStorage.getItem(element.name)) {
+            element.value = localStorage.getItem(element.name);
+            if (element.name === 'item') {
+                hasStoredItemValue = true;
+            }
+        }
+    });
+    
+    if (!hasStoredItemValue) {
+        document.querySelector('select[name="item"] option[value=""]').selected = true;
+    }
+}
+
+function handleScanMoreButtonClick() {
+    // Clear the serial number
+    document.querySelector('input[name="serialno"]').value = '';
+    localStorage.removeItem('serialno');
+    
+    // Toggle the 'elevated' class and the related localStorage logic
+    toggleButtonElevation();
+}
+
+function toggleButtonElevation() {
+    const scanMoreButton = document.querySelector('.scan-more-button');
+
+    if (scanMoreButton.classList.contains('elevated')) {
+        // If the button is already elevated, clear all values from localStorage and remove the class
+        localStorage.clear();
+        scanMoreButton.classList.remove('elevated');
+    } else {
+        // If the button is not elevated, store values in localStorage and add the class
+        saveFormValues();
+        scanMoreButton.classList.add('elevated');
+    }
+}
+
+</script>
 
 {% include 'header/footer.html' %}

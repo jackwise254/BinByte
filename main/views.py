@@ -239,7 +239,7 @@ def upload_stock(request):
     hdds = Hdd.objects.all()
     rams = Ram.objects.all()
     if request.method == 'POST':
-        types = request.POST.get('type')
+        types = request.POST.get('item')
         model = request.POST.get('model')
         cpu = request.POST.get('cpu')
         ram = request.POST.get('ram')
@@ -249,10 +249,8 @@ def upload_stock(request):
         naration = request.POST.get('naration')
         serialno = request.POST.get('serialno')
         print(f"types:{types}, model:{model}, cpu:{cpu}, ram:{ram}, hdd:{hdd}, price:{price}, supplier:{supplier}, naration:{naration}, serialno:{serialno}")
-
-
     context = {
-        'types':types,
+        'items':types,
         'cpus':cpus,
         'hdds':hdds,
         'rams':rams,
