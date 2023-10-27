@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'main',
     'users',
     'django.contrib.humanize',
+    'mathfilters',
 
 ]
 
@@ -51,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
 ]
 
 
@@ -75,7 +77,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'BinByte.wsgi.application'
-
+CSRF_COOKIE_DOMAIN = '.example.com'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases

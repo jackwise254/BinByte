@@ -18,7 +18,15 @@ urlpatterns = [
     path('edit_vendor/<int:pk>', editvendor, name='editvendor'),
     path('deletevendor/<int:pk>', delete_vendor, name='delete_vendor'),
     path('stockin/', stockin_view, name='stockin_view'),
+    path('stockout/', stockout_view, name='stockout'),
+    
     path('uploadstock/', upload_stock, name='uploadstock'),
+    path('clear_templist/', ClearTemplist, name='clear_templist'),
+    path('push_templist/', PushTemplist, name='push_templist'),
+    path('masterlist_view/', masterlistview, name='masterlist_view'),
+    path('fetchproduct/<str:title>', FetchProduct, name='fetchproduct'),
+    path('delete_templist/<int:pk>', DeleteTemplist, name='delete_templist'),
+    
      
 
     

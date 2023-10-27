@@ -44,6 +44,7 @@
 
 
 <style>
+ 
   .sticky-table-header {
       position: sticky;
       top: 0;
@@ -83,10 +84,9 @@
     opacity: 1;
 }
 
-
 .digital-number {
     font-family: 'DS-Digital', sans-serif;
-    font-size: 45px;
+    font-size: 50px;
     line-height: 1;  /* Adjust this value as needed */
     color: hsl(0, 88%, 49%);
     vertical-align: middle;
@@ -103,13 +103,12 @@
 
   .sidebar-toggler {
       position: fixed;
-      top: 15px; 
+      top: 30px; 
       left: 250px; 
       z-index: 1000;
       
   }
   .th-style {
-    padding-left: 0%;
     position: sticky;
     top: 0;
     z-index: 1; /* Decreased the z-index */
@@ -133,6 +132,12 @@
     line-height: 0.5;
 
 }
+.blurred-content-transitioning {
+    filter: blur(5px);
+    transform: translateY(-100%);
+    transition: filter 0.5s, transform 0.5s;
+}
+
 
 /* 
   .th-style {
@@ -140,7 +145,7 @@
       position: sticky;
       top: 0;
       z-index: 2;
-      background-color: #849bbf;;
+      background-color: #849bbf;
       line-height: 0.5;    
   } */
 
@@ -151,50 +156,137 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #849bbf;
+    background-color: #849bbf; 
+    
     z-index: -1;
 }
 
-.navbar-nav {
-    margin: 0;
-    padding: 0;
+.blurred-content1 {
+  filter: blur(5px);
 }
 
-.navbar-nav > li {
-    list-style-type: none;  /* Removes bullet points */
-    margin: 0;
-    padding: 0;
+.blurred-content2{
+  filter: blur(5px);
+}
+   
+.blurred-content {
+    filter: blur(5px);
+}
+.table-container {
+    position: relative;
+}
+.fade-out {
+    opacity: 5;
+    transition: opacity 1.0s;
 }
 
-/* Default height for standard screens */
-.table-responsive.text-nowrap {
-    height: 60vh;
+.tr-unblurring {
+    animation: swipeDownBlur 1.0s forwards;
 }
 
-/* Adjust height for larger laptop screens */
-@media (min-width: 1440px) {
-    .table-responsive.text-nowrap {
-        height: 65vh;
+
+.overlay {
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.wide-button{
+  width: 400px;
+
+}
+
+.click-to-display-buttons {
+    background-color: #849bbf;
+    padding: 5px 20px;
+    width: 200px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+@keyframes slideUpDown {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-8px);
+    }
+    60% {
+        transform: translateY(8px);
     }
 }
 
-/* Adjust height for standard desktop screens */
-@media (min-width: 1920px) {
-    .table-responsive.text-nowrap {
-        height: 75vh;
-    }
+.animated-button {
+    animation: slideUpDown 8s infinite;  /* Adjust the time as per your preference */
 }
 
-/* Adjust height for very large/wide screens */
-@media (min-width: 2560px) {
-    .table-responsive.text-nowrap {
-        height: 80vh;
+td[contenteditable=true]:hover {
+        background-color: #f5f5f5;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 4px;
     }
+/* .tbl-content td:first-child {
+
+position: sticky;
+left: 0;
+z-index: 1; 
+background-color: #ffffff;
+} */
+
+
+.table-responsive.text-nowrap{
+  height: 53vh;
+}
+ 
+@media(min-width: 1440px){
+  .table-responsive.text-nowrap {
+    height: 55vh;
+  }
 }
 
+@media (min-width: 1920px){
+  .table-responsive.text-nowrap {
+    height: 72vh;
+  }
+} 
+@media (min-width: 2560px){
+  .table-responsive.text-nowrap {
+    height: 80vh;
+  }
+}
 
-  </style>
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* margin-top: 5px; */
+}
 
+.pagination a, .pagination span {
+    margin: 0 3px;  /* Reduced margin */
+    padding: 3px 6px;  /* Reduced padding */
+    border-radius: 3px;
+    background-color: #f7f7f7;
+    text-decoration: none;
+    font-size: 0.8rem;  /* Reduced font size */
+}
+
+.pagination a:hover {
+    background-color: #e0e0e0;
+}
+
+.pagination span.current {
+    background-color: #849bbf;
+    color: white;
+}
+</style>
+  
 
   
 
@@ -325,7 +417,7 @@
                   </a>
                 </li>
               <li class="nav-item">
-                <a class="nav-link  {% if selected == 'settings' %}active{% endif %}" href="/settings">
+                <a class="nav-link  {% if selected == 'stockout' %}active{% endif %}" href="/stockout">
                   <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <svg width="12px" height="12px" viewBox="0 0 46 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                       <title>customer-support</title>

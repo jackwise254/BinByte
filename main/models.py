@@ -52,11 +52,68 @@ class Masterlist(models.Model):
     total = models.CharField(max_length=200 , null=True)
     dels = models.CharField(max_length=200 , null=True)
     supplier = models.ForeignKey(Vendor, on_delete=models.CASCADE, null=True)
-    unit_price = models.CharField(max_length=200 , null=True)
-    total = models.CharField(max_length=200 , null=True)
-    vat = models.CharField(max_length=200 , null=True)
+    unit_price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    total = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    vat = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    sub_total = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    terms = models.CharField(max_length=200, null=True)
+
     class Meta:
         ordering = ["-id"]
+
+
+class Stockout(models.Model):
+    type = models.CharField(max_length=200 , null=True)
+    serialno = models.CharField(max_length=200 , null=True)
+    model = models.CharField(max_length=200 , null=True)
+    cpu = models.CharField(max_length=200 , null=True)
+    ram = models.CharField(max_length=200 , null=True)
+    hdd = models.CharField(max_length=200 , null=True)
+    daterecieved = models.DateField(auto_now_add=False, null=True)
+    qty = models.CharField(max_length=200 , null=True)
+    total = models.CharField(max_length=200 , null=True)
+    dels = models.CharField(max_length=200 , null=True)
+    supplier = models.ForeignKey(Vendor, on_delete=models.CASCADE, null=True)
+    unit_price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    total = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    vat = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    sub_total = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    terms = models.CharField(max_length=200, null=True)
+
+    class Meta:
+        ordering = ["-id"] 
+
+from django.db import models
+from decimal import Decimal
+
+class Templist(models.Model):
+    type = models.CharField(max_length=200, null=True)
+    serialno = models.CharField(max_length=200, null=True)
+    model = models.CharField(max_length=200, null=True)
+    cpu = models.CharField(max_length=200, null=True)
+    ram = models.CharField(max_length=200, null=True)
+    hdd = models.CharField(max_length=200, null=True)
+    daterecieved = models.DateField(auto_now_add=True, null=True)
+    qty = models.CharField(max_length=200, null=True)
+    dels = models.CharField(max_length=200, null=True)
+    supplier = models.ForeignKey(Vendor, on_delete=models.CASCADE, null=True)
+    unit_price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    total = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    vat = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    sub_total = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    terms = models.CharField(max_length=200, null=True)
+
+    class Meta:
+        ordering = ["-id"]
+
+    def save(self, *args, **kwargs):
+        self.vat = Decimal(self.price) * Decimal(0.16) # 16% VAT calculation
+        self.sub_total = Decimal(self.price) + self.vat
+        super(Templist, self).save(*args, **kwargs)
+     
 
 
 class NewCondition(models.Model):

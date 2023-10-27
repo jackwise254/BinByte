@@ -1,0 +1,147 @@
+{% load static %}
+{% load humanize %}
+
+{% include 'header/header.html' %}
+
+
+<div class="container-fluid mt-5 pt-4 test_continer ">
+    <h4 class="text-center"><u>STOCK OUT</u></h4>
+    <hr class="my-2" />
+
+    <div class="row px-3 border-bottom">
+        <div class="col-lg-2 col-md-2  ">
+            <div class="nav-wrapperr position-relative end-0" id="hidden-content">
+              <ul class="nav  nav-fill p-2 bg-transparent" role="tablists">
+
+                <li class="nav-item px-1">
+                    <a class="nav-link mb-0 px-0 py-1 btn btn-md p-2"style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);"  href="/uploadstock"  aria-selected="false">
+                        <i class="fa fa-table text-dark" aria-hidden="true"></i>
+                        <span class="ms-1 text-dark">Delivery Notes</span>
+                    </a>
+                </li>
+                
+              </ul>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="row" id="data-content">
+
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4 p-2">
+            <a href="/masterlist_view">
+                <div class="card">
+                    <div class="card-body p-3">
+                        
+                        <div class="row">
+                            <div class="col-8">
+                            <div class="numbers">
+                                <p class="text-sm mb-0 text-capitalize font-weight-bold">Total Stock</p>
+                                <h5 class="font-weight-bolder mb-0">
+                                    {{ master_count | intcomma }}
+                                <span class="text-success text-sm font-weight-bolder"></span>
+                                </h5>
+                            </div>
+                            </div>
+                            <div class="col-4 text-end">
+                            <div class="icon icon-shape shadow text-center border-radius-md bg-gradient-secondary" >
+                                <i class="fa fa-stack-exchange text-lg opacity-10" aria-hidden="true"></i>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        {% for k, v in names %}
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4 p-2">
+            <a href="/fetchproduct/{{k}}">
+                <div class="card">
+                    <div class="card-body p-3">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="numbers">
+                                    <p class="text-sm mb-0 text-capitalize font-weight-bold">{{k}}</p>
+                                    <h5 class="font-weight-bolder mb-0">
+                                        {{ v | intcomma }}
+                                        <span class="text-sm font-weight-bolder"
+                                        {% if "Laptop" in k %}
+                                            style="color: #1A76D2;" 
+                                        {% elif "Desktop" in k %}
+                                            style="color: #FF6B6B;" 
+                                        {% elif "Allinone" in k %}
+                                            style="color: #28A745;"
+                                        {% elif "Imac" in k %}
+                                            style="color: #28A745;"
+                                        {% else %}
+                                            style="color: #F39C12;"
+                                        {% endif %}
+                                        ></span>
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="col-4 text-end">
+                                <div class="icon icon-shape shadow text-center border-radius-md"
+                                {% if "Laptop" in k %}
+                                    style="background-image: linear-gradient(to right, #1A76D2, #1D8FE1);" 
+                                {% elif "Desktop" in k %}
+                                    style="background-image: linear-gradient(to right, #FF6B6B, #FF8E8E);" 
+                                {% elif "Allinone" in k %}
+                                    style="background-image: linear-gradient(to right, #28A745, #4CAF50);"
+                                {% elif "Imac" in k %}
+                                    style="background-image: linear-gradient(to right, #28A745, #4CAF50);"
+                                {% else %}
+                                    style="background-image: linear-gradient(to right, #F39C12, #F7B731);" 
+                                {% endif %}
+                                >
+                                    <!-- Replace the placeholder icons below with your desired icons -->
+                                    {% if "Laptop" in k %}
+                                        <i class="fa fa-laptop text-lg opacity-10" aria-hidden="true"></i> 
+                                    {% elif "Desktop" in k %}
+                                        <i class="fa fa-desktop text-lg opacity-10" aria-hidden="true"></i> 
+                                    {% elif "Allinone" in k %}
+                                        <i class="fa fa-tv text-lg opacity-10" aria-hidden="true"></i> 
+
+                                    {% elif "Imac" in k %}
+                                        <i class="fa fa-tv text-lg opacity-10" aria-hidden="true"></i>
+
+                                    {% elif "Lcd" in k %}
+                                    <i class="fa fa-tv text-lg opacity-10" aria-hidden="true"></i> 
+                                    {% elif "Macbook" in k %}
+                                    <i class="fa fa-laptop text-lg opacity-10" aria-hidden="true"></i> 
+
+                                    {% elif "RAM" in k %}
+                                    <i class="fa fa-hdd text-lg opacity-10" aria-hidden="true"></i> 
+
+
+                                    {% elif "HDD" in k %}
+                                        <i class="fa fa-hdd-o text-lg opacity-10" aria-hidden="true"></i> 
+                                    {% else %}
+                                    
+                                        <i class="fa fa-hdd text-lg opacity-10" aria-hidden="true"></i> <!-- Placeholder for Others -->
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>        
+    {% endfor %}
+    
+
+
+
+
+
+
+    </div>
+
+    </div>
+
+
+
+
+{% include 'header/footer.html' %}

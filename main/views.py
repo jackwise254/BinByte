@@ -7,6 +7,7 @@ from .models import *
 from .spreadsheets import *
 import pandas as pd
 from django.core.files.storage import FileSystemStorage
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 # Create your views here.
@@ -231,29 +232,148 @@ def stockin_view(request):
     }
 
     return render(request, 'stock/index.html', context)
+def masterlistview(request):
+    template_name = "stock/stockin.html"
+    products =  Masterlist.objects.all()[:500]
+    p = Paginator(products, 500)
+    page_number = request.GET.get('page')
+    try: 
+        page_obj = p.get_page(page_number)
+    except PageNotAnInteger:
+        page_obj = p.page(1)
+    except EmptyPage:
+        page_obj = p.page(p.num_pages)
+    title = "Total stock"
+    context = {
+        'title':title,
+        'page_obj':page_obj,
+    }
 
+    return render(request, template_name, context)
+
+def stockout_view(request):
+    template_name = "stockout/index.html"
+    user1 = request.session.get('username')
+
+    def get_names_and_counts(model, types):
+        lists, names = [], []
+        for type in types:
+            name = f"{type.type}"
+            item_count = model.objects.filter(type=type.type).count()
+            if item_count > 0:
+                lists.append(item_count)
+                names.append(name)
+        return lists, names
+
+    types = Type.objects.all()
+    conditions = NewCondition.objects.all()
+
+    master_count = Stockout.objects.count()
+    masterlist = Stockout.objects.all()
+    lists, names = get_names_and_counts(Stockout, types)
+
+    context = {
+        'count': lists,
+        'master_count': master_count,
+        'masterlist': masterlist,
+        'items': types,
+        'conditions': conditions,
+        'names': zip(names, lists),
+        'names_stockin': zip(names, lists),
+        'title': 'Stock',
+        'user1':user1,
+        'title1': 'In',
+        'colors': ['red', 'green', 'blue', 'yellow', 'orange'],
+        'selected':'stockout',
+    }
+    return render(request, template_name, context)
+
+
+def FetchProduct(request, title):
+    template_name = "stock/stockin.html"
+    k_split = title.split()
+    conditions = k_split[0]
+    types = k_split[1:]
+    types = ' '.join(types)
+    masterlists = Masterlist.objects.filter(type__icontains=types)
+    count = masterlists.count()
+    masterlist = Masterlist.objects.filter(type__icontains=types).order_by('-daterecieved')[:500]
+
+    p = Paginator(masterlist, 500)
+    page_number = request.GET.get('page')
+    try: 
+        page_obj = p.get_page(page_number)
+    except PageNotAnInteger:
+        page_obj = p.page(1)
+    except EmptyPage:
+        page_obj = p.page(p.num_pages)
+    context = {
+        'count':count,
+        'title':title,
+        'page_obj':page_obj,
+    }
+
+    return render(request, template_name, context)
+    
+def PushTemplist(request):
+    rows = Templist.objects.filter(terms=request.user)
+    for temp_item in rows:
+        fields = [field.name for field in Templist._meta.fields if field.name != 'id']
+        masterlist_entry = Masterlist()
+        for field in fields:
+            setattr(masterlist_entry, field, getattr(temp_item, field))
+        masterlist_entry.save()
+        temp_item.delete()
+
+    return redirect('/uploadstock')
+
+def ClearTemplist(request):
+    Templist.objects.filter(terms=request.user).delete()
+    return redirect('/uploadstock')
+
+def DeleteTemplist(request, pk):
+    Templist.objects.get(id=pk).delete()
+    return redirect('/uploadstock')
 
 def upload_stock(request):
     types = Type.objects.all()
     cpus = Cpu.objects.all()
     hdds = Hdd.objects.all()
     rams = Ram.objects.all()
+    suppliers = Vendor.objects.all()
+    products = Templist.objects.all()
+    total_vat = sum(product.vat for product in products)
+    total_price = sum(product.price for product in products)
+    total_sub_total = sum(product.sub_total for product in products)
+    # Templist.objects.all().delete()
     if request.method == 'POST':
-        types = request.POST.get('item')
+        types = request.POST.get('types')
         model = request.POST.get('model')
         cpu = request.POST.get('cpu')
         ram = request.POST.get('ram')
         hdd = request.POST.get('hdd')
         price = request.POST.get('price')
         supplier = request.POST.get('supplier')
+        supplier = Vendor.objects.get(username=supplier)
         naration = request.POST.get('naration')
         serialno = request.POST.get('serialno')
-        print(f"types:{types}, model:{model}, cpu:{cpu}, ram:{ram}, hdd:{hdd}, price:{price}, supplier:{supplier}, naration:{naration}, serialno:{serialno}")
+
+        Templist.objects.create(
+            terms=request.user, type=types,model=model,cpu=cpu, ram=ram,hdd=hdd,price=price, supplier=supplier, serialno=serialno
+        )
+
+        return redirect('/uploadstock')
+    
     context = {
+        'total_vat':total_vat,
+        'total_price':total_price,
+        'total_sub_total':total_sub_total,
         'items':types,
+        'products':products,
         'cpus':cpus,
         'hdds':hdds,
         'rams':rams,
+        'suppliers':suppliers
     }
 
 

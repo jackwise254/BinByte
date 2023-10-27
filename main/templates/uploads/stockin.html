@@ -1,5 +1,6 @@
 {% load static %}
 {% load humanize %}
+{% load mathfilters %}
 
 {% include 'header/header.html' %}
 
@@ -33,21 +34,22 @@
     </div>
     <form method="POST">
         {% csrf_token %}
+
         <div class="row mt-2 pt-2">
             <div class="col-md-5 px-4">
                 <div class="row mb-4">
                     <div class="col-3">
                         <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Suppliers</small></label>
-                        <select name="supplier" id=""  class="form-select form-control py-1">
+                        <select name="supplier"   class="form-select form-control py-1">
                             <option disabled>Suppliers</option>
-                            {% for vendor in vendors %}
+                            {% for vendor in suppliers %}
                                 <option value="{{vendor.username}}">{{vendor.username}}</option>
                             {%endfor %}
                         </select>
                     </div>
                     <div class="col-3">
                         <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Naration</small></label>
-                        <input type="text" name="naration" id="" class="form-control py-1" placeholder="Naration">
+                        <input type="text" name="naration"  class="form-control py-1" placeholder="Naration">
                     </div>
                     <div class="col-2">
                         <div class="nav-wrapperr position-relative end-0">
@@ -70,10 +72,9 @@
                     <div class="col-md-3">
                     </div>
                     <div class="col-md-3">
-                        <input type="text" name="" id="" class="form-control py-1" readonly placeholder="KSH 0/=">
+                        <input type="text" name=""  class="form-control py-1" readonly placeholder="KSH 0/=">
                     </div>
                 </div>
-
 
             </div>
             <div class="col-md-2">
@@ -83,26 +84,26 @@
                 <div class="row mb-2">
                     <div class="col-3">
                         <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Serial No.</small></label>
-                        <input type="text" class="form-control py-1" name="serialno" id="" placeholder="S/No." autofocus>
+                        <input type="text" class="form-control py-1" name="serialno"  placeholder="S/No." autofocus required>
                     </div>
 
                     <div class="col-2">
                         <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Item</small></label>
-                        <select name="item" id="" class="form-select form-control py-1">
+                        <select name="types"  class="form-select form-control py-1">
                             <option disabled>Item</option>
-                            {%for cpu in items%}
-                                <option value="{{cpu.type}}">{{cpu.type}}</option>
+                            {%for item in items%}
+                                <option value="{{item.type}}">{{item.type}}</option>
                             {%endfor %}
                         </select>
                     </div>
                     
                     <div class="col-2">
                         <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Model</small></label>
-                        <input type="text" class="form-control py-1" name="model" id="" placeholder="Model">
+                        <input type="text" class="form-control py-1" name="model"  placeholder="Model">
                     </div>
                     <div class="col-3">
                         <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Cpu</small></label>
-                        <select name="cpu" id="" class="form-select form-control py-1">
+                        <select name="cpu"  class="form-select form-control py-1">
                             <option disabled>Cpu</option>
                             {%for cpu in cpus|dictsort:"cpu" %}
                                 <option value="{{cpu.cpu}}">{{cpu.cpu}}</option>
@@ -112,7 +113,7 @@
                     
                     <div class="col-2">
                         <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Ram</small></label>
-                        <select name="ram" id="" class="form-select form-control py-1">
+                        <select name="ram"  class="form-select form-control py-1">
                             <option disabled>Ram</option>
                             {%for ram in rams|dictsort:"ram" %}
                                 <option value="{{ram.ram}}">{{ram.ram}}</option>
@@ -124,7 +125,7 @@
                     
                     <div class="col-3">
                         <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Hdd</small></label>
-                        <select name="hdd" id="" class="form-control form-select py-1">
+                        <select name="hdd"  class="form-control form-select py-1">
                             <option disabled>Hdd</option>
                             {% for hdd in hdds|dictsort:"hdd" %}
                                 <option value="{{hdd.hdd}}">{{hdd.hdd}}</option>
@@ -134,14 +135,14 @@
                     
                     <div class="col-3">
                         <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Price</small></label>
-                        <input type="text" class="form-control py-1" name="price" id="" placeholder="price">
+                        <input type="text" class="form-control py-1" name="price"  placeholder="price">
                     </div>
                     <div class="col-3">
                         <div class="nav-wrapperr position-relative end-0">
                             <ul class="nav  nav-fill bg-transparent" role="tablists">
                                 <li class="nav-item ">
                                 <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small></small></label>
-                                <button type="submit" class="nav-link mb-0 px-0 btn btn-md py-2 scan-more-button" style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);">
+                                <button type="button" class="nav-link mb-0 px-0 btn btn-md py-2 scan-more-button" style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);">
                                     <i class="fa fa-hand-o-right text-dark text-xxs font-weight-bolder opacity-10 text-uppercase" aria-hidden="true"></i>
                                     <span class="ms-1 text-dark text-xxs font-weight-bolder opacity-10 text-uppercase" >Scan More</span>
                                 </button>
@@ -177,6 +178,7 @@
           <thead  style="background-color: #849bbf;"
           >
             <tr class="my-1 text-align text-xls" >
+                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" ></th>
                 <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Item</th>
                 <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Serial No.</th>
                 <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Model</th>
@@ -191,128 +193,138 @@
             </tr>
         </thead>
             <tbody>
+              
+
             {% for user in products %}
                 <tr style="font-size: 11px">
                     <td class ="text-dark custom-letter-spacing  text-xs">
-                        <a href="/delete_templist/{{user.dels}}" class="btn-outline-danger px-2 my-3"  class="overlay" >
-                            <i class="bi bi-trash text-lg opacity-10" aria-hidden="true"></i>
+                        <a href="/delete_templist/{{user.id}}" class="btn-outline-primary px-2 my-3"  class="overlay" >
+                            <i class="bi bi-trash text-sm opacity-10" aria-hidden="true"></i>
                         </a>
-                        <a href="/push_templist/{{user.dels}}" class=" btn-outline-success px-2 my-3"  class="overlay" >
-                            <i class="bi bi-upload text-lg opacity-10" aria-hidden="true"></i>
-                        </a>
+                       
                     </td>                        
-                    <td scope="col" class="col-5">{{user.btl |default_if_none:""  }} </td>
-                    <td scope="col" class="col-5">{{user.total |default_if_none:""  }} </td>
                     <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.type |default_if_none:""  }} </td>
-                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.conditions |default_if_none:""  }} </td>
-                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.list |default_if_none:""  }} </td>
-                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.assetid |default_if_none:""  }} </td>
-                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.dels |default_if_none:""  }} </td>
-                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.gen |default_if_none:""  }} </td>
-                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.brand |default_if_none:""  }} </td>
                     <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.serialno |default_if_none:""  }} </td>
-                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.part |default_if_none:""  }} </td>
-                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.modelid |default_if_none:""  }} </td>
                     <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.model |default_if_none:""  }} </td>
                     <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.cpu |default_if_none:""  }} </td>
-                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.speed |default_if_none:""  }} </td>
                     <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.ram |default_if_none:""  }} </td>
                     <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.hdd |default_if_none:""  }} </td>
-                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.screen |default_if_none:""  }} </td>
-                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.odd |default_if_none:""  }} </td>
-                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.comment |default_if_none:""  }} </td>
-                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.problem |default_if_none:""  }} </td>
-                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.price |default_if_none:""  }} </td>
                     <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.daterecieved |default_if_none:""  }} </td>
-                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.uploaded_by |default_if_none:""  }} </td>
-                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.vendor |default_if_none:""  }} </td>
-                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.shipno |default_if_none:""  }} </td>
-                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.daterepaired |default_if_none:""  }} </td>
-                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.barcodes |default_if_none:""  }} </td>
-                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.status |default_if_none:""  }} </td>
-                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.datedelivered |default_if_none:""  }} </td>
-                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.delvno |default_if_none:""  }} </td>
-                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.invoice |default_if_none:""  }} </td>
-                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.customer |default_if_none:""  }} </td>
-                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.created_by |default_if_none:""  }} </td>
-                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.mode |default_if_none:""  }} </td>
-                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.qty |default_if_none:""  }} </td>
-                    
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.supplier.username |default_if_none:""  }} </td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.vat |intcomma|default_if_none:""  }} </td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.price |intcomma|default_if_none:""  }} </td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs ">{{user.sub_total |intcomma|default_if_none:""  }}</td>
                 </tr>
-                {% endfor %}
-
+          
             </tbody>
+            {% endfor %}
+
+            {% if products %}
+            <tfoot>
+                <tr>
+                    <td colspan="12" class="text-dark  py-3 text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold text-right"></td>
+
+                </tr>
+
+                <tr>
+                    <td colspan="7" class="text-dark th-style  py-2 text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold text-right">Totals:</td>
+                    <td class="text-dark py-1 th-style text-xxs custom-letter-spacing font-weight-bolder text-lg"><a href="/clear_templist" class="bi bi-trashs">clear</a></td>
+                    <td class="text-dark py-1 th-style text-xxs custom-letter-spacing text-xs font-weight-bolder"><a href="/push_templist" class="bi bi-arrow-ups">Push</a></td>
+                    <td class="text-dark py-1 th-style text-xxs custom-letter-spacing text-xs font-weight-bolder" >{{ total_vat|intcomma }}</td>
+                    <td class="text-dark py-1 th-style text-xxs custom-letter-spacing text-xs font-weight-bolder">{{ total_price|intcomma }}</td>
+                    <td class="text-dark py-1 th-style text-xxs custom-letter-spacing text-xs font-weight-bolder">{{ total_sub_total|intcomma }}</td>
+                </tr>
+            </tfoot>
+            {% endif %}
         </table>
         </div>
+
     </div>
 
 
 </div>
 
-
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-    // Load values from localStorage
-    loadFormValues();
-
-    // Save form values to localStorage whenever they change
-    document.querySelectorAll('input, select').forEach(element => {
-        element.addEventListener('change', saveFormValues);
-    });
-
-    // Setup event listener for 'Scan More' button
-    const scanMoreButton = document.querySelector('.scan-more-button');
-    scanMoreButton.addEventListener('click', handleScanMoreButtonClick);
+    document.querySelector('.scan-more-button').addEventListener('click', function() {
+    let isScanning = localStorage.getItem('isScanning');
+    
+    if (!isScanning || isScanning === "false") {
+        // Setting data to local storage and lowering the button elevation
+        localStorage.setItem('supplier', document.querySelector('[name="supplier"]').value);
+        localStorage.setItem('naration', document.querySelector('[name="naration"]').value);
+        localStorage.setItem('types', document.querySelector('[name="types"]').value);
+        localStorage.setItem('model', document.querySelector('[name="model"]').value);
+        localStorage.setItem('cpu', document.querySelector('[name="cpu"]').value);
+        localStorage.setItem('ram', document.querySelector('[name="ram"]').value);
+        localStorage.setItem('hdd', document.querySelector('[name="hdd"]').value);
+        localStorage.setItem('price', document.querySelector('[name="price"]').value);
+        
+        this.style.boxShadow = 'none'; // Lowering the button's elevation
+        
+        localStorage.setItem('isScanning', true);
+    } else {
+        // Clearing the local storage and resetting the button's elevation
+        clearLocalStorageAfterSave();
+        this.style.boxShadow = '2px 2px 4px rgba(0, 0, 0, 0.1)'; // Resetting the button's elevation
+        
+        localStorage.setItem('isScanning', false);
+    }
 });
 
-function saveFormValues() {
-    document.querySelectorAll('input, select').forEach(element => {
-        if (element.name) {
-            localStorage.setItem(element.name, element.value);
-        }
-    });
-}
+document.addEventListener('DOMContentLoaded', function() {
 
-function loadFormValues() {
-    let hasStoredItemValue = false;
-    
-    document.querySelectorAll('input, select').forEach(element => {
-        if (element.name && localStorage.getItem(element.name)) {
-            element.value = localStorage.getItem(element.name);
-            if (element.name === 'item') {
-                hasStoredItemValue = true;
-            }
-        }
-    });
-    
-    if (!hasStoredItemValue) {
-        document.querySelector('select[name="item"] option[value=""]').selected = true;
+    // let cumulativeSum = 0;
+
+    // // Get all the price cells
+    // const priceCells = document.querySelectorAll('td:nth-child(11)');
+
+    // priceCells.forEach((priceCell, index) => {
+    //     let price = parseFloat(priceCell.textContent.trim()) || 0; // Convert the price to a number, defaulting to 0 if not a number
+    //     cumulativeSum += price;
+
+    //     // Setting the cumulative sum to the corresponding cell in the next column
+    //     document.querySelectorAll('td.cumulative-price')[index].textContent = cumulativeSum.toFixed(2); // Assuming 2 decimal places
+    // });
+
+    if (localStorage.getItem('supplier')) {
+        document.querySelector('[name="supplier"]').value = localStorage.getItem('supplier');
     }
-}
-
-function handleScanMoreButtonClick() {
-    // Clear the serial number
-    document.querySelector('input[name="serialno"]').value = '';
-    localStorage.removeItem('serialno');
-    
-    // Toggle the 'elevated' class and the related localStorage logic
-    toggleButtonElevation();
-}
-
-function toggleButtonElevation() {
-    const scanMoreButton = document.querySelector('.scan-more-button');
-
-    if (scanMoreButton.classList.contains('elevated')) {
-        // If the button is already elevated, clear all values from localStorage and remove the class
-        localStorage.clear();
-        scanMoreButton.classList.remove('elevated');
-    } else {
-        // If the button is not elevated, store values in localStorage and add the class
-        saveFormValues();
-        scanMoreButton.classList.add('elevated');
+    if (localStorage.getItem('naration')) {
+        document.querySelector('[name="naration"]').value = localStorage.getItem('naration');
     }
+    if (localStorage.getItem('types')) {
+        document.querySelector('[name="types"]').value = localStorage.getItem('types');
+    }
+    if (localStorage.getItem('model')) {
+        document.querySelector('[name="model"]').value = localStorage.getItem('model');
+    }
+    if (localStorage.getItem('cpu')) {
+        document.querySelector('[name="cpu"]').value = localStorage.getItem('cpu');
+    }
+    if (localStorage.getItem('ram')) {
+        document.querySelector('[name="ram"]').value = localStorage.getItem('ram');
+    }
+    if (localStorage.getItem('hdd')) {
+        document.querySelector('[name="hdd"]').value = localStorage.getItem('hdd');
+    }
+    if (localStorage.getItem('price')) {
+        document.querySelector('[name="price"]').value = localStorage.getItem('price');
+    }
+});
+
+function clearLocalStorageAfterSave() {
+    localStorage.removeItem('supplier');
+    localStorage.removeItem('naration');
+    localStorage.removeItem('types');
+    localStorage.removeItem('model');
+    localStorage.removeItem('cpu');
+    localStorage.removeItem('ram');
+    localStorage.removeItem('hdd');
+    localStorage.removeItem('price');
 }
+
 
 </script>
+
 
 {% include 'header/footer.html' %}
