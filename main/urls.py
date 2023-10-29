@@ -26,6 +26,9 @@ urlpatterns = [
     path('masterlist_view/', masterlistview, name='masterlist_view'),
     path('fetchproduct/<str:title>', FetchProduct, name='fetchproduct'),
     path('delete_templist/<int:pk>', DeleteTemplist, name='delete_templist'),
+    path('sales/', SalesView, name='sales'),
+
+    
     
      
 

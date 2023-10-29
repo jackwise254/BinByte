@@ -62,6 +62,47 @@ class Masterlist(models.Model):
     class Meta:
         ordering = ["-id"]
 
+class Product(models.Model):
+    fname = models.CharField(max_length=200, null=True)
+    lname = models.CharField(max_length=200, null=True)
+    vendor = models.CharField(max_length=200, null=True)
+    customer = models.CharField(max_length=200, null=True)
+    email = models.CharField(max_length=200, null=True)
+    username = models.CharField(max_length=200, null=True)
+    user_name = models.CharField(max_length=200, null=True)
+    id_no = models.CharField(max_length=200, null=True)
+    document = models.CharField(max_length=200, null=True)
+    ref = models.CharField(max_length=200, null=True)
+    random = models.CharField(max_length=200, null=True)
+    address = models.CharField(max_length=200, null=True)
+    phone = models.CharField(max_length=200, null=True)
+    delvnote = models.CharField(max_length=200, null=True)
+    location = models.CharField(max_length=200, null=True)
+    date = models.CharField(max_length=200, null=True)
+    invono = models.CharField(max_length=200, null=True)
+    sold_to = models.ForeignKey(Customer, on_delete=models.CASCADE, null= True)
+    total = models.IntegerField()
+    class Meta:
+        db_table = 'product'
+        ordering = ['-date']
+
+class Dcustomer(models.Model):
+    fname = models.CharField(max_length=200, null=True)
+    lname = models.CharField(max_length=200, null=True)
+    phone = models.CharField(max_length=200, null=True)
+    location = models.CharField(max_length=200, null=True)
+    email = models.CharField(max_length=200, null=True)
+    user_created_at = models.CharField(max_length=200, null=True)
+    random = models.CharField(max_length=200, null=True)
+    username = models.CharField(max_length=200, null=True)
+    id_no = models.CharField(max_length=200, null=True)
+    status = models.CharField(max_length=200, null=True)
+    invono = models.CharField(max_length=200, null=True)
+    d_type = models.CharField(max_length=200, null=True)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        db_table ='dcustomer'
 
 class Stockout(models.Model):
     type = models.CharField(max_length=200 , null=True)

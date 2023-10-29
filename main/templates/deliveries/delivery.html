@@ -1,0 +1,246 @@
+{% load static %}
+{% load humanize %}
+{% include 'header/header.html' %}
+
+
+<div class="container-fluid mt-5 pt-4 test_continer ">
+    <h5 class="text-center"><u>SALES</u></h5>
+    <hr class="my-2" />
+    <div class="card shadow-none">
+        <div class="row mt-3 px-3">
+            <div class="col-lg-4 col-md-7   ">
+                <div class="nav-wrapperr position-relative end-0">
+                  <ul class="nav  nav-fill p-1 bg-transparent" role="tablists">
+    
+                    <li class="nav-item px-1">
+                        <a class="nav-link mb-0 px-0 py-1 btn btn-md p-2"style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);"  href="/stockout">
+                            <i class="fa fa-home text-dark" ></i>
+                          <span class="ms-1 text-dark">Home</span>
+                        </a>
+                      </li>
+    
+                      <li class="nav-item px-1">
+                        <a class="nav-link mb-0 px-0 py-1 btn btn-md p-2"style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);"  href="/deliveries"  aria-selected="false">
+                          <i class="fa fa-plus text-dark" aria-hidden="true"></i>
+                          <span class="ms-1 text-dark">Create New</span>
+                        </a>
+                      </li>
+
+                      <li class="nav-item px-1">
+                        <a class="nav-link mb-0 px-0 py-1 btn btn-md  " style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);" href="#"  aria-selected="false" id="editdelivery">
+                          <i class="fa fa-pencil text-warning" aria-hidden="true"></i>
+                          <span class="ms-1 text-warning">Edit</span>
+                        </a>
+                      </li>
+                  </ul>
+                </div>
+            </div>
+    
+
+            <div class="col-md-2">
+              
+            </div>
+
+
+            <div class="col-md-1"></div>
+
+            <div class="col-md-6 col-lg-5">
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        
+                        <div class="col-5">
+                            <div class="nav-wrapperr position-relative end-0">
+                                <ul class="nav  nav-fill p-1 bg-transparent" role="tablists">
+                                  <li class="nav-item px-1">
+                                      <a class="nav-link mb-0 px-0 py-1 btn btn-md p-2"style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);"  href="#" id="deletedelivery">
+                                          <i class="fa fa-recycle text-danger" ></i>
+                                        <span class="ms-1 text-danger">Delete</span>
+                                      </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <input
+                                type="text"
+                                class="form-control custom-input py-1"
+                                placeholder="Search..."
+                                aria-label="Search..."
+                                aria-describedby="basic-addon-search31"
+                                name="q"
+                                />
+                            </div>
+                            <button type="submit" class="d-none"></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+        </div>
+        <div class="card-body">
+        <div class="table-responsive tbl-content text-nowrap tbl-content" >
+          <div class="table-container">
+
+            <table class="table table-bordered table-responsive table-hover text-xls table-sm ">
+              
+              <thead  style="background-color: #87bad4; ">
+                  <tr class="my-1 text-align text-xls" style="padding-left: 0%;">
+                      <th class="text-dark th-style font-weight-bold ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                      <th class="text-dark th-style font-weight-bold">User Name</th>
+                      <th class="text-dark th-style font-weight-bold">Note No</th>
+                      <th class="text-dark th-style font-weight-bold">Served By</th>
+                      <th class="text-dark th-style font-weight-bold">Date</th>
+                      <th class="text-dark th-style font-weight-bold">Invoice</th>
+                      <th class="text-dark th-style font-weight-bold">Document</th>
+                      <th class="text-dark th-style font-weight-bold">Qty</th>
+                  </tr>
+              </thead>
+              <tbody>
+                {% for delivery in page_obj %}
+                    <tr class="{% if not forloop.first %}blurred-content  {% endif %}">
+
+                      <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                        <div class="nav-wrapperr position-relative end-0">
+                            <ul class="nav  nav-fill p-1 bg-transparent" role="tablists">
+              
+                              <li class="nav-item px-1">
+                                  <a class="nav-link mb-0 px-0 py-1 btn btn-md"style="box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);"  href="/spread_excell/deliveries/{{delivery.id_no}}">
+                                      <i class="fa fa-table text-dark" ></i>
+                                    <span class="ms-1 text-dark"></span>
+                                  </a>
+                                </li>
+
+                                <li class="nav-item px-1">
+                                    <a class="nav-link mb-0 px-0 py-1 btn btn-md"style="box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);"  href="/read_pdf/deliveries/{{delivery.document}}">
+                                        <i class="fa fa-eye text-dark" ></i>
+                                      <span class="ms-1 text-dark"></span>
+                                    </a>
+                                  </li>
+                            </ul>
+                        </div>
+                      </td>
+                      <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{delivery.username |default_if_none:""  }} </td>
+                      <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{delivery.delvnote |default_if_none:""  }} </td>
+                      <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{delivery.user_name |default_if_none:""  }} </td>
+                      <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{ delivery.date|slice:"0:10"  |default_if_none:""  }} </td>
+                      <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{delivery.invono |default_if_none:""  }} </td>
+                      <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{delivery.document |default_if_none:""  }} </td>
+                      <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{delivery.total |default_if_none:""  }} </td>
+                    </tr>
+
+
+
+                {% endfor %}
+              </tbody>
+            </table>
+            
+          </div>
+        </div>
+    </div>
+    
+
+  </div>
+</main>
+
+<script>
+document.getElementById('editdelivery').addEventListener('click', async function() {
+const result = await Swal.fire({
+title: 'Enter delivery note',
+width: '600px',
+html: `
+<input type="text" name="delvnote" id="delvnote" class="form-control" placeholder="Note no.">
+
+`,
+showCancelButton: true,
+allowOutsideClick: false,
+preConfirm: () => {
+    const selectedOption = document.getElementById('delvnote').value;
+    return { option: selectedOption };
+}
+});
+
+if (result.isConfirmed && result.value.option) {
+const selectedOption = result.value.option;
+
+const formData = new FormData();
+formData.append('delvnote', selectedOption);
+
+const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+formData.append('csrfmiddlewaretoken', csrfToken);
+
+try {
+    const response = await fetch("#", {
+        method: 'POST',
+        body: formData
+    });
+
+    if (!response.ok) { // If server responds with a non-2xx status code
+      console.log(response)
+        const data = await response.json(); // assuming server responds with json
+        console.log(data.message)
+        Swal.fire('', data.message || 'Something went wrong.', 'warning');
+    } else {
+        // location.reload();
+        window.location.href = "/deliveries";
+
+    }
+} catch (error) {
+    const data = await response.json(); // assuming server responds with json
+    Swal.fire(data.message || 'Something went wrong.', 'Warning');
+}
+}
+});
+
+
+document.getElementById('deletedelivery').addEventListener('click', async function() {
+const result = await Swal.fire({
+title: 'Enter delivery note',
+width: '600px',
+html: `
+  <input type="text" name="delvnote" id="delvnote" class="form-control" placeholder="Note no.">
+
+`,
+showCancelButton: true,
+allowOutsideClick: false,
+preConfirm: () => {
+    const selectedOption = document.getElementById('delvnote').value;
+    return { option: selectedOption };
+}
+});
+
+if (result.isConfirmed && result.value.option) {
+const selectedOption = result.value.option;
+
+const formData = new FormData();
+formData.append('delvnote', selectedOption);
+
+const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+formData.append('csrfmiddlewaretoken', csrfToken);
+
+try {
+    const response = await fetch("#", {
+        method: 'POST',
+        body: formData
+    });
+
+    if (!response.ok) { // If server responds with a non-2xx status code
+        const data = await response.json(); // assuming server responds with json
+        Swal.fire('Error!', data.message || 'There was an error scaning for duplicates .', 'error');
+    } else {
+        location.reload();
+    }
+} catch (error) {
+    Swal.fire('Error!', 'There was an error scaning for duplicates.', 'error');
+}
+}
+});
+
+</script>
+
+
+
+{% include 'header/footer.html' %}
+

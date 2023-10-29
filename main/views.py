@@ -378,3 +378,37 @@ def upload_stock(request):
 
 
     return render(request, 'uploads/stockin.html', context)
+
+def SalesView(request):
+    delivery = Product.objects.all().order_by('-id')
+    if request.method == "POST":
+        name = request.POST.get('q')
+        delivery = Product.objects.filter(
+            Q(fname__icontains=name) | Q(lname__icontains=name) |  Q(invono__icontains=name) | Q(location__icontains=name) | Q(document__icontains=name) | Q(delvnote__icontains=name) | Q(ref__icontains=name)| Q(id_no__icontains=name) | Q(random__icontains=name) | Q(date__icontains=name) | Q(username__icontains=name) | Q(email__icontains=name)|Q(user_name__icontains=name)
+        )
+    paginator = Paginator(delivery, 100)
+    resume = False
+    sess = request.session.get('username')
+    check_existing_delivery = Dcustomer.objects.filter(user_created_at=sess, d_type='delivery', status=0)
+    # Get the page number from the GET request parameters
+    page_number = request.GET.get('page')
+
+    try:
+        # Retrieve the requested page of results
+        page_obj = paginator.get_page(page_number)
+    except PageNotAnInteger:
+        # If the page number is not an integer, show the first page
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        # If the page number is out of range, show the last page
+        page_obj = paginator.page(paginator.num_pages)
+
+    context = {
+        'resume':resume,
+        'page_obj': page_obj,
+        'deliveries': delivery,
+        'user1':request.session.get('username'),
+    }
+    return render(request, 'deliveries/delivery.html', context)
+
+
