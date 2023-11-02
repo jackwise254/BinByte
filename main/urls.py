@@ -27,6 +27,14 @@ urlpatterns = [
     path('fetchproduct/<str:title>', FetchProduct, name='fetchproduct'),
     path('delete_templist/<int:pk>', DeleteTemplist, name='delete_templist'),
     path('sales/', SalesView, name='sales'),
+    path('deliveries/', Delivery_View, name='deliveries'),
+    path('delvcustomer/', delv_customer, name='delv_customer'),
+    path('delv_sub/', delvsub, name='delvsub'),
+    path('delv_out/', delvout, name='delvout'),
+    path('delv_csv/', delvcsv, name='delvcsv'),
+    
+    
+
 
     
     

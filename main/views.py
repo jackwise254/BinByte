@@ -412,3 +412,75 @@ def SalesView(request):
     return render(request, 'deliveries/delivery.html', context)
 
 
+def Delivery_View(request):
+    customers = Customer.objects.all().order_by("-id")
+    products = Templist.objects.filter(terms=request.user, d_type="delivery")
+    total = products.count()
+    sess = request.session.get('username')
+    d_customer = Dcustomer.objects.filter(user_created_at=sess, d_type="delivery")
+    context ={
+        "customers":customers,
+        "products":products,
+        "total":total,
+        "d_customer":d_customer,
+
+    }
+
+    return render(request, "deliveries/deliver.html", context)
+
+def delv_customer(request):
+    if request.method=='POST':
+        customer = request.POST.get('customer')
+        invoice = request.POST.get('invoice')
+        sess = request.session.get('username')
+        rows = Customer.objects.filter(username=customer).values()
+        check = Dcustomer.objects.filter(user_created_at=sess, status=0)
+        if not check:
+            batch = [Dcustomer(lname=row['lname'], phone=row['phone'], fname=row['fname'], location=row['location'], email=row['email'], username=row['username'], id_no=row['id_no'], invono=invoice,user_created_at=sess, status=0, d_type='delivery') for row in rows]
+            Dcustomer.objects.bulk_create(batch)
+        else:
+            check.delete()
+            batch = [Dcustomer(lname=row['lname'], phone=row['phone'], fname=row['fname'], location=row['location'], email=row['email'], username=row['username'], id_no=row['id_no'], invono=invoice,user_created_at=sess, status=0, d_type='delivery') for row in rows]
+            Dcustomer.objects.bulk_create(batch)
+        return redirect('/deliveries')
+    return redirect('/deliveries')
+
+def delvsub(request):
+    customer = Customer.objects.all()
+    if request.method =='POST':
+        sess = request.session.get('username')
+        assetid=request.POST.get('assetid')
+        rows = Masterlist.objects.filter(Q(assetid=assetid) |Q(dels=assetid) |Q(list=assetid))
+        assets = []
+        for r in rows:
+            if r.assetid not in assets:
+                assets.append(r.assetid)
+
+        check = Templist.objects.filter(assetid__in=assets, is_active=True)
+        if not check:
+            if rows:
+                for row in rows:
+                    
+                    fields = [field.name for field in row._meta.fields if field.name != 'id']
+                    temp_entry = Templist()
+                    for field in fields:
+                        setattr(temp_entry, field, getattr(row, field))
+                    temp_entry.terms=sess
+                    temp_entry.d_type='delivery'
+                    temp_entry.tbl='Stock In'
+                    temp_entry.is_active = True
+                    temp_entry.save()
+
+            else:
+                messages.add_message(request, messages.INFO, "Item does not exist")
+                return redirect('/deliveries')
+        
+        return redirect('/deliveries')
+    return redirect('/deliveries')
+
+
+def delvout(request):
+    pass
+
+def delvcsv(request):
+    pass
