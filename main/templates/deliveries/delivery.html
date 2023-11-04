@@ -88,34 +88,29 @@
               
               <thead  style="background-color: #87bad4; ">
                   <tr class="my-1 text-align text-xls" style="padding-left: 0%;">
-                      <th class="text-dark th-style font-weight-bold ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                      <th class="text-dark th-style font-weight-bold">User Name</th>
-                      <th class="text-dark th-style font-weight-bold">Note No</th>
+                      <th class="text-dark th-style font-weight-bold "></th>
+                      <th class="text-dark th-style font-weight-bold">Customer</th>
                       <th class="text-dark th-style font-weight-bold">Served By</th>
-                      <th class="text-dark th-style font-weight-bold">Date</th>
                       <th class="text-dark th-style font-weight-bold">Invoice</th>
-                      <th class="text-dark th-style font-weight-bold">Document</th>
+                      <th class="text-dark th-style font-weight-bold">Mode</th>
+                      <th class="text-dark th-style font-weight-bold">Date</th>
                       <th class="text-dark th-style font-weight-bold">Qty</th>
+                      <th class="text-dark th-style font-weight-bold">Amount</th>
+
                   </tr>
               </thead>
               <tbody>
                 {% for delivery in page_obj %}
-                    <tr class="{% if not forloop.first %}blurred-content  {% endif %}">
+                    <tr class="">
 
                       <td class ="text-dark py-1 custom-letter-spacing  text-xs">
                         <div class="nav-wrapperr position-relative end-0">
                             <ul class="nav  nav-fill p-1 bg-transparent" role="tablists">
-              
-                              <li class="nav-item px-1">
-                                  <a class="nav-link mb-0 px-0 py-1 btn btn-md"style="box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);"  href="/spread_excell/deliveries/{{delivery.id_no}}">
-                                      <i class="fa fa-table text-dark" ></i>
-                                    <span class="ms-1 text-dark"></span>
-                                  </a>
-                                </li>
-
                                 <li class="nav-item px-1">
                                     <a class="nav-link mb-0 px-0 py-1 btn btn-md"style="box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);"  href="/read_pdf/deliveries/{{delivery.document}}">
-                                        <i class="fa fa-eye text-dark" ></i>
+                                        <i class="fa fa-file-pdf-o text-danger" ></i>
+
+
                                       <span class="ms-1 text-dark"></span>
                                     </a>
                                   </li>
@@ -123,12 +118,14 @@
                         </div>
                       </td>
                       <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{delivery.username |default_if_none:""  }} </td>
-                      <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{delivery.delvnote |default_if_none:""  }} </td>
                       <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{delivery.user_name |default_if_none:""  }} </td>
+                      <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{delivery.delvnote |default_if_none:""  }} </td>
+                      <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{delivery.mode |default_if_none:""  }} </td>
+
                       <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{ delivery.date|slice:"0:10"  |default_if_none:""  }} </td>
-                      <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{delivery.invono |default_if_none:""  }} </td>
-                      <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{delivery.document |default_if_none:""  }} </td>
                       <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{delivery.total |default_if_none:""  }} </td>
+                      <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{delivery.amount |default_if_none:""  }} </td>
+
                     </tr>
 
 

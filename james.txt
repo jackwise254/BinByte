@@ -1,0 +1,11 @@
+DELIVERY NOTE
+Customer: james
+Date: 2023-11-04
+Address: Nairobi
+Phone: 3571525
+Delivery No.: AA007
+Email: james
+Reference No.: M-pesa
+Type  Description  Qty
+Macbook Macbook Macbook Macbook 1
+Total Qty: 1

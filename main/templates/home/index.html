@@ -1,4 +1,5 @@
 {% load static %}
+{%load humanize%}
 {% include 'header/header.html' %}
 
 <div class="container-fluid py-4 mt-5 pt-5">
@@ -9,9 +10,9 @@
             <div class="row">
             <div class="col-8">
                 <div class="numbers">
-                <p class="text-sm mb-0 text-capitalize font-weight-bold">Total Stock</p>
+                <p class="text-sm mb-0 text-capitalize font-weight-bold">Stock</p>
                 <h5 class="font-weight-bolder mb-0">
-                    $53,000
+                    {{stock|intcomma}}
                 </h5>
                 </div>
             </div>
@@ -51,9 +52,10 @@
             <div class="row">
             <div class="col-8">
                 <div class="numbers">
-                <p class="text-sm mb-0 text-capitalize font-weight-bold">Stock Out</p>
+                <p class="text-sm mb-0 text-capitalize font-weight-bold">Stock Out (monthly)</p>
                 <h5 class="font-weight-bolder mb-0">
-                    +3,462
+
+                    {{stockout|intcomma}}
                 </h5>
                 </div>
             </div>
@@ -116,23 +118,25 @@
             </div>
             <div class="card-body px-0 pb-2">
                 <div class="table-responsive">
-                <table class="table align-items-center mb-0">
+                <table class="table align-items-center mb-0 table-bordered">
                     <thead>
                     <tr>
-                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Item</th>
-                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Customer</th>
-                        <th class="text-center opacity-7 text-secondary text-xxs font-weight-bolder opacity-7">Mode of payment</th>
-                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Amount</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Customer</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Qty</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Mode of payment</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Amount</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        
-                    </tr>
+                        {% for sale in sales %}
+                            <tr class="px-4">
+                                <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{sale.username|default_if_none:""|title}}</td>
+                                <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{sale.total|default_if_none:""|title}} </td>
+                                <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{sale.mode|default_if_none:""|title}}</td>
+                                <td class="px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{sale.amount|default_if_none:""|intcomma}}</td>
+                                
+                            </tr>
+                        {% endfor %}
                     
                     </tbody>
                 </table>

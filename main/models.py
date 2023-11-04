@@ -45,9 +45,15 @@ class Masterlist(models.Model):
     serialno = models.CharField(max_length=200 , null=True)
     model = models.CharField(max_length=200 , null=True)
     cpu = models.CharField(max_length=200 , null=True)
+    brand = models.CharField(max_length=200 , null=True)
+    gen = models.CharField(max_length=200 , null=True)
     ram = models.CharField(max_length=200 , null=True)
+    screen = models.CharField(max_length=200 , null=True)
+    speed = models.CharField(max_length=200 , null=True)
+    comment = models.CharField(max_length=200 , null=True)
     hdd = models.CharField(max_length=200 , null=True)
     daterecieved = models.DateField(auto_now_add=False, null=True)
+    datedelivered = models.DateField(auto_now_add=False, null=True)
     qty = models.CharField(max_length=200 , null=True)
     total = models.CharField(max_length=200 , null=True)
     dels = models.CharField(max_length=200 , null=True)
@@ -58,6 +64,7 @@ class Masterlist(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     sub_total = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     terms = models.CharField(max_length=200, null=True)
+    random = models.CharField(max_length=200, null=True)
 
     class Meta:
         ordering = ["-id"]
@@ -82,6 +89,10 @@ class Product(models.Model):
     invono = models.CharField(max_length=200, null=True)
     sold_to = models.ForeignKey(Customer, on_delete=models.CASCADE, null= True)
     total = models.IntegerField()
+    amount = models.IntegerField(null=True)
+    mode = models.CharField(blank=True, max_length=200)
+
+
     class Meta:
         db_table = 'product'
         ordering = ['-date']
@@ -100,6 +111,7 @@ class Dcustomer(models.Model):
     invono = models.CharField(max_length=200, null=True)
     d_type = models.CharField(max_length=200, null=True)
     is_active = models.BooleanField(default=True)
+    mode = models.CharField(blank=True, max_length=200)
 
     class Meta:
         db_table ='dcustomer'
@@ -109,9 +121,15 @@ class Stockout(models.Model):
     serialno = models.CharField(max_length=200 , null=True)
     model = models.CharField(max_length=200 , null=True)
     cpu = models.CharField(max_length=200 , null=True)
+    brand = models.CharField(max_length=200 , null=True)
+    gen = models.CharField(max_length=200 , null=True)
     ram = models.CharField(max_length=200 , null=True)
+    screen = models.CharField(max_length=200 , null=True)
+    speed = models.CharField(max_length=200 , null=True)
+    comment = models.CharField(max_length=200 , null=True)
     hdd = models.CharField(max_length=200 , null=True)
-    daterecieved = models.DateField(auto_now_add=False, null=True)
+    daterecieved = models.DateField(auto_now_add=True, null=True)
+    datedelivered = models.DateField(auto_now_add=False, null=True)
     qty = models.CharField(max_length=200 , null=True)
     total = models.CharField(max_length=200 , null=True)
     dels = models.CharField(max_length=200 , null=True)
@@ -122,6 +140,7 @@ class Stockout(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     sub_total = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     terms = models.CharField(max_length=200, null=True)
+    random = models.CharField(max_length=200, null=True)
 
     class Meta:
         ordering = ["-id"] 
@@ -137,6 +156,7 @@ class Temp(models.Model):
     ram = models.CharField(max_length=200, null=True)
     hdd = models.CharField(max_length=200, null=True)
     daterecieved = models.DateField(auto_now_add=True, null=True)
+    datedelivered = models.DateField(auto_now_add=False, null=True)
     qty = models.CharField(max_length=200, null=True)
     dels = models.CharField(max_length=200, null=True)
     supplier = models.ForeignKey(Vendor, on_delete=models.CASCADE, null=True)
@@ -147,6 +167,8 @@ class Temp(models.Model):
     sub_total = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     terms = models.CharField(max_length=200, null=True)
     d_type = models.CharField(max_length=200, null=True)
+    random = models.CharField(max_length=200, null=True)
+    is_active = models.BooleanField(default=True)
 
     class Meta:
         ordering = ["-id"]
@@ -160,6 +182,7 @@ class Templist(models.Model):
     ram = models.CharField(max_length=200, null=True)
     hdd = models.CharField(max_length=200, null=True)
     daterecieved = models.DateField(auto_now_add=True, null=True)
+    datedelivered = models.DateField(auto_now_add=False, null=True)
     qty = models.CharField(max_length=200, null=True)
     dels = models.CharField(max_length=200, null=True)
     supplier = models.ForeignKey(Vendor, on_delete=models.CASCADE, null=True)
@@ -170,6 +193,8 @@ class Templist(models.Model):
     sub_total = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     terms = models.CharField(max_length=200, null=True)
     d_type = models.CharField(max_length=200, null=True)
+    is_active = models.BooleanField(default=True)
+    random = models.CharField(max_length=200, null=True)
 
     class Meta:
         ordering = ["-id"]
@@ -179,7 +204,9 @@ class Templist(models.Model):
         self.sub_total = Decimal(self.price) + self.vat
         super(Templist, self).save(*args, **kwargs)
      
-
+class Mode(models.Model):
+    name = models.CharField(max_length=200)
+    created_at = models.DateField(auto_now=True)
 
 class NewCondition(models.Model):
     conditions = models.CharField(max_length = 200)
@@ -254,6 +281,10 @@ def create_default_items(sender, **kwargs):
         speeds = ['1.0','1.2','1.6','1.8','2.0','2.1','2.2','2.3','2.4','2.5','2.6','2.7','2.8','2.9','3.0','3.2','3.4','3.6','3.5',]
         for sp in speeds:
             Speed.objects.update_or_create(speed=sp)
+        
+        modes = ['M-pesa', 'Cash', 'Bank']
+        for mode in modes:
+            Mode.objects.update_or_create(name=mode)
 
         types = ['Laptop','Desktop','Allinone','Smartphone','HDD 2.5','HDD 3.5','SSD','Macbook','iMac','Lcd','RAM','Scrap','Discount','OTHERS',]
         for t in types:

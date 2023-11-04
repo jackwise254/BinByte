@@ -8,6 +8,10 @@ from .spreadsheets import *
 import pandas as pd
 from django.core.files.storage import FileSystemStorage
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db import connection, transaction
+import numpy
+from datetime import *
+from django.utils import timezone
 
 
 # Create your views here.
@@ -16,8 +20,27 @@ def Home(request):
     return redirect('/accounts/login')
 
 def HomePage(request):
+    # Get the current date and time
+    current_date = timezone.now()
+
+    # Calculate the start and end of the current month
+    start_of_month = current_date.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+    end_of_month = (start_of_month + timezone.timedelta(days=32)).replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+
+    # Query the "Stockout" model to count products for the current month
+    count_current_month = Stockout.objects.filter(datedelivered__lt=start_of_month, datedelivered__gte=end_of_month).count()
+
+    stock = Masterlist.objects.all().count()
+    sales = Product.objects.all().order_by("-id")[:10]
+
+
+
+
     context ={
-        'selected':True
+        "stockout":count_current_month,
+        'selected':True,
+        "stock":stock,
+        "sales":sales,
     }
 
     return render(request, 'home/index.html', context)
@@ -414,14 +437,18 @@ def SalesView(request):
 
 def Delivery_View(request):
     customers = Customer.objects.all().order_by("-id")
-    products = Templist.objects.filter(terms=request.user, d_type="delivery")
-    total = products.count()
     sess = request.session.get('username')
-    d_customer = Dcustomer.objects.filter(user_created_at=sess, d_type="delivery")
+    products = Temp.objects.filter(terms=sess, d_type="delivery", is_active=True)
+    total = products.count()
+    modes = Mode.objects.all()
+
+    sess = request.session.get('username')
+    d_customer = Dcustomer.objects.filter(user_created_at=sess, d_type="delivery", status=0)
     context ={
         "customers":customers,
         "products":products,
         "total":total,
+        "modes":modes,
         "d_customer":d_customer,
 
     }
@@ -431,43 +458,48 @@ def Delivery_View(request):
 def delv_customer(request):
     if request.method=='POST':
         customer = request.POST.get('customer')
-        invoice = request.POST.get('invoice')
+        mode = request.POST.get('mode')
         sess = request.session.get('username')
         rows = Customer.objects.filter(username=customer).values()
         check = Dcustomer.objects.filter(user_created_at=sess, status=0)
         if not check:
-            batch = [Dcustomer(lname=row['lname'], phone=row['phone'], fname=row['fname'], location=row['location'], email=row['email'], username=row['username'], id_no=row['id_no'], invono=invoice,user_created_at=sess, status=0, d_type='delivery') for row in rows]
+            batch = [Dcustomer(lname=row['lname'], phone=row['phone'], fname=row['fname'], location=row['location'], email=row['email'], username=row['username'], id_no=row['id_no'], mode=mode,user_created_at=sess, status=0, d_type='delivery') for row in rows]
             Dcustomer.objects.bulk_create(batch)
         else:
             check.delete()
-            batch = [Dcustomer(lname=row['lname'], phone=row['phone'], fname=row['fname'], location=row['location'], email=row['email'], username=row['username'], id_no=row['id_no'], invono=invoice,user_created_at=sess, status=0, d_type='delivery') for row in rows]
+            batch = [Dcustomer(lname=row['lname'], phone=row['phone'], fname=row['fname'], location=row['location'], email=row['email'], username=row['username'], id_no=row['id_no'], mode=mode,user_created_at=sess, status=0, d_type='delivery') for row in rows]
             Dcustomer.objects.bulk_create(batch)
         return redirect('/deliveries')
     return redirect('/deliveries')
+
+def deleteDdelivery(request, pk):
+    Temp.objects.filter(id=pk).update(is_active=False)
+
+    return redirect('/deliveries')
+
 
 def delvsub(request):
     customer = Customer.objects.all()
     if request.method =='POST':
         sess = request.session.get('username')
         assetid=request.POST.get('assetid')
-        rows = Masterlist.objects.filter(Q(assetid=assetid) |Q(dels=assetid) |Q(list=assetid))
+        
+        rows = Masterlist.objects.filter(Q(serialno=assetid))
         assets = []
         for r in rows:
-            if r.assetid not in assets:
-                assets.append(r.assetid)
+            if r.serialno not in assets:
+                assets.append(r.serialno)
 
-        check = Templist.objects.filter(assetid__in=assets, is_active=True)
+        check = Temp.objects.filter(serialno__in=assets, is_active=True)
         if not check:
             if rows:
                 for row in rows:
-                    
                     fields = [field.name for field in row._meta.fields if field.name != 'id']
-                    temp_entry = Templist()
+                    temp_entry = Temp()
                     for field in fields:
                         setattr(temp_entry, field, getattr(row, field))
                     temp_entry.terms=sess
                     temp_entry.d_type='delivery'
-                    temp_entry.tbl='Stock In'
                     temp_entry.is_active = True
                     temp_entry.save()
 
@@ -478,9 +510,226 @@ def delvsub(request):
         return redirect('/deliveries')
     return redirect('/deliveries')
 
+def generate_new_random_number(rands):
+    if Product.objects.filter(random=rands).exists():
+        rands = randint(1000000, 9999999)
+        rands = generate_new_random_number
+    return rands
 
+
+def delvgenerate(table):
+    if table == 'Product':
+        # Assuming you are using Django's ORM (Object-Relational Mapping)
+        from .models import Product
+
+        # Check if the table is empty
+        if Product.objects.exists():
+            # Get the maximum 'delvnote' from the table
+            max_delvnote = Product.objects.aggregate(models.Max('delvnote'))['delvnote__max']
+
+            if max_delvnote:
+                # Increment the maximum 'delvnote' and return the incremented value
+                return increment_delvnote(max_delvnote)
+            else:
+                return 'AA000'
+        else:
+            return 'AA000' 
+
+def increment_delvnote(delvnote):
+    x = delvnote
+    x = int(delvnote, 36) + 1
+    delv = numpy.base_repr(x, 36)
+    return delv
+
+@transaction.atomic
 def delvout(request):
-    pass
+    rands = randint(1000000, 9999999)
+    page = '/delivery'
+    title = 'DELIVERY NOTE'
+    sess = request.session.get('username')
+    delv = None
+    delvivery_ref = None
+    import datetime
+    if request.method == 'POST':
+        datedelis = request.POST.get('datedelivered')
+
+        datedelivered = datetime.datetime.strptime(datedelis, '%Y-%m-%d').date() if datedelis else date.today()
+        customerss = request.POST.get('username')
+
+        fname = request.POST.get('fname')
+        lname = request.POST.get('lname')
+        location = request.POST.get('location')
+        invono = request.POST.get('invoice')
+        location = request.POST.get('location')
+        email = request.POST.get('email')
+        customer_count = Dcustomer.objects.filter(username=customerss, user_created_at=sess, status=0, d_type='delivery').exists()
+        if not customer_count:
+            messages.add_message(request, messages.WARNING, 'Kindly update customer and try again...')
+            return redirect('/deliveries')
+        masterlist_count = Temp.objects.filter(d_type='delivery', terms=sess, is_active=True).count()
+        if masterlist_count < 1:
+            messages.add_message(request, messages.WARNING, 'Kindly scan Items and try again?')
+            return redirect('/deliveries')
+        sold_to = Customer.objects.get(username=customerss)
+        check_random_temp = Temp.objects.filter(terms=sess ).values()
+        check_random_product = Product.objects.filter(random=check_random_temp[0]['random']).values()
+        Dcustomer.objects.filter(username=customerss, d_type='delivery', status=0, user_created_at=sess).update(random=rands, status=1)
+        delvivery_ref = None
+        table = 'Product'
+        delv = delvgenerate(table)
+        rands = generate_new_random_number(rands)
+        pdfs = '.pdf'
+        document = f"{customerss}{delv}{pdfs}"
+        excell = f"{rands}_{customerss}.xls"
+        
+
+        amount = 0
+        rows = Temp.objects.filter(d_type='delivery', terms=sess,is_active=True)
+        for temp_item in rows:
+            fields = [field.name for field in Temp._meta.fields if field.name != 'id']
+            stockout_entry = Stockout()
+            for field in fields:
+                setattr(stockout_entry, field, getattr(temp_item, field))
+            stockout_entry.qty = 1
+            amount += temp_item.sub_total
+
+            stockout_entry.datedelivered = datedelivered
+            stockout_entry.random = rands
+            stockout_entry.created_by = sess
+            stockout_entry.customer = customerss
+            stockout_entry.mode ='Sold'
+            stockout_entry.invoice = invono
+            stockout_entry.delvno = delv
+            stockout_entry.save()
+            Masterlist.objects.filter(serialno=temp_item.serialno).delete()
+            # temp_item.delete()
+        items = (Stockout.objects.filter(random=rands)
+        .values_list('type', 'brand', 'gen', 'model', 'cpu', 'speed', 'ram', 'hdd', 'screen', 'comment')
+        .annotate(count=Count('qty')))
+    
+
+        if check_random_product.count() < 1:
+            delvivery_ref = delv
+
+            data = [Product(
+                fname=fname, lname=lname, amount=amount,mode=invono, invono=invono, total=Temp.objects.filter(d_type='delivery', terms=sess, is_active=True).count(),
+                location=location, document=document, delvnote=delv, ref=rands, id_no=excell, random=rands,
+                date=datedelivered, username=customerss, email=email, user_name=sess, sold_to=sold_to,
+            )]
+            Product.objects.bulk_create(data)
+        else:
+            for delvs in check_random_product:
+                if delvs:
+                    delvivery_ref = delvs['delvnote']
+                else:
+                    delvivery_ref = delv
+            Product.objects.filter(random=check_random_temp[0]['random']).update(
+                fname=fname, lname=lname, amount=amount,mode=invono,invono=invono, total=Temp.objects.filter(d_type='delivery', terms=sess, is_active=True).count(),
+                location=location, document=document, ref=rands, id_no=excell, random=rands,
+                date=datedelivered, username=customerss, email=email, user_name=sess,sold_to=sold_to
+            )
+        Temp.objects.filter(terms=sess).delete()
+
+        
+    receipt_output = print_receipt(delvivery_ref, items, customerss, rands, datedelivered, location, invono, title)
+
+
+    # Create an HTTP response with the receipt content
+    response = HttpResponse(receipt_output, content_type='text/plain')
+
+    return response
+    
+    
+    # pdf(
+    #         request, delvivery_ref, items, page, document, Stockout, customerss, rands, datedelivered, location,
+    #         invono, title
+    #     )
+
+
+# from escpos.printer import Network
+
+# def print_receipt(delivery_ref, items, customerss, rands, datedelivered, location, invono, title):
+# from escpos import printer
+from escpos import printer
+
+def print_receipt(delivery_ref, items, customerss, rands, datedelivered, location, invono, title):
+    # Create a connection to the thermal printer
+    # p = printer.Serial("COM1", baudrate=9600, timeout=10)
+
+    # Generate the receipt content
+    receipt = []
+    receipt.append(title)
+    receipt.append("Customer: {}".format(customerss))
+    receipt.append("Date: {}".format(datedelivered))
+    receipt.append("Address: {}".format(location))
+    receipt.append("Phone: {}".format(rands))
+    receipt.append("Delivery No.: {}".format(delivery_ref))
+    receipt.append("Email: {}".format(customerss.lower()))
+    receipt.append("Reference No.: {}".format(invono))
+
+    # Calculate the maximum length for each field
+    max_type_length = max(len(str(item[0])) for item in items)
+    max_description_length = max(len(item[0] + ' ' + item[0] + ' ' + item[0]) for item in items)
+    max_qty_length = max(len(str(item[10])) for item in items)
+
+    # Header for the "Type  Description  Qty" section
+    header = "Type  Description  Qty"
+    receipt.append(header)
+
+    # Generate item lines based on the maximum lengths
+    for item in items:
+        item_line = "{:<{}} {:<{}} {:<{}}".format(item[0], max_type_length, item[0] + ' ' + item[0] + ' ' + item[0], max_description_length, item[10], max_qty_length)
+        receipt.append(item_line)
+
+    # Calculate the total quantity
+    total_qty = sum(item[10] for item in items)
+    receipt.append("Total Qty: {}".format(total_qty))
+    output_filename = f"{customerss}.txt"
+
+    # Save the receipt as a text file
+    with open(output_filename, "w") as f:
+        f.write("\n".join(receipt))
+
+
+    # Print the receipt
+    # for line in receipt:
+    #     p.text(line + '\n')
+
+    # # Cut the paper
+    # p.cut()
+
+    # # Close the printer connection
+    # p.close()
+
+# Usage example
+# items = [('Product1', 'Category1', 'Brand1', 'Description1', 1)]
+# print_receipt("AA001", items, "Customer Name", "1234567890", "2023-11-04", "Delivery Address", "iTEST1", "Receipt Title", "receipt.txt")
+
+
+
+
+def generate_receipt(delivery_ref, items, customerss, rands, datedelivered, location, invono, title):
+    p = printer.Serial("COM1", baudrate=9600)
+    p = printer.Serial("/dev/ttyUSB0", baudrate=9600)
+
+
+    receipt_content = print_receipt(delivery_ref, items, customerss, rands, datedelivered, location, invono, title)
+
+    # Send the receipt content to the printer
+    p.text(receipt_content)
+
+    # Cut the paper and close the printer
+    p.cut()
+    p.close()
+
+
+# Example usage
+# receipt_output = print_receipt(delivery_ref, items, customerss, rands, datedelivered, location, invono, title)
+# print(receipt_output)  # This will print the receipt to the screen
+
+# if __name__ == "__main__":
+#     print_receipt(delivery_ref, items, session_username, Model, customers, rands, datedelivered, location, invono, title)
+
 
 def delvcsv(request):
     pass

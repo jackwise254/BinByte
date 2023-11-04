@@ -19,7 +19,7 @@
                                 <ul class="nav  nav-fill bg-transparent" role="tablists">
                   
                                   <li class="nav-item ">
-                                      <a class="nav-link mb-0 px-0 py-2 btn btn-md "style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);"  href="/delivery">
+                                      <a class="nav-link mb-0 px-0 py-2 btn btn-md "style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);"  href="/sales">
                                           <i class="fa fa-home text-dark" ></i>
                                         <span class="ms-1 text-dark">Home</span>
                                       </a>
@@ -42,7 +42,13 @@
 
                         <div class="col-md-3">
                             <div class="form-group  has-success">
-                                <input type="text" placeholder="Invoice" name="invoice" class="form-control py-1 " required />
+                                <select name="mode" id="" class="form-control py-1" required>
+                                    <option disabled selected>Mode</option>
+                                    {% for mode in modes %}
+                                        <option value="{{mode.name}}">{{mode.name}}</option>
+                                    {% endfor %}
+                                </select>
+                                <!-- <input type="text" placeholder="Invoice" name="invoice" class="form-control py-1 " required /> -->
                             </div>
                         </div>
 
@@ -272,7 +278,7 @@
                                                 aria-describedby="basic-addon-search31"
                                                 name="invoice"
                                                 style="font-family: arial, arial, arial; font-size: 12px "
-                                                value="{{cus.invono}}"
+                                                value="{{cus.mode}}"
                                                  readonly
                                                 />
                                             </div>
@@ -319,7 +325,7 @@
                                             <li class="nav-item ">
                                                 <button type="submit" class="nav-link mb-0 px-0 btn btn-md"style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); padding: right 10px;">
                                                     <i class="fa fa-id-card text-dark" aria-hidden="true"></i>
-                                                    <span class="ms-1 text-dark">{{customer.invono}}</span>
+                                                    <span class="ms-1 text-dark">{{customer.mode}}</span>
                                                 </button>
                                             </li>
                                         </ul>
@@ -395,30 +401,23 @@
                                 <div class="table-responsive tbl-content text-nowrap tbl-content" style="height:52vh">
                                     <table class="table table-bordered table-responsive table-hover text-xls table-sm ">
                                         <thead  style="background-color: #87bad4; ">
-                                            <tr class="my-1 text-align text-xls" style="padding-left: 0%;">
-                                                <th class="text-dark th-style font-weight-bold" ></th>
-                                                <th class="text-dark th-style font-weight-bold" style="padding-left: 0%;">Condition</th>
-                                                <th class="text-dark th-style font-weight-bold" style="padding-left: 0%;">Type</th>
-                                                <th class="text-dark th-style font-weight-bold" style="padding-left: 0%;">AssetId</th>
-                                                <th class="text-dark th-style font-weight-bold" style="padding-left: 0%;">Batch</th>
-                                                <th class="text-dark th-style font-weight-bold" style="padding-left: 0%;">Brand</th>
-                                                <th class="text-dark th-style font-weight-bold" style="padding-left: 0%;">SerialNo.</th>
-                                                <th class="text-dark th-style font-weight-bold" style="padding-left: 0%;">Gen</th>
-                                                <th class="text-dark th-style font-weight-bold" style="padding-left: 0%;">Model</th>
-                                                <th class="text-dark th-style font-weight-bold" style="padding-left: 0%;">CPU</th>
-                                                <th class="text-dark th-style font-weight-bold" style="padding-left: 0%;">Speed</th>
-                                                <th class="text-dark th-style font-weight-bold" style="padding-left: 0%;">Ram</th>
-                                                <th class="text-dark th-style font-weight-bold" style="padding-left: 0%;">Hdd</th>
-                                                <th class="text-dark th-style font-weight-bold" style="padding-left: 0%;">Screen</th>
-                                                <th class="text-dark th-style font-weight-bold" style="padding-left: 0%;">Odd</th>
-                                                <th class="text-dark th-style font-weight-bold" style="padding-left: 0%;">Comment</th>
-                                                <th class="text-dark th-style font-weight-bold" style="padding-left: 0%;">Problem</th>
-                                                <th class="text-dark th-style font-weight-bold" style="padding-left: 0%;">Invoice</th>
-                                                <th class="text-dark th-style font-weight-bold" style="padding-left: 0%;">Qty</th>
+                                            <tr class="my-1 text-align text-xls" >
+                                                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" ></th>
+                                                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Item</th>
+                                                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Serial No.</th>
+                                                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Model</th>
+                                                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >CPU</th>
+                                                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Ram</th>
+                                                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Hdd</th>
+                                                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Date Rcvd</th>
+                                                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Supplier</th>
+                                                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >% VAT</th>
+                                                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Unit Price</th>
+                                                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Sub Total</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        {% for user in masterlist %}
+                                        {% for user in products %}
                                             <tr style="font-size: 11px">
                                                 <td class ="text-dark py-1 custom-letter-spacing  text-xs">
                                                     <div class="nav-wrapperr position-relative end-0">
@@ -433,24 +432,17 @@
                                                         </ul>
                                                     </div>
                                                 </td>
-                                                <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.conditions |default_if_none:""  }} </td>
                                                 <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.type |default_if_none:""  }} </td>
-                                                <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.assetid |default_if_none:""  }} </td>
-                                                <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.dels |default_if_none:""  }} </td>
-                                                <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.brand |default_if_none:""  }} </td>
                                                 <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.serialno |default_if_none:""  }} </td>
-                                                <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.gen |default_if_none:""  }} </td>
                                                 <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.model |default_if_none:""  }} </td>
                                                 <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.cpu |default_if_none:""  }} </td>
-                                                <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.speed |default_if_none:""  }} </td>
                                                 <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.ram |default_if_none:""  }} </td>
                                                 <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.hdd |default_if_none:""  }} </td>
-                                                <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.screen |default_if_none:""  }} </td>
-                                                <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.odd |default_if_none:""  }} </td>
-                                                <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.comment |default_if_none:""  }} </td>
-                                                <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.problem |default_if_none:""  }} </td>
-                                                <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.invoice |default_if_none:""  }} </td>
-                                                <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.qty |default_if_none:""  }} </td>
+                                                <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.daterecieved |default_if_none:""  }} </td>
+                                                <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.supplier.username |default_if_none:""  }} </td>
+                                                <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.vat |intcomma|default_if_none:""  }} </td>
+                                                <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.price |intcomma|default_if_none:""  }} </td>
+                                                <td class ="text-dark py-1 custom-letter-spacing  text-xs ">{{user.sub_total |intcomma|default_if_none:""  }}</td>
                                                 
                                             </tr>
                                             {% endfor %}

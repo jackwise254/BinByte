@@ -32,6 +32,8 @@ urlpatterns = [
     path('delv_sub/', delvsub, name='delvsub'),
     path('delv_out/', delvout, name='delvout'),
     path('delv_csv/', delvcsv, name='delvcsv'),
+    path('delete_delivery/<int:pk>', deleteDdelivery, name='delete_delivery'),
+    
     
     
 
