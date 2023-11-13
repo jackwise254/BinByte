@@ -11,7 +11,6 @@
     .elevated {
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3); /* Example shadow for elevation effect */
 }
-
 </style>
 
 <div class="container-fluid mt-5 pt-4 test_continer ">
@@ -32,143 +31,153 @@
             </div>
         </div>
     </div>
-    <form method="POST">
-        {% csrf_token %}
+
 
         <div class="row mt-2 pt-2">
+
             <div class="col-md-5 px-4">
-                <div class="row mb-4">
-                    <div class="col-3">
-                        <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Suppliers</small></label>
-                        <select name="supplier"   class="form-select form-control py-1">
-                            <option disabled>Suppliers</option>
-                            {% for vendor in suppliers %}
-                                <option value="{{vendor.username}}">{{vendor.username}}</option>
-                            {%endfor %}
-                        </select>
-                    </div>
-                    <div class="col-3">
-                        <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Naration</small></label>
-                        <input type="text" name="naration"  class="form-control py-1" placeholder="Naration">
-                    </div>
-                    <div class="col-2">
-                        <div class="nav-wrapperr position-relative end-0">
-                            <ul class="nav  nav-fill bg-transparent" role="tablists">
-                                <li class="nav-item ">
-                                <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small></small></label>
-                                <button type="submit" class="nav-link mb-0 px-0 btn btn-md py-2"style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);">
-                                    <i class="fa fa-floppy-o text-dark text-xxs font-weight-bolder opacity-10 text-uppercase" aria-hidden="true"></i>
-                                    <span class="ms-1 text-dark text-xxs font-weight-bolder opacity-10 text-uppercase" >Save</span></button>
-                                </li>
-                            </ul>
+                <form action="/naration_sub/" method="POST">
+                    {% csrf_token %}
+                    <div class="row ">
+                        <div class="col-3">
+                            <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Suppliers</small></label>
+                            <select name="supplier"   class="form-select form-control py-1" required>
+                                <option disabled>Suppliers</option>
+                                {% for vendor in suppliers %}
+                                    <option value="{{vendor.username}}">{{vendor.username}}</option>
+                                {%endfor %}
+                            </select>
+                        </div>
+                        <div class="col-3">
+                            <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Naration</small></label>
+                            <input type="text" name="naration"  class="form-control py-1" placeholder="Naration" required>
+                        </div>
+                        <div class="col-2">
+                            <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Amount</small></label>
+                            <input type="number" name="amount"  class="form-control py-1" placeholder="KES /=" required>
+                        </div>
+                        <div class="col-2">
+                            
                         </div>
                     </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-md-2">
-                        <label for="" class="text-xxs font-weight-bolder opacity-10 text-uppercase">BALANCE:</label>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="nav-wrapperr position-relative end-0">
+                                <ul class="nav  nav-fill bg-transparent" role="tablists">
+                                    <li class="nav-item ">
+                                    <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small></small></label>
+                                    <button type="submit" class="nav-link mb-0 px-0 btn btn-md "style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);">
+                                        <i class="fa fa-floppy-o text-dark text-xxs font-weight-bolder opacity-10 text-uppercase" aria-hidden="true"></i>
+                                        <span class="ms-1 text-dark text-xxs font-weight-bolder opacity-10 text-uppercase" >Save</span></button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mt-4">
+                            <label for="" class="text-xxs font-weight-bolder opacity-10 text-uppercase">BALANCE:</label>
+                        </div>
+                        <div class="col-md-3 mt-4">
+                            <input type="text" name=""  class="form-control py-1" readonly placeholder="KSH 0/=" value=" KES {{balance| intcomma}}/=">
+                        </div>
                     </div>
-                    <div class="col-md-3">
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" name=""  class="form-control py-1" readonly placeholder="KSH 0/=">
-                    </div>
-                </div>
-
+                </form>
             </div>
+
+
             <div class="col-md-2">
             </div>
             <div class="col-md-5">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="row mb-2">
+                        <div class="col-3">
+                            <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Serial No.</small></label>
+                            <input type="text" class="form-control py-1" name="serialno"  placeholder="S/No." autofocus required>
+                        </div>
 
-                <div class="row mb-2">
-                    <div class="col-3">
-                        <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Serial No.</small></label>
-                        <input type="text" class="form-control py-1" name="serialno"  placeholder="S/No." autofocus required>
-                    </div>
-
-                    <div class="col-2">
-                        <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Item</small></label>
-                        <select name="types"  class="form-select form-control py-1">
-                            <option disabled>Item</option>
-                            {%for item in items%}
-                                <option value="{{item.type}}">{{item.type}}</option>
-                            {%endfor %}
-                        </select>
-                    </div>
-                    
-                    <div class="col-2">
-                        <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Model</small></label>
-                        <input type="text" class="form-control py-1" name="model"  placeholder="Model">
-                    </div>
-                    <div class="col-3">
-                        <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Cpu</small></label>
-                        <select name="cpu"  class="form-select form-control py-1">
-                            <option disabled>Cpu</option>
-                            {%for cpu in cpus|dictsort:"cpu" %}
-                                <option value="{{cpu.cpu}}">{{cpu.cpu}}</option>
-                            {%endfor %}
-                        </select>
-                    </div>
-                    
-                    <div class="col-2">
-                        <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Ram</small></label>
-                        <select name="ram"  class="form-select form-control py-1">
-                            <option disabled>Ram</option>
-                            {%for ram in rams|dictsort:"ram" %}
-                                <option value="{{ram.ram}}">{{ram.ram}}</option>
-                            {%endfor %}
-                        </select>
-                    </div>
-                </div>
-                <div class="row mb-2">
-                    
-                    <div class="col-3">
-                        <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Hdd</small></label>
-                        <select name="hdd"  class="form-control form-select py-1">
-                            <option disabled>Hdd</option>
-                            {% for hdd in hdds|dictsort:"hdd" %}
-                                <option value="{{hdd.hdd}}">{{hdd.hdd}}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    
-                    <div class="col-3">
-                        <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Price</small></label>
-                        <input type="text" class="form-control py-1" name="price"  placeholder="price">
-                    </div>
-                    <div class="col-3">
-                        <div class="nav-wrapperr position-relative end-0">
-                            <ul class="nav  nav-fill bg-transparent" role="tablists">
-                                <li class="nav-item ">
-                                <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small></small></label>
-                                <button type="button" class="nav-link mb-0 px-0 btn btn-md py-2 scan-more-button" style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);">
-                                    <i class="fa fa-hand-o-right text-dark text-xxs font-weight-bolder opacity-10 text-uppercase" aria-hidden="true"></i>
-                                    <span class="ms-1 text-dark text-xxs font-weight-bolder opacity-10 text-uppercase" >Scan More</span>
-                                </button>
-                                
-                                </li>
-                            </ul>
+                        <div class="col-2">
+                            <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Item</small></label>
+                            <select name="types"  class="form-select form-control py-1">
+                                <option disabled>Item</option>
+                                {%for item in items%}
+                                    <option value="{{item.type}}">{{item.type}}</option>
+                                {%endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="col-2">
+                            <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Model</small></label>
+                            <input type="text" class="form-control py-1" name="model"  placeholder="Model">
+                        </div>
+                        <div class="col-3">
+                            <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Cpu</small></label>
+                            <select name="cpu"  class="form-select form-control py-1">
+                                <option disabled>Cpu</option>
+                                {%for cpu in cpus|dictsort:"cpu" %}
+                                    <option value="{{cpu.cpu}}">{{cpu.cpu}}</option>
+                                {%endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="col-2">
+                            <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Ram</small></label>
+                            <select name="ram"  class="form-select form-control py-1">
+                                <option disabled>Ram</option>
+                                {%for ram in rams|dictsort:"ram" %}
+                                    <option value="{{ram.ram}}">{{ram.ram}}</option>
+                                {%endfor %}
+                            </select>
                         </div>
                     </div>
+                    <div class="row mb-2">
+                        
+                        <div class="col-3">
+                            <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Hdd</small></label>
+                            <select name="hdd"  class="form-control form-select py-1">
+                                <option disabled>Hdd</option>
+                                {% for hdd in hdds|dictsort:"hdd" %}
+                                    <option value="{{hdd.hdd}}">{{hdd.hdd}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="col-3">
+                            <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Price</small></label>
+                            <input type="text" class="form-control py-1" name="price"  placeholder="price">
+                        </div>
+                        <div class="col-3">
+                            <div class="nav-wrapperr position-relative end-0">
+                                <ul class="nav  nav-fill bg-transparent" role="tablists">
+                                    <li class="nav-item ">
+                                    <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small></small></label>
+                                    <button type="button" class="nav-link mb-0 px-0 btn btn-md py-2 scan-more-button" style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);">
+                                        <i class="fa fa-hand-o-right text-dark text-xxs font-weight-bolder opacity-10 text-uppercase" aria-hidden="true"></i>
+                                        <span class="ms-1 text-dark text-xxs font-weight-bolder opacity-10 text-uppercase" >Scan More</span>
+                                    </button>
+                                    
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
 
-                    <div class="col-3">
-                        <div class="nav-wrapperr position-relative end-0">
-                            <ul class="nav  nav-fill bg-transparent" role="tablists">
-                                <li class="nav-item ">
-                                <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small></small></label>
-                                <button type="submit" class="nav-link mb-0 px-0 btn btn-md py-2"style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);">
-                                    <i class="fa fa-floppy-o text-dark text-xxs font-weight-bolder opacity-10 text-uppercase" aria-hidden="true"></i>
-                                    <span class="ms-1 text-dark text-xxs font-weight-bolder opacity-10 text-uppercase" >Save</span></button>
-                                </li>
-                            </ul>
+                        <div class="col-3">
+                            <div class="nav-wrapperr position-relative end-0">
+                                <ul class="nav  nav-fill bg-transparent" role="tablists">
+                                    <li class="nav-item ">
+                                    <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small></small></label>
+                                    <button type="submit" class="nav-link mb-0 px-0 btn btn-md py-2"style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);">
+                                        <i class="fa fa-floppy-o text-dark text-xxs font-weight-bolder opacity-10 text-uppercase" aria-hidden="true"></i>
+                                        <span class="ms-1 text-dark text-xxs font-weight-bolder opacity-10 text-uppercase" >Save</span></button>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
 
             </div>
         </div>
-    </form>
 
     <hr class="my-2">
 

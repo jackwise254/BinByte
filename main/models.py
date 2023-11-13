@@ -27,6 +27,8 @@ class Customer(models.Model):
         ordering = ["username"]
 
 
+
+
 class Vendor(models.Model):
     fname = models.CharField(max_length=200, null=True)
     lname = models.CharField(max_length=200, null=True)
@@ -39,6 +41,29 @@ class Vendor(models.Model):
     id_no = models.CharField(max_length=200, null=True)
     status = models.CharField(max_length=200, null=True)
     invono = models.CharField(max_length=200, null=True)
+
+class Narations(models.Model):
+    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE, null=True)
+    naration = models.CharField(max_length=200, null=True)
+    date = models.DateField(auto_now=True)
+    balance = models.FloatField(null=True)
+    amount = models.FloatField(null=True)
+    status = models.IntegerField(default=0)
+
+class Orders(models.Model):
+    DEBIT = 'Debit'
+    CREDIT = 'Credit'
+
+    ORDER_CHOICES = [
+        (DEBIT, 'Debit'),
+        (CREDIT, 'Credit'),
+    ]
+
+    order_type = models.CharField(max_length=10, null=True, choices=ORDER_CHOICES)
+    name = models.CharField(max_length=200, null=True)
+    amount = models.FloatField(null=True)
+    date = models.DateField(auto_now=False, null=True)
+
 
 class Masterlist(models.Model):
     type = models.CharField(max_length=200 , null=True)
@@ -155,6 +180,7 @@ class Temp(models.Model):
     cpu = models.CharField(max_length=200, null=True)
     ram = models.CharField(max_length=200, null=True)
     hdd = models.CharField(max_length=200, null=True)
+    brand = models.CharField(max_length=200 , null=True)
     daterecieved = models.DateField(auto_now_add=True, null=True)
     datedelivered = models.DateField(auto_now_add=False, null=True)
     qty = models.CharField(max_length=200, null=True)
@@ -176,11 +202,13 @@ class Temp(models.Model):
 
 class Templist(models.Model):
     type = models.CharField(max_length=200, null=True)
-    serialno = models.CharField(max_length=200, null=True)
+    serialno = models.CharField(max_length=200, null=True, unique=True)
     model = models.CharField(max_length=200, null=True)
     cpu = models.CharField(max_length=200, null=True)
     ram = models.CharField(max_length=200, null=True)
     hdd = models.CharField(max_length=200, null=True)
+    brand = models.CharField(max_length=200 , null=True)
+    gen = models.CharField(max_length=200 , null=True)
     daterecieved = models.DateField(auto_now_add=True, null=True)
     datedelivered = models.DateField(auto_now_add=False, null=True)
     qty = models.CharField(max_length=200, null=True)

@@ -19,6 +19,8 @@ urlpatterns = [
     path('deletevendor/<int:pk>', delete_vendor, name='delete_vendor'),
     path('stockin/', stockin_view, name='stockin_view'),
     path('stockout/', stockout_view, name='stockout'),
+    path('naration_sub/', NarationSub, name='naration_sub'),
+    
     
     path('uploadstock/', upload_stock, name='uploadstock'),
     path('clear_templist/', ClearTemplist, name='clear_templist'),

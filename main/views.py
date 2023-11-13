@@ -12,6 +12,7 @@ from django.db import connection, transaction
 import numpy
 from datetime import *
 from django.utils import timezone
+from django.db.models import Max
 
 
 # Create your views here.
@@ -32,11 +33,16 @@ def HomePage(request):
 
     stock = Masterlist.objects.all().count()
     sales = Product.objects.all().order_by("-id")[:10]
-
-
-
-
+    orders = Orders.objects.all().order_by("-id")[:10]
+    if orders:
+        start_date = min(order.date for order in orders)
+        end_date = max(order.date for order in orders)
+    else:
+        start_date = end_date = None
     context ={
+        "start_date":start_date,
+        "end_date":end_date,
+        "orders":orders,
         "stockout":count_current_month,
         'selected':True,
         "stock":stock,
@@ -65,8 +71,6 @@ def customersView(request):
     }
 
     return render(request, 'accounts/customers.html', context)
-
-
 
 def logged_in_users_check():
     sessions = Session.objects.filter(expire_date__gte=timezone.now())
@@ -318,9 +322,10 @@ def FetchProduct(request, title):
     conditions = k_split[0]
     types = k_split[1:]
     types = ' '.join(types)
-    masterlists = Masterlist.objects.filter(type__icontains=types)
+    print(f"conditions:{conditions}")
+    masterlists = Masterlist.objects.filter(type=conditions)
     count = masterlists.count()
-    masterlist = Masterlist.objects.filter(type__icontains=types).order_by('-daterecieved')[:500]
+    masterlist = Masterlist.objects.filter(type=conditions).order_by('-daterecieved')[:500]
 
     p = Paginator(masterlist, 500)
     page_number = request.GET.get('page')
@@ -338,17 +343,46 @@ def FetchProduct(request, title):
 
     return render(request, template_name, context)
     
+
+
+
+@transaction.atomic
 def PushTemplist(request):
     rows = Templist.objects.filter(terms=request.user)
+
+    # Bulk create Masterlist entries
+    masterlist_entries = []
     for temp_item in rows:
-        fields = [field.name for field in Templist._meta.fields if field.name != 'id']
         masterlist_entry = Masterlist()
-        for field in fields:
-            setattr(masterlist_entry, field, getattr(temp_item, field))
-        masterlist_entry.save()
-        temp_item.delete()
+
+        for field in Masterlist._meta.fields:
+            if field.name != 'id':
+                value = getattr(temp_item, field.name, None)
+
+                # Convert non-string values to string for CharField fields
+                if isinstance(field, models.CharField) and not isinstance(value, str):
+                    value = str(value)
+
+                setattr(masterlist_entry, field.name, value)
+
+        masterlist_entries.append(masterlist_entry)
+
+    Masterlist.objects.bulk_create(masterlist_entries)
+
+    # Delete Templist entries
+    rows.delete()
+
+    # Update Narations status
+    naration = Narations.objects.get(status=0)
+    naration.status = 1
+    naration.save()
+
+    # Create Orders entry
+    Orders.objects.create(name=naration.vendor.username, order_type="Debit", amount=naration.balance, date=naration.date)
 
     return redirect('/uploadstock')
+
+
 
 def ClearTemplist(request):
     Templist.objects.filter(terms=request.user).delete()
@@ -357,6 +391,29 @@ def ClearTemplist(request):
 def DeleteTemplist(request, pk):
     Templist.objects.get(id=pk).delete()
     return redirect('/uploadstock')
+
+
+def NarationSub(request):
+    if request.method == "POST":
+        supplier = request.POST.get('supplier')
+        naration = request.POST.get('naration')
+        amount = request.POST.get('amount')
+        vendor = Vendor.objects.get(username=supplier)
+
+        # Get the latest balance for the vendor
+        latest_balance = Narations.objects.filter(vendor=vendor).aggregate(Max('balance'))['balance__max']
+
+        # If there is a latest balance, add it to the amount as acc_balance
+        if latest_balance is not None:
+            acc_balance = float(amount) + float(latest_balance)
+        else:
+            acc_balance = amount
+
+        # Create a new Narations instance with the updated acc_balance
+        Narations.objects.create(vendor=vendor, naration=naration, amount=amount, balance=acc_balance, status=0)
+
+        return redirect("/uploadstock")
+    return redirect("/uploadstock")
 
 def upload_stock(request):
     types = Type.objects.all()
@@ -368,26 +425,39 @@ def upload_stock(request):
     total_vat = sum(product.vat for product in products)
     total_price = sum(product.price for product in products)
     total_sub_total = sum(product.sub_total for product in products)
+    balance = 0
+    balances = Narations.objects.filter(status=0)
+    for balance in balances:
+        balance = balance.balance
     # Templist.objects.all().delete()
     if request.method == 'POST':
-        types = request.POST.get('types')
-        model = request.POST.get('model')
-        cpu = request.POST.get('cpu')
-        ram = request.POST.get('ram')
-        hdd = request.POST.get('hdd')
-        price = request.POST.get('price')
-        supplier = request.POST.get('supplier')
-        supplier = Vendor.objects.get(username=supplier)
-        naration = request.POST.get('naration')
-        serialno = request.POST.get('serialno')
+        try:
+            types = request.POST.get('types')
+            model = request.POST.get('model')
+            cpu = request.POST.get('cpu')
+            ram = request.POST.get('ram')
+            hdd = request.POST.get('hdd')
+            price = request.POST.get('price')
+            supplier = Narations.objects.get(status=0)
+            vendor = Vendor.objects.get(id=supplier.vendor.id)
+            naration = Narations.objects.get(status=0).naration
+            serialno = request.POST.get('serialno')
+            if Templist.objects.filter(serialno=serialno).exists():
+                return redirect('/uploadstock')
 
-        Templist.objects.create(
-            terms=request.user, type=types,model=model,cpu=cpu, ram=ram,hdd=hdd,price=price, supplier=supplier, serialno=serialno
-        )
+            Templist.objects.create(
+                terms=request.user, type=types,model=model,cpu=cpu, ram=ram,hdd=hdd,price=price, supplier=vendor, serialno=serialno
+            )
+        except:
+            messages.add_message(request, messages.INFO, "Please add naration add try again")
+
+
+        # supplier.update(status=1)
 
         return redirect('/uploadstock')
     
     context = {
+        "balance":balance,
         'total_vat':total_vat,
         'total_price':total_price,
         'total_sub_total':total_sub_total,
