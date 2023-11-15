@@ -343,13 +343,9 @@ def FetchProduct(request, title):
 
     return render(request, template_name, context)
     
-
-
-
 @transaction.atomic
 def PushTemplist(request):
     rows = Templist.objects.filter(terms=request.user)
-
     # Bulk create Masterlist entries
     masterlist_entries = []
     for temp_item in rows:

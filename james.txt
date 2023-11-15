@@ -1,11 +1,11 @@
 DELIVERY NOTE
 Customer: james
-Date: 2023-11-04
+Date: 2023-11-15
 Address: Nairobi
-Phone: 3571525
-Delivery No.: AA007
+Phone: 4635337
+Delivery No.: AA000
 Email: james
 Reference No.: M-pesa
 Type  Description  Qty
-Macbook Macbook Macbook Macbook 1
+Laptop Laptop Laptop Laptop 1
 Total Qty: 1
