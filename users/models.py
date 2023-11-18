@@ -99,7 +99,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(auto_now_add=True)
     groups = models.ManyToManyField(Group, blank=True, related_name="custom_user_set")
     user_permissions = models.ManyToManyField(Permission, blank=True, related_name="custom_user_permission_set")
-
+    
+    def __str__(self):
+        return self.username
 
 from django.db.models.signals import post_migrate
 from django.dispatch import receiver
@@ -121,8 +123,6 @@ def create_default_user(sender, **kwargs):
                 pass
             else:
                 User.objects.create_user(username=email.split('@')[1], firstname='Test', lastname='Test', email=email, password='test123', type=user_types[i], )
-
-
         
 @receiver(post_migrate)
 def create_default_permissions(sender, **kwargs):

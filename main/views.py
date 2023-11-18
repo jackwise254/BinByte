@@ -13,6 +13,51 @@ import numpy
 from datetime import *
 from django.utils import timezone
 from django.db.models import Max
+from django.db.models import F
+from django.db.models.functions import ExtractMonth, ExtractYear
+from django.http import JsonResponse
+import json
+
+def get_monthly_sales_totals():
+    sales = Stockout.objects.annotate(month=ExtractMonth('datedelivered')).values('month').annotate(sales_count=Count('id')).order_by('month')
+    sales_list = [0] * 12  # initialize a list with 12 zeros
+    for sale in sales:
+        sales_list[sale['month'] - 1] = sale['sales_count']
+    return sales_list
+
+def get_top_four_stockouts():
+    return Stockout.objects.values('type')\
+                           .annotate(type_count=Count('type'))\
+                           .order_by('-type_count')[:4]
+
+
+from datetime import datetime, timedelta, date
+def start_of_the_year():
+    today = date.today()
+    start_of_year = datetime(today.year, 1, 1)
+    end_of_year = datetime(today.year + 1, 1, 1) - timedelta(days=1)
+    return start_of_year, end_of_year
+
+
+def monthly_sales():
+    # Fetch top four stockouts
+    top_four_sales = get_top_four_stockouts()
+    start_of_year, end_of_year = start_of_the_year()
+
+    all_results = []
+    for t in top_four_sales:
+        monthly_result = [0]*12
+        monthly_sales = Stockout.objects.filter(type=t['type'], datedelivered__range=(start_of_year, end_of_year))\
+                                        .annotate(month=ExtractMonth('datedelivered'))\
+                                        .values('month')\
+                                        .annotate(monthly_count=Count('id'))\
+                                        .order_by('month')
+        
+        for sale in monthly_sales:
+            month_index = sale['month'] - 1
+            monthly_result[month_index] = sale['monthly_count']
+        all_results.append(monthly_result)
+    return all_results
 
 
 # Create your views here.
@@ -30,23 +75,32 @@ def HomePage(request):
 
     # Query the "Stockout" model to count products for the current month
     count_current_month = Stockout.objects.filter(datedelivered__lt=start_of_month, datedelivered__gte=end_of_month).count()
-
+    monthly_saless = get_monthly_sales_totals()
+    sales_mon = monthly_sales()
+    top_labels = get_top_four_stockouts()
+    product_labels = [item['type'] for item in top_labels]
     stock = Masterlist.objects.all().count()
     sales = Product.objects.all().order_by("-id")[:10]
     orders = Orders.objects.all().order_by("-id")[:10]
+    agent_records = Agents_Records.objects.all()[:10]
     if orders:
         start_date = min(order.date for order in orders)
         end_date = max(order.date for order in orders)
     else:
         start_date = end_date = None
     context ={
+        'product_labels': json.dumps(product_labels),
+        "monthly_sales":monthly_saless,
         "start_date":start_date,
+        "agent_records":agent_records,
         "end_date":end_date,
         "orders":orders,
         "stockout":count_current_month,
         'selected':True,
         "stock":stock,
         "sales":sales,
+        'sales_mon': json.dumps(sales_mon),
+
     }
 
     return render(request, 'home/index.html', context)
@@ -618,10 +672,8 @@ def delvout(request):
     import datetime
     if request.method == 'POST':
         datedelis = request.POST.get('datedelivered')
-
         datedelivered = datetime.datetime.strptime(datedelis, '%Y-%m-%d').date() if datedelis else date.today()
         customerss = request.POST.get('username')
-
         fname = request.POST.get('fname')
         lname = request.POST.get('lname')
         location = request.POST.get('location')
@@ -651,6 +703,7 @@ def delvout(request):
 
         amount = 0
         rows = Temp.objects.filter(d_type='delivery', terms=sess,is_active=True)
+        units = rows.count()
         for temp_item in rows:
             fields = [field.name for field in Temp._meta.fields if field.name != 'id']
             stockout_entry = Stockout()
@@ -668,7 +721,6 @@ def delvout(request):
             stockout_entry.delvno = delv
             stockout_entry.save()
             Masterlist.objects.filter(serialno=temp_item.serialno).delete()
-            # temp_item.delete()
         items = (Stockout.objects.filter(random=rands)
         .values_list('type', 'brand', 'gen', 'model', 'cpu', 'speed', 'ram', 'hdd', 'screen', 'comment')
         .annotate(count=Count('qty')))
@@ -695,14 +747,22 @@ def delvout(request):
                 date=datedelivered, username=customerss, email=email, user_name=sess,sold_to=sold_to
             )
         Temp.objects.filter(terms=sess).delete()
-
+        Orders.objects.create(name=customerss, order_type="Credit", amount=amount, date=datedelivered)
         
+        agent = User.objects.get(username=sess)
+        UnicodeTranslateError
+
+        Agents_Records.objects.update_or_create(
+            name=User.objects.get(username=sess),
+            defaults={
+                'units': F('units') + units, 
+                'commission': F('commission') + int(amount) * 0.03,
+            }
+        )
+
     receipt_output = print_receipt(delvivery_ref, items, customerss, rands, datedelivered, location, invono, title)
-
-
     # Create an HTTP response with the receipt content
     response = HttpResponse(receipt_output, content_type='text/plain')
-
     return response
     
     

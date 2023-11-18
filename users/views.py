@@ -1,50 +1,61 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate,login as user_login, logout as user_logout
-from .models import *
-from django.contrib.sessions.models import Session
 from django.contrib import messages
 from django.contrib.auth.hashers import check_password
-
-def get_active_sessions_for_user(user):
-    user_sessions = []
-    for session in Session.objects.filter(expire_date__gte=timezone.now()):
-        data = session.get_decoded()
-        if data.get('_auth_user_id', None) == str(user.id):
-            user_sessions.append(session)
-    return user_sessions
+from django.shortcuts import render, redirect
+from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.sessions.models import Session
+from django.contrib.auth import login as user_login
+from django.contrib.auth import logout
+from .models import User
+from django.utils import timezone
 
 
 def LoginPage(request):
     if request.method == "POST":
         email = request.POST.get('email')
         password = request.POST.get('password')
-        user = User.objects.get(email=email)
+
+        try:
+            user = User.objects.get(email=email)
+        except ObjectDoesNotExist:
+            messages.info(request, 'Invalid login credentials')
+            return render(request, "accounts/login.html")
+
         if check_password(password, user.password):
-            active_sessions = get_active_sessions_for_user(user)
-            if active_sessions:
-                for session in active_sessions:
-                    session.delete()
+            # Delete active sessions for the user
+            active_sessions = Session.objects.filter(expire_date__gte=timezone.now(), session_key__contains=str(user.id))
+            for session in active_sessions:
+                session.delete()
+
+            # Log in the user
             user_login(request, user)
+
+            # Get user details for session storage
             user_details = User.objects.filter(email=email).values('type', 'username', 'id').first()
             user_type = user_details['type']
             username = user_details['username']
             user_id = user_details['id']
+
+            # Set session variables
             request.session['user'] = user_type
             request.session['username'] = username
+
+            # Define redirection URLs based on user type
             user_redirection = {
                 'ADMIN': '/home_page',
                 'TECHNICIAN': '/warrantyin',
                 'SALES': '/stockout',
             }
-            return redirect(user_redirection.get(user_type, '/'))  # Fallback to root if user type not in the dictionary
+
+            return redirect(user_redirection.get(user_type, '/'))
 
         else:
             messages.info(request, 'Invalid login credentials')
 
     return render(request, "accounts/login.html")
 
+
 def LogoutView(request):
-    user_logout(request)
+    logout(request)
 
     return redirect('/accounts/login')
 

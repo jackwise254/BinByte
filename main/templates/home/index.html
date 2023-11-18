@@ -179,7 +179,7 @@
                                 <span class="text-xs">{{order.date}}</span>
                             </div>
                             </div>
-                            <div class="d-flex align-items-center text-danger text-gradient text-sm font-weight-bold">
+                            <div class="d-flex align-items-center  text-gradient text-sm font-weight-bold  {% if order.order_type == 'Debit' %} text-danger KES {% else %} text-success {% endif  %}">
                                 {% if order.order_type == "Debit" %} - KES {% else %} + {% endif  %} {{order.amount|intcomma}}
                             </div>
                         </li>
@@ -417,12 +417,12 @@
                 </tr>
                 </thead>
                 <tbody>
-                    {% for sale in sales %}
+                    {% for agent in agent_records %}
                         <tr class="px-4">
-                            <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{sale.username|default_if_none:""|title}}</td>
-                            <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{sale.total|default_if_none:""|title}} </td>
-                            <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{sale.total|default_if_none:""|intcomma}} </td>
-                            <td class="px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{sale.amount|default_if_none:""|intcomma}}</td>
+                            <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{agent.name|default_if_none:""|title}}</td>
+                            <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{agent.units|default_if_none:""|intcomma}} </td>
+                            <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{agent.returned_units |default_if_none:""|intcomma}} </td>
+                            <td class="px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{agent.commission|default_if_none:""|intcomma}}</td>
                             
                         </tr>
                     {% endfor %}

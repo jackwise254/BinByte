@@ -1,5 +1,5 @@
 from django.db import models
-
+from users.models import User
 # Create your models here.
 
 class Customer(models.Model):
@@ -63,6 +63,13 @@ class Orders(models.Model):
     name = models.CharField(max_length=200, null=True)
     amount = models.FloatField(null=True)
     date = models.DateField(auto_now=False, null=True)
+    unique_key = models.CharField(null=True, max_length=200)
+
+class Agents_Records(models.Model):
+    name = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    units = models.IntegerField(null=True)
+    returned_units = models.IntegerField(default=0)
+    commission = models.FloatField(null=True)
 
 
 class Masterlist(models.Model):

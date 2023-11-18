@@ -1,70 +1,181 @@
 <script>
-    // var ctx = document.getElementById("chart-bars").getContext("2d");
 
-    // new Chart(ctx, {
-    //   type: "bar",
-    //   data: {
-    //     labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-    //     datasets: [{
-    //       label: "Sales",
-    //       tension: 0.4,
-    //       borderWidth: 0,
-    //       borderRadius: 4,
-    //       borderSkipped: false,
-    //       backgroundColor: "#fff",
-    //       data: [450, 200, 100, 220, 500, 100, 400, 230, 500],
-    //       maxBarThickness: 6
-    //     }, ],
-    //   },
-    //   options: {
-    //     responsive: true,
-    //     maintainAspectRatio: false,
-    //     plugins: {
-    //       legend: {
-    //         display: false,
-    //       }
-    //     },
-    //     interaction: {
-    //       intersect: false,
-    //       mode: 'index',
-    //     },
-    //     scales: {
-    //       y: {
-    //         grid: {
-    //           drawBorder: false,
-    //           display: false,
-    //           drawOnChartArea: false,
-    //           drawTicks: false,
-    //         },
-    //         ticks: {
-    //           suggestedMin: 0,
-    //           suggestedMax: 500,
-    //           beginAtZero: true,
-    //           padding: 15,
-    //           font: {
-    //             size: 14,
-    //             family: "Open Sans",
-    //             style: 'normal',
-    //             lineHeight: 2
-    //           },
-    //           color: "#fff"
-    //         },
-    //       },
-    //       x: {
-    //         grid: {
-    //           drawBorder: false,
-    //           display: false,
-    //           drawOnChartArea: false,
-    //           drawTicks: false
-    //         },
-    //         ticks: {
-    //           display: false
-    //         },
-    //       },
-    //     },
-    //   },
-    // });
+  let data_totals = JSON.parse('{{ monthly_sales|escapejs|safe }}');
+  let sales = JSON.parse('{{ sales_mon |escapejs|safe }}');
+  
+  let salesDatas = JSON.parse('{{ sales_mon |escapejs|safe }}');
+  let productLabels = JSON.parse('{{ product_labels |escapejs|safe }}');
+  var ctx2 = document.getElementById("chart-line").getContext("2d");
+  var gradientStroke1 = ctx2.createLinearGradient(0, 230, 0, 50);
+  gradientStroke1.addColorStop(1, 'rgba(203,12,159,0.2)');
+  gradientStroke1.addColorStop(0.2, 'rgba(58,65,111,0.0)'); // Use the new color here
+  gradientStroke1.addColorStop(0, 'rgba(203,12,159,0)'); //purple colors
 
+  var gradientStroke2 = ctx2.createLinearGradient(0, 230, 0, 50);
+  gradientStroke2.addColorStop(1, 'rgba(32,34,57,0.2)'); // Use the new color here
+  gradientStroke2.addColorStop(0.2, 'rgba(72,72,176,0.0)');
+  gradientStroke2.addColorStop(0, 'rgba(32,34,57,0)');
+
+  
+
+let salesData = sales;
+const baseConfig  = [
+  {
+    tension: 0.4,
+    borderWidth: 0,
+    pointRadius: 0,
+    borderColor: "#3A416F",
+    borderWidth: 3,
+    backgroundColor: gradientStroke1,
+    fill: true,
+    maxBarThickness: 6
+  },
+  {
+    tension: 0.4,
+    borderWidth: 0,
+    pointRadius: 0,
+    borderColor: "#cb0c9f",
+    borderWidth: 3,
+    backgroundColor: gradientStroke2,
+    fill: true,
+    maxBarThickness: 6
+  },
+  {
+    tension: 0.4,
+    borderWidth: 0,
+    pointRadius: 0,
+    borderColor: "#094C7F",
+    borderWidth: 3,
+    backgroundColor: gradientStroke2,
+    fill: true,
+    maxBarThickness: 6
+  },
+  {
+    tension: 0.4,
+    borderWidth: 0,
+    pointRadius: 0,
+    borderColor: "#002E4E",
+    borderWidth: 3,
+    backgroundColor: gradientStroke2,
+    fill: true,
+    maxBarThickness: 6
+  }
+];
+
+let productConfig = productLabels.map((label, index) => {
+  return {
+      label: label,
+      ...baseConfig[index]
+  };
+});
+
+let datasets = [];
+
+salesData.forEach((data, index) => {
+  if(productConfig[index]) {
+      datasets.push({
+          label: productConfig[index].label,
+          tension: 0.4,
+          borderWidth: 0,
+          pointRadius: 0,
+          borderColor: productConfig[index].borderColor,
+          borderWidth: 3,
+          backgroundColor: productConfig[index].backgroundColor,
+          fill: true,
+          data: data,
+          maxBarThickness: 6
+      });
+  }
+});
+
+
+new Chart(ctx2, {
+  type: "line",
+  data: {
+      labels: ["Jan","Feb","Mar","Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+      datasets: datasets
+  },
+  options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: true,
+        }
+      },
+      interaction: {
+        intersect: false,
+        mode: 'index',
+      },
+      scales: {
+        y: {
+          grid: {
+            drawBorder: false,
+            display: true,
+            drawOnChartArea: true,
+            drawTicks: false,
+            borderDash: [5, 5]
+          },
+          ticks: {
+            display: true,
+            padding: 10,
+            color: '#333333',
+            font: {
+              size: 11,
+              family: "Open Sans",
+              style: 'normal',
+              lineHeight: 2
+            },
+          }
+        },
+        x: {
+          grid: {
+            drawBorder: false,
+            display: false,
+            drawOnChartArea: false,
+            drawTicks: false,
+            borderDash: [5, 5]
+          },
+          ticks: {
+            display: true,
+            color: '#dddddd',
+            padding: 20,
+            font: {
+              size: 11,
+              family: "Open Sans",
+              style: 'normal',
+              lineHeight: 2
+            },
+          }
+        },
+      },
+    },
+});
+
+
+let data = productLabels.map((label, index) => {
+  return {
+      label: label,
+      tension: 0.4,
+      borderWidth: 0,
+      borderRadius: 4,
+      borderSkipped: false,
+      backgroundColor: "rgba(255, 255, 255, .8)",
+      data: data_totals,
+      maxBarThickness: 6
+  };
+});
+
+  var win = navigator.platform.indexOf('Win') > -1;
+  if (win && document.querySelector('#sidenav-scrollbar')) {
+    var options = {
+      damping: '0.5'
+    }
+    Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+  }
+</script>
+
+<!-- <script>
 
     var ctx2 = document.getElementById("chart-line").getContext("2d");
 
@@ -79,6 +190,72 @@
     gradientStroke2.addColorStop(1, 'rgba(20,23,39,0.2)');
     gradientStroke2.addColorStop(0.2, 'rgba(72,72,176,0.0)');
     gradientStroke2.addColorStop(0, 'rgba(20,23,39,0)'); //purple colors
+
+
+  new Chart(ctx2, {
+  type: "bar",
+  data: {
+      labels: ["Jan","Feb","Mar","Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+      datasets: datasets
+  },
+  options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: true,
+        }
+      },
+      interaction: {
+        intersect: false,
+        mode: 'index',
+      },
+      scales: {
+        y: {
+          grid: {
+            drawBorder: false,
+            display: true,
+            drawOnChartArea: true,
+            drawTicks: false,
+            borderDash: [5, 5]
+          },
+          ticks: {
+            display: true,
+            padding: 10,
+            color: '#333333',
+            font: {
+              size: 11,
+              family: "Open Sans",
+              style: 'normal',
+              lineHeight: 2
+            },
+          }
+        },
+        x: {
+          grid: {
+            drawBorder: false,
+            display: false,
+            drawOnChartArea: false,
+            drawTicks: false,
+            borderDash: [5, 5]
+          },
+          ticks: {
+            display: true,
+            color: '#dddddd',
+            padding: 20,
+            font: {
+              size: 11,
+              family: "Open Sans",
+              style: 'normal',
+              lineHeight: 2
+            },
+          }
+        },
+      },
+    },
+});
+
+
 
     new Chart(ctx2, {
       type: "line",
@@ -167,4 +344,4 @@
         },
       },
     });
-  </script>
+  </script> -->

@@ -1,11 +1,11 @@
 DELIVERY NOTE
 Customer: james
-Date: 2023-11-15
+Date: 2023-11-18
 Address: Nairobi
-Phone: 4635337
-Delivery No.: AA000
+Phone: 8516040
+Delivery No.: AA004
 Email: james
-Reference No.: M-pesa
+Reference No.: Cash
 Type  Description  Qty
-Laptop Laptop Laptop Laptop 1
+Allinone Allinone Allinone Allinone 1
 Total Qty: 1
