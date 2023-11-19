@@ -104,8 +104,6 @@ def HomePage(request):
     }
 
     return render(request, 'home/index.html', context)
-
-
 def customersView(request):
     customers = Customer.objects.values()
     user = request.session.get('username')
@@ -116,8 +114,6 @@ def customersView(request):
             Q(fname__icontains=name) |Q(lname__icontains=name) | Q(phone__icontains=name) | Q(location__icontains=name) | Q(email__icontains=name) | Q(username__icontains=name) | Q(id_no__icontains=name)
         )
         counts = customers.count()
-
-
     context = {
         'selected':'customers',
         'customers':customers,
@@ -140,7 +136,6 @@ def logged_in_users_check():
 def StaffMember(request):
     all_users = User.objects.all()
     active_users = logged_in_users_check()
-
     # Build a list of users with their checked status
     final_users = [
         {
@@ -166,7 +161,6 @@ def setpassword(request):
     print("A'int nothing here")
 
     return redirect('/home_page')
-
 
 def add_customer(request):
     customer = Customer.objects.all()
