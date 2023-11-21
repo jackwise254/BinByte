@@ -1,0 +1,272 @@
+{% load static %}
+{% load humanize %}
+{% include 'header/header.html' %}
+
+<div class="container-fluid mt-5 pt-4 test_continer ">
+    <h5 class="text-center"><u>RETURN SALES</u></h5>
+
+
+    <hr class="my-2" />
+    <div class="card">
+
+        <div class="row mt-3 px-3">
+            <div class="col-lg-6 col-md-6   ">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="nav-wrapperr position-relative end-0">
+                            <ul class="nav  nav-fill bg-transparent" role="tablists">
+                
+                                <li class="nav-item ">
+                                    <a class="nav-link mb-0 px-0 py-2 btn btn-md "style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);"  href="/sales">
+                                        <i class="fa fa-home text-dark" ></i>
+                                    <span class="ms-1 text-dark">Home</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>   
+
+                    </div>
+
+                    <div class="col-md-5">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-7">
+                                    <div class="input-group">
+                                        <input
+                                        type="text"
+                                        class="form-control custom-input py-1"
+                                        placeholder="Serial No..."
+                                        aria-label="Search..."
+                                        aria-describedby="basic-addon-search31"
+                                        name="assetid"
+                                        autofocus
+                                        />
+                                    </div>
+                                    <button type="submit" class="d-none"></button>
+                                </div>
+        
+                            </div>
+        
+                        </form>
+                    </div>
+
+
+                </div>
+            </div>
+    
+            <div class="col-md-5">
+                
+                <div class="row">
+                    
+    
+                    <div class="col-6 mt-0">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="digital-number">{{ count|intcomma }}</div>
+                            </div>
+                            <div class="col-4 digital-number mt-2" style="font-size: 18px;"> QTY</div>
+                        </div>
+                    </div>
+
+                    <div class="col-3">
+
+        
+                        <div class="nav-wrapperr position-relative end-0">
+                            <ul class="nav  nav-fill bg-transparent" role="tablists">
+                
+                                <li class="nav-item px-1">
+                                    <a class="nav-link mb-0 px-0 py-2 btn btn-md p-2 text-dark"style="box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);"  href="/clearreturns">
+                                        <i class="fa fa-trash text-dark" ></i>
+                                        <span class="ms-1 text-dark ">Clear</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+
+                    <div class="col-3">
+                        <div class="nav-wrapperr position-relative end-0">
+                            <ul class="nav  nav-fill bg-transparent" role="tablists">
+                              <li class="nav-item ">
+                                <a href="/returnsout" class="nav-link mb-0 px-0 btn btn-md"style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); padding: right 10px;">
+                                    <i class="fa fa-plus-circle text-dark" aria-hidden="true"></i>
+                                    <span class="ms-1 text-dark">Create</span></a>
+                                  
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+
+
+        </div>
+
+        
+
+        
+        <form action="{% url 'delvout' %}" method="POST">
+            {% csrf_token %}
+            <div class="card-body ">
+
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="card">
+
+
+                            <div class="card-body">
+                                <div class="table-responsive tbl-content text-nowrap tbl-content" style="height:66vh">
+                                    <table class="table table-bordered table-responsive table-hover text-xls table-sm ">
+                                        <thead  style="background-color: #87bad4; ">
+                                            <tr class="my-1 text-align text-xls" >
+                                                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" ></th>
+                                                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Item</th>
+                                                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Serial No.</th>
+                                                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Model</th>
+                                                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >CPU</th>
+                                                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Ram</th>
+                                                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Hdd</th>
+                                                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Date Rcvd</th>
+                                                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Supplier</th>
+                                                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >% VAT</th>
+                                                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Unit Price</th>
+                                                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Sub Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for user in products %}
+                                            <tr style="font-size: 11px">
+                                                <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                                    <div class="nav-wrapperr position-relative end-0">
+                                                        <ul class="nav  nav-fill p-1 bg-transparent" role="tablists">
+                        
+                                                            <li class="nav-item px-1">
+                                                                <a class="nav-link mb-0 px-0 py-1 btn btn-md"style="box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);"  href="/delete_returns/{{user.id}}">
+                                                                    <i class="fa fa-trash text-danger" ></i>
+                                                                  <span class="ms-1 text-dark"></span>
+                                                                </a>
+                                                              </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                                <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.type |default_if_none:""  }} </td>
+                                                <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.serialno |default_if_none:""  }} </td>
+                                                <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.model |default_if_none:""  }} </td>
+                                                <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.cpu |default_if_none:""  }} </td>
+                                                <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.ram |default_if_none:""  }} </td>
+                                                <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.hdd |default_if_none:""  }} </td>
+                                                <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.daterecieved |default_if_none:""  }} </td>
+                                                <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.supplier.username |default_if_none:""  }} </td>
+                                                <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.vat |intcomma|default_if_none:""  }} </td>
+                                                <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.price |intcomma|default_if_none:""  }} </td>
+                                                <td class ="text-dark py-1 custom-letter-spacing  text-xs ">{{user.sub_total |intcomma|default_if_none:""  }}</td>
+                                                
+                                            </tr>
+                                            {% endfor %}
+                        
+                                        </tbody>
+                                    </table>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+</div>
+
+
+<script>
+
+document.getElementById('uploadButton').addEventListener('click', async function() {
+    const result = await Swal.fire({
+        title: 'Upload CSV',
+        html: `
+            <div class="row" style="margin: 0;">
+                <div class="col-12" style="padding: 5px;">
+                    <input type="file" id="swalFileInput" class="form-select form-control" accept=".csv">
+                </div>
+                
+            </div>
+            <div style="margin-top: 1px; display: none;" id="progressContainer">
+                <div class="progress" style="height: 1px;">
+                    <div id="uploadProgressBar" class="progress-bar" role="progressbar" style="width: 0%; background-color: #44a4d4;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+        `,
+        showCancelButton: true,
+        confirmButtonText: 'Upload',
+        allowOutsideClick: false,
+        preConfirm: async () => {
+            const file = document.getElementById('swalFileInput').files[0];
+
+            if (!file) {
+                Swal.showValidationMessage("Please select a file.");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', file);
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            formData.append('csrfmiddlewaretoken', csrfToken);
+
+            const progressContainer = document.getElementById('progressContainer');
+            if (progressContainer) {
+                progressContainer.style.display = 'block'; // Show the progress bar container
+            }
+
+            // Pseudo-progress bar update
+            let progress = 0;
+            const intervalId = setInterval(() => {
+                if (progress < 95) {
+                    progress += 2; // Increase by 2% 
+                    const progressBar = document.getElementById('uploadProgressBar');
+                    if (progressBar) {
+                        progressBar.style.width = progress + '%';
+                        progressBar.setAttribute('aria-valuenow', progress);
+                    }
+                }
+            }, 250); // Update every 250ms
+
+
+            try {
+                const response = await fetch("{% url 'delvcsv' %}", {
+                    method: 'POST',
+                    body: formData
+                });
+                clearInterval(intervalId); // Stop the fake progress
+                const progressBar = document.getElementById('uploadProgressBar');
+                if (progressBar) {
+                    progressBar.style.width = '100%';
+                    progressBar.setAttribute('aria-valuenow', 100);
+                }
+
+
+                if (!response.ok) {
+                    console.log(response)
+                    console.log(data.message)
+                    const data = await response.json();
+                    throw new Error(data.message || 'Something went wrong.');
+                }
+
+                location.reload();
+            } catch (error) {
+                clearInterval(intervalId);
+                Swal.showValidationMessage(error.message || 'Something went wrong.');
+            }
+        }
+    });
+});
+
+</script>
+    
+
+{% include 'header/footer.html' %}

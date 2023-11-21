@@ -74,9 +74,9 @@
             <div class="row">
             <div class="col-8">
                 <div class="numbers">
-                <p class="text-sm mb-0 text-capitalize font-weight-bold">Total Returns (daily)</p>
+                <p class="text-sm mb-0 text-capitalize font-weight-bold">Total Returns (monthly)</p>
                 <h5 class="font-weight-bolder mb-0">
-                    10
+                    {{monthly_returns|intcomma}}
                 </h5>
                 </div>
             </div>
@@ -116,7 +116,7 @@
                 </div>
                 </div>
             </div>
-            <div class="card-body px-0 pb-2">
+            <div class="card-body ">
                 <div class="table-responsive">
                 <table class="table align-items-center mb-0 table-bordered">
                     <thead>
@@ -180,7 +180,7 @@
                             </div>
                             </div>
                             <div class="d-flex align-items-center  text-gradient text-sm font-weight-bold  {% if order.order_type == 'Debit' %} text-danger KES {% else %} text-success {% endif  %}">
-                                {% if order.order_type == "Debit" %} - KES {% else %} + {% endif  %} {{order.amount|intcomma}}
+                                {% if order.order_type == "Debit" %} - KES {% else %} + KES {% endif  %} {{order.amount|intcomma}}
                             </div>
                         </li>
                     {% endfor %}
@@ -261,7 +261,7 @@
             </div>
         </div> -->
         </div>
-    <div class="row mt-4">
+    <div class="row mt-3">
     <!-- <div class="col-lg-5 mb-lg-0 mb-4"> -->
 
 
@@ -384,18 +384,18 @@
     <!-- </div> -->
 
 
-    <div class="col-lg-5 mb-lg-0 mb-4">
+    <div class="col-lg-7 mb-lg-0">
         <div class="card">
         <div class="card-header pb-0">
             <div class="row">
-            <div class="col-lg-6  col-7">
-                <h6>Agent's perfomance overview</h6>
+            <div class="col-lg-6">
+                <h6>Sales perfomance overview</h6>
             </div>
-            <div class="col-lg-6 col-5 my-auto text-end">
+            <div class="col-lg-6 my-auto text-end">
                 <div class="dropdown float-lg-end pe-4">
-                <!-- <a class="cursor-pointer" id="dropdownTable" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="cursor-pointer" id="dropdownTable" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fa fa-ellipsis-v text-secondary"></i>
-                </a> -->
+                </a>
                 <ul class="dropdown-menu px-2 py-3 ms-sm-n4 ms-n5" aria-labelledby="dropdownTable">
                     <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
                     <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
@@ -405,14 +405,16 @@
             </div>
             </div>
         </div>
-        <div class="card-body px-0 pb-2">
+        <div class="card-body ">
             <div class="table-responsive">
             <table class="table align-items-center mb-0 table-bordered">
                 <thead>
                 <tr>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Sales Agent</th>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Units sold</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Units Sold</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Sales Revenue</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Returns</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Refund Amount</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Commision</th>
                 </tr>
                 </thead>
@@ -422,6 +424,8 @@
                             <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{agent.name|default_if_none:""|title}}</td>
                             <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{agent.units|default_if_none:""|intcomma}} </td>
                             <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{agent.returned_units |default_if_none:""|intcomma}} </td>
+                            <td class="px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{agent.commission|default_if_none:""|intcomma}}</td>
+                            <td class="px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{agent.commission|default_if_none:""|intcomma}}</td>
                             <td class="px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{agent.commission|default_if_none:""|intcomma}}</td>
                             
                         </tr>
@@ -433,23 +437,97 @@
         </div>
         </div>
     </div>
+    
+
+    <div class="col-lg-5">
+        <div class="card">
+            <div class="card-header pb-0">
+                <div class="row">
+                    <div class="col-lg-9">
+                        <h6>Cash Box</h6>
+                    </div>
+                    <div class="col-lg-1 my-auto text-end">
+                        <div class="dropdown float-end pe-4">
+                            <a class="cursor-pointer" id="dropdownTable" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-ellipsis-v text-secondary"></i>
+                            </a>
+                            <ul class="dropdown-menu px-2 py-3 ms-sm-n4 ms-n5" aria-labelledby="dropdownTable">
+                                <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
+                                <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
+                                <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+                            <ul class="nav nav-tabs" role="tablist">
+                              
+                              <li class="nav-item">
+                                <a class="nav-link active ps-0" id="total-stock-tab" data-bs-toggle="tab" href="" role="tab" aria-controls="overview" aria-selected="true" style="color: inherit;"> &nbsp; &nbsp;  Bank</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" id="faulty-in-tab" data-bs-toggle="tab" href="" role="tab" aria-selected="false" style="color: inherit;">Cash Sales</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" id="warranty-in-tab" data-bs-toggle="tab" href="" role="tab" aria-selected="false" style="color: inherit;">Credit</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" id="warranty-in-tab" data-bs-toggle="tab" href="" role="tab" aria-selected="false" style="color: inherit;">Expenses</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" id="stock-in-tab" data-bs-toggle="tab" href="" role="tab" aria-selected="false" style="color: inherit;">M-pesa</a>
+                              </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                <table class="table align-items-center mb-0 table-bordered">
+                    <thead>
+                    <tr>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Customer</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Mode</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Amount</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for agent in agent_records %}
+                            <tr class="px-4">
+                                <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{agent.name|default_if_none:""|title}}</td>
+                                <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{agent.units|default_if_none:""|intcomma}} </td>
+                                <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{agent.returned_units |default_if_none:""|intcomma}} </td>
+                                
+                            </tr>
+                        {% endfor %}
+                    
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
-    <div class="col-lg-7">
+    <!-- <div class="col-lg-6">
         <div class="card z-index-2">
         <div class="card-header pb-0">
-            <h6>Sales overview</h6>
+            <h6>Sales overview</h6> -->
             <!-- <p class="text-sm">
             <i class="fa fa-arrow-up text-success"></i>
             <span class="font-weight-bold">4% more</span> in 2021
             </p> -->
-        </div>
+        <!-- </div>
         <div class="card-body p-3">
             <div class="chart">
             <canvas id="chart-line" class="chart-canvas" height="300"></canvas>
             </div>
         </div>
-        </div>
+        </div> -->
     </div>
     </div>
     

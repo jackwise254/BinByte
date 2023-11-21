@@ -1,0 +1,179 @@
+{% load static %}
+{% load humanize %}
+
+{% include 'header/header.html' %}
+
+<div class="container-fluid mt-5 pt-4 test_continer ">
+    <h4 class="text-center"><u>{{title|upper}}</u></h4>
+    <hr class="my-2" />
+    <div class="card">
+
+        <div class="row mt-3 px-3">
+            <div class="col-lg-2 col-md-3">
+                <div class="nav-wrapperr position-relative end-0">
+                  <ul class="nav nav-pills nav-fill p-1 bg-transparent" role="tablists">
+                    <li class="nav-item px-1">
+                        <a class="nav-link mb-0 px-0 py-1 btn btn-md p-2"style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);"  href="/stockout">
+                            <i class="fa fa-home" ></i>
+                          <span class="ms-1">Home</span>
+                        </a>
+                      </li>
+                  </ul>
+                </div>
+            </div>
+    
+            <div class="col-md-5 col-lg-5">
+                <div class="digital-number ms-1 " style="text-align: center; padding-top: -30px; height: 1px; font-size: 35px;">{{ count | intcomma }} </div>
+            </div>
+            <!-- <div class="col-md-3 col-lg-3"></div> -->
+
+            <div class="col-md-6 col-lg-5">
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        
+                        <div class="col-5">
+                           
+                        </div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <input
+                                type="text"
+                                class="form-control custom-input py-1"
+                                placeholder="Search..."
+                                aria-label="Search..."
+                                aria-describedby="basic-addon-search31"
+                                name="q"
+                                />
+                            </div>
+                            <button type="submit" class="d-none"></button>
+                        </div>
+    
+                    </div>
+
+                </form>
+
+
+            </div>
+
+
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive tbl-content text-nowrap tbl-content">
+            <table class="table table-bordered table-responsive table-hover text-xls table-sm ">
+                <thead  style="background-color: #849bbf; " >
+
+                    <tr class="my-1 text-align text-xls" style="padding-left: 0%;">
+                        <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" ></th>
+                        <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Item</th>
+                        <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Serial No.</th>
+                        <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Model</th>
+                        <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >CPU</th>
+                        <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Ram</th>
+                        <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Hdd</th>
+                        <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Date Rcvd</th>
+                        <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Supplier</th>
+                        <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >% VAT</th>
+                        <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Unit Price</th>
+                        <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Sub Total</th>
+                    </tr>
+                </thead>
+                <tbody class="tbl-content">
+                {% for user in page_obj %}
+                    <tr style="font-size: 11px">
+                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+
+                                <div class="nav-wrapperr position-relative end-0">
+                
+                                    <ul class="nav  nav-fill p-1 bg-transparent" role="tablists">
+                                        {% if has_perms_stockin_update %}
+                        
+                                            <li class="nav-item position-relative">
+                                                <a class="nav-link mb-0 px-0 py-1 btn btn-md" style="box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1); border-radius: 5;" href="/update_m/{{user.pk}}">
+                                                    <i class="fa fa-pencil text-warning" ></i>
+                                                <span class="ms-1 text-dark"></span>
+                                                </a>
+                                            </li>
+                                        {%else%}
+                                            <li class="nav-item px-1">
+                                            </li>
+                                        {%endif%}
+
+                                        {% if has_perms_read_barcodes %}
+
+                                            <li class="nav-item px-1">
+                                                <a class="nav-link mb-0 px-0 py-1 btn btn-md"style="box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);"  href="/barcode_masterlists/{{user.assetid}}">
+                                                    <i class="fa fa-barcode text-dark" ></i>
+                                                <span class="ms-1 text-dark"></span>
+                                                </a>
+                                            </li>
+            
+                                            <li class="nav-item px-1">
+                                                <a class="nav-link mb-0 px-0 py-1 btn btn-md"style="box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);"  href="/barcode_masterlists_two/{{user.assetid}}">
+                                                    <i class="fa fa-qrcode text-dark" ></i>
+                                                    <span class="ms-1 text-dark"></span>
+                                                </a>
+                                            </li>
+                                        {%else%}
+                                            <li class="nav-item px-1">
+                                            </li>
+                                            <li class="nav-item px-1">
+                                            </li>
+                                        {%endif%} 
+                                    </ul>
+                                </div>
+                        </td>
+                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.type |default_if_none:""  }} </td>
+                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.serialno |default_if_none:""  }} </td>
+                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.model |default_if_none:""  }} </td>
+                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.cpu |default_if_none:""  }} </td>
+                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.ram |default_if_none:""  }} </td>
+                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.hdd |default_if_none:""  }} </td>
+                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.daterecieved |default_if_none:""  }} </td>
+                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.supplier.username |default_if_none:""  }} </td>
+                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.vat |intcomma|default_if_none:""  }} </td>
+                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.price |intcomma|default_if_none:""  }} </td>
+                        <td class ="text-dark py-1 custom-letter-spacing  text-xs ">{{user.sub_total |intcomma|default_if_none:""  }}</td>
+                        
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+            
+            </div>
+            <center>
+                <div class="pagination">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1">First</a>
+                        <a href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
+                    {% else %}
+                        <span>First</span>
+                        <span>&laquo;</span>
+                    {% endif %}
+                
+                    {% for num in page_obj.paginator.page_range %}
+                        {% if page_obj.number == num %}
+                            <span class="current">{{ num }}</span>
+                        {% else %}
+                            <a href="?page={{ num }}">{{ num }}</a>
+                        {% endif %}
+                    {% endfor %}
+                
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">&raquo;</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                    {% else %}
+                        <span>&raquo;</span>
+                        <span>Last</span>
+                    {% endif %}
+                </div>
+            </center>
+        </div>
+    </div>
+
+</div>
+{% include 'header/footer.html' %}
+

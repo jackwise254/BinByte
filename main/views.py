@@ -73,15 +73,32 @@ def HomePage(request):
     start_of_month = current_date.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
     end_of_month = (start_of_month + timezone.timedelta(days=32)).replace(day=1, hour=0, minute=0, second=0, microsecond=0)
 
-    # Query the "Stockout" model to count products for the current month
-    count_current_month = Stockout.objects.filter(datedelivered__lt=start_of_month, datedelivered__gte=end_of_month).count()
+    # Get the current month and year
+    now = timezone.now()
+    current_month = now.month
+    current_year = now.year
+
+    # Filter Stockout objects for the current month
+    count_current_month = Stockout.objects.filter(datedelivered__month=current_month, datedelivered__year=current_year)
+
+    # Print the count of items delivered in the current month
+    print(f"Total count for {now.strftime('%B %Y')}: {count_current_month.count()}")
+
+    # If you want to print the individual counts for each date, you can use annotate and values
+    counts_per_date = count_current_month.values('datedelivered').annotate(count=Count('id'))
+
+    for entry in counts_per_date:
+        print(f"{entry['datedelivered']}: {entry['count']} items")
+
+    monthly_returns = Agents_Records.objects.filter(date__month=current_month, date__year=current_year)
+
     monthly_saless = get_monthly_sales_totals()
     sales_mon = monthly_sales()
     top_labels = get_top_four_stockouts()
     product_labels = [item['type'] for item in top_labels]
     stock = Masterlist.objects.all().count()
     sales = Product.objects.all().order_by("-id")[:10]
-    orders = Orders.objects.all().order_by("-id")[:10]
+    orders = Orders.objects.all().order_by("-id")[:5]
     agent_records = Agents_Records.objects.all()[:10]
     if orders:
         start_date = min(order.date for order in orders)
@@ -95,15 +112,52 @@ def HomePage(request):
         "agent_records":agent_records,
         "end_date":end_date,
         "orders":orders,
-        "stockout":count_current_month,
+        "stockout":count_current_month.count(),
         'selected':True,
         "stock":stock,
+        "monthly_returns":monthly_returns.count(),
         "sales":sales,
         'sales_mon': json.dumps(sales_mon),
 
     }
 
     return render(request, 'home/index.html', context)
+
+def ReturnItems(request):
+    template_name = "deliveries/returns.html"
+    sess = request.session.get("username")
+    products = Temp.objects.filter(terms=sess, d_type="returns", is_active=True)
+    count = products.count()
+    context = {
+        "products":products,
+        "count":count
+    }
+
+    if request.method == "POST":
+        assetid = request.POST.get("assetid")
+        rows = Stockout.objects.filter(serialno=assetid)
+        print(f"rows:{rows}, assetid:{assetid}")
+        for temp_item in rows:
+            fields = [field.name for field in Stockout._meta.fields if field.name != 'id']
+            stockout_entry = Temp()
+            for field in fields:
+                setattr(stockout_entry, field, getattr(temp_item, field))
+            stockout_entry.qty = 1
+            stockout_entry.mode ='Returned'
+            stockout_entry.d_type ='returns'
+            stockout_entry.terms =sess
+            stockout_entry.is_active =True
+            stockout_entry.save()
+        return redirect("/returnitems")
+
+    return render(request, template_name, context)
+
+def ClearReturns(request):
+    sess = request.session.get("username")
+    Temp.objects.filter(d_type="returns", terms=sess).delete()
+
+    return redirect("/returnitems")
+
 def customersView(request):
     customers = Customer.objects.values()
     user = request.session.get('username')
@@ -326,6 +380,28 @@ def masterlistview(request):
 
     return render(request, template_name, context)
 
+def stockoutview(request):
+    template_name = "stockout/stockout.html"
+    products =  Stockout.objects.all()[:500]
+    count = Stockout.objects.all().count()
+    p = Paginator(products, 500)
+    page_number = request.GET.get('page')
+    try: 
+        page_obj = p.get_page(page_number)
+    except PageNotAnInteger:
+        page_obj = p.page(1)
+    except EmptyPage:
+        page_obj = p.page(p.num_pages)
+    title = "Total stock"
+    context = {
+        'title':title,
+        'page_obj':page_obj,
+        "count":count,
+    }
+
+    return render(request, template_name, context)    
+
+
 def stockout_view(request):
     template_name = "stockout/index.html"
     user1 = request.session.get('username')
@@ -370,7 +446,6 @@ def FetchProduct(request, title):
     conditions = k_split[0]
     types = k_split[1:]
     types = ' '.join(types)
-    print(f"conditions:{conditions}")
     masterlists = Masterlist.objects.filter(type=conditions)
     count = masterlists.count()
     masterlist = Masterlist.objects.filter(type=conditions).order_by('-daterecieved')[:500]
@@ -390,7 +465,34 @@ def FetchProduct(request, title):
     }
 
     return render(request, template_name, context)
-    
+
+def FetchStockout(request, title):
+    template_name = "stockout/stockout.html"
+    k_split = title.split()
+    conditions = k_split[0]
+    types = k_split[1:]
+    types = ' '.join(types)
+    masterlists = Stockout.objects.filter(type=conditions)
+    count = masterlists.count()
+    masterlist = Stockout.objects.filter(type=conditions).order_by('-daterecieved')[:500]
+
+    p = Paginator(masterlist, 500)
+    page_number = request.GET.get('page')
+    try: 
+        page_obj = p.get_page(page_number)
+    except PageNotAnInteger:
+        page_obj = p.page(1)
+    except EmptyPage:
+        page_obj = p.page(p.num_pages)
+    context = {
+        'count':count,
+        'title':title,
+        'page_obj':page_obj,
+    }
+
+    return render(request, template_name, context)
+
+
 @transaction.atomic
 def PushTemplist(request):
     rows = Templist.objects.filter(terms=request.user)
@@ -591,6 +693,51 @@ def deleteDdelivery(request, pk):
 
     return redirect('/deliveries')
 
+def DeleteReturns(request, pk):
+    Temp.objects.filter(id=pk).delete()
+
+    return redirect("/returnitems")
+
+@transaction.atomic
+def ReturnsOut(request):
+    sess = request.session.get("username")
+    rows = Temp.objects.filter(terms=sess,d_type="returns")
+    assets = []
+    for r in rows:
+        if r.serialno not in assets:
+            assets.append(r.serialno)
+
+
+    check = Temp.objects.filter(serialno__in=assets, is_active=True)
+    if check:
+        for row in rows:
+            fields = [field.name for field in row._meta.fields if field.name != 'id']
+            temp_entry = Masterlist()
+            for field in fields:
+                setattr(temp_entry, field, getattr(row, field))
+            temp_entry.terms=sess
+            temp_entry.is_active = True
+            temp_entry.save()
+            Stockout.objects.filter(random=row.random).delete()
+            Orders.objects.filter(random=row.random).delete()
+            Product.objects.filter(random=row.random).delete()
+
+            Agents_Records.objects.update_or_create(
+                name=User.objects.get(username=sess),
+                defaults={
+                    'units': F('units') - 1, 
+                    'commission': F('commission') - int(row.sub_total) * 0.007,
+                    'returned_units': F('returned_units') + 1,
+                }
+            )
+            row.delete()
+
+    else:
+        messages.add_message(request, messages.INFO, "There's nothing to return")
+        return redirect('/returnitems')
+    
+    return redirect("/sales")
+
 
 def delvsub(request):
     customer = Customer.objects.all()
@@ -657,7 +804,7 @@ def increment_delvnote(delvnote):
 
 @transaction.atomic
 def delvout(request):
-    rands = randint(1000000, 9999999)
+    rands = randint(10000000, 99999999)
     page = '/delivery'
     title = 'DELIVERY NOTE'
     sess = request.session.get('username')
@@ -741,16 +888,17 @@ def delvout(request):
                 date=datedelivered, username=customerss, email=email, user_name=sess,sold_to=sold_to
             )
         Temp.objects.filter(terms=sess).delete()
-        Orders.objects.create(name=customerss, order_type="Credit", amount=amount, date=datedelivered)
+        Orders.objects.create(name=customerss, order_type="Credit", random=rands, amount=amount, date=datedelivered)
         
         agent = User.objects.get(username=sess)
-        UnicodeTranslateError
+        # UnicodeTranslateError
 
         Agents_Records.objects.update_or_create(
             name=User.objects.get(username=sess),
             defaults={
                 'units': F('units') + units, 
-                'commission': F('commission') + int(amount) * 0.03,
+                'commission': F('commission') + int(amount) * 0.007,
+                'random':rands,
             }
         )
 

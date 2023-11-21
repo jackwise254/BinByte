@@ -64,12 +64,15 @@ class Orders(models.Model):
     amount = models.FloatField(null=True)
     date = models.DateField(auto_now=False, null=True)
     unique_key = models.CharField(null=True, max_length=200)
+    random = models.IntegerField(null=True)
 
 class Agents_Records(models.Model):
     name = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     units = models.IntegerField(null=True)
     returned_units = models.IntegerField(default=0)
     commission = models.FloatField(null=True)
+    random = models.IntegerField(null=True)
+    date = models.DateField(auto_now=True)
 
 
 class Masterlist(models.Model):
