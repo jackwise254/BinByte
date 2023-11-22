@@ -106,6 +106,18 @@
                             </select>
                         </div>
                         
+
+                        <div class="col-2">
+                            <label for="" class="form-label text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Brand</small></label>
+                            <select name="brand" class="form-select py-1">
+                                <option disabled selected>brand</option>
+                                {% for brand in brands %}
+                                    <option value="{{ brand.brand }}">{{ brand.brand }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+
                         <div class="col-2">
                             <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Model</small></label>
                             <input type="text" class="form-control py-1" name="model"  placeholder="Model">
@@ -120,6 +132,9 @@
                             </select>
                         </div>
                         
+                        
+                    </div>
+                    <div class="row mb-2">
                         <div class="col-2">
                             <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Ram</small></label>
                             <select name="ram"  class="form-select form-control py-1">
@@ -129,10 +144,8 @@
                                 {%endfor %}
                             </select>
                         </div>
-                    </div>
-                    <div class="row mb-2">
                         
-                        <div class="col-3">
+                        <div class="col-2">
                             <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Hdd</small></label>
                             <select name="hdd"  class="form-control form-select py-1">
                                 <option disabled>Hdd</option>
@@ -142,7 +155,7 @@
                             </select>
                         </div>
                         
-                        <div class="col-3">
+                        <div class="col-2">
                             <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Price</small></label>
                             <input type="text" class="form-control py-1" name="price"  placeholder="price">
                         </div>
@@ -188,8 +201,9 @@
           >
             <tr class="my-1 text-align text-xls" >
                 <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" ></th>
-                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Item</th>
                 <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Serial No.</th>
+                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Item</th>
+                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Brand</th>
                 <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Model</th>
                 <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >CPU</th>
                 <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Ram</th>
@@ -212,8 +226,9 @@
                         </a>
                        
                     </td>                        
-                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.type |default_if_none:""  }} </td>
                     <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.serialno |default_if_none:""  }} </td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.type |default_if_none:""  }} </td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.brand |default_if_none:""  }} </td>
                     <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.model |default_if_none:""  }} </td>
                     <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.cpu |default_if_none:""  }} </td>
                     <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.ram |default_if_none:""  }} </td>
@@ -236,7 +251,7 @@
                 </tr>
 
                 <tr>
-                    <td colspan="7" class="text-dark th-style  py-2 text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold text-right">Totals:</td>
+                    <td colspan="8" class="text-dark th-style  py-2 text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold text-right">Totals:</td>
                     <td class="text-dark py-1 th-style text-xxs custom-letter-spacing font-weight-bolder text-lg"><a href="/clear_templist" class="bi bi-trashs">clear</a></td>
                     <td class="text-dark py-1 th-style text-xxs custom-letter-spacing text-xs font-weight-bolder"><a href="/push_templist" class="bi bi-arrow-ups">Push</a></td>
                     <td class="text-dark py-1 th-style text-xxs custom-letter-spacing text-xs font-weight-bolder" >{{ total_vat|intcomma }}</td>
@@ -259,6 +274,7 @@
     
     if (!isScanning || isScanning === "false") {
         // Setting data to local storage and lowering the button elevation
+        localStorage.setItem('brand', document.querySelector('[name="brand"]').value);
         localStorage.setItem('supplier', document.querySelector('[name="supplier"]').value);
         localStorage.setItem('naration', document.querySelector('[name="naration"]').value);
         localStorage.setItem('types', document.querySelector('[name="types"]').value);
@@ -298,6 +314,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (localStorage.getItem('supplier')) {
         document.querySelector('[name="supplier"]').value = localStorage.getItem('supplier');
     }
+    if (localStorage.getItem('brand')) {
+        document.querySelector('[name="brand"]').value = localStorage.getItem('brand');
+    }
     if (localStorage.getItem('naration')) {
         document.querySelector('[name="naration"]').value = localStorage.getItem('naration');
     }
@@ -323,6 +342,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function clearLocalStorageAfterSave() {
     localStorage.removeItem('supplier');
+    localStorage.removeItem('brand');
     localStorage.removeItem('naration');
     localStorage.removeItem('types');
     localStorage.removeItem('model');

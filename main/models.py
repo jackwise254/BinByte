@@ -65,6 +65,7 @@ class Orders(models.Model):
     date = models.DateField(auto_now=False, null=True)
     unique_key = models.CharField(null=True, max_length=200)
     random = models.IntegerField(null=True)
+    total_amount = models.FloatField(null=True)
 
 class Agents_Records(models.Model):
     name = models.ForeignKey(User, on_delete=models.CASCADE, null=True)

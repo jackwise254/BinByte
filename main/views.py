@@ -92,6 +92,7 @@ def HomePage(request):
 
     monthly_returns = Agents_Records.objects.filter(date__month=current_month, date__year=current_year)
 
+
     monthly_saless = get_monthly_sales_totals()
     sales_mon = monthly_sales()
     top_labels = get_top_four_stockouts()
@@ -99,6 +100,9 @@ def HomePage(request):
     stock = Masterlist.objects.all().count()
     sales = Product.objects.all().order_by("-id")[:10]
     orders = Orders.objects.all().order_by("-id")[:5]
+    customer_balances = Orders.objects.filter(order_type="Credit").order_by("-id")[:10]
+    suplier_balances = Orders.objects.filter(order_type="Debit").order_by("-id")[:10]
+
     agent_records = Agents_Records.objects.all()[:10]
     if orders:
         start_date = min(order.date for order in orders)
@@ -106,6 +110,8 @@ def HomePage(request):
     else:
         start_date = end_date = None
     context ={
+        "customer_balances":customer_balances,
+        "suplier_balances":suplier_balances,
         'product_labels': json.dumps(product_labels),
         "monthly_sales":monthly_saless,
         "start_date":start_date,
@@ -524,7 +530,12 @@ def PushTemplist(request):
     naration.save()
 
     # Create Orders entry
+    # Create a new Orders object
     Orders.objects.create(name=naration.vendor.username, order_type="Debit", amount=naration.balance, date=naration.date)
+
+    # Update the total_amount field of the existing or newly created object
+    Orders.objects.filter(name=naration.vendor.username).update(total_amount=F('total_amount') + naration.balance)
+
 
     return redirect('/uploadstock')
 
@@ -539,12 +550,18 @@ def DeleteTemplist(request, pk):
     return redirect('/uploadstock')
 
 
+@transaction.atomic
 def NarationSub(request):
     if request.method == "POST":
         supplier = request.POST.get('supplier')
         naration = request.POST.get('naration')
         amount = request.POST.get('amount')
         vendor = Vendor.objects.get(username=supplier)
+
+        # Check if there is an existing record for the vendor with status=0
+        if Narations.objects.filter(vendor=vendor, status=0).exists():
+            # Delete the existing record
+            Narations.objects.filter(vendor=vendor, status=0).delete()
 
         # Get the latest balance for the vendor
         latest_balance = Narations.objects.filter(vendor=vendor).aggregate(Max('balance'))['balance__max']
@@ -561,11 +578,13 @@ def NarationSub(request):
         return redirect("/uploadstock")
     return redirect("/uploadstock")
 
+
 def upload_stock(request):
     types = Type.objects.all()
     cpus = Cpu.objects.all()
     hdds = Hdd.objects.all()
     rams = Ram.objects.all()
+    brands = Brand.objects.all()
     suppliers = Vendor.objects.all()
     products = Templist.objects.all()
     total_vat = sum(product.vat for product in products)
@@ -584,6 +603,7 @@ def upload_stock(request):
             ram = request.POST.get('ram')
             hdd = request.POST.get('hdd')
             price = request.POST.get('price')
+            brand = request.POST.get('brand')
             supplier = Narations.objects.get(status=0)
             vendor = Vendor.objects.get(id=supplier.vendor.id)
             naration = Narations.objects.get(status=0).naration
@@ -592,7 +612,7 @@ def upload_stock(request):
                 return redirect('/uploadstock')
 
             Templist.objects.create(
-                terms=request.user, type=types,model=model,cpu=cpu, ram=ram,hdd=hdd,price=price, supplier=vendor, serialno=serialno
+                terms=request.user, brand=brand,type=types,model=model,cpu=cpu, ram=ram,hdd=hdd,price=price, supplier=vendor, serialno=serialno
             )
         except:
             messages.add_message(request, messages.INFO, "Please add naration add try again")
@@ -612,7 +632,8 @@ def upload_stock(request):
         'cpus':cpus,
         'hdds':hdds,
         'rams':rams,
-        'suppliers':suppliers
+        'suppliers':suppliers,
+        "brands":brands,
     }
 
 
