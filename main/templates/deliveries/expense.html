@@ -1,0 +1,138 @@
+{% load static %}
+{% load humanize %}
+{% include 'header/header.html' %}
+<div class="container-fluid mt-5 pt-4 test_continer ">
+    <h5 class="text-center"><u>EXPENSES</u></h5>
+
+
+    <hr class="my-2" />
+    <div class="card">
+
+        <div class="card ">
+            <div class="card-header pb-0 px-3">
+                <div class="row">
+                    <div class="col-6">
+                        <h6 class="mb-0">Expenditures</h6>
+        
+                    </div>
+                    <div class="col-6 text-end">
+                        <a class="btn bg-gradient-dark mb-0" href="#" onclick="return CreateExpenditure();">
+                            <i class="fas fa-plus"></i>&nbsp;&nbsp;Add New Expense
+                          </a>
+                      </div>
+                </div>
+            </div>
+            <div class="card-body pt-4 p-3">
+            <ul class="list-group">
+                
+                {% for expense in expenses %}
+                    <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
+                        <div class="d-flex flex-column">
+                            <h6 class="mb-3 text-sm">{{expense.description.description}}</h6>
+                            <span class="mb-2 text-xs">Raised By:<span class="text-dark font-weight-bold ms-sm-2">{{expense.name}}</span></span>
+                            <span class="mb-2 text-xs">Date Raised<span class="text-dark ms-sm-2 font-weight-bold">{{expense.date}}</span></span>
+                            <span class="text-xs">Amount<span class="text-dark ms-sm-2 font-weight-bold">{{expense.amount}}</span></span>
+                        </div>
+                        <div class="ms-auto text-end">
+                            <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i class="far fa-trash-alt me-2"></i>Delete</a>
+                            <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
+                        </div>
+                    </li>
+                {% endfor %}
+
+            </ul>
+            </div>
+        </div>
+        </div>
+        
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.0/dist/sweetalert2.all.min.js"></script>
+
+{% include 'header/footer.html' %}
+<style>    
+.custom-swal-modal {
+    width: 800px; 
+}
+</style>
+<form >
+    {% csrf_token %}
+    <input type="hidden" name="csrfmiddlewaretoken" id="" value="{% csrf_token %}
+</form>
+<script>
+    function CreateExpenditure( ) {
+    
+    Swal.fire({
+        title: 'Add a description',
+        html: `
+            
+            <div class="row">
+                <div class="col-6">
+                    <select name="comment" id="userComment" class="form-control">
+                        <option selected disabled>Description</option>
+                        {% for desc in description %}
+                            <option value="{{desc.description}}">{{desc.description}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-6">
+                    <input type="text" name="amount" id="amount" class="form-control" placeholder="KES /=">
+                </div>
+
+            </div>
+        `,
+        showCancelButton: true,
+        confirmButtonText: 'Submit',
+        cancelButtonText: 'Cancel',
+        reverseButtons: true,
+        preConfirm: () => {
+            return {
+                comment: document.getElementById('userComment').value,
+                amount: document.getElementById('amount').value,
+            };
+        },
+        customClass: {
+                modal: 'custom-swal-modal' // Add your custom class here
+            },
+        onOpen: () => {
+            const confirmButton = document.querySelector('.swal2-confirm');
+            const cancelButton = document.querySelector('.swal2-cancel');
+            
+            if (confirmButton) confirmButton.classList.add('py-1 bg-dark');
+            if (cancelButton) cancelButton.classList.add('py-1');
+        }
+    }).then(async (result) => {
+        if (result.isConfirmed && result.value.comment) {
+            const comment = result.value.comment;
+            const amount = result.value.amount;
+            
+
+            const formData = new FormData();
+            formData.append('comment', comment);
+            formData.append('amount', amount);
+
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            
+            formData.append('csrfmiddlewaretoken', csrfToken);
+
+            try {
+                const response = await fetch("/expenses/", {
+                    method: 'POST',
+                    body: formData
+                    
+                });
+
+                if (!response.ok) { 
+                    const data = await response.json(); 
+                    Swal.fire('Error!', data.message || 'There was an creating an expense.', 'error');
+                } else {
+                    location.reload();
+                }
+            } catch (error) {
+                Swal.fire('Error!', 'There was an error creating an expense.', 'error');
+            }
+        }
+    });
+}
+
+</script>

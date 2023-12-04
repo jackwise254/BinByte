@@ -100,8 +100,44 @@ def HomePage(request):
     stock = Masterlist.objects.all().count()
     sales = Product.objects.all().order_by("-id")[:10]
     orders = Orders.objects.all().order_by("-id")[:5]
-    customer_balances = Orders.objects.filter(order_type="Credit").order_by("-id")[:10]
-    suplier_balances = Orders.objects.filter(order_type="Debit").order_by("-id")[:10]
+    customer_balances = Orders.objects.filter(order_type="Credit").order_by("-id")[:7]
+    phone_numbers = []
+    phone_numberss = []
+    mode = []
+    modes = []
+    
+    for order in customer_balances:
+        name = order.name
+        # Find customers with a matching username
+        matching_customers = Customer.objects.filter(username__contains=name)
+        matching_mode = Product.objects.filter(username__contains=name)
+        # Use the first matching customer's phone number
+        if matching_mode.exists():
+            mode.append(matching_mode.first().mode)
+        else:
+            mode.append("N/A")
+
+        if matching_customers.exists():
+            phone_numbers.append(matching_customers.first().phone)
+        else:
+            phone_numbers.append("N/A")
+
+    suplier_balances = Orders.objects.filter(order_type="Debit").order_by("-id")[:7]
+    for order in suplier_balances:
+        name = order.name
+        matching_suppliers = Vendor.objects.filter(username__contains=name)
+        matching_modes = Product.objects.filter(username__contains=name)
+
+        if matching_modes.exists():
+            modes.append(matching_modes.first().mode)
+        else:
+            modes.append("N/A")
+
+        if matching_suppliers.exists():
+            phone_numberss.append(matching_suppliers.first().phone)
+        else:
+            phone_numberss.append("N/A")
+
 
     agent_records = Agents_Records.objects.all()[:10]
     if orders:
@@ -109,9 +145,38 @@ def HomePage(request):
         end_date = max(order.date for order in orders)
     else:
         start_date = end_date = None
+
+    # cash_box= Product.objects.all()
+    from django.db.models import F
+
+    # Retrieve the latest 10 records for each mode
+    cash_box = (
+        Product.objects.filter(mode="Bank")
+        .order_by("-id")[:10]
+        .union(
+            Product.objects.filter(mode="Cash")
+            .order_by("-id")[:10]
+        )
+        .union(
+            Product.objects.filter(mode="M-pesa")
+            .order_by("-id")[:10]
+        )
+        .union(
+            Product.objects.filter(mode="Expense")
+            .order_by("-id")[:10]
+        )
+        .union(
+            Product.objects.filter(mode="Credit")
+            .order_by("-id")[:10]
+        )
+    )
+
     context ={
-        "customer_balances":customer_balances,
+        "cash_boxs":cash_box,
+        "mode":mode,
+        "modes":modes,
         "suplier_balances":suplier_balances,
+        "phone_numberss":phone_numberss,
         'product_labels': json.dumps(product_labels),
         "monthly_sales":monthly_saless,
         "start_date":start_date,
@@ -124,10 +189,39 @@ def HomePage(request):
         "monthly_returns":monthly_returns.count(),
         "sales":sales,
         'sales_mon': json.dumps(sales_mon),
-
+        'phone_numbers': phone_numbers,
+        'customer_balances': customer_balances,
     }
 
     return render(request, 'home/index.html', context)
+
+def Expenses_view(request):
+
+    description = Expense_description.objects.all()
+
+    context = {
+        "expenses":Expense.objects.all().order_by("-id"),
+        "description":description,
+    }
+    if request.method == "POST":
+        name = request.session.get("username")
+        description = request.POST.get("comment")
+        amount = request.POST.get("amount")
+        try:
+            Expense.objects.create(
+            name=User.objects.get(username=name),
+            amount = amount,
+            description = Expense_description.objects.get(description=description)
+            )
+            
+        except:
+            messages.add_message(request, messages.INFO, "Something went worng, please try again later")
+        return redirect("/expenses")
+
+
+    return render(request, "deliveries/expense.html", context)
+
+
 
 def ReturnItems(request):
     template_name = "deliveries/returns.html"
@@ -694,18 +788,22 @@ def Delivery_View(request):
 
 def delv_customer(request):
     if request.method=='POST':
-        customer = request.POST.get('customer')
-        mode = request.POST.get('mode')
+        customer = request.POST.get('customer', None)
+        mode = request.POST.get('mode', None)
+
         sess = request.session.get('username')
-        rows = Customer.objects.filter(username=customer).values()
+        customer_rows = Customer.objects.filter(username=customer).values()
         check = Dcustomer.objects.filter(user_created_at=sess, status=0)
-        if not check:
-            batch = [Dcustomer(lname=row['lname'], phone=row['phone'], fname=row['fname'], location=row['location'], email=row['email'], username=row['username'], id_no=row['id_no'], mode=mode,user_created_at=sess, status=0, d_type='delivery') for row in rows]
+
+        if customer_rows.exists():
+            batch = [Dcustomer(lname=row['lname'], phone=row['phone'], fname=row['fname'], location=row['location'], email=row['email'], username=row['username'], id_no=row['id_no'], mode=mode, user_created_at=sess, status=0, d_type='delivery') for row in customer_rows]
+            if check.exists():
+                check.delete()
             Dcustomer.objects.bulk_create(batch)
         else:
-            check.delete()
-            batch = [Dcustomer(lname=row['lname'], phone=row['phone'], fname=row['fname'], location=row['location'], email=row['email'], username=row['username'], id_no=row['id_no'], mode=mode,user_created_at=sess, status=0, d_type='delivery') for row in rows]
-            Dcustomer.objects.bulk_create(batch)
+            if check.exists():
+                check.delete()
+            Dcustomer.objects.create(username=customer, mode=mode,d_type='delivery', user_created_at=sess, status=0,)
         return redirect('/deliveries')
     return redirect('/deliveries')
 
@@ -861,8 +959,6 @@ def delvout(request):
         pdfs = '.pdf'
         document = f"{customerss}{delv}{pdfs}"
         excell = f"{rands}_{customerss}.xls"
-        
-
         amount = 0
         rows = Temp.objects.filter(d_type='delivery', terms=sess,is_active=True)
         units = rows.count()

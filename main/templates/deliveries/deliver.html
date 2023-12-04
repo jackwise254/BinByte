@@ -29,14 +29,15 @@
 
                         </div>
                         <div class="col-md-4">
-                            <div class="input-group bg-secondary">
-                                <select name="customer" class="form-select py-1 custom-button input-group" id="inputGroupSelect02">
-                                <option selected disabled>Customer...</option>
-                                {% for cus in customers %}
-                                    <option value="{{cus.username}}">{{cus.username | title}}</option>
-                                {% endfor %}
-                                </select>
+                            <div class="input-group bg-secondarys">
+                                <input list="customerList" name="customer" class="form-select py-1 custom-button input-group" placeholder="Customer..." autocomplete="off">
+                                <datalist id="customerList">
+                                    {% for cus in customers %}
+                                        <option value="{{cus.username}}">
+                                    {% endfor %}
+                                </datalist>
                             </div>
+                            
                         </div>
 
 

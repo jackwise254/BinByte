@@ -35,9 +35,13 @@
   <script src="{% static 'js/sweetalert.js'%}"></script>
   <link rel="stylesheet" href="{% static 'fonts/digital.css' %}">
   <link id="pagestyle" href="{% static 'css/soft-ui-dashboard.css' %}" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>z
   <!-- SweetAlert2 CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.1.9/sweetalert2.min.css" integrity="sha384-rQua/R0R23RzPBcUIbK/vA8KF4UHnxz3X8p1q6vrgKv3StQJJQv5jHUBBIGt6ujr" crossorigin="anonymous" referrerpolicy="no-referrer">
+<!-- SweetAlert2 CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.0/dist/sweetalert2.min.css">
+
+<!-- SweetAlert2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.0/dist/sweetalert2.all.min.js"></script>
 
 
 </head>
@@ -511,7 +515,7 @@ background-color: #ffffff;
       </aside>
     <main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg ">
       <!-- Navbar -->
-      <nav class="navbar navbar-expand-lg py-2 fixed-top bg-light" id="navbarBlur" navbar-scroll="true">
+      <nav class="navbar navbar-expand-lg py-2 fixed-top bg-light" id="navbarBlur" navbar-scroll="false">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
                 <img src="{% static '/img/binbyte.png' %}" alt="" style="max-width: 80px;">

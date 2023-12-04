@@ -1,5 +1,7 @@
 {% load static %}
 {%load humanize%}
+{% load custom_filters %}
+
 {% include 'header/header.html' %}
 
 <div class="container-fluid py-4 mt-5 pt-5">
@@ -121,10 +123,10 @@
                                 <ul class="nav nav-tabs" role="tablist">
                                   
                                   <li class="nav-item">
-                                    <a class="nav-link active ps-0" id="total-stock-tab" data-bs-toggle="tab" href="" role="tab" aria-controls="overview" aria-selected="true" style="color: inherit;"> &nbsp; &nbsp;  Customers</a>
+                                    <a class="nav-link active ps-0" id="customer_balances" data-bs-toggle="tab" href="" role="tab" aria-controls="overview" aria-selected="true" style="color: inherit;"> &nbsp; &nbsp;  Customers</a>
                                   </li>
                                   <li class="nav-item">
-                                    <a class="nav-link" id="faulty-in-tab" data-bs-toggle="tab" href="" role="tab" aria-selected="false" style="color: inherit;">Suppliers</a>
+                                    <a class="nav-link" id="supplier_balances" data-bs-toggle="tab" href="" role="tab" aria-selected="false" style="color: inherit;">Suppliers</a>
                                   </li>
                                 </ul>
                             </div>
@@ -142,13 +144,18 @@
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Amount</th>
                         </tr>
                         </thead>
-                        <tbody>
-                            {% for customer_balance in customer_balances %}
+                        <tbody id="balances">
+                            {% for order in customer_balances %}
+
                                 <tr class="px-4">
-                                    <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{customer_balance.name|default_if_none:""|title}}</td>
-                                    <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{customer_balance.name.phone|default_if_none:""|intcomma}} </td>
-                                    <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{agent.returned_units |default_if_none:""|intcomma}} </td>
-                                    <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{agent.returned_units |default_if_none:""|intcomma}} </td>
+                                    <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{order.name|default_if_none:""|title}}</td>
+                                    {% if phone_numbers|length and forloop.counter0 < phone_numbers|length %}
+                                    <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{ phone_numbers.0 }}</td>
+                                    {% endif %}
+                                    {% if mode|length and forloop.counter0 < mode|length %}
+                                    <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{ mode.0 }}</td>
+                                    {% endif %}
+                                    <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{order.amount |default_if_none:""|intcomma}} </td>
                                 </tr>
                             {% endfor %}
                         
@@ -293,19 +300,19 @@
                                 <ul class="nav nav-tabs" role="tablist">
                                 
                                 <li class="nav-item">
-                                    <a class="nav-link active ps-0" id="total-stock-tab" data-bs-toggle="tab" href="" role="tab" aria-controls="overview" aria-selected="true" style="color: inherit;"> &nbsp; &nbsp;  Bank</a>
+                                    <a class="nav-link active ps-0" id="bank_box" data-bs-toggle="tab" href="" role="tab" aria-controls="overview" aria-selected="true" style="color: inherit;"> &nbsp; &nbsp;  Bank</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="faulty-in-tab" data-bs-toggle="tab" href="" role="tab" aria-selected="false" style="color: inherit;">Cash Sales</a>
+                                    <a class="nav-link" id="cashes_box" data-bs-toggle="tab" href="" role="tab" aria-selected="false" style="color: inherit;">Cash Sales</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="warranty-in-tab" data-bs-toggle="tab" href="" role="tab" aria-selected="false" style="color: inherit;">Credit</a>
+                                    <a class="nav-link" id="credit_box" data-bs-toggle="tab" href="" role="tab" aria-selected="false" style="color: inherit;">Credit</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="warranty-in-tab" data-bs-toggle="tab" href="" role="tab" aria-selected="false" style="color: inherit;">Expenses</a>
+                                    <a class="nav-link" id="expense_box" data-bs-toggle="tab" href="" role="tab" aria-selected="false" style="color: inherit;">Expenses</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="stock-in-tab" data-bs-toggle="tab" href="" role="tab" aria-selected="false" style="color: inherit;">M-pesa</a>
+                                    <a class="nav-link" id="mpesa_box" data-bs-toggle="tab" href="" role="tab" aria-selected="false" style="color: inherit;">M-pesa</a>
                                 </li>
                                 </ul>
                             </div>
@@ -318,18 +325,21 @@
                         <thead>
                         <tr>
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Customer</th>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Mode</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Agent</th>
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Amount</th>
                         </tr>
                         </thead>
-                        <tbody>
-                            {% for agent in agent_records %}
+                        <tbody id="cash_box">
+
+                            {% for cash_box in cash_boxs %}
+                                {% if cash_box.mode == "Bank"%}
+                                
                                 <tr class="px-4">
-                                    <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{agent.name|default_if_none:""|title}}</td>
-                                    <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{agent.units|default_if_none:""|intcomma}} </td>
-                                    <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{agent.returned_units |default_if_none:""|intcomma}} </td>
-                                    
+                                    <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.username|default_if_none:""|title}}</td>
+                                    <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.user_name|default_if_none:""}} </td>
+                                    <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.amount |default_if_none:""|intcomma}} </td>
                                 </tr>
+                                {%endif %}
                             {% endfor %}
                         
                         </tbody>
@@ -425,6 +435,149 @@
 
   {% include 'header/script.html' %}
   <script>
+    
+
+document.getElementById("customer_balances").addEventListener("click", function() {
+    document.getElementById("balances").innerHTML = `
+    
+    {% for order in customer_balances %}
+
+        <tr class="px-4">
+            <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{order.name|default_if_none:""|title}}</td>
+            {% if phone_numbers|length and forloop.counter0 < phone_numbers|length %}
+            <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{ phone_numbers.0 }}</td>
+            {% endif %}
+            {% if mode|length and forloop.counter0 < mode|length %}
+                <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{ mode.0 }}</td>
+            {% endif %}
+            <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{order.amount |default_if_none:""|intcomma}} </td>
+        </tr>
+    {% endfor %}
+    
+    
+    `;
+});
+
+document.getElementById("supplier_balances").addEventListener("click", function() {
+  document.getElementById("balances").innerHTML = `
+  {% for order in suplier_balances %}
+
+    <tr class="px-4">
+        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{order.name|default_if_none:""|title}}</td>
+        {% if phone_numberss|length and forloop.counter0 < phone_numberss|length %}
+        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{ phone_numberss.0 }}</td>
+        {% endif %}
+        {% if mode|length and forloop.counter0 < mode|length %}
+            <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{ mode.0 }}</td>
+        {% endif %}
+        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{order.amount |default_if_none:""|intcomma}} </td>
+    </tr>
+  {% endfor %}
+  
+  
+  `;
+});
+
+
+
+document.getElementById("bank_box").addEventListener("click", function() {
+  document.getElementById("cash_box").innerHTML = `
+
+  {% for cash_box in cash_boxs %}
+    {% if cash_box.mode == "Bank"%}
+    
+    <tr class="px-4">
+        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.username|default_if_none:""|title}}</td>
+        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.user_name|default_if_none:""}} </td>
+        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.amount |default_if_none:""|intcomma}} </td>
+    </tr>
+    {%endif %}
+{% endfor %}
+  
+  `;
+});
+
+
+document.getElementById("cashes_box").addEventListener("click", function() {
+  document.getElementById("cash_box").innerHTML = `
+
+  {% for cash_box in cash_boxs %}
+    {% if cash_box.mode == "Cash"%}
+    
+    <tr class="px-4">
+        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.username|default_if_none:""|title}}</td>
+        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.user_name|default_if_none:""}} </td>
+        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.amount |default_if_none:""|intcomma}} </td>
+    </tr>
+    {%endif %}
+{% endfor %}
+  
+  `;
+});
+
+document.getElementById("credit_box").addEventListener("click", function() {
+  document.getElementById("cash_box").innerHTML = `
+
+  {% for cash_box in cash_boxs %}
+    {% if cash_box.mode == "Credit"%}
+    
+    <tr class="px-4">
+        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.username|default_if_none:""|title}}</td>
+        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.user_name|default_if_none:""}} </td>
+        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.amount |default_if_none:""|intcomma}} </td>
+    </tr>
+    {%endif %}
+{% endfor %}
+  
+
+
+  `;
+});
+
+
+
+document.getElementById("expense_box").addEventListener("click", function() {
+  document.getElementById("cash_box").innerHTML = `
+
+  {% for cash_box in cash_boxs %}
+    {% if cash_box.mode == "Expense"%}
+    
+    <tr class="px-4">
+        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.username|default_if_none:""|title}}</td>
+        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.user_name|default_if_none:""}} </td>
+        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.amount |default_if_none:""|intcomma}} </td>
+    </tr>
+    {%endif %}
+{% endfor %}
+  
+  `;
+});
+
+document.getElementById("mpesa_box").addEventListener("click", function() {
+  document.getElementById("cash_box").innerHTML = `
+  {% for cash_box in cash_boxs %}
+    {% if cash_box.mode == "M-pesa"%}
+    
+    <tr class="px-4">
+        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.username|default_if_none:""|title}}</td>
+        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.user_name|default_if_none:""}} </td>
+        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.amount |default_if_none:""|intcomma}} </td>
+    </tr>
+    {%endif %}
+{% endfor %}
+  
+  `;
+});
+
+
+
+
+
+
+
+
+
+
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
       var options = {

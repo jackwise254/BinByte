@@ -20,8 +20,6 @@ urlpatterns = [
     path('stockin/', stockin_view, name='stockin_view'),
     path('stockout/', stockout_view, name='stockout'),
     path('naration_sub/', NarationSub, name='naration_sub'),
-    
-    
     path('uploadstock/', upload_stock, name='uploadstock'),
     path('clear_templist/', ClearTemplist, name='clear_templist'),
     path('push_templist/', PushTemplist, name='push_templist'),
@@ -29,17 +27,12 @@ urlpatterns = [
     path('stockout_view/', stockoutview, name='stockout_view'),
     path('returnitems/', ReturnItems, name='returnitems'),
     path('clearreturns/', ClearReturns, name='clearreturns'),
-    
-    
-    
     path('fetchproduct/<str:title>', FetchProduct, name='fetchproduct'),
     path('fetchstockout/<str:title>', FetchStockout, name='fetchstockout'),
-    
     path('delete_templist/<int:pk>', DeleteTemplist, name='delete_templist'),
-    
-
     path('sales/', SalesView, name='sales'),
     path('deliveries/', Delivery_View, name='deliveries'),
+    path('expenses/', Expenses_view, name='expenses'),
     path('delvcustomer/', delv_customer, name='delv_customer'),
     path('delv_sub/', delvsub, name='delvsub'),
     path('delv_out/', delvout, name='delvout'),

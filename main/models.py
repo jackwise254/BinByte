@@ -66,6 +66,7 @@ class Orders(models.Model):
     unique_key = models.CharField(null=True, max_length=200)
     random = models.IntegerField(null=True)
     total_amount = models.FloatField(null=True)
+    
 
 class Agents_Records(models.Model):
     name = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
@@ -123,15 +124,23 @@ class Product(models.Model):
     location = models.CharField(max_length=200, null=True)
     date = models.CharField(max_length=200, null=True)
     invono = models.CharField(max_length=200, null=True)
-    sold_to = models.ForeignKey(Customer, on_delete=models.CASCADE, null= True)
+    sold_to = models.CharField(max_length=200, null=True)
+    # sold_to = models.ForeignKey(Customer, on_delete=models.CASCADE, null= True)
     total = models.IntegerField()
     amount = models.IntegerField(null=True)
     mode = models.CharField(blank=True, max_length=200)
 
-
     class Meta:
         db_table = 'product'
         ordering = ['-date']
+class Expense_description(models.Model):
+    description = models.CharField(max_length=200, null=True)
+
+class Expense(models.Model):
+    name = models.ForeignKey(User,on_delete=models.CASCADE, null=True)
+    date = models.DateTimeField(auto_now=True)
+    description = models.ForeignKey(Expense_description, on_delete=models.CASCADE, null=True)
+    amount = models.IntegerField(null=True)
 
 class Dcustomer(models.Model):
     fname = models.CharField(max_length=200, null=True)
@@ -328,3 +337,8 @@ def create_default_items(sender, **kwargs):
         types = ['Laptop','Desktop','Allinone','Smartphone','HDD 2.5','HDD 3.5','SSD','Macbook','iMac','Lcd','RAM','Scrap','Discount','OTHERS',]
         for t in types:
             Type.objects.update_or_create(type=t)
+
+        expenses = ["Broker", "Lunch", "Rent, utilities (electricity, water), and maintenance.", "Regular upkeep of tools and equipment."]
+
+        for expense in expenses:
+            Expense_description.objects.update_or_create(description=expense)
