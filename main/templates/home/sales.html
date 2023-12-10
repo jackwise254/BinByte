@@ -1,0 +1,69 @@
+{% load static %}
+{%load humanize%}
+{% load custom_filters %}
+{% include 'header/header.html' %}
+
+
+
+<div class="container-fluid mt-5 pt-4 test_continer ">
+    <h5 class="text-center"><u>AGENTS RECORDS</u></h5>
+    <hr class="my-2" />
+
+    <div class="card">
+        <div class="card-header pb-0">
+            
+            <div class="row">
+                <div class="col-3">
+                </div>
+                <div class="col-6"></div>
+                <div class="col-3 ">
+                    <div class="input-group input-group-merge ">
+                        <button class="input-group-text custom-button py-1" id="basic-addon-search31" type="submit">
+                            <i class="bi bi-search"></i>
+                        </button>
+                        <input
+                        name="q"
+                        type="text"
+                        class="form-control py-1"
+                        placeholder="Search..."
+                        aria-describedby="basic-addon-search31"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-responsive table-hover text-xls table-sm ">
+                    <thead  style="background-color: #849bbf; " >
+    
+                        <tr class="my-1 text-align text-xls" style="padding-left: 0%;">
+                            <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Sales Agent</th>
+                            <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Units Sold</th>
+                            <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Sales Revenue</th>
+                            <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Returns</th>
+                            <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Refund amount</th>
+                            <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Commission</th>
+                        </tr>
+                    </thead>
+                    <tbody id="balances">
+                        {% for agent in agent_records %}
+                        <tr style="font-size: 11px">
+                            <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{agent.name|default_if_none:""|title}}</td>
+                            <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{agent.units|default_if_none:""|intcomma}}</td>
+                            <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{agent.returned_units |default_if_none:""|intcomma}}</td>
+                            <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{agent.commission|default_if_none:""|intcomma}}</td>
+                            <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{agent.commission|default_if_none:""|intcomma}}</td>
+                            <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{agent.commission|default_if_none:""|intcomma}}</td>
+                        </tr>
+                        {% endfor %}
+    
+                    </tbody>
+    
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'header/footer.html' %}

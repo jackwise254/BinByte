@@ -95,7 +95,7 @@
     <div class="row mt-3">
 
         <div class="col-lg-8">
-            <div class="card"style="height: 45vh;">
+            <div class="card"style="height: 69vh;">
                 <div class="card-header pb-0">
                     <div class="row">
                         <div class="col-lg-6">
@@ -103,7 +103,8 @@
                         </div>
                         <div class="col-lg-6 my-auto text-end">
                             <div class=" float-end pe-4">
-                                <button class="btn btn-outline-primary btn-sm mb-0">View All</button>
+                                <!-- <button class="btn btn-outline-primary btn-sm mb-0">View All</button> -->
+                                <a href="/view-balances" class="btn btn-outline-primary btn-sm mb-0"> View all</a>
 
                                 <!-- <a class="cursor-pointer" id="dropdownTable" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fa fa-ellipsis-v text-secondary"></i>
@@ -225,16 +226,7 @@
                 </div>
                 <div class="col-lg-6 my-auto text-end">
                     <div class=" float-lg-end pe-4">
-                        <button class="btn btn-outline-primary btn-sm mb-0">View All</button>
-
-                    <!-- <a class="cursor-pointer" id="dropdownTable" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa fa-ellipsis-v text-secondary"></i>
-                    </a>
-                    <ul class="dropdown-menu px-2 py-3 ms-sm-n4 ms-n5" aria-labelledby="dropdownTable">
-                        <li><a class="dropdown-item border-radius-md" href="javascript:;">More</a></li>
-                        
-                        
-                    </ul> -->
+                        <a href="/sales-perfomance" class="btn btn-outline-primary btn-sm mb-0">View All</a>
                     </div>
                 </div>
                 </div>
@@ -382,7 +374,7 @@
             </div>
             <div class="card-body ">
                 <div class="table-responsive">
-                <table class="table align-items-center mb-0 table-bordered" style="height: 29vh;">
+                <table class="table align-items-center mb-0 table-bordered" style="height: 42vh;">
                     <thead>
                     <tr>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Customer</th>
@@ -467,8 +459,8 @@ document.getElementById("supplier_balances").addEventListener("click", function(
         {% if phone_numberss|length and forloop.counter0 < phone_numberss|length %}
         <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{ phone_numberss.0 }}</td>
         {% endif %}
-        {% if mode|length and forloop.counter0 < mode|length %}
-            <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{ mode.0 }}</td>
+        {% if modes|length and forloop.counter0 < modes|length %}
+            <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{ modes.0 }}</td>
         {% endif %}
         <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{order.amount |default_if_none:""|intcomma}} </td>
     </tr>

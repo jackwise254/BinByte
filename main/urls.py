@@ -39,7 +39,11 @@ urlpatterns = [
     path('delv_csv/', delvcsv, name='delvcsv'),
     path('delete_delivery/<int:pk>', deleteDdelivery, name='delete_delivery'),
     path('delete_returns/<int:pk>', DeleteReturns, name='delete_returns'),
-    path("returnsout/", ReturnsOut, name="returnsout")
+    path("returnsout/", ReturnsOut, name="returnsout"),
+    path("view-balances/", ViewBalances, name="view-balances"),
+    path("sales-perfomance/", SalesPerfomance, name="sales-perfomance"),
+    
+    
     
     
     

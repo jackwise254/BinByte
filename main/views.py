@@ -65,6 +65,71 @@ def Home(request):
 
     return redirect('/accounts/login')
 
+def ViewBalances(request):
+    customer_balances = Orders.objects.filter(order_type="Credit").order_by("-id")
+    supplier_balances = Orders.objects.filter(order_type="Debit").order_by("-id")
+    phone_numbers = []
+    phone_numberss = []
+    mode = []
+    modes = []
+    
+    for order in customer_balances:
+        name = order.name
+        # Find customers with a matching username
+        matching_customers = Customer.objects.filter(username__contains=name)
+        matching_mode = Product.objects.filter(username__contains=name)
+        # Use the first matching customer's phone number
+        if matching_mode.exists():
+            mode.append(matching_mode.first().mode)
+        else:
+            mode.append("N/A")
+
+        if matching_customers.exists():
+            phone_numbers.append(matching_customers.first().phone)
+        else:
+            phone_numbers.append("N/A")
+
+    suplier_balances = Orders.objects.filter(order_type="Debit").order_by("-id")
+
+    for order in suplier_balances:
+        name = order.name
+        matching_suppliers = Vendor.objects.filter(username__contains=name)
+        matching_modes = Product.objects.filter(username__contains=name)
+
+        if matching_modes.exists():
+            modes.append(matching_modes.first().mode)
+        else:
+            modes.append("N/A")
+
+        if matching_suppliers.exists():
+            phone_numberss.append(matching_suppliers.first().phone)
+        else:
+            phone_numberss.append("N/A")
+
+    context = {
+        "modes":modes,
+        "mode":mode,
+        "phone_numberss":phone_numberss,
+        "phone_numbers":phone_numbers,
+        "customer_balancess":customer_balances,
+        "suplier_balancess":supplier_balances,
+
+    }
+    return render(request, "home/balances.html", context)
+
+def SalesPerfomance(request):
+    agent_records = Agents_Records.objects.all().order_by("-id")
+    
+
+
+    context ={
+        "agent_records":agent_records,
+
+
+    }
+
+    return render(request, "home/sales.html", context)
+
 def HomePage(request):
     # Get the current date and time
     current_date = timezone.now()
@@ -816,6 +881,8 @@ def DeleteReturns(request, pk):
     Temp.objects.filter(id=pk).delete()
 
     return redirect("/returnitems")
+
+
 
 @transaction.atomic
 def ReturnsOut(request):

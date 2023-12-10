@@ -1,0 +1,120 @@
+{% load static %}
+{%load humanize%}
+{% load custom_filters %}
+{% include 'header/header.html' %}
+
+
+
+<div class="container-fluid mt-5 pt-4 test_continer ">
+    <h5 class="text-center"><u>BALANCES</u></h5>
+    <hr class="my-2" />
+
+    <div class="card">
+        <div class="card-header pb-0">
+            
+            <div class="row">
+                <div class="col-3">
+                    <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+                        <ul class="nav nav-tabs" role="tablist">
+                            
+                            <li class="nav-item">
+                            <a class="nav-link active ps-0" id="customer_balances" data-bs-toggle="tab" href="" role="tab" aria-controls="overview" aria-selected="true" style="color: inherit;"> &nbsp; &nbsp;  Customers</a>
+                            </li>
+                            <li class="nav-item">
+                            <a class="nav-link" id="supplier_balances" data-bs-toggle="tab" href="" role="tab" aria-selected="false" style="color: inherit;">Suppliers</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-6"></div>
+                <div class="col-3 ">
+                    <div class="input-group input-group-merge ">
+                        <button class="input-group-text custom-button py-1" id="basic-addon-search31" type="submit">
+                            <i class="bi bi-search"></i>
+                        </button>
+                        <input
+                        name="q"
+                        type="text"
+                        class="form-control py-1"
+                        placeholder="Search..."
+                        aria-describedby="basic-addon-search31"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-responsive table-hover text-xls table-sm ">
+                    <thead  style="background-color: #849bbf; " >
+    
+                        <tr class="my-1 text-align text-xls" style="padding-left: 0%;">
+                            <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Username</th>
+                            <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Phone</th>
+                            <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Mode of payment</th>
+                            <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody id="balances">
+                        {% for order in customer_balancess %}
+                        <tr style="font-size: 11px">
+                            <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{order.name|default_if_none:""|title}}</td>
+                            {% if phone_numbers|length and forloop.counter0 < phone_numbers|length %}
+                            <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{ phone_numbers.0 }}</td>
+                            {% endif %}
+                            {% if mode|length and forloop.counter0 < mode|length %}
+                            <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{ mode.0 }}</td>
+                            {% endif %}
+                            <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{order.amount |default_if_none:""|intcomma}}</td>
+                        </tr>
+                        {% endfor %}
+    
+                    </tbody>
+    
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    document.getElementById("customer_balances").addEventListener("click", function() {
+    document.getElementById("balances").innerHTML = `
+    
+    {% for order in customer_balancess %}
+        <tr style="font-size: 11px">
+            <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{order.name|default_if_none:""|title}}</td>
+            {% if phone_numbers|length and forloop.counter0 < phone_numbers|length %}
+            <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{ phone_numbers.0 }}</td>
+            {% endif %}
+            {% if mode|length and forloop.counter0 < mode|length %}
+            <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{ mode.0 }}</td>
+            {% endif %}
+            <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{order.amount |default_if_none:""|intcomma}}</td>
+        </tr>
+    {% endfor %}
+    
+    
+    `;
+});
+
+document.getElementById("supplier_balances").addEventListener("click", function() {
+  document.getElementById("balances").innerHTML = `
+    {% for order in suplier_balancess %}
+    <tr style="font-size: 11px">
+        <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{order.name|default_if_none:""|title}}</td>
+        {% if phone_numbers|length and forloop.counter0 < phone_numberss|length %}
+        <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{ phone_numberss.0 }}</td>
+        {% endif %}
+        {% if mode|length and forloop.counter0 < modes|length %}
+        <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{ modes.0 }}</td>
+        {% endif %}
+        <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{order.amount |default_if_none:""|intcomma}}</td>
+    </tr>
+    {% endfor %}
+  `;
+});
+</script>
+{% include 'header/footer.html' %}
