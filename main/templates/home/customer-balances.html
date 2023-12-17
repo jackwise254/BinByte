@@ -1,0 +1,63 @@
+{% load static %}
+{% load humanize %}
+{% include 'header/header.html' %}
+<div class="container-fluid mt-5 pt-4 test_continer ">
+    <h5 class="text-center"><u>{{username| upper}}'S TRANSACTION RECORD</u></h5>
+
+
+    <hr class="my-2" />
+    <div class="card">
+
+        <div class="card ">
+            <div class="card-header pb-0 px-3">
+                <div class="row">
+                    <div class="col-1">
+                        <div class="nav-wrapperr position-relative end-0">
+
+                            <ul class="nav nav-pillss nav-fill p-1 bg-transparent" role="tablists">
+                                <li class="nav-item px-1">
+                                    <a class="nav-link mb-0 px-0 py-1 btn btn-md"style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);"  href="/view-balances">
+                                        <i class="fa fa-home text-dark" ></i>
+                                    <span class="ms-1 text-dark">Home</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-5"></div>
+                    <div class="col-6 text-end">
+                        <a class="btn bg-gradient-light mb-0" href="#" onclick="return CreateExpenditure();">
+                            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>&nbsp;&nbsp;Print Statement
+                          </a>
+                        <a class="btn bg-gradient-dark mb-0" href="#" onclick="return CreateExpenditure();">
+                            <i class="fas fa-plus"></i>&nbsp;&nbsp;Create a payment
+                          </a>
+                      </div>
+                </div>
+            </div>
+            <div class="card-body pt-4 p-3">
+            <ul class="list-group">
+                {% for customer in customer_balances %}
+                    <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
+                        <div class="d-flex flex-column">
+                            <span class="mb-2 text-xs">Date Raised<span class="text-dark ms-sm-2 font-weight-bold">{{customer.date}}</span></span>
+                            <span class="text-xs">Amount<span class="text-dark ms-sm-2 font-weight-bold">{{customer.amount}}</span></span>
+                        </div>
+
+                        <div class="ms-auto text-end d-flex flex-column">
+                            <span class="text-xs">Paid: <span class=" ms-sm-2 font-weight-bold {% if customer.order_type == 'Debit' %} text-success {% else %} text-danger {% endif %}">{{customer.amount}}</span></span>
+                            <span class="text-xs">Running Balance:<span class="text-dark ms-sm-2 font-weight-bold">{{customer.total_amount}}</span></span>
+                        </div>
+                    </li>
+                {% endfor %}
+
+            </ul>
+            </div>
+        </div>
+        </div>
+        
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.0/dist/sweetalert2.all.min.js"></script>
+
+{% include 'header/footer.html' %}

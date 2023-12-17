@@ -1,0 +1,11 @@
+DELIVERY NOTE
+Customer: jack
+Date: 2023-12-15
+Address: nairobi
+Phone: 27326425
+Delivery No.: AA006
+Email: jack
+Reference No.: M-pesa
+Type  Description  Qty
+Laptop Laptop Laptop Laptop 1
+Total Qty: 1

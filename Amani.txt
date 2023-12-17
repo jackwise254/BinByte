@@ -1,0 +1,11 @@
+DELIVERY NOTE
+Customer: Amani
+Date: 2023-12-15
+Address: None
+Phone: 26127650
+Delivery No.: AA005
+Email: amani
+Reference No.: Bank
+Type  Description  Qty
+Allinone Allinone Allinone Allinone 1
+Total Qty: 1

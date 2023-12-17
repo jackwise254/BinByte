@@ -29,6 +29,8 @@ urlpatterns = [
     path('clearreturns/', ClearReturns, name='clearreturns'),
     path('fetchproduct/<str:title>', FetchProduct, name='fetchproduct'),
     path('fetchstockout/<str:title>', FetchStockout, name='fetchstockout'),
+    path('cleardelv/', clear_delv, name='clear_delv'),
+
     path('delete_templist/<int:pk>', DeleteTemplist, name='delete_templist'),
     path('sales/', SalesView, name='sales'),
     path('deliveries/', Delivery_View, name='deliveries'),
@@ -42,8 +44,44 @@ urlpatterns = [
     path("returnsout/", ReturnsOut, name="returnsout"),
     path("view-balances/", ViewBalances, name="view-balances"),
     path("sales-perfomance/", SalesPerfomance, name="sales-perfomance"),
+    path("cash-box/", CashBox, name="cash-box"),
+    path("sales-box/", SalesBox, name="sales-box"),
+    path("settings/", Settings, name="settings"),
+    
+    path('typeadd/' , type_add, name='type_add'),
+    path('conditionadd/' , condition_add, name='condition_add'),
+    path('brandadd/' , brand_add, name='brand_add'),
+    path('genadd/' , gen_add, name='gen_add'),
+    path('speedadd/' , speed_add, name='speed_add'),
+    path('hddadd/' , hdd_add, name='hdd_add'),
+    path('cpuadd/' , cpu_add, name='cpu_add'),
+    path('ramadd/' , ram_add, name='ram_add'),
+    path('screenadd/' , screen_add, name='screen_add'),
+    path('initialdd/' , initial, name='initial'),
+    path('descriptionadd/' , description_add, name='description_add'),
+
     
     
+
+    path('delcreen/<int:pk>', delcreen_v, name='delcreen_v'),
+    path('delram/<int:pk>', delram_v, name='delram_v'),
+    path('delinit/<int:pk>', delinit_v, name='delinit_v'),
+    path('delcpu/<int:pk>', delcpu_v, name='delcpu_v'),
+    path('delhdd/<int:pk>', delhdd_v, name='delhdd_v'),
+    path('deltype/<int:pk>', deltype_v, name='deltype_v'),
+    path('delexpense/<int:pk>', delexpense_v, name='delexpense_v'),
+    path('delcond/<int:pk>', delcond_v, name='delcond_v'),
+    path('delbrand/<int:pk>', delbrand_v, name='delbrand_v'),
+    path('delgen/<int:pk>', delgen_v, name='delgen_v'),
+    path('delspeed/<int:pk>', delspeed_v, name='delspeed_v'),
+    path('update_m/<int:pk>', update_masterlist, name='update_masterlist'),
+
+    path('edit-expense/' , EditExpense, name='EditExpense'),
+    path('customer-balances/<str:pk>' , CustomerBalances, name='customer-balances'),
+    
+
+    
+
     
     
     

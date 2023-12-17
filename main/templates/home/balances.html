@@ -57,7 +57,7 @@
                     </thead>
                     <tbody id="balances">
                         {% for order in customer_balancess %}
-                        <tr style="font-size: 11px">
+                        <tr style="font-size: 11px" class='clickable-row' data-href="/customer-balances/{{order.name}}">
                             <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{order.name|default_if_none:""|title}}</td>
                             {% if phone_numbers|length and forloop.counter0 < phone_numbers|length %}
                             <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{ phone_numbers.0 }}</td>

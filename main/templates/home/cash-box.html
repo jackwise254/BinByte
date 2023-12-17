@@ -1,0 +1,187 @@
+{% load static %}
+{%load humanize%}
+{% load custom_filters %}
+{% include 'header/header.html' %}
+
+
+
+<div class="container-fluid mt-5 pt-4 test_continer ">
+    <h5 class="text-center"><u>CASH BOX</u></h5>
+    <hr class="my-2" />
+
+    <div class="card">
+        <div class="card-header pb-0">
+            
+            <div class="row">
+                <div class="col-3">
+                    <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+                        <ul class="nav nav-tabs" role="tablist">
+                            
+                            <li class="nav-item">
+                            <a class="nav-link active ps-0" id="bank_box" data-bs-toggle="tab" href="" role="tab" aria-controls="overview" aria-selected="true" style="color: inherit;"> &nbsp; &nbsp;  Bank</a>
+                            </li>
+                            <li class="nav-item">
+                            <a class="nav-link" id="cashes_box" data-bs-toggle="tab" href="" role="tab" aria-selected="false" style="color: inherit;">Cash Sales</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="credit_box" data-bs-toggle="tab" href="" role="tab" aria-selected="false" style="color: inherit;">Credit</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="expense_box" data-bs-toggle="tab" href="" role="tab" aria-selected="false" style="color: inherit;">Expenses</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="mpesa_box" data-bs-toggle="tab" href="" role="tab" aria-selected="false" style="color: inherit;">Mpesa</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-6"></div>
+                <div class="col-3 ">
+                    <div class="input-group input-group-merge ">
+                        <button class="input-group-text custom-button py-1" id="basic-addon-search31" type="submit">
+                            <i class="bi bi-search"></i>
+                        </button>
+                        <input
+                        name="q"
+                        type="text"
+                        class="form-control py-1"
+                        placeholder="Search..."
+                        aria-describedby="basic-addon-search31"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-responsive table-hover text-xls table-sm ">
+                    <thead  style="background-color: #849bbf; " >
+    
+                        <tr class="my-1 text-align text-xls" style="padding-left: 0%;">
+                            <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Customer</th>
+                            <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Agent</th>
+                            <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cash_box">
+                        {% for cash_box in cash_boxs %}
+                            {% if cash_box.mode == "Bank"%}
+                                
+                                <tr class="px-4">
+                                    <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.username|default_if_none:""|title}}</td>
+                                    <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.user_name|default_if_none:""}} </td>
+                                    <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.amount |default_if_none:""|intcomma}} </td>
+                                </tr>
+                            {%endif %}
+                        {% endfor %}
+                    </tbody>
+    
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+document.getElementById("bank_box").addEventListener("click", function() {
+  document.getElementById("cash_box").innerHTML = `
+
+  {% for cash_box in cash_boxs %}
+    {% if cash_box.mode == "Bank"%}
+    
+    <tr class="px-4">
+        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.username|default_if_none:""|title}}</td>
+        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.user_name|default_if_none:""}} </td>
+        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.amount |default_if_none:""|intcomma}} </td>
+    </tr>
+    {%endif %}
+{% endfor %}
+  
+  `;
+});
+
+
+document.getElementById("cashes_box").addEventListener("click", function() {
+    console.log("In chash box")
+  document.getElementById("cash_box").innerHTML = `
+
+  {% for cash_box in cash_boxs %}
+    {% if cash_box.mode == "Cash"%}
+    
+    <tr class="px-4">
+        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.username|default_if_none:""|title}}</td>
+        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.user_name|default_if_none:""}} </td>
+        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.amount |default_if_none:""|intcomma}} </td>
+    </tr>
+    {%endif %}
+{% endfor %}
+  
+  `;
+});
+
+document.getElementById("credit_box").addEventListener("click", function() {
+    console.log("In credit_box box")
+
+  document.getElementById("cash_box").innerHTML = `
+
+  {% for cash_box in cash_boxs %}
+    {% if cash_box.mode == "Credit"%}
+    
+    <tr class="px-4">
+        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.username|default_if_none:""|title}}</td>
+        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.user_name|default_if_none:""}} </td>
+        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.amount |default_if_none:""|intcomma}} </td>
+    </tr>
+    {%endif %}
+{% endfor %}
+  
+
+
+  `;
+});
+
+
+
+document.getElementById("expense_box").addEventListener("click", function() {
+    console.log("In expense_box box")
+
+  document.getElementById("cash_box").innerHTML = `
+
+  {% for cash_box in cash_boxs %}
+    {% if cash_box.mode == "Expense"%}
+    
+    <tr class="px-4">
+        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.username|default_if_none:""|title}}</td>
+        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.user_name|default_if_none:""}} </td>
+        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.amount |default_if_none:""|intcomma}} </td>
+    </tr>
+    {%endif %}
+{% endfor %}
+  
+  `;
+});
+
+document.getElementById("mpesa_box").addEventListener("click", function() {
+    console.log("In mpesa_box box")
+
+  document.getElementById("cash_box").innerHTML = `
+  {% for cash_box in cash_boxs %}
+    {% if cash_box.mode == "M-pesa"%}
+    
+    <tr class="px-4">
+        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.username|default_if_none:""|title}}</td>
+        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.user_name|default_if_none:""}} </td>
+        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.amount |default_if_none:""|intcomma}} </td>
+    </tr>
+    {%endif %}
+{% endfor %}
+  
+  `;
+});
+
+</script>
+
+{% include 'header/footer.html' %}

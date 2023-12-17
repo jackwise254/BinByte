@@ -1,0 +1,375 @@
+{% load static %}
+{% load humanize %}
+{% include 'dashboard/header/header.html' %}
+
+<div class="container-fluid mt-5 pt-4 test_continer ">
+    <h5 class=" text-center"><u>UPLOAD MULTIPLE</u></h5>
+
+    <hr class="my-2" />
+    <div class="card" style="height:68vh">
+
+  
+
+        <div class="row mt-3 px-3">
+            <div class="col-2">
+                <div class="nav-wrapperr position-relative end-0">
+                    <ul class="nav  nav-fill bg-transparent" role="tablists">
+                      <li class="nav-item ">
+                        <a href="/warrantyin" class="nav-link mb-0 px-0 btn btn-md py-2"style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);">
+                            <i class="fa fa-home text-dark" aria-hidden="true"></i>
+                            <span class="ms-1 text-dark">Home</span>
+                        </a>
+                       </li>
+                    </ul>
+                </div>
+            </div>
+    
+        </div>
+
+
+        <div class="card-body" style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);">
+            <!-- <form action="{% url 'warrantyupload' %}" method="POST">
+                {% csrf_token %} -->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive text-nowrap " style="height:21vh">
+                            <table class="table table-bordered table-responsive text-xls table-sm ">
+                                <thead  >
+                                    <tr>
+                                        <th class=" th-style">Type  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  ">Condition &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> List&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Brand&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Gen&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Part&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Serial_no&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Modelid&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Model&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Cpu&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Speed&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Ram&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Hdd&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Screen&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Odd&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Comment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Problem&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Price&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  d-none">Date_dlvd&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th> 
+                                        <th class=" th-style  "> Customer&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Quantity&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+            
+            
+                                    <tr style="font-size: 11px">
+                                        <td scope="col" class="col-5"> 
+                                            <div class="form-group">
+                                                <select name="type" id="type" class="form-control py-1 "required>
+                                                    <option selected disabled> </option>
+                                                    {% for type in types %}
+                                                        <option value="{{ type.type}}">{{ type.type}}</option>
+                                                    {%endfor %}
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs"> 
+                                            <div class="form-group">
+                                                <select name="conditions" id="conditions" class="form-control py-1 " required>
+                                                    <option selected disabled> </option>
+                                                    {% for condition in conditions %}
+                                                        <option value="{{ condition.conditions}}">{{ condition.conditions}}</option>
+                                                    {%endfor %}
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group  has-success">
+                                                <input type="text" placeholder="List" name="list" id="list" class="form-control py-1" />
+                                            </div>
+                                        </td>
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group">
+                                                <select name="brand" id="brand" class="form-control py-1 "  >
+                                                    <option selected disabled> </option>
+                                                    {% for brand in brands %}
+                                                        <option value="{{ brand.brand}}">{{ brand.brand}}</option>
+                                                    {%endfor %}
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group">
+                                                <select name="gen" id="gen" class="form-control py-1 "  >
+                                                    <option selected disabled> </option>
+                                                    {% for gen in gns %}
+                                                        <option value="{{ gen.gen}}">{{ gen.gen}}</option>
+                                                    {%endfor %}
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group  has-success">
+                                                <input type="text" placeholder="Part" name="part" id="part" class="form-control py-1" />
+                                            </div>
+                                        </td>
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group  has-success">
+                                                <input type="text" placeholder="SerialNo" name="serialno" id="serialno" class="form-control py-1" />
+                                            </div>
+                                        </td>
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group  has-success">
+                                                <input type="text" placeholder="Model Id" name="modelid" id="modelid" class="form-control py-1" />
+                                            </div>
+                                        </td>  
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group  has-success">
+                                                <input type="text" placeholder="Model" name="model" id="model" class="form-control py-1" />
+                                            </div>
+                                        </td>  
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group">
+                                                <select name="cpu" id="cpu" class="form-control py-1 "  >
+                                                    <option selected disabled> </option>
+                                                    {% for cpu in cpus %}
+                                                        <option value="{{ cpu.cpu}}">{{ cpu.cpu}}</option>
+                                                    {%endfor %}
+                                                </select>
+                                            </div>
+                                        </td> 
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group">
+                                                <select name="speed" id="speed" class="form-control py-1 "  >
+                                                    <option selected disabled> </option>
+                                                    {% for speed in speeds %}
+                                                        <option value="{{ speed.speed}}">{{ speed.speed}}</option>
+                                                    {%endfor %}
+                                                </select>
+                                            </div>
+                                        </td>  
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group">
+                                                <select name="ram" id="ram" class="form-control py-1 "  >
+                                                    <option selected disabled> </option>
+                                                    {% for ram in rams %}
+                                                        <option value="{{ ram.ram}}">{{ ram.ram}}</option>
+                                                    {%endfor %}
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group">
+                                                <select name="hdd" id="hdd" class="form-control py-1 "  >
+                                                    <option selected disabled> </option>
+                                                    {% for hdd in hdds %}
+                                                        <option value="{{ hdd.hdd}}">{{ hdd.hdd}}</option>
+                                                    {%endfor %}
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group">
+                                                <select name="screen" id="screen" class="form-control py-1 "  >
+                                                    <option selected disabled> </option>
+                                                    {% for screen in screens %}
+                                                        <option value="{{ screen.screen}}">{{ screen.screen}}</option>
+                                                    {%endfor %}
+                                                </select>
+                                            </div>
+                                        </td> 
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group">
+                                                <select name="odd" id="odd" class="form-control py-1 "  >
+                                                    <option selected disabled> </option>
+                                                    <option value="Yes">Yes</option>
+                                                    <option value="No">No</option>
+                                                </select>
+                                            </div>
+                                        </td> 
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group  has-success"> 
+                                                <input type="text" placeholder="Comment" name="comment" id="comment" class="form-control py-1" />
+                                            </div>
+                                        </td>
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group  has-success">
+                                                <input type="text" placeholder="Problem" name="problem" id="problem" class="form-control py-1" />
+                                            </div>
+                                        </td>
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group  has-success">
+                                                <input type="text" placeholder="Price" name="price"  id="price" class="form-control py-1" />
+                                            </div>
+                                        </td>
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group">
+                                                <select name="customer" id="customer" class="form-control py-1 "  required>
+                                                    <option selected > </option>
+                                                    {%for vendor in customer%}
+                                                        <option value="{{ vendor.username}}">{{ vendor.username}}</option>
+                                                    {%endfor %}
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group  has-success">
+                                                <input type="text" placeholder="Status" name="status" id="status" class="form-control py-1" />
+                                            </div>
+                                        </td>
+                                        
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group  has-success">
+                                                <input type="number" placeholder="Qty" name="qty" id="qty" class="form-control py-1" required />
+                                            </div>
+                                        </td>   
+                                    </tr>
+            
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="row mt-2">
+                    <div class="col-md-10">
+                        
+                    </div>
+                    <div class="col-md-2 float-end">
+                        <div class="nav-wrapperr position-relative end-0">
+                            <ul class="nav  nav-fill bg-transparent" role="tablists">
+                              <li class="nav-item ">
+                                <!-- <button type="submit" class="nav-link mb-0 px-0 btn btn-md py-2"style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);"> -->
+                                <a href="#"  class="nav-link mb-0 px-0 btn btn-md" data-url="/warranty_upload/" style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); padding: right 10px;" data-name="Upload Multiple" onclick="CreateType('Upload Multiple', this)">
+
+                                    <i class="fa fa-floppy-o text-dark" aria-hidden="true"></i>
+                                    <span class="ms-1 text-dark">Save</span></a>
+                                  
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            <!-- </form> -->
+
+
+        </div>
+    </div>
+
+</div>
+
+    <form >
+    {% csrf_token %}
+    <input type="hidden" name="name"  value="{% csrf_token %}">
+
+</form>
+<script>
+
+
+function CreateType(name, element) {
+    const url = element.getAttribute("data-url");
+
+    Swal.fire({
+        title: 'Do you want to ' + name + ' ?',
+        inputAttributes: {
+            autocapitalize: 'off'
+        },
+        showLoaderOnConfirm: true,
+        allowOutsideClick: false,
+
+        showCancelButton: true,
+        confirmButtonText: 'Yes, create',
+        cancelButtonText: 'No, cancel',
+        reverseButtons: true,
+        preConfirm: () => {
+            return new Promise((resolve, reject) => {
+                let form = document.createElement('form');
+                form.method = 'post';
+                form.action = url;
+                const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                let csrfInput = document.createElement('input');
+                
+                csrfInput.setAttribute('type', 'hidden');
+                csrfInput.setAttribute('name', 'csrfmiddlewaretoken');
+                csrfInput.setAttribute('value', csrfToken);
+                const conditions = document.getElementById('conditions').value;
+                const type = document.getElementById('type').value;
+                const qty = document.getElementById('qty').value;
+                const gen = document.getElementById('gen').value;
+                const ram = document.getElementById('ram').value;
+                const brand = document.getElementById('brand').value;
+                const screen = document.getElementById('screen').value;
+                const serialno = document.getElementById('serialno').value;
+                const modelid = document.getElementById('modelid').value;
+                const model = document.getElementById('model').value;
+                const cpu = document.getElementById('cpu').value;
+                const speed = document.getElementById('speed').value;
+                const price = document.getElementById('price').value;
+                const hdd = document.getElementById('hdd').value;
+                const list = document.getElementById('list').value;
+                const odd = document.getElementById('odd').value;
+                const comment = document.getElementById('comment').value;
+                const problem = document.getElementById('problem').value;
+                const customer = document.getElementById('customer').value;
+                const part = document.getElementById('part').value;
+
+                form.appendChild(csrfInput);
+                document.body.appendChild(form);
+                // Prevent the default form submission behavior
+                form.addEventListener('submit', function (event) {
+                    event.preventDefault();
+                });
+
+                // Serialize the form data
+                const formData = new FormData(form);
+                formData.append("conditions", conditions)
+                formData.append("type", type)
+                formData.append("qty", qty)
+                formData.append("gen", gen)
+                formData.append("ram", ram)
+                formData.append("brand", brand)
+                formData.append("screen", screen)
+                formData.append("serialno", serialno)
+                formData.append("modelid", modelid)
+                formData.append("model", model)
+                formData.append("cpu", cpu)
+                formData.append("speed", speed)
+                formData.append("price", price)
+                formData.append("hdd", hdd)
+                formData.append("list", list)
+                formData.append("odd", odd)
+                formData.append("comment", comment)
+                formData.append("problem", problem)
+                formData.append("customer", customer)
+                formData.append("part", part)
+
+                // Perform AJAX request here
+                let xhr = new XMLHttpRequest();
+                xhr.open('POST', url, true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.onload = function () {
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                        resolve();
+                    } else {
+                        reject('Error: ' + xhr.statusText);
+                    }
+                };
+                xhr.onerror = function () {
+                    reject('Request failed');
+                };
+                xhr.send(new URLSearchParams(formData)); // Serialize the form data
+            });
+        }
+    }).then(() => {
+        // Reload the page after the form submission is complete
+        // location.reload();
+
+        window.location.href = "/warranty_upload_csv";
+    });
+}
+
+
+</script>
+
+{% include 'dashboard/header/footer.html' %}

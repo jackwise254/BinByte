@@ -35,7 +35,7 @@
                         </div>
                         <div class="ms-auto text-end">
                             <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i class="far fa-trash-alt me-2"></i>Delete</a>
-                            <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
+                            <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true" onclick="return EditExpenditure();"></i>Edit</a>
                         </div>
                     </li>
                 {% endfor %}
@@ -57,11 +57,87 @@
 </style>
 <form >
     {% csrf_token %}
-    <input type="hidden" name="csrfmiddlewaretoken" id="" value="{% csrf_token %}
+    <input type="hidden" name="csrfmiddlewaretoken" id="" value="{% csrf_token %}">
+
+    
 </form>
 <script>
     function CreateExpenditure( ) {
-    
+    Swal.fire({
+        title: 'Add a description',
+        html: `
+            
+            <div class="row">
+                <div class="col-6">
+                    <select name="comment" id="userComment" class="form-control">
+                        <option selected disabled>Description</option>
+                        {% for desc in description %}
+                            <option value="{{desc.description}}">{{desc.description}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-6">
+                    <input type="text" name="amount" id="amount" class="form-control" placeholder="KES /=">
+                </div>
+
+            </div>
+        `,
+        showCancelButton: true,
+        confirmButtonText: 'Submit',
+        cancelButtonText: 'Cancel',
+        reverseButtons: true,
+        preConfirm: () => {
+            return {
+                comment: document.getElementById('userComment').value,
+                amount: document.getElementById('amount').value,
+            };
+        },
+        customClass: {
+                modal: 'custom-swal-modal' // Add your custom class here
+            },
+        onOpen: () => {
+            const confirmButton = document.querySelector('.swal2-confirm');
+            const cancelButton = document.querySelector('.swal2-cancel');
+            
+            if (confirmButton) confirmButton.classList.add('py-1 bg-dark');
+            if (cancelButton) cancelButton.classList.add('py-1');
+        }
+    }).then(async (result) => {
+        if (result.isConfirmed && result.value.comment) {
+            const comment = result.value.comment;
+            const amount = result.value.amount;
+            
+
+            const formData = new FormData();
+            formData.append('comment', comment);
+            formData.append('amount', amount);
+
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            
+            formData.append('csrfmiddlewaretoken', csrfToken);
+
+            try {
+                const response = await fetch("/expenses/", {
+                    method: 'POST',
+                    body: formData
+                    
+                });
+
+                if (!response.ok) { 
+                    const data = await response.json(); 
+                    Swal.fire('Error!', data.message || 'There was an creating an expense.', 'error');
+                } else {
+                    location.reload();
+                }
+            } catch (error) {
+                Swal.fire('Error!', 'There was an error creating an expense.', 'error');
+            }
+        }
+    });
+}
+
+
+function EditExpenditure( ) {
     Swal.fire({
         title: 'Add a description',
         html: `

@@ -1,0 +1,698 @@
+{% load static %}
+{% load humanize %}
+
+{% include 'header/header.html' %}
+
+
+  <div class="container-fluid mt-5 pt-4 test_continer ">
+    <h4 class="text-center"><u>SETTINGS</u></h4>
+    <hr class="my-3" />
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <h5 class="card-header">Type</h5>
+                <div class="card-body">
+                  <div class="table-responsive text-nowrap" style="height:45vh">
+                    <table class="table table-bordered" >
+                      <thead>
+                        <tr>
+                          <th class="text-dark">Type</th>
+                          <th class="text-dark">
+                            <span data-url="{% url 'type_add' %}" onclick="CreateType(this)">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                </svg>
+                            </span>
+                          </th>
+                          
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for type in types%}
+
+                            <tr>
+                                <td>
+                                    <strong class="text-dark">{{type.type}}</strong>
+                                </td>
+                                <td>
+                                    <!-- <a href="/deltype/{{type.id}}" > -->
+                                    <span data-name="{{type.type}}" data-id="{{type.id}}" onclick="confirmDeleteType(this)">
+
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#dc3545" class="bi bi-x-sm" viewBox="0 0 16 16">
+                                            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                                            </svg>
+                                    </span>
+                                    <!-- </a> -->
+                                </td>
+                            </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <h5 class="card-header">Conditions</h5>
+                <div class="card-body">
+                  <div class="table-responsive text-nowrap" style="height:45vh">
+                    <table class="table table-bordered" >
+                      <thead>
+                        <tr>
+                          <th class="text-dark">Condition</th>
+                          <th class="text-dark">
+                            <span data-url="{% url 'condition_add' %}" onclick="CreateType(this)">
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                </svg>
+                            </span>
+                          </th>
+                          
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for type in conditions%}
+
+                            <tr>
+                                <td>
+                                    <strong class="text-dark">{{type.conditions}}</strong>
+                                </td>
+                                <td>
+                                    <!-- <a href="/delcond/{{type.id}}" > -->
+                                    <span data-name="{{type.conditions}}" data-id="{{type.id}}" onclick="confirmDeleteCond(this)">
+
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#dc3545" class="bi bi-x-sm" viewBox="0 0 16 16">
+                                            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                                            </svg>
+                                    </span>
+                                    <!-- </a> -->
+                                </td>
+                            </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+        </div>
+
+
+
+        <div class="col-md-4">
+            <div class="card">
+                <h5 class="card-header">Brands</h5>
+                <div class="card-body">
+                  <div class="table-responsive text-nowrap" style="height:45vh">
+                    <table class="table table-bordered" >
+                      <thead>
+                        <tr>
+                          <th class="text-dark">Brand</th>
+                          <th class="text-dark">
+                            <span data-url="{% url 'brand_add' %}" onclick="CreateType(this)">
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                </svg>
+                            </span>
+                          </th>
+                          
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for type in brands%}
+
+                            <tr>
+                                <td>
+                                    <strong class="text-dark">{{type.brand}}</strong>
+                                </td>
+                                <td>
+                                    
+                                    <!-- <a href="/delbrand/{{type.id}}" > -->
+                                    <span data-name="{{type.brand}}" data-id="{{type.id}}" onclick="confirmDeleteBrand(this)">
+
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#dc3545" class="bi bi-x-sm" viewBox="0 0 16 16">
+                                            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                                            </svg>
+                                    </span>
+                                    <!-- </a> -->
+                                </td>
+                            </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+        </div>
+    </div>
+
+    <hr class="my-5" />
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <h5 class="card-header">Generations</h5>
+                <div class="card-body">
+                  <div class="table-responsive text-nowrap" style="height:45vh">
+                    <table class="table table-bordered" >
+                      <thead>
+                        <tr>
+                          <th class="text-dark">Generation</th>
+                          <th class="text-dark">
+                            <span data-url="{% url 'gen_add' %}" onclick="CreateType(this)">
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                </svg>
+                            </span>
+                          </th>
+                          
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for type in gens%}
+
+                            <tr>
+                                <td>
+                                    <strong class="text-dark">{{type.gen}}</strong>
+                                </td>
+                                <td>
+                                    <!-- <a href="/delgen/{{type.id}}" > -->
+                                    <span data-name="{{type.gen}}" data-id="{{type.id}}" onclick="confirmDeleteGen(this)">
+
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#dc3545" class="bi bi-x-sm" viewBox="0 0 16 16">
+                                            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                                            </svg>
+                                    </span>
+                                    <!-- </a> -->
+                                </td>
+                            </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <h5 class="card-header">Speeds</h5>
+                <div class="card-body">
+                  <div class="table-responsive text-nowrap" style="height:45vh">
+                    <table class="table table-bordered" >
+                      <thead>
+                        <tr>
+                          <th class="text-dark">Speed</th>
+                          <th class="text-dark">
+                            <span data-url="{% url 'speed_add' %}" onclick="CreateType(this)">
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                </svg>
+                            </span>
+                          </th>
+                          
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for type in speeds%}
+
+                            <tr>
+                                <td>
+                                    <strong class="text-dark">{{type.speed}}</strong>
+                                </td>
+                                <td>
+                                    <!-- <a href="/delspeed/{{type.id}}" > -->
+                                    <span data-name="{{type.speed}}" data-id="{{type.id}}" onclick="confirmDeleteSpeed(this)">
+
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#dc3545" class="bi bi-x-sm" viewBox="0 0 16 16">
+                                            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                                            </svg>
+                                    </span>
+                                    <!-- </a> -->
+                                </td>
+                            </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <h5 class="card-header">Hdds</h5>
+                <div class="card-body">
+                  <div class="table-responsive text-nowrap" style="height:45vh">
+                    <table class="table table-bordered" >
+                      <thead>
+                        <tr>
+                          <th class="text-dark">Hdd</th>
+                          <th class="text-dark">
+                            <span data-url="{% url 'hdd_add' %}" onclick="CreateType(this)">
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                </svg>
+                            </span>
+                          </th>
+                          
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for type in hdds%}
+
+                            <tr>
+                                <td>
+                                    <strong class="text-dark">{{type.hdd}}</strong>
+                                </td>
+                                <td>
+                                    <!-- <a href="/delhdd/{{type.id}}" > -->
+                                    <span data-name="{{type.hdd}}" data-id="{{type.id}}" onclick="confirmDeleteHdd(this)">
+
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#dc3545" class="bi bi-x-sm" viewBox="0 0 16 16">
+                                            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                                            </svg>
+                                    </span>
+                                    <!-- </a> -->
+                                </td>
+                            </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+        </div>
+    </div>
+
+    <hr class="my-5" />
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <h5 class="card-header">Cpus</h5>
+                <div class="card-body">
+                  <div class="table-responsive text-nowrap" style="height:45vh">
+                    <table class="table table-bordered" >
+                      <thead>
+                        <tr>
+                          <th class="text-dark">Cpus</th>
+                          <th class="text-dark">
+                            <span data-url="{% url 'cpu_add' %}" onclick="CreateType(this)">
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                </svg>
+                            </span>
+                          </th>
+                          
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for type in cpus%}
+
+                            <tr>
+                                <td>
+                                    <strong class="text-dark">{{type.cpu}}</strong>
+                                </td>
+                                <td>
+                                    <!-- <a href="/delcpu/{{type.id}}" > -->
+                                        <span data-name="{{type.cpu}}" data-id="{{type.id}}" onclick="confirmDeleteCpu(this)">
+
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#dc3545" class="bi bi-x-sm" viewBox="0 0 16 16">
+                                                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                                              </svg>
+                                        </span>
+                                    <!-- </a> -->
+                                </td>
+                            </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <h5 class="card-header">Rams</h5>
+                <div class="card-body">
+                  <div class="table-responsive text-nowrap" style="height:45vh">
+                    <table class="table table-bordered" >
+                      <thead>
+                        <tr>
+                          <th class="text-dark">Ram</th>
+                          <th class="text-dark">
+                            <span data-url="{% url 'ram_add' %}" onclick="CreateType(this)">
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                </svg>
+                            </span>
+                          </th>
+                          
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for type in rams%}
+
+                            <tr>
+                                <td>
+                                    <strong class="text-dark">{{type.ram}}</strong>
+                                </td>
+                                <td>
+                                    <!-- <a href="/delram/{{type.id}}" > -->
+                                    <span data-name="{{type.ram}}" data-id="{{type.id}}" onclick="confirmDeleteRam(this)">
+
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#dc3545" class="bi bi-x-sm" viewBox="0 0 16 16">
+                                            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                                            </svg>
+                                    </span>
+                                    <!-- </a> -->
+                                </td>
+                            </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <h5 class="card-header">Screens</h5>
+                <div class="card-body">
+                  <div class="table-responsive text-nowrap" style="height:45vh">
+                    <table class="table table-bordered" >
+                      <thead>
+                        <tr>
+                          <th class="text-dark">Screen</th>
+                          <th class="text-dark">
+                            <span data-url="{% url 'screen_add' %}" onclick="CreateType(this)">
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                </svg>
+                            </span>
+                          </th>
+                          
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for type in screens%}
+
+                            <tr>
+                                <td>
+                                    <strong class="text-dark">{{type.screen}}</strong>
+                                </td>
+                                <td>
+                                    <!-- <a href="/delscreen/{{type.id}}" > -->
+                                    <span data-name="{{type.screen}}" data-id="{{type.id}}" onclick="confirmDeleteScreen(this)">
+
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#dc3545" class="bi bi-x-sm" viewBox="0 0 16 16">
+                                            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                                            </svg>
+                                    </span>
+                                    <!-- </a> -->
+                                </td>
+                            </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+        </div>
+    </div>
+
+    <hr class="my-5" />
+    <div class="row">
+        <div class="col-md-5 mb-4">
+            <div class="card">
+                <h5 class="card-header">Expenses</h5>
+                <div class="card-body">
+                  <div class="table-responsive text-nowrap " style="height:45vh">
+                    <table class="table table-bordered" >
+                      <thead>
+                        <tr>
+                          <th class="text-dark">description</th>
+                          <th class="text-dark">
+                            <span data-url="{% url 'description_add' %}" onclick="CreateType(this)">
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                </svg>
+                            </span>
+                          </th>
+                          
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for type in expenses %}
+
+                            <tr>
+                                <td>
+                                    <strong class="text-dark">{{type.description}}</strong>
+                                </td>
+                                <td>
+                                    <!-- <a href="/delscreen/{{type.id}}" > -->
+                                    <span data-name="{{type.description}}" data-id="{{type.id}}" onclick="confirmDeleteExpense(this)">
+
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#dc3545" class="bi bi-x-sm" viewBox="0 0 16 16">
+                                            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                                            </svg>
+                                    </span>
+                                    <!-- </a> -->
+                                </td>
+                            </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+        </div>
+     
+    </div>
+
+  </div>
+</main>
+
+
+<form action="">
+    {% csrf_token %}
+    <input type="hidden" id="csrfToken" value="{{ csrf_token }}">
+</form>
+
+
+    
+
+      <script>
+        function confirmDelete1(element) {
+            var itemName = element.getAttribute('data-name');
+            var inputName = prompt("Type the name of the item to confirm deletion:");
+    
+            if (inputName === itemName) {
+                window.location.href = "/delaccessos/" + element.getAttribute('data-id');
+            } else {
+                alert("Name does not match. Please try again.");
+            }
+        }
+
+        function confirmDeleteExpense(element) {
+            var itemName = element.getAttribute('data-name');
+            var inputName = prompt("Type the name of the item to confirm deletion:");
+    
+            if (inputName === itemName) {
+                window.location.href = "/delexpense/" + element.getAttribute('data-id');
+            } else {
+                alert("Name does not match. Please try again.");
+            }
+
+        }
+    
+    
+    
+        function confirmDeleteType(element) {
+            var itemName = element.getAttribute('data-name');
+            var inputName = prompt("Type the name of the item to confirm deletion:");
+    
+            if (inputName === itemName) {
+                window.location.href = "/deltype/" + element.getAttribute('data-id');
+            } else {
+                alert("Name does not match. Please try again.");
+            }
+        }
+    
+    
+        function confirmDeleteCond(element) {
+            var itemName = element.getAttribute('data-name');
+            var inputName = prompt("Type the name of the item to confirm deletion:");
+    
+            if (inputName === itemName) {
+                window.location.href = "/delcond/" + element.getAttribute('data-id');
+            } else {
+                alert("Name does not match. Please try again.");
+            }
+        }
+    
+    
+        function confirmDeleteBrand(element) {
+            var itemName = element.getAttribute('data-name');
+            var inputName = prompt("Type the name of the item to confirm deletion:");
+    
+            if (inputName === itemName) {
+                window.location.href = "/delbrand/" + element.getAttribute('data-id');
+            } else {
+                alert("Name does not match. Please try again.");
+            }
+        }
+    
+    
+        function confirmDeleteGen(element) {
+            var itemName = element.getAttribute('data-name');
+            var inputName = prompt("Type the name of the item to confirm deletion:");
+    
+            if (inputName === itemName) {
+                window.location.href = "/delgen/" + element.getAttribute('data-id');
+            } else {
+                alert("Name does not match. Please try again.");
+            }
+        }
+    
+    
+        function confirmDeleteSpeed(element) {
+            var itemName = element.getAttribute('data-name');
+            var inputName = prompt("Type the name of the item to confirm deletion:");
+    
+            if (inputName === itemName) {
+                window.location.href = "/delspeed/" + element.getAttribute('data-id');
+            } else {
+                alert("Name does not match. Please try again.");
+            }
+        }
+    
+    
+        function confirmDeleteHdd(element) {
+            var itemName = element.getAttribute('data-name');
+            var inputName = prompt("Type the name of the item to confirm deletion:");
+    
+            if (inputName === itemName) {
+                window.location.href = "/delhdd/" + element.getAttribute('data-id');
+            } else {
+                alert("Name does not match. Please try again.");
+            }
+        }
+    
+    
+        function confirmDeleteInit(element) {
+            var itemName = element.getAttribute('data-name');
+            var inputName = prompt("Type the name of the item to confirm deletion:");
+    
+            if (inputName === itemName) {
+                window.location.href = "/delinit/" + element.getAttribute('data-id');
+            } else {
+                alert("Name does not match. Please try again.");
+            }
+        }
+    
+        function confirmDeleteCpu(element) {
+            var itemName = element.getAttribute('data-name');
+            var inputName = prompt("Type the name of the item to confirm deletion:");
+    
+            if (inputName === itemName) {
+                window.location.href = "/delcpu/" + element.getAttribute('data-id');
+            } else {
+                alert("Name does not match. Please try again.");
+            }
+        }
+    
+    
+        function confirmDeleteRam(element) {
+            var itemName = element.getAttribute('data-name');
+            var inputName = prompt("Type the name of the item to confirm deletion:");
+    
+            if (inputName === itemName) {
+                window.location.href = "/delram/" + element.getAttribute('data-id');
+            } else {
+                alert("Name does not match. Please try again.");
+            }
+        }
+    
+        function confirmDeleteScreen(element) {
+            var itemName = element.getAttribute('data-name');
+            var inputName = prompt("Type the name of the item to confirm deletion:");
+    
+            if (inputName === itemName) {
+                window.location.href = "/delscreen/" + element.getAttribute('data-id');
+            } else {
+                alert("Name does not match. Please try again.");
+            }
+        }
+    
+        function confirmDeleteCustomcolumn(element) {
+            var itemName = element.getAttribute('data-name');
+            var inputName = prompt("Type the name of the item to confirm deletion:");
+    
+            if (inputName === itemName) {
+                window.location.href = "/delcustomcolumn/" + element.getAttribute('data-id');
+            } else {
+                alert("Name does not match. Please try again.");
+            }
+        }
+    
+        
+ function CreateType(element) {
+    const url = element.getAttribute("data-url");
+    const csrfToken = document.getElementById("csrfToken").value;
+
+    Swal.fire({
+        title: 'Enter Name',
+
+        customClass: {
+            confirmButton: 'py-1',
+            cancelButton: 'py-1',
+            title: 'text-dark',
+            popup: 'dark-mode-swal'
+        },
+        input: 'text',
+        inputAttributes: {
+            autocapitalize: 'off'
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Submit',
+        showLoaderOnConfirm: true,
+        preConfirm: (name) => {
+            let form = document.createElement('form');
+            form.method = 'post';
+            form.action = url;
+
+            let csrfInput = document.createElement('input');
+            csrfInput.type = 'hidden';
+            csrfInput.name = 'csrfmiddlewaretoken';
+            csrfInput.value = csrfToken;
+            form.appendChild(csrfInput);
+
+            let nameInput = document.createElement('input');
+            nameInput.type = 'hidden';
+            nameInput.name = 'name';
+            nameInput.value = name;
+            form.appendChild(nameInput);
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+    });
+}
+   
+        </script>
+{% include 'header/footer.html' %}

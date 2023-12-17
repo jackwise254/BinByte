@@ -1,0 +1,11 @@
+DELIVERY NOTE
+Customer: Oscar
+Date: 2023-12-17
+Address: None
+Phone: 96255594
+Delivery No.: AA00B
+Email: oscar
+Reference No.: Credit
+Type  Description  Qty
+Allinone Allinone Allinone Allinone 1
+Total Qty: 1

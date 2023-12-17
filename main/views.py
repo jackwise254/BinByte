@@ -130,6 +130,273 @@ def SalesPerfomance(request):
 
     return render(request, "home/sales.html", context)
 
+def CashBox(request):
+    cash_box = (
+        Product.objects.filter(mode="Bank")
+        .order_by("-id")
+        .union(
+            Product.objects.filter(mode="Cash")
+            .order_by("-id")
+        )
+        .union(
+            Product.objects.filter(mode="M-pesa")
+            .order_by("-id")
+        )
+        .union(
+            Product.objects.filter(mode="Expense")
+            .order_by("-id")
+        )
+        .union(
+            Product.objects.filter(mode="Credit")
+            .order_by("-id")
+        )
+    )
+
+    context = {
+        'cash_boxs':cash_box,
+    }
+
+
+
+    return render(request, "home/cash-box.html", context)
+
+
+
+
+def type_add(request):
+    types = Type.objects.all().order_by('type')
+    if request.method =='POST':
+        t = request.POST.get('name')
+        en = Type(type=t)
+        en.save()
+    return redirect('/settings')
+
+
+def gen_add(request):
+    types = Gen.objects.all()
+    if request.method =='POST':
+        t = request.POST.get('name')
+        en = Gen(gen=t)
+        en.save()
+    return redirect('/settings')
+
+
+def speed_add(request):
+    types = Speed.objects.all()
+    if request.method =='POST':
+        t = request.POST.get('name')
+        en = Speed(speed=t)
+        en.save()
+    return redirect('/settings')
+
+
+def hdd_add(request):
+    types = Hdd.objects.all()
+    if request.method =='POST':
+        t = request.POST.get('name')
+        en = Hdd(hdd=t)
+        en.save()
+    return redirect('/settings')
+
+
+def cpu_add(request):
+    types = Cpu.objects.all()
+    if request.method =='POST':
+        t = request.POST.get('name')
+        en = Cpu(cpu=t)
+        en.save()
+    return redirect('/settings')
+
+
+def ram_add(request):
+    types = Ram.objects.all()
+    if request.method =='POST':
+        t = request.POST.get('name')
+        en = Ram(ram=t)
+        en.save()
+    return redirect('/settings')
+
+def description_add(request):
+    if request.method =='POST':
+        t = request.POST.get('name')
+        Expense_description(description=t).save()
+    return redirect("/settings")
+
+def initial(request):
+    from .models import Init
+    if request.method == 'POST':
+        init = request.POST.get('name')
+        if init:
+            Init.objects.all().delete()
+            en = Init(initial=init)
+            en.save()
+    return redirect('/settings')
+
+
+
+def brand_add(request):
+    types = Brand.objects.all()
+    if request.method =='POST':
+        t = request.POST.get('name')
+        en = Brand(brand=t)
+        en.save()
+    return redirect('/settings')
+
+
+def condition_add(request):
+    types = NewCondition.objects.all()
+    if request.method =='POST':
+        t = request.POST.get('name')
+        en = NewCondition(conditions=t)
+        en.save()
+    return redirect('/settings')
+
+
+def screen_add(request):
+    types = Screen.objects.all()
+    if request.method =='POST':
+        t = request.POST.get('name')
+        en = Screen(screen=t)
+        en.save()
+    return redirect('/settings')
+
+
+def delspeed_v(request, pk):
+    Speed.objects.filter(id=pk).delete()
+    return redirect('/settings')
+
+
+def delcreen_v(request, pk):
+    Screen.objects.filter(id=pk).delete()
+    return redirect('/settings')
+
+
+def delram_v(request, pk):
+    Ram.objects.filter(id=pk).delete()
+    return redirect('/settings')
+def delinit_v(request, pk):
+    from .models import Init
+    Init.objects.get(id=pk).delete()
+    return redirect('/settings')
+
+def delhdd_v(request, pk):
+    Hdd.objects.filter(id=pk).delete()
+    return redirect('/settings')
+
+def deltype_v(request, pk):
+    Type.objects.filter(id=pk).delete()
+    return redirect('/settings')
+
+def delexpense_v(request, pk):
+    Expense_description.objects.filter(id=pk).delete()
+    return redirect("/settings")
+
+def delcond_v(request, pk):
+    NewCondition.objects.filter(id=pk).delete()
+    return redirect('/settings')
+def delbrand_v(request, pk):
+    Brand.objects.filter(id=pk).delete()
+    return redirect('/settings')
+
+def delgen_v(request, pk):
+    Gen.objects.filter(id=pk).delete()
+    return redirect('/settings')
+
+def delcpu_v(request, pk):
+    Cpu.objects.filter(id=pk).delete()
+    return redirect('/settings')
+
+def EditExpense(request, pk):
+
+
+    return render(request, "deliveries/edit-expense.html")
+
+def update_masterlist(request,pk):
+    masterlist = Masterlist.objects.get(id=pk)
+    type = Type.objects.all()
+    conditions = NewCondition.objects.all().order_by('conditions')
+    brands = Brand.objects.all()
+    generations = Gen.objects.all()
+    cpus = Cpu.objects.all()
+    speeds = Speed.objects.all()
+    rams = Ram.objects.all()
+    hdds = Hdd.objects.all()
+    screens = Screen.objects.all()
+    vendors = Vendor.objects.all()
+
+    if request.method == 'POST':
+
+        masterlist = Masterlist.objects.filter(id=pk).update(
+
+        type=request.POST.get('type'),
+        gen=request.POST.get('gen'),
+        ram=request.POST.get('ram'),
+        brand=request.POST.get('brand'),
+        screen=request.POST.get('screen'),
+        serialno=request.POST.get('serialno'),
+        model=request.POST.get('model'),
+        cpu=request.POST.get('cpu'),
+        speed=request.POST.get('speed'),
+        price=request.POST.get('price'),
+        hdd=request.POST.get('hdd'),
+        comment=request.POST.get('comment'),
+        supplier=Vendor.objects.get(username=request.POST.get('supplier')),
+        )
+        return redirect('/stockin')
+    context ={
+        'masterlist': masterlist,
+        'brands': brands,
+        'gns': generations,
+        'cpus': cpus,
+        'speeds': speeds,
+        'rams': rams,
+        'hdds': hdds,
+        'screens': screens,
+        'vendors':vendors,
+        'types': type,
+        'conditions': conditions,
+        'user1':request.session.get('username')
+    }
+    return render(request,'uploads/update_masterlist.html',context)
+
+def Settings(request):
+    type =Type.objects.all()
+    conditions = NewCondition.objects.all().order_by('conditions')
+    brands = Brand.objects.all()
+    generations = Gen.objects.all()
+    cpus = Cpu.objects.all()
+    speeds = Speed.objects.all()
+    rams = Ram.objects.all()
+    hdds = Hdd.objects.all()
+    screens = Screen.objects.all()
+    gens = Gen.objects.all()
+    expenses = Expense_description.objects.all()
+    context ={
+        'types':type,
+        'conditions':conditions,
+        'brands':brands,
+        'generations':generations,
+        'cpus':cpus,
+        'gens':gens,
+        'speeds':speeds,
+        'rams':rams,
+        'hdds':hdds,
+        'screens':screens,
+        'selected':'settings',
+        'user':request.user,
+        "expenses":expenses,
+    }
+    return render(request, "dropdowns/settings.html", context)
+
+def SalesBox(request):
+    sales = Product.objects.all().order_by("-id")
+
+    context ={
+        'sales':sales
+    }
+
+    return render(request, "home/slaes-box.html" , context)
+
 def HomePage(request):
     # Get the current date and time
     current_date = timezone.now()
@@ -351,7 +618,7 @@ def logged_in_users_check():
 
     return users
 
-# @login_required
+# 
 def StaffMember(request):
     all_users = User.objects.all()
     active_users = logged_in_users_check()
@@ -509,6 +776,8 @@ def stockin_view(request):
     master_count = Masterlist.objects.count()
     masterlist = Masterlist.objects.all()
     lists, names = get_names_and_counts(Masterlist, types)
+
+
 
     context = {
         'count': lists,
@@ -988,6 +1257,28 @@ def increment_delvnote(delvnote):
     delv = numpy.base_repr(x, 36)
     return delv
 
+def clear_delv(request):
+    sess = request.session.get('username')
+    Dcustomer.objects.filter(d_type='delivery', user_created_at=sess, status=0).delete()
+    Temp.objects.filter(d_type='delivery', terms=sess).delete()
+    return redirect('/deliveries')
+
+def CustomerBalances(request, pk):
+    try:
+
+        customer_balances = Orders.objects.filter(name=pk).values().order_by("-id")
+    except:
+        messages.add_message(request, messages.INFO, "Something went wrong!, please try again")
+        return redirect("/view-balances")
+    
+    context ={
+        "username":pk,
+        "customer_balances":customer_balances,
+
+    }
+
+    return render(request, "home/customer-balances.html", context)
+
 @transaction.atomic
 def delvout(request):
     rands = randint(10000000, 99999999)
@@ -1007,6 +1298,7 @@ def delvout(request):
         invono = request.POST.get('invoice')
         location = request.POST.get('location')
         email = request.POST.get('email')
+        mode = request.POST.get('mode')
         customer_count = Dcustomer.objects.filter(username=customerss, user_created_at=sess, status=0, d_type='delivery').exists()
         if not customer_count:
             messages.add_message(request, messages.WARNING, 'Kindly update customer and try again...')
@@ -1015,7 +1307,14 @@ def delvout(request):
         if masterlist_count < 1:
             messages.add_message(request, messages.WARNING, 'Kindly scan Items and try again?')
             return redirect('/deliveries')
-        sold_to = Customer.objects.get(username=customerss)
+
+
+        sold_to = None
+        try:
+            sold_to = Customer.objects.get(username=customerss)
+        except:
+            sold_to = customerss
+
         check_random_temp = Temp.objects.filter(terms=sess ).values()
         check_random_product = Product.objects.filter(random=check_random_temp[0]['random']).values()
         Dcustomer.objects.filter(username=customerss, d_type='delivery', status=0, user_created_at=sess).update(random=rands, status=1)
@@ -1072,7 +1371,32 @@ def delvout(request):
                 date=datedelivered, username=customerss, email=email, user_name=sess,sold_to=sold_to
             )
         Temp.objects.filter(terms=sess).delete()
-        Orders.objects.create(name=customerss, order_type="Credit", random=rands, amount=amount, date=datedelivered)
+        if mode == "Credit":
+            existing_customer = Orders.objects.filter(name=customerss).order_by("-id").first()
+            if existing_customer:
+                total_amount = int(existing_customer.total_amount) or 0
+                total_amount += int(amount)
+
+                Orders.objects.create(
+                    name=customerss,
+                    order_type="Credit",
+                    random=rands,
+                    amount=amount,
+                    date=datedelivered,
+                    total_amount=total_amount
+                )
+            else:
+                Orders.objects.create(
+                    name=customerss,
+                    order_type="Credit",
+                    random=rands,
+                    amount=amount,
+                    date=datedelivered,
+                    total_amount=amount
+                )
+        else:
+            Orders.objects.create(name=customerss, order_type=mode, random=rands, amount=amount, date=datedelivered)
+
         
         agent = User.objects.get(username=sess)
         # UnicodeTranslateError

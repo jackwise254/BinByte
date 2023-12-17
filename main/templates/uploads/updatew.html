@@ -1,0 +1,256 @@
+{% load static %}
+{% load humanize %}
+{% include 'dashboard/header/header.html' %}
+
+<div class="container-fluid mt-5 pt-4 test_continer ">
+    <h5 class=" text-center"><u>UPDATE PRODUCT</u></h5>
+
+    <hr class="my-2" />
+    <div class="card" style="height:68vh">
+
+  
+
+        <div class="row mt-3 px-3">
+            <div class="col-2">
+                <div class="nav-wrapperr position-relative end-0">
+                    <ul class="nav  nav-fill bg-transparent" role="tablists">
+                      <li class="nav-item ">
+                        <a href="/warrantyin" class="nav-link mb-0 px-0 btn btn-md py-2"style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);">
+                            <i class="fa fa-home text-dark" aria-hidden="true"></i>
+                            <span class="ms-1 text-dark">Home</span>
+                        </a>
+                       </li>
+                    </ul>
+                </div>
+            </div>
+    
+        </div>
+
+
+        <div class="card-body" style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);">
+            <form  method="POST">
+                {% csrf_token %}
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive tbl-content text-nowrap tbl-content" style="height:21vh">
+                            <table class="table table-bordered table-responsive table-hover text-xls table-sm ">
+                                <thead  >
+                                    <tr>
+                                        <th class=" th-style th-style  ">Type  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  ">Condition &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> List&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Brand&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Gen&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Part&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Serial_no&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Modelid&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Model&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Cpu&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Speed&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Ram&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Hdd&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Screen&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Odd&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Comment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Problem&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Price&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  d-none">Date_dlvd&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th> 
+                                        <th class=" th-style  "> Vendor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Shipment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+            
+            
+                                    <tr style="font-size: 11px">
+                                        <td scope="col" class="col-5"> 
+                                            <div class="form-group">
+                                                <input type="text" class="form-control py-1"  name="type" value="{{warrantyin.type}}">
+                                            </div>
+                                        </td>
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs"> 
+                                            <div class="form-group">
+                                                <input type="text" class="form-control py-1"  name="conditions" value="{{warrantyin.conditions}}">
+
+                                            </div>
+                                        </td>
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group  has-success">
+                                                <input type="text" placeholder="List" name="list" class="form-control py-1" value="{{warrantyin.list}}" />
+                                            </div>
+                                        </td>
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control py-1"  name="brand" value="{{warrantyin.brand}}">
+
+                                            </div>
+                                        </td>
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control py-1"  name="gen" value="{{warrantyin.gen}}">
+
+                                            </div>
+                                        </td>
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group  has-success">
+                                                <input type="text" placeholder="Part" name="part" class="form-control py-1" value="{{warrantyin.part}}"/>
+                                            </div>
+                                        </td>
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group  has-success">
+                                                <input type="text" placeholder="SerialNo" name="serialno" class="form-control py-1" value="{{warrantyin.serialno}}"/>
+                                            </div>
+                                        </td>
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group  has-success">
+                                                <input type="text" placeholder="Model Id" name="modelid" class="form-control py-1" value="{{warrantyin.modelid}}"/>
+                                            </div>
+                                        </td>  
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group  has-success">
+                                                <input type="text" placeholder="Model" name="model" class="form-control py-1" value="{{warrantyin.model}}"/>
+                                            </div>
+                                        </td>  
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control py-1"  name="cpu" value="{{warrantyin.cpu}}">
+
+                                            </div>
+                                        </td> 
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control py-1"  name="speed" value="{{warrantyin.speed}}">
+
+                                            </div>
+                                        </td>  
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control py-1"  name="ram" value="{{warrantyin.ram}}">
+
+                                            </div>
+                                        </td>
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control py-1"  name="hdd" value="{{warrantyin.hdd}}">
+
+                                            </div>
+                                        </td>
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control py-1"  name="screen" value="{{warrantyin.screen}}">
+
+                                            </div>
+                                        </td> 
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control py-1"  name="odd" value="{{warrantyin.odd}}">
+
+                                            </div>
+                                        </td> 
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group  has-success">
+                                                <input type="text" placeholder="Comment" name="comment" class="form-control py-1" value="{{warrantyin.comment}}"/>
+                                            </div>
+                                        </td>
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group  has-success">
+                                                <input type="text" placeholder="Problem" name="problem" class="form-control py-1" value="{{warrantyin.problem}}"/>
+                                            </div>
+                                        </td>
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group  has-success">
+                                                <input type="text" placeholder="Price" name="price" class="form-control py-1" value="{{warrantyin.price}}"/>
+                                            </div>
+                                        </td>
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group">
+                                                <select name="customer" id="" class="form-control py-1 "  required>
+                                                    <option selected value="{{warrantyin.customer}}">{{warrantyin.customer}}</option>
+
+                                                    {% for screen in vendors %}
+                                                        <option value="{{ screen.username}}">{{ screen.username}}</option>
+                                                    {%endfor %}
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group  has-success">
+                                                <input type="text" placeholder="Status" name="status" class="form-control py-1" value="{{warrantyin.status}}"/>
+                                            </div>
+                                        </td>
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group  has-success">
+                                                <input type="text" placeholder="Shipment" name="shipno" class="form-control py-1" value="{{warrantyin.shipno}}" required/>
+                                            </div>
+                                        </td>
+                                        
+                                    </tr>
+            
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="row mt-2">
+                    <div class="col-md-10">
+                        
+                    </div>
+                    <div class="col-md-2 float-end">
+                        <div class="nav-wrapperr position-relative end-0">
+                            <ul class="nav  nav-fill bg-transparent" role="tablists">
+                              <li class="nav-item ">
+                                <button type="submit" class="nav-link mb-0 px-0 btn btn-md py-2"style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);">
+                                    <i class="fa fa-floppy-o text-dark" aria-hidden="true"></i>
+                                    <span class="ms-1 text-dark">Save</span></button>
+                                  
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+
+</div>
+
+<script>
+    
+function updateButton(item) {
+var buttonText = item.textContent || item.innerText;
+var button = document.querySelector('.custom-button1');
+button.textContent = buttonText;
+localStorage.setItem('selected disabledValue', buttonText);
+}
+
+
+document.addEventListener('DOMContentLoaded', function() {
+// The select element
+const selectElement = document.getElementById('inputGroupSelect01');
+const selectElement1 = document.getElementById('inputGroupSelect02');
+const storedValue1 = localStorage.getItem('selected disabledTable1')
+if(storedValue1){
+selectElement1.value = storedValue1;
+}
+selectElement1.addEventListener('change', function() {
+localStorage.setItem('selected disabledTable1', this.value);
+});
+// Set the value from localStorage when the page is loaded
+const storedValue = localStorage.getItem('selected disabledTable');
+if (storedValue) {
+selectElement.value = storedValue;
+}
+
+// When the value of the select changes, store it in localStorage
+selectElement.addEventListener('change', function() {
+localStorage.setItem('selected disabledTable', this.value);
+});
+});
+
+</script>
+
+{% include 'dashboard/header/footer.html' %}

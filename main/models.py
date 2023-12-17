@@ -50,6 +50,7 @@ class Narations(models.Model):
     amount = models.FloatField(null=True)
     status = models.IntegerField(default=0)
 
+
 class Orders(models.Model):
     DEBIT = 'Debit'
     CREDIT = 'Credit'
@@ -66,7 +67,13 @@ class Orders(models.Model):
     unique_key = models.CharField(null=True, max_length=200)
     random = models.IntegerField(null=True)
     total_amount = models.FloatField(null=True)
-    
+
+    # def save(self, *args, **kwargs):
+    #     if self.order_type == Orders.CREDIT:
+    #         # Credit transaction (customer buys on credit)
+    #         self.total_amount = self.total_amount + self.amount if self.total_amount else self.amount
+    #     super().save(*args, **kwargs)
+
 
 class Agents_Records(models.Model):
     name = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
@@ -330,7 +337,7 @@ def create_default_items(sender, **kwargs):
         for sp in speeds:
             Speed.objects.update_or_create(speed=sp)
         
-        modes = ['M-pesa', 'Cash', 'Bank']
+        modes = ['M-pesa', 'Cash', 'Bank', 'Credit']
         for mode in modes:
             Mode.objects.update_or_create(name=mode)
 

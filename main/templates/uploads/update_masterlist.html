@@ -1,0 +1,186 @@
+{% load static %}
+{% load humanize %}
+{% include 'header/header.html' %}
+
+<div class="container-fluid mt-5 pt-4 test_continer ">
+    <h5 class=" text-center"><u>UPDATE PRODUCT</u></h5>
+
+    <hr class="my-2" />
+    <div class="card" style="height:68vh">
+
+  
+
+        <div class="row mt-3 px-3">
+            <div class="col-2">
+                <div class="nav-wrapperr position-relative end-0">
+                    <ul class="nav  nav-fill bg-transparent" role="tablists">
+                      <li class="nav-item ">
+                        <a href="/stockin" class="nav-link mb-0 px-0 btn btn-md py-2"style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);">
+                            <i class="fa fa-home text-dark" aria-hidden="true"></i>
+                            <span class="ms-1 text-dark">Home</span>
+                        </a>
+                       </li>
+                    </ul>
+                </div>
+            </div>
+    
+        </div>
+
+
+        <div class="card-body" style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);">
+            <form  method="POST">
+                {% csrf_token %}
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive tbl-content text-nowrap tbl-content" style="height:45vh">
+                            <table class="table table-bordered table-responsive table-hover text-xls table-sm ">
+                                <thead  >
+                                    <tr>
+                                        <th class=" th-style th-style  ">Item  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  ">Serialno &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Brand&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Model&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Cpu&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Ram&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Hdd&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Date Recieved&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Supplier &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th class=" th-style  "> Price &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+            
+            
+                                    <tr style="font-size: 11px">
+                                        
+                                        <td scope="col" class="col-5"> 
+                                            <div class="form-group">
+                                                <input type="text" class="form-control py-1"  name="type" value="{{masterlist.type}}">
+                                            </div>
+                                        </td>
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs"> 
+                                            <div class="form-group">
+                                                <input type="text" class="form-control py-1"  name="serialno" value="{{masterlist.serialno}}">
+
+                                            </div>
+                                        </td>
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group  has-success">
+                                                <input type="text" placeholder="brand" name="brand" class="form-control py-1" value="{{masterlist.brand}}" />
+                                            </div>
+                                        </td>
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control py-1"  name="model" value="{{masterlist.model}}">
+
+                                            </div>
+                                        </td>
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control py-1"  name="cpu" value="{{masterlist.cpu}}">
+
+                                            </div>
+                                        </td>
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group  has-success">
+                                                <input type="text" placeholder="Part" name="ram" class="form-control py-1" value="{{masterlist.ram}}"/>
+                                            </div>
+                                        </td>
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group  has-success">
+                                                <input type="text" placeholder="SerialNo" name="hdd" class="form-control py-1" value="{{masterlist.hdd}}"/>
+                                            </div>
+                                        </td>
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group  has-success">
+                                                <input type="text" placeholder="Date Recieved" name="daterecieved" class="form-control py-1" value="{{masterlist.daterecieved}}"/>
+                                            </div>
+                                        </td>  
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group  has-success">
+                                                <select name="supplier" id="" name="supplier" class="form-control form-select py-1">
+                                                    <option value="{{masterlist.supplier.username }}">{{masterlist.supplier.username }}</option>
+                                                    {% for vendor in vendors %}
+                                                    <option value="{{vendor.username}}">{{vendor.username}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                                <!-- <input type="text" placeholder="Supplier" name="supplier" class="form-control py-1" value="{{masterlist.supplier.username }}"/> -->
+                                            </div>
+                                        </td>  
+                                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control py-1"  name="cpu" value="{{masterlist.price}}">
+
+                                            </div>
+                                        </td> 
+                                        
+                                    </tr>
+            
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="row mt-2">
+                    <div class="col-md-10">
+                        
+                    </div>
+                    <div class="col-md-2 float-end">
+                        <div class="nav-wrapperr position-relative end-0">
+                            <ul class="nav  nav-fill bg-transparent" role="tablists">
+                              <li class="nav-item ">
+                                <button type="submit" class="nav-link mb-0 px-0 btn btn-md py-2"style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);">
+                                    <i class="fa fa-floppy-o text-dark" aria-hidden="true"></i>
+                                    <span class="ms-1 text-dark">Save</span></button>
+                                  
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+
+</div>
+
+<script>
+    
+function updateButton(item) {
+var buttonText = item.textContent || item.innerText;
+var button = document.querySelector('.custom-button1');
+button.textContent = buttonText;
+localStorage.setItem('selected disabledValue', buttonText);
+}
+
+
+document.addEventListener('DOMContentLoaded', function() {
+// The select element
+const selectElement = document.getElementById('inputGroupSelect01');
+const selectElement1 = document.getElementById('inputGroupSelect02');
+const storedValue1 = localStorage.getItem('selected disabledTable1')
+if(storedValue1){
+selectElement1.value = storedValue1;
+}
+selectElement1.addEventListener('change', function() {
+localStorage.setItem('selected disabledTable1', this.value);
+});
+// Set the value from localStorage when the page is loaded
+const storedValue = localStorage.getItem('selected disabledTable');
+if (storedValue) {
+selectElement.value = storedValue;
+}
+
+// When the value of the select changes, store it in localStorage
+selectElement.addEventListener('change', function() {
+localStorage.setItem('selected disabledTable', this.value);
+});
+});
+
+</script>
+
+{% include 'header/footer.html' %}

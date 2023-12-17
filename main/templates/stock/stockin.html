@@ -87,40 +87,13 @@
                                 <div class="nav-wrapperr position-relative end-0">
                 
                                     <ul class="nav  nav-fill p-1 bg-transparent" role="tablists">
-                                        {% if has_perms_stockin_update %}
                         
-                                            <li class="nav-item position-relative">
-                                                <a class="nav-link mb-0 px-0 py-1 btn btn-md" style="box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1); border-radius: 5;" href="/update_m/{{user.pk}}">
-                                                    <i class="fa fa-pencil text-warning" ></i>
-                                                <span class="ms-1 text-dark"></span>
-                                                </a>
-                                            </li>
-                                        {%else%}
-                                            <li class="nav-item px-1">
-                                            </li>
-                                        {%endif%}
-
-                                        {% if has_perms_read_barcodes %}
-
-                                            <li class="nav-item px-1">
-                                                <a class="nav-link mb-0 px-0 py-1 btn btn-md"style="box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);"  href="/barcode_masterlists/{{user.assetid}}">
-                                                    <i class="fa fa-barcode text-dark" ></i>
-                                                <span class="ms-1 text-dark"></span>
-                                                </a>
-                                            </li>
-            
-                                            <li class="nav-item px-1">
-                                                <a class="nav-link mb-0 px-0 py-1 btn btn-md"style="box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);"  href="/barcode_masterlists_two/{{user.assetid}}">
-                                                    <i class="fa fa-qrcode text-dark" ></i>
-                                                    <span class="ms-1 text-dark"></span>
-                                                </a>
-                                            </li>
-                                        {%else%}
-                                            <li class="nav-item px-1">
-                                            </li>
-                                            <li class="nav-item px-1">
-                                            </li>
-                                        {%endif%} 
+                                        <li class="nav-item position-relative">
+                                            <a class="nav-link mb-0 px-0 py-1 btn btn-md" style="box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1); border-radius: 5;" href="/update_m/{{user.pk}}">
+                                                <i class="fa fa-pencil text-warning" ></i>
+                                            <span class="ms-1 text-dark"></span>
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
                         </td>
