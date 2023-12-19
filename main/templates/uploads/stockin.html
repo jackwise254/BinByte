@@ -53,8 +53,25 @@
                             <input type="text" name="naration"  class="form-control py-1" placeholder="Naration" required>
                         </div>
                         <div class="col-2">
-                            <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Amount</small></label>
-                            <input type="number" name="amount"  class="form-control py-1" placeholder="KES /=" required>
+                            <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Mode</small></label>
+
+                            <select name="mode" id="" class="form-control py-1 form-select" required>
+                                <option value="Credit">Credit</option>
+                                <option value="Debit">Debit</option>
+                            </select>
+                            <!-- <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Amount</small></label> -->
+                            <!-- <input type="number" name="amount"  class="form-control py-1" placeholder="KES /=" required> -->
+
+                            <!-- <div class="nav-wrapperr position-relative end-0">
+                                <ul class="nav  nav-fill bg-transparent" role="tablists">
+                                    <li class="nav-item ">
+                                    <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small></small></label>
+                                    <button type="submit" class="nav-link mb-0 px-0 btn btn-md "style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);">
+                                        <i class="fa fa-floppy-o text-dark text-xxs font-weight-bolder opacity-10 text-uppercase" aria-hidden="true"></i>
+                                        <span class="ms-1 text-dark text-xxs font-weight-bolder opacity-10 text-uppercase" >Save</span></button>
+                                    </li>
+                                </ul>
+                            </div> -->
                         </div>
                         <div class="col-2">
                             
@@ -63,6 +80,7 @@
 
                     <div class="row">
                         <div class="col-md-3">
+
                             <div class="nav-wrapperr position-relative end-0">
                                 <ul class="nav  nav-fill bg-transparent" role="tablists">
                                     <li class="nav-item ">
@@ -78,7 +96,7 @@
                             <label for="" class="text-xxs font-weight-bolder opacity-10 text-uppercase">BALANCE:</label>
                         </div>
                         <div class="col-md-3 mt-4">
-                            <input type="text" name=""  class="form-control py-1" readonly placeholder="KSH 0/=" value=" KES {{balance| intcomma}}/=">
+                            <input type="text" name=""  class="form-control py-1" readonly placeholder="KSH 0/=" value=" KES {{balance|default_if_none:0 | intcomma}}/=">
                         </div>
                     </div>
                 </form>
@@ -253,7 +271,7 @@
                 <tr>
                     <td colspan="8" class="text-dark th-style  py-2 text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold text-right">Totals:</td>
                     <td class="text-dark py-1 th-style text-xxs custom-letter-spacing font-weight-bolder text-lg"><a href="/clear_templist" class="bi bi-trashs">clear</a></td>
-                    <td class="text-dark py-1 th-style text-xxs custom-letter-spacing text-xs font-weight-bolder"><a href="/push_templist" class="bi bi-arrow-ups">Push</a></td>
+                    <td class="text-dark py-1 th-style text-xxs custom-letter-spacing text-xs font-weight-bolder"><a href="/push_templist" class="bi bi-arrow-ups">Accept</a></td>
                     <td class="text-dark py-1 th-style text-xxs custom-letter-spacing text-xs font-weight-bolder" >{{ total_vat|intcomma }}</td>
                     <td class="text-dark py-1 th-style text-xxs custom-letter-spacing text-xs font-weight-bolder">{{ total_price|intcomma }}</td>
                     <td class="text-dark py-1 th-style text-xxs custom-letter-spacing text-xs font-weight-bolder">{{ total_sub_total|intcomma }}</td>

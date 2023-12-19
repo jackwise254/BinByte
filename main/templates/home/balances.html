@@ -49,6 +49,7 @@
                     <thead  style="background-color: #849bbf; " >
     
                         <tr class="my-1 text-align text-xls" style="padding-left: 0%;">
+                            <th class="" ></th>
                             <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Username</th>
                             <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Phone</th>
                             <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Mode of payment</th>
@@ -58,6 +59,9 @@
                     <tbody id="balances">
                         {% for order in customer_balancess %}
                         <tr style="font-size: 11px" class='clickable-row' data-href="/customer-balances/{{order.name}}">
+                            <td class ="">
+                                <a href="/customer-balances/{{order.name}}" class="text-dark fa fa-eye"></a>
+                            </td>
                             <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{order.name|default_if_none:""|title}}</td>
                             {% if phone_numbers|length and forloop.counter0 < phone_numbers|length %}
                             <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{ phone_numbers.0 }}</td>
@@ -84,7 +88,10 @@
     document.getElementById("balances").innerHTML = `
     
     {% for order in customer_balancess %}
-        <tr style="font-size: 11px">
+        <tr style="font-size: 11px" class='clickable-row' data-href="/customer-balances/{{order.name}}">
+            <td class ="">
+                <a href="/customer-balances/{{order.name}}" class="text-dark fa fa-eye"></a>
+            </td>
             <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{order.name|default_if_none:""|title}}</td>
             {% if phone_numbers|length and forloop.counter0 < phone_numbers|length %}
             <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{ phone_numbers.0 }}</td>
@@ -103,7 +110,10 @@
 document.getElementById("supplier_balances").addEventListener("click", function() {
   document.getElementById("balances").innerHTML = `
     {% for order in suplier_balancess %}
-    <tr style="font-size: 11px">
+    <tr style="font-size: 11px" class='clickable-row' data-href="/supplier-balances/{{order.name}}">
+        <td class ="">
+            <a href="/supplier-balances/{{order.name}}" class="text-dark fa fa-eye content-justify-center content-center"></a>
+        </td>
         <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{order.name|default_if_none:""|title}}</td>
         {% if phone_numbers|length and forloop.counter0 < phone_numberss|length %}
         <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{ phone_numberss.0 }}</td>

@@ -47,7 +47,7 @@ urlpatterns = [
     path("cash-box/", CashBox, name="cash-box"),
     path("sales-box/", SalesBox, name="sales-box"),
     path("settings/", Settings, name="settings"),
-    
+    path("delete-expense/<int:pk>", DeleteExpense, name="delete-expense"),
     path('typeadd/' , type_add, name='type_add'),
     path('conditionadd/' , condition_add, name='condition_add'),
     path('brandadd/' , brand_add, name='brand_add'),
@@ -59,10 +59,11 @@ urlpatterns = [
     path('screenadd/' , screen_add, name='screen_add'),
     path('initialdd/' , initial, name='initial'),
     path('descriptionadd/' , description_add, name='description_add'),
-
+    path('makepayments/' , MakePayments, name='makepayments'),
+    path('makepaymentssupplier/' , MakePaymentsSup, name='makepaymentssupplier'),
+    path('print-receipt/<str:name>' , PrintReceipt, name='print-receipt'),
+    path('print-receiptsup/<str:name>' , PrintReceiptSup, name='print-receiptsup'),
     
-    
-
     path('delcreen/<int:pk>', delcreen_v, name='delcreen_v'),
     path('delram/<int:pk>', delram_v, name='delram_v'),
     path('delinit/<int:pk>', delinit_v, name='delinit_v'),
@@ -78,6 +79,7 @@ urlpatterns = [
 
     path('edit-expense/' , EditExpense, name='EditExpense'),
     path('customer-balances/<str:pk>' , CustomerBalances, name='customer-balances'),
+    path('supplier-balances/<str:pk>' , SupplierBalances, name='supplier-balances'),
     
 
     

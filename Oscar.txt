@@ -1,11 +1,95 @@
-DELIVERY NOTE
-Customer: Oscar
-Date: 2023-12-17
-Address: None
-Phone: 96255594
-Delivery No.: AA00B
-Email: oscar
-Reference No.: Credit
-Type  Description  Qty
-Allinone Allinone Allinone Allinone 1
-Total Qty: 1
+Oscar
+
+Sale Receipt
+
+Opp Golden Line Mall
+P.O BOX 3404-20100
+ TEL: 0727441192
+EMAIL: Hiltonltd@yandex.com
+
+Receipt No:3733
+
+______________________________________
+Amount:        23200.0
+______________________________________
+
+Paid In:     Credit
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        11600.0
+______________________________________
+
+Paid In:     Cash
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        11600.0
+______________________________________
+
+Paid In:     Credit
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        11600.0
+______________________________________
+
+Paid In:     Credit
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        11600.0
+______________________________________
+
+Paid In:     Credit
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        30000.0
+______________________________________
+
+Paid In:     Debit
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        1000.0
+______________________________________
+
+Paid In:     Debit
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back

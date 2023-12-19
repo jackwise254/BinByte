@@ -67,7 +67,7 @@ def Home(request):
 
 def ViewBalances(request):
     customer_balances = Orders.objects.filter(order_type="Credit").order_by("-id")
-    supplier_balances = Orders.objects.filter(order_type="Debit").order_by("-id")
+    supplier_balances = SupplierOrders.objects.all().order_by("-id")
     phone_numbers = []
     phone_numberss = []
     mode = []
@@ -119,8 +119,6 @@ def ViewBalances(request):
 
 def SalesPerfomance(request):
     agent_records = Agents_Records.objects.all().order_by("-id")
-    
-
 
     context ={
         "agent_records":agent_records,
@@ -131,32 +129,26 @@ def SalesPerfomance(request):
     return render(request, "home/sales.html", context)
 
 def CashBox(request):
-    cash_box = (
-        Product.objects.filter(mode="Bank")
-        .order_by("-id")
-        .union(
-            Product.objects.filter(mode="Cash")
-            .order_by("-id")
-        )
-        .union(
-            Product.objects.filter(mode="M-pesa")
-            .order_by("-id")
-        )
-        .union(
-            Product.objects.filter(mode="Expense")
-            .order_by("-id")
-        )
-        .union(
-            Product.objects.filter(mode="Credit")
-            .order_by("-id")
-        )
-    )
+    from itertools import chain
+
+    modes = ["Bank", "Cash", "M-pesa", "Expense", "Credit"]
+
+    cash_boxs = []
+
+    # Iterate over modes
+    for mode in modes:
+        # Filter entries for the current mode
+        mode_queryset = Product.objects.filter(mode=mode).order_by("-id")[:10]
+        cash_boxs.extend(mode_queryset)
+
+    # Calculate totals for each mode
+    mode_totals = {mode: sum(entry.amount for entry in cash_boxs if entry.mode == mode) for mode in modes}
 
     context = {
-        'cash_boxs':cash_box,
+        'cash_boxs': cash_boxs,
+        'modes': modes,
+        'mode_totals': mode_totals,
     }
-
-
 
     return render(request, "home/cash-box.html", context)
 
@@ -388,6 +380,11 @@ def Settings(request):
     }
     return render(request, "dropdowns/settings.html", context)
 
+def DeleteExpense(request, pk):
+    Expense.objects.get(id=pk).delete()
+    return redirect("/expenses")
+
+
 def SalesBox(request):
     sales = Product.objects.all().order_by("-id")
 
@@ -454,7 +451,7 @@ def HomePage(request):
         else:
             phone_numbers.append("N/A")
 
-    suplier_balances = Orders.objects.filter(order_type="Debit").order_by("-id")[:7]
+    suplier_balances = SupplierOrders.objects.all().order_by("-id")[:7]
     for order in suplier_balances:
         name = order.name
         matching_suppliers = Vendor.objects.filter(username__contains=name)
@@ -472,39 +469,68 @@ def HomePage(request):
 
 
     agent_records = Agents_Records.objects.all()[:10]
+
     if orders:
-        start_date = min(order.date for order in orders)
-        end_date = max(order.date for order in orders)
+        # Filter out orders with None values in the 'date' field
+        filtered_orders = [order for order in orders if order.date is not None]
+
+        if filtered_orders:
+            start_date = min(order.date for order in filtered_orders)
+            end_date = max(order.date for order in filtered_orders)
+        else:
+            start_date = end_date = None
     else:
         start_date = end_date = None
+
 
     # cash_box= Product.objects.all()
     from django.db.models import F
 
     # Retrieve the latest 10 records for each mode
+    from datetime import date
+
+    today = date.today()
+    bank_total = Product.objects.filter(date=today, mode="Bank").aggregate(total_amount=Sum('amount'))['total_amount']
+    cash_total = Product.objects.filter(date=today, mode="Cash").aggregate(total_amount=Sum('amount'))['total_amount']
+    mpesa_total = Product.objects.filter(date=today, mode="M-pesa").aggregate(total_amount=Sum('amount'))['total_amount']
+    credit_total = Product.objects.filter(date=today, mode="Credit").aggregate(total_amount=Sum('amount'))['total_amount']
+    # Filter expenses based on the date portion
+    expense = Expense.objects.filter(date__date=today).order_by("-id")[:10]
+    # Calculate total amount for today's expenses
+    expense_total = Expense.objects.filter(date__date=today).aggregate(total_amount=Sum('amount'))['total_amount']
+
+    print(f"expense: {expense}, today: {today}, expense_total: {expense_total}")
+
+
     cash_box = (
-        Product.objects.filter(mode="Bank")
+        Product.objects.filter(date=today, mode="Bank")
         .order_by("-id")[:10]
         .union(
-            Product.objects.filter(mode="Cash")
+            Product.objects.filter(date=today, mode="Cash")
             .order_by("-id")[:10]
         )
         .union(
-            Product.objects.filter(mode="M-pesa")
+            Product.objects.filter(date=today, mode="M-pesa")
             .order_by("-id")[:10]
         )
         .union(
-            Product.objects.filter(mode="Expense")
+            Product.objects.filter(date=today, mode="Expense")
             .order_by("-id")[:10]
         )
         .union(
-            Product.objects.filter(mode="Credit")
+            Product.objects.filter(date=today, mode="Credit")
             .order_by("-id")[:10]
         )
     )
 
     context ={
         "cash_boxs":cash_box,
+        'bank_total': bank_total,
+        'cash_total': cash_total,
+        'mpesa_total': mpesa_total,
+        'expense_total': expense_total,
+        'credit_total': credit_total,
+        "expense":expense,
         "mode":mode,
         "modes":modes,
         "suplier_balances":suplier_balances,
@@ -545,6 +571,8 @@ def Expenses_view(request):
             amount = amount,
             description = Expense_description.objects.get(description=description)
             )
+
+
             
         except:
             messages.add_message(request, messages.INFO, "Something went worng, please try again later")
@@ -836,6 +864,9 @@ def stockoutview(request):
     return render(request, template_name, context)    
 
 
+from django.utils import timezone
+from datetime import timedelta
+
 def stockout_view(request):
     template_name = "stockout/index.html"
     user1 = request.session.get('username')
@@ -853,8 +884,14 @@ def stockout_view(request):
     types = Type.objects.all()
     conditions = NewCondition.objects.all()
 
+    # Calculate the date one month ago
+    one_month_ago = timezone.now() - timedelta(days=30)
+
     master_count = Stockout.objects.count()
-    masterlist = Stockout.objects.all()
+
+    # Filter Stockout items where datedelivered is less than a month ago
+    masterlist = Stockout.objects.filter(datedelivered__lt=one_month_ago)
+
     lists, names = get_names_and_counts(Stockout, types)
 
     context = {
@@ -866,12 +903,13 @@ def stockout_view(request):
         'names': zip(names, lists),
         'names_stockin': zip(names, lists),
         'title': 'Stock',
-        'user1':user1,
+        'user1': user1,
         'title1': 'In',
         'colors': ['red', 'green', 'blue', 'yellow', 'orange'],
-        'selected':'stockout',
+        'selected': 'stockout',
     }
     return render(request, template_name, context)
+
 
 
 def FetchProduct(request, title):
@@ -930,10 +968,12 @@ def FetchStockout(request, title):
 @transaction.atomic
 def PushTemplist(request):
     rows = Templist.objects.filter(terms=request.user)
+    total_amount = 0
     # Bulk create Masterlist entries
     masterlist_entries = []
     for temp_item in rows:
         masterlist_entry = Masterlist()
+        total_amount += int(temp_item.sub_total)
 
         for field in Masterlist._meta.fields:
             if field.name != 'id':
@@ -954,12 +994,21 @@ def PushTemplist(request):
 
     # Update Narations status
     naration = Narations.objects.get(status=0)
+    order_type = naration.order_type
     naration.status = 1
     naration.save()
 
     # Create Orders entry
     # Create a new Orders object
+    total_amount_1 += total_amount
     Orders.objects.create(name=naration.vendor.username, order_type="Debit", amount=naration.balance, date=naration.date)
+    if order_type == "Credit":
+        try:
+            total_amount_1 += int(naration.balance)
+        except:
+            total_amount_1 += 0
+        SupplierOrders.objects.create(name=naration.vendor.username, order_type="Credit", amount=total_amount, date=naration.date, total_amount=total_amount)
+    # balance = SupplierOrders.objects.filter(name=supplier).values("total_amount").order_by("-id").first()
 
     # Update the total_amount field of the existing or newly created object
     Orders.objects.filter(name=naration.vendor.username).update(total_amount=F('total_amount') + naration.balance)
@@ -983,8 +1032,12 @@ def NarationSub(request):
     if request.method == "POST":
         supplier = request.POST.get('supplier')
         naration = request.POST.get('naration')
-        amount = request.POST.get('amount')
+        mode = request.POST.get('mode')
+        amount = 0
+        # amount = request.POST.get('amount')
         vendor = Vendor.objects.get(username=supplier)
+
+        balance = SupplierOrders.objects.filter(name=supplier).values("total_amount").order_by("-id").first()
 
         # Check if there is an existing record for the vendor with status=0
         if Narations.objects.filter(vendor=vendor, status=0).exists():
@@ -999,10 +1052,8 @@ def NarationSub(request):
             acc_balance = float(amount) + float(latest_balance)
         else:
             acc_balance = amount
-
         # Create a new Narations instance with the updated acc_balance
-        Narations.objects.create(vendor=vendor, naration=naration, amount=amount, balance=acc_balance, status=0)
-
+        Narations.objects.create(vendor=vendor, naration=naration, amount=amount, balance=balance['total_amount'], status=0, order_type=mode)
         return redirect("/uploadstock")
     return redirect("/uploadstock")
 
@@ -1018,6 +1069,7 @@ def upload_stock(request):
     total_vat = sum(product.vat for product in products)
     total_price = sum(product.price for product in products)
     total_sub_total = sum(product.sub_total for product in products)
+
     balance = 0
     balances = Narations.objects.filter(status=0)
     for balance in balances:
@@ -1279,6 +1331,124 @@ def CustomerBalances(request, pk):
 
     return render(request, "home/customer-balances.html", context)
 
+def SupplierBalances(request, pk):
+    try:
+
+        customer_balances = SupplierOrders.objects.filter(name=pk).values().order_by("-id")
+    except:
+        messages.add_message(request, messages.INFO, "Something went wrong!, please try again")
+        return redirect("/view-balances")
+    
+    context ={
+        "username":pk,
+        "customer_balances":customer_balances,
+
+    }
+    return render(request, "home/supplier-balances.html", context)
+
+
+
+from jinja2 import Environment, FileSystemLoader
+
+from random import randint
+import os
+import platform
+def generate_html_receiptsup(customer_name, orders):
+    companyName = customer_name
+    filename = f"{customer_name}.txt"
+    companyName = companyName + "\n\nSale Receipt\n\nOpp Golden Line Mall\nP.O BOX 3404-20100\n TEL: 0727441192\nEMAIL: Hiltonltd@yandex.com"
+    receiptNo = randint(1, 100000)
+    finalString = companyName + "\n\nReceipt No:" + str(receiptNo) + "\n"
+
+    if orders:
+        for order in orders:
+            finalString += "\n______________________________________\n" + f"Amount:        {order['amount']}" + "\n______________________________________\n\n" + f"Paid In:     {order['order_type']}" + "\n\n" +"\n" + "\nBalance:            {order['total_amount']}"  + "\n\n\nWelcome Back"
+    else:
+        finalString += "\n\nNo orders for this customer."
+
+    # try:
+    with open(filename, "w") as f:
+        f.write(finalString)
+    
+    if platform.system() == "Windows":
+        os.startfile(filename, "print")
+    else:
+        # Add code here for opening/processing files on non-Windows platforms
+        print(f"Printing not supported on {platform.system()}")
+    
+    return redirect(f"/supplier-balances/{customer_name}")
+
+
+def generate_html_receipt(customer_name, orders):
+    companyName = customer_name
+    filename = f"{customer_name}.txt"
+    companyName = companyName + "\n\nSale Receipt\n\nOpp Golden Line Mall\nP.O BOX 3404-20100\n TEL: 0727441192\nEMAIL: Hiltonltd@yandex.com"
+    receiptNo = randint(1, 100000)
+    finalString = companyName + "\n\nReceipt No:" + str(receiptNo) + "\n"
+
+    if orders:
+        for order in orders:
+            finalString += "\n______________________________________\n" + f"Amount:        {order['amount']}" + "\n______________________________________\n\n" + f"Paid In:     {order['order_type']}" + "\n\n" +"\n" + "\nBalance:            {order['total_amount']}"  + "\n\n\nWelcome Back"
+    else:
+        finalString += "\n\nNo orders for this customer."
+
+    # try:
+    with open(filename, "w") as f:
+        f.write(finalString)
+    
+    if platform.system() == "Windows":
+        os.startfile(filename, "print")
+    else:
+        # Add code here for opening/processing files on non-Windows platforms
+        print(f"Printing not supported on {platform.system()}")
+    
+    return redirect(f"/customer-balances/{customer_name}")
+    # except Exception as e:
+    #     print(f"Error generating receipt: {e}")
+    #     return None
+
+def PrintReceiptSup(request, name):
+    orders = SupplierOrders.objects.filter(name=name).values()
+    return generate_html_receiptsup(name, orders)
+
+def PrintReceipt(request, name):
+    orders = Orders.objects.filter(name=name).values()
+    return generate_html_receipt(name, orders)
+
+    return redirect(f"/customer-balances/{name}")
+
+def MakePayments(request):
+    if request.method == "POST":
+        print(f"Got the request")
+
+        customer = request.POST.get("customer")
+        amount = request.POST.get("amount")
+        orders = Orders.objects.filter(name=customer).values().order_by("-id").first()
+        if orders:
+            running_balance = int(orders['total_amount'])
+            running_balance -= int(amount)
+            rands = orders['random']
+            Orders.objects.create(name=customer, order_type="Debit", random=rands, amount=amount, total_amount=running_balance)
+
+        print(f"customer:{customer}, amount:{amount}")
+
+    return redirect(f"/customer-balances/{customer}")
+
+
+def MakePaymentsSup(request):
+    if request.method == "POST":
+        customer = request.POST.get("customer")
+        amount = request.POST.get("amount")
+        orders = SupplierOrders.objects.filter(name=customer).values().order_by("-id").first()
+        if orders:
+            running_balance = int(orders['total_amount'])
+            running_balance -= int(amount)
+            rands = orders['random']
+            SupplierOrders.objects.create(name=customer, order_type="Debit", random=rands, amount=amount, total_amount=running_balance)
+
+    return redirect(f"/supplier-balances/{customer}")
+
+
 @transaction.atomic
 def delvout(request):
     rands = randint(10000000, 99999999)
@@ -1349,6 +1519,7 @@ def delvout(request):
         .values_list('type', 'brand', 'gen', 'model', 'cpu', 'speed', 'ram', 'hdd', 'screen', 'comment')
         .annotate(count=Count('qty')))
     
+    
 
         if check_random_product.count() < 1:
             delvivery_ref = delv
@@ -1415,7 +1586,6 @@ def delvout(request):
     response = HttpResponse(receipt_output, content_type='text/plain')
     return response
     
-    
     # pdf(
     #         request, delvivery_ref, items, page, document, Stockout, customerss, rands, datedelivered, location,
     #         invono, title
@@ -1429,9 +1599,6 @@ def delvout(request):
 from escpos import printer
 
 def print_receipt(delivery_ref, items, customerss, rands, datedelivered, location, invono, title):
-    # Create a connection to the thermal printer
-    # p = printer.Serial("COM1", baudrate=9600, timeout=10)
-
     # Generate the receipt content
     receipt = []
     receipt.append(title)
@@ -1465,6 +1632,14 @@ def print_receipt(delivery_ref, items, customerss, rands, datedelivered, locatio
     # Save the receipt as a text file
     with open(output_filename, "w") as f:
         f.write("\n".join(receipt))
+
+    # For printing on Windows
+    if platform.system() == "Windows":
+        os.startfile(output_filename, "print")
+    else:
+        # Add code here for opening/processing files on non-Windows platforms
+        print(f"Printing not supported on {platform.system()}")
+
 
 
     # Print the receipt

@@ -43,6 +43,15 @@ class Vendor(models.Model):
     invono = models.CharField(max_length=200, null=True)
 
 class Narations(models.Model):
+    DEBIT = 'Debit'
+    CREDIT = 'Credit'
+
+    ORDER_CHOICES = [
+        (DEBIT, 'Debit'),
+        (CREDIT, 'Credit'),
+    ]
+
+    order_type = models.CharField(max_length=10, null=True, choices=ORDER_CHOICES)
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE, null=True)
     naration = models.CharField(max_length=200, null=True)
     date = models.DateField(auto_now=True)
@@ -63,17 +72,28 @@ class Orders(models.Model):
     order_type = models.CharField(max_length=10, null=True, choices=ORDER_CHOICES)
     name = models.CharField(max_length=200, null=True)
     amount = models.FloatField(null=True)
-    date = models.DateField(auto_now=False, null=True)
+    date = models.DateField(auto_now=True, null=True)
     unique_key = models.CharField(null=True, max_length=200)
     random = models.IntegerField(null=True)
     total_amount = models.FloatField(null=True)
 
-    # def save(self, *args, **kwargs):
-    #     if self.order_type == Orders.CREDIT:
-    #         # Credit transaction (customer buys on credit)
-    #         self.total_amount = self.total_amount + self.amount if self.total_amount else self.amount
-    #     super().save(*args, **kwargs)
 
+class SupplierOrders(models.Model):
+    DEBIT = 'Debit'
+    CREDIT = 'Credit'
+
+    ORDER_CHOICES = [
+        (DEBIT, 'Debit'),
+        (CREDIT, 'Credit'),
+    ]
+
+    order_type = models.CharField(max_length=10, null=True, choices=ORDER_CHOICES)
+    name = models.CharField(max_length=200, null=True)
+    amount = models.FloatField(null=True)
+    date = models.DateField(auto_now=True, null=True)
+    unique_key = models.CharField(null=True, max_length=200)
+    random = models.IntegerField(null=True)
+    total_amount = models.FloatField(null=True)
 
 class Agents_Records(models.Model):
     name = models.ForeignKey(User, on_delete=models.CASCADE, null=True)

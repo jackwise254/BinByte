@@ -1,0 +1,35 @@
+njuguna
+
+Sale Receipt
+
+Opp Golden Line Mall
+P.O BOX 3404-20100
+ TEL: 0727441192
+EMAIL: Hiltonltd@yandex.com
+
+Receipt No:45917
+
+______________________________________
+Amount:        46400.0
+______________________________________
+
+Paid In:     Credit
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        10000.0
+______________________________________
+
+Paid In:     Debit
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back

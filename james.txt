@@ -1,11 +1,131 @@
-DELIVERY NOTE
-Customer: james
-Date: 2023-11-21
-Address: Nairobi
-Phone: 80680994
-Delivery No.: AA005
-Email: james
-Reference No.: Cash
-Type  Description  Qty
-Laptop Laptop Laptop Laptop 1
-Total Qty: 1
+james
+
+Sale Receipt
+
+Opp Golden Line Mall
+P.O BOX 3404-20100
+ TEL: 0727441192
+EMAIL: Hiltonltd@yandex.com
+
+Receipt No:27607
+
+______________________________________
+Amount:        45000.0
+______________________________________
+
+Paid In:     Debit
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        45000.0
+______________________________________
+
+Paid In:     Debit
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        45000.0
+______________________________________
+
+Paid In:     Debit
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        45000.0
+______________________________________
+
+Paid In:     Debit
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        55000.0
+______________________________________
+
+Paid In:     Debit
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        11600.0
+______________________________________
+
+Paid In:     Credit
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        46400.0
+______________________________________
+
+Paid In:     Credit
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        11600.0
+______________________________________
+
+Paid In:     Credit
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        11600.0
+______________________________________
+
+Paid In:     Credit
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        56000.0
+______________________________________
+
+Paid In:     Debit
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back

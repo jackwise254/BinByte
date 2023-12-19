@@ -316,26 +316,31 @@
                     <div class="table-responsive">
                     <table class="table align-items-center mb-0 table-bordered" >
                         <thead>
-                        <tr>
+                        <tr id="header">
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Customer</th>
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Agent</th>
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Amount</th>
                         </tr>
                         </thead>
                         <tbody id="cash_box">
-
                             {% for cash_box in cash_boxs %}
                                 {% if cash_box.mode == "Bank"%}
                                 
                                 <tr class="px-4">
-                                    <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.username|default_if_none:""|title}}</td>
-                                    <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.user_name|default_if_none:""}} </td>
-                                    <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.amount |default_if_none:""|intcomma}} </td>
+                                    <td class="text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.username|default_if_none:""|title}}</td>
+                                    <td class=" text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.user_name|default_if_none:""}} </td>
+                                    <td class="text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.amount |default_if_none:""|intcomma}} </td>
                                 </tr>
                                 {%endif %}
                             {% endfor %}
                         
                         </tbody>
+                        <tfoot id="total_holder">
+                            <tr>
+                                <td colspan="2" class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Total:</td>
+                                <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">{{ bank_total |default_if_none:0 |intcomma }}</td>
+                            </tr>
+                        </tfoot>
                     </table>
                     </div>
                 </div>
@@ -481,14 +486,25 @@ document.getElementById("bank_box").addEventListener("click", function() {
     {% if cash_box.mode == "Bank"%}
     
     <tr class="px-4">
-        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.username|default_if_none:""|title}}</td>
-        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.user_name|default_if_none:""}} </td>
-        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.amount |default_if_none:""|intcomma}} </td>
+        <td class="text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.username|default_if_none:""|title}}</td>
+        <td class=" text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.user_name|default_if_none:""}} </td>
+        <td class="text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.amount |default_if_none:""|intcomma}} </td>
     </tr>
     {%endif %}
 {% endfor %}
+<tr>
+    <td colspan="2" class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Total:</td>
+    <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">{{ cash_total |default_if_none:0 |intcomma }}</td>
+</tr>
   
   `;
+  document.getElementById("total_holder").innerHTML = `
+  <tr>
+    <td colspan="2" class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Total:</td>
+    <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">{{ bank_total |default_if_none:0 |intcomma }}</td>
+</tr>
+  `;
+
 });
 
 
@@ -497,16 +513,25 @@ document.getElementById("cashes_box").addEventListener("click", function() {
 
   {% for cash_box in cash_boxs %}
     {% if cash_box.mode == "Cash"%}
-    
+                                
     <tr class="px-4">
-        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.username|default_if_none:""|title}}</td>
-        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.user_name|default_if_none:""}} </td>
-        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.amount |default_if_none:""|intcomma}} </td>
+        <td class=" text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.username|default_if_none:""|title}}</td>
+        <td class="text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.user_name|default_if_none:""}} </td>
+        <td class=" text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.amount |default_if_none:""|intcomma}} </td>
     </tr>
     {%endif %}
 {% endfor %}
-  
+
+    
+    
   `;
+  document.getElementById("total_holder").innerHTML = `
+  <tr>
+    <td colspan="2" class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Total:</td>
+    <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">{{ cash_total |default_if_none:0 |intcomma }}</td>
+</tr>
+  `;
+
 });
 
 document.getElementById("credit_box").addEventListener("click", function() {
@@ -516,9 +541,9 @@ document.getElementById("credit_box").addEventListener("click", function() {
     {% if cash_box.mode == "Credit"%}
     
     <tr class="px-4">
-        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.username|default_if_none:""|title}}</td>
-        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.user_name|default_if_none:""}} </td>
-        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.amount |default_if_none:""|intcomma}} </td>
+        <td class="text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.username|default_if_none:""|title}}</td>
+        <td class="text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.user_name|default_if_none:""}} </td>
+        <td class="text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.amount |default_if_none:""|intcomma}} </td>
     </tr>
     {%endif %}
 {% endfor %}
@@ -526,25 +551,46 @@ document.getElementById("credit_box").addEventListener("click", function() {
 
 
   `;
+  document.getElementById("total_holder").innerHTML = `
+  <tr>
+    <td colspan="2" class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Total:</td>
+    <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">{{ credit_total |default_if_none:0 |intcomma }}</td>
+</tr>
+  `;
+
 });
 
 
 
 document.getElementById("expense_box").addEventListener("click", function() {
+
+    document.getElementById("header").innerHTML = `
+    <tr>
+        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Name</th>
+        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Description</th>
+        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Amount</th>
+    </tr>
+     `;
+
   document.getElementById("cash_box").innerHTML = `
 
-  {% for cash_box in cash_boxs %}
-    {% if cash_box.mode == "Expense"%}
+  {% for cash_box in expense %}
     
     <tr class="px-4">
-        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.username|default_if_none:""|title}}</td>
-        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.user_name|default_if_none:""}} </td>
-        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.amount |default_if_none:""|intcomma}} </td>
+        <td class="text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.name|default_if_none:""|title}}</td>
+        <td class="text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.description.description|default_if_none:""}} </td>
+        <td class="text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.amount |default_if_none:""|intcomma}} </td>
     </tr>
-    {%endif %}
 {% endfor %}
   
   `;
+  document.getElementById("total_holder").innerHTML = `
+  <tr>
+    <td colspan="2" class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Total:</td>
+    <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">{{ expense_total |default_if_none:0 |intcomma }}</td>
+</tr>
+  `;
+
 });
 
 document.getElementById("mpesa_box").addEventListener("click", function() {
@@ -553,14 +599,21 @@ document.getElementById("mpesa_box").addEventListener("click", function() {
     {% if cash_box.mode == "M-pesa"%}
     
     <tr class="px-4">
-        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.username|default_if_none:""|title}}</td>
-        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.user_name|default_if_none:""}} </td>
-        <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.amount |default_if_none:""|intcomma}} </td>
+        <td class="text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.username|default_if_none:""|title}}</td>
+        <td class=" text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.user_name|default_if_none:""}} </td>
+        <td class="text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.amount |default_if_none:""|intcomma}} </td>
     </tr>
     {%endif %}
 {% endfor %}
   
   `;
+  document.getElementById("total_holder").innerHTML = `
+  <tr>
+    <td colspan="2" class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Total:</td>
+    <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">{{ mpesa_total |default_if_none:0 |intcomma }}</td>
+</tr>
+  `;
+
 });
 
 

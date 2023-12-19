@@ -41,8 +41,10 @@ INSTALLED_APPS = [
     'users',
     'django.contrib.humanize',
     'mathfilters',
-
 ]
+
+SESSION_COOKIE_AGE = 10800  # 3 hours * 3600 seconds per hour
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -52,8 +54,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
 ]
+
 
 
 
