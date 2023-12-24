@@ -103,7 +103,9 @@
             </div>
 
 
-            <div class="col-md-2">
+            <div class="col-md-2 mt-4 pt-4">
+                <div class="digital-number ms-1 " style="text-align: center; padding-top: -30px; height: 1px; font-size: 35px;">{{ count | intcomma }} </div>
+
             </div>
             <div class="col-md-5">
                 <form method="POST">
@@ -174,11 +176,16 @@
                         </div>
                         
                         <div class="col-2">
-                            <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Price</small></label>
-                            <input type="text" class="form-control py-1" name="price"  placeholder="price">
+                            <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Buying Price</small></label>
+                            <input type="number" class="form-control py-1" name="bprice"  placeholder="price">
                         </div>
-                        <div class="col-3">
-                            <div class="nav-wrapperr position-relative end-0">
+                        <div class="col-2">
+                            <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small>Selling Price</small></label>
+                            <input type="number" class="form-control py-1" name="sprice"  placeholder="price">
+
+                        </div>
+                        <div class="col-2">
+                            <div class="nav-wrapperr position-relative end-0 ">
                                 <ul class="nav  nav-fill bg-transparent" role="tablists">
                                     <li class="nav-item ">
                                     <label for="" style="margin-bottom: 0;" class="text-xxs font-weight-bolder opacity-10 text-uppercase"><small></small></label>
@@ -192,7 +199,7 @@
                             </div>
                         </div>
 
-                        <div class="col-3">
+                        <div class="col-2">
                             <div class="nav-wrapperr position-relative end-0">
                                 <ul class="nav  nav-fill bg-transparent" role="tablists">
                                     <li class="nav-item ">
@@ -228,9 +235,8 @@
                 <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Hdd</th>
                 <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Date Rcvd</th>
                 <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Supplier</th>
-                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >% VAT</th>
-                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Unit Price</th>
-                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Sub Total</th>
+                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Buying Price</th>
+                <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Selling Price</th>
             </tr>
         </thead>
             <tbody>
@@ -253,9 +259,8 @@
                     <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.hdd |default_if_none:""  }} </td>
                     <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.daterecieved |default_if_none:""  }} </td>
                     <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.supplier.username |default_if_none:""  }} </td>
-                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.vat |intcomma|default_if_none:""  }} </td>
-                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.price |intcomma|default_if_none:""  }} </td>
-                    <td class ="text-dark py-1 custom-letter-spacing  text-xs ">{{user.sub_total |intcomma|default_if_none:""  }}</td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.bprice |intcomma|default_if_none:""  }} </td>
+                    <td class ="text-dark py-1 custom-letter-spacing  text-xs ">{{user.sprice |intcomma|default_if_none:""  }}</td>
                 </tr>
           
             </tbody>
@@ -272,7 +277,7 @@
                     <td colspan="8" class="text-dark th-style  py-2 text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold text-right">Totals:</td>
                     <td class="text-dark py-1 th-style text-xxs custom-letter-spacing font-weight-bolder text-lg"><a href="/clear_templist" class="bi bi-trashs">clear</a></td>
                     <td class="text-dark py-1 th-style text-xxs custom-letter-spacing text-xs font-weight-bolder"><a href="/push_templist" class="bi bi-arrow-ups">Accept</a></td>
-                    <td class="text-dark py-1 th-style text-xxs custom-letter-spacing text-xs font-weight-bolder" >{{ total_vat|intcomma }}</td>
+                    <!-- <td class="text-dark py-1 th-style text-xxs custom-letter-spacing text-xs font-weight-bolder" >{{ total_vat|intcomma }}</td> -->
                     <td class="text-dark py-1 th-style text-xxs custom-letter-spacing text-xs font-weight-bolder">{{ total_price|intcomma }}</td>
                     <td class="text-dark py-1 th-style text-xxs custom-letter-spacing text-xs font-weight-bolder">{{ total_sub_total|intcomma }}</td>
                 </tr>
@@ -300,7 +305,8 @@
         localStorage.setItem('cpu', document.querySelector('[name="cpu"]').value);
         localStorage.setItem('ram', document.querySelector('[name="ram"]').value);
         localStorage.setItem('hdd', document.querySelector('[name="hdd"]').value);
-        localStorage.setItem('price', document.querySelector('[name="price"]').value);
+        localStorage.setItem('bprice', document.querySelector('[name="bprice"]').value);
+        localStorage.setItem('sprice', document.querySelector('[name="sprice"]').value);
         
         this.style.boxShadow = 'none'; // Lowering the button's elevation
         
@@ -353,8 +359,11 @@ document.addEventListener('DOMContentLoaded', function() {
     if (localStorage.getItem('hdd')) {
         document.querySelector('[name="hdd"]').value = localStorage.getItem('hdd');
     }
-    if (localStorage.getItem('price')) {
-        document.querySelector('[name="price"]').value = localStorage.getItem('price');
+    if (localStorage.getItem('bprice')) {
+        document.querySelector('[name="bprice"]').value = localStorage.getItem('bprice');
+    }
+    if (localStorage.getItem('sprice')) {
+        document.querySelector('[name="sprice"]').value = localStorage.getItem('sprice');
     }
 });
 
@@ -367,7 +376,8 @@ function clearLocalStorageAfterSave() {
     localStorage.removeItem('cpu');
     localStorage.removeItem('ram');
     localStorage.removeItem('hdd');
-    localStorage.removeItem('price');
+    localStorage.removeItem('bprice');
+    localStorage.removeItem('sprice');
 }
 
 

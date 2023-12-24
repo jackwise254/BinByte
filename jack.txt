@@ -1,11 +1,11 @@
 DELIVERY NOTE
 Customer: jack
-Date: 2023-12-19
+Date: 2023-12-21
 Address: nairobi
-Phone: 43961219
-Delivery No.: AA00D
+Phone: 85366401
+Delivery No.: AA00Q
 Email: jack
 Reference No.: M-pesa
 Type  Description  Qty
-SSD SSD SSD SSD 1
-Total Qty: 1
+Laptop Laptop Laptop Laptop 2
+Total Qty: 2

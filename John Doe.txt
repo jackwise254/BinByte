@@ -1,0 +1,14 @@
+                Receipt                 
+Customer: John Doe
+Date: 2023-01-01
+Address: 123 Main St, City
+Phone: 123-456-7890
+Delivery No.: 12345
+Email: john doe
+Reference No.: INV123
+
+Type  Description  Qty
+Item1   Item1   Item1   5
+Item2   Item2   Item2   3
+
+Total Qty: 8

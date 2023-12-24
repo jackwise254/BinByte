@@ -45,7 +45,7 @@
                         </div>
 
                         <div class="ms-auto text-end d-flex flex-column">
-                            <span class="text-xs">Paid: <span class=" ms-sm-2 font-weight-bold {% if customer.order_type == 'Debit' %} text-success {% else %} text-danger {% endif %}">{{customer.amount}}</span></span>
+                            <span class="text-xs">Paid: <span class=" ms-sm-2 font-weight-bold {% if customer.order_type == 'Credit' %} text-danger {% else %} text-success {% endif %}">{{customer.amount}}</span></span>
                             <span class="text-xs">Running Balance:<span class="text-dark ms-sm-2 font-weight-bold">{{customer.total_amount}}</span></span>
                         </div>
                     </li>

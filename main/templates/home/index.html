@@ -249,10 +249,11 @@
                             <tr class="px-4">
                                 <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{agent.name|default_if_none:""|title}}</td>
                                 <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{agent.units|default_if_none:""|intcomma}} </td>
-                                <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{agent.returned_units |default_if_none:""|intcomma}} </td>
-                                <td class="px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{agent.commission|default_if_none:""|intcomma}}</td>
-                                <td class="px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{agent.commission|default_if_none:""|intcomma}}</td>
-                                <td class="px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{agent.commission|default_if_none:""|intcomma}}</td>
+                                <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{agent.sales_revenue |default_if_none:""|floatformat:2|intcomma|intcomma}} </td>
+                                <td class="px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{agent.returned_units|default_if_none:""|intcomma}}</td>
+                                <td class="px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{agent.refund_amound|default_if_none:""|floatformat:2|intcomma|intcomma}}</td>
+                                <td class="px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{ agent.commission|default_if_none:''|floatformat:2|intcomma }}
+                                </td>
                                 
                             </tr>
                         {% endfor %}
@@ -388,6 +389,7 @@
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Qty</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Mode of payment</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Amount</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Profit</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -397,6 +399,7 @@
                                 <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{sale.total|default_if_none:""|title}} </td>
                                 <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{sale.mode|default_if_none:""|title}}</td>
                                 <td class="px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{sale.amount|default_if_none:""|intcomma}}</td>
+                                <td class="px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{sale.profit|default_if_none:""|intcomma}}</td>
                                 
                             </tr>
                         {% endfor %}

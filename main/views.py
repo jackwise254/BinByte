@@ -428,6 +428,8 @@ def HomePage(request):
     product_labels = [item['type'] for item in top_labels]
     stock = Masterlist.objects.all().count()
     sales = Product.objects.all().order_by("-id")[:10]
+    # stockouts = Product.objects.select_related('stockout').order_by("-id")[:10]
+
     orders = Orders.objects.all().order_by("-id")[:5]
     customer_balances = Orders.objects.filter(order_type="Credit").order_by("-id")[:7]
     phone_numbers = []
@@ -498,8 +500,6 @@ def HomePage(request):
     expense = Expense.objects.filter(date__date=today).order_by("-id")[:10]
     # Calculate total amount for today's expenses
     expense_total = Expense.objects.filter(date__date=today).aggregate(total_amount=Sum('amount'))['total_amount']
-
-    print(f"expense: {expense}, today: {today}, expense_total: {expense_total}")
 
 
     cash_box = (
@@ -973,7 +973,7 @@ def PushTemplist(request):
     masterlist_entries = []
     for temp_item in rows:
         masterlist_entry = Masterlist()
-        total_amount += int(temp_item.sub_total)
+        total_amount += int(temp_item.bprice)
 
         for field in Masterlist._meta.fields:
             if field.name != 'id':
@@ -997,19 +997,25 @@ def PushTemplist(request):
     order_type = naration.order_type
     naration.status = 1
     naration.save()
-
+    total_amount_1 = 0
     # Create Orders entry
     # Create a new Orders object
-    total_amount_1 += total_amount
+    total_amount_1 = total_amount
     Orders.objects.create(name=naration.vendor.username, order_type="Debit", amount=naration.balance, date=naration.date)
+
+    # total_amount_1 = SupplierOrders.objects.filter(name=naration.vendor.username).order_by("-id").first()
+    # print(f"total_amount_1:{total_amount_1}")
+    # total_amount_1 = int(total_amount_1.total_amount)
     if order_type == "Credit":
         try:
             total_amount_1 += int(naration.balance)
         except:
             total_amount_1 += 0
-        SupplierOrders.objects.create(name=naration.vendor.username, order_type="Credit", amount=total_amount, date=naration.date, total_amount=total_amount)
-    # balance = SupplierOrders.objects.filter(name=supplier).values("total_amount").order_by("-id").first()
 
+        SupplierOrders.objects.create(name=naration.vendor.username, order_type="Credit", amount=total_amount, date=naration.date, total_amount=total_amount_1)
+    else:
+        SupplierOrders.objects.create(name=naration.vendor.username, order_type=order_type, amount=total_amount, date=naration.date, total_amount=int(naration.balance))
+    # balance = SupplierOrders.objects.filter(name=supplier).values("total_amount").order_by("-id").first()
     # Update the total_amount field of the existing or newly created object
     Orders.objects.filter(name=naration.vendor.username).update(total_amount=F('total_amount') + naration.balance)
 
@@ -1065,11 +1071,11 @@ def upload_stock(request):
     rams = Ram.objects.all()
     brands = Brand.objects.all()
     suppliers = Vendor.objects.all()
-    products = Templist.objects.all()
+    products = Templist.objects.filter(terms=request.user)
+    count = products.count()
     total_vat = sum(product.vat for product in products)
-    total_price = sum(product.price for product in products)
-    total_sub_total = sum(product.sub_total for product in products)
-
+    total_price = sum(product.bprice for product in products)
+    total_sub_total = sum(product.sprice for product in products)
     balance = 0
     balances = Narations.objects.filter(status=0)
     for balance in balances:
@@ -1082,7 +1088,8 @@ def upload_stock(request):
             cpu = request.POST.get('cpu')
             ram = request.POST.get('ram')
             hdd = request.POST.get('hdd')
-            price = request.POST.get('price')
+            bprice = request.POST.get('bprice')
+            sprice = request.POST.get('sprice')
             brand = request.POST.get('brand')
             supplier = Narations.objects.get(status=0)
             vendor = Vendor.objects.get(id=supplier.vendor.id)
@@ -1092,7 +1099,7 @@ def upload_stock(request):
                 return redirect('/uploadstock')
 
             Templist.objects.create(
-                terms=request.user, brand=brand,type=types,model=model,cpu=cpu, ram=ram,hdd=hdd,price=price, supplier=vendor, serialno=serialno
+                terms=request.user, brand=brand,type=types,model=model,cpu=cpu, ram=ram,hdd=hdd,bprice=bprice, supplier=vendor, serialno=serialno,sprice=sprice
             )
         except:
             messages.add_message(request, messages.INFO, "Please add naration add try again")
@@ -1103,6 +1110,7 @@ def upload_stock(request):
         return redirect('/uploadstock')
     
     context = {
+        "count":count,
         "balance":balance,
         'total_vat':total_vat,
         'total_price':total_price,
@@ -1251,6 +1259,7 @@ def delvsub(request):
     if request.method =='POST':
         sess = request.session.get('username')
         assetid=request.POST.get('assetid')
+        bprice=request.POST.get('bprice')
         
         rows = Masterlist.objects.filter(Q(serialno=assetid))
         assets = []
@@ -1269,6 +1278,7 @@ def delvsub(request):
                     temp_entry.terms=sess
                     temp_entry.d_type='delivery'
                     temp_entry.is_active = True
+                    temp_entry.sub_total = bprice
                     temp_entry.save()
 
             else:
@@ -1493,9 +1503,10 @@ def delvout(request):
         delv = delvgenerate(table)
         rands = generate_new_random_number(rands)
         pdfs = '.pdf'
-        document = f"{customerss}{delv}{pdfs}"
+        document = f"{customerss}{delv}"
         excell = f"{rands}_{customerss}.xls"
         amount = 0
+        bprice = 0
         rows = Temp.objects.filter(d_type='delivery', terms=sess,is_active=True)
         units = rows.count()
         for temp_item in rows:
@@ -1505,6 +1516,7 @@ def delvout(request):
                 setattr(stockout_entry, field, getattr(temp_item, field))
             stockout_entry.qty = 1
             amount += temp_item.sub_total
+            bprice += temp_item.bprice
 
             stockout_entry.datedelivered = datedelivered
             stockout_entry.random = rands
@@ -1518,16 +1530,14 @@ def delvout(request):
         items = (Stockout.objects.filter(random=rands)
         .values_list('type', 'brand', 'gen', 'model', 'cpu', 'speed', 'ram', 'hdd', 'screen', 'comment')
         .annotate(count=Count('qty')))
-    
-    
-
+        print(f"bprice:{bprice}")
         if check_random_product.count() < 1:
             delvivery_ref = delv
 
             data = [Product(
                 fname=fname, lname=lname, amount=amount,mode=invono, invono=invono, total=Temp.objects.filter(d_type='delivery', terms=sess, is_active=True).count(),
                 location=location, document=document, delvnote=delv, ref=rands, id_no=excell, random=rands,
-                date=datedelivered, username=customerss, email=email, user_name=sess, sold_to=sold_to,
+                date=datedelivered, username=customerss, email=email, user_name=sess, sold_to=sold_to,bprice=bprice
             )]
             Product.objects.bulk_create(data)
         else:
@@ -1539,13 +1549,23 @@ def delvout(request):
             Product.objects.filter(random=check_random_temp[0]['random']).update(
                 fname=fname, lname=lname, amount=amount,mode=invono,invono=invono, total=Temp.objects.filter(d_type='delivery', terms=sess, is_active=True).count(),
                 location=location, document=document, ref=rands, id_no=excell, random=rands,
-                date=datedelivered, username=customerss, email=email, user_name=sess,sold_to=sold_to
+                date=datedelivered, username=customerss, email=email, user_name=sess,sold_to=sold_to,bprice=bprice
             )
         Temp.objects.filter(terms=sess).delete()
+        existing_customer = Orders.objects.filter(name=customerss).order_by("-id").first()
+        if existing_customer:
+
+            if existing_customer.total_amount is not None:
+                total_amount = int(existing_customer.total_amount)
+            else:
+                total_amount = 0
+        else:
+            total_amount = 0
+
         if mode == "Credit":
             existing_customer = Orders.objects.filter(name=customerss).order_by("-id").first()
             if existing_customer:
-                total_amount = int(existing_customer.total_amount) or 0
+
                 total_amount += int(amount)
 
                 Orders.objects.create(
@@ -1566,8 +1586,7 @@ def delvout(request):
                     total_amount=amount
                 )
         else:
-            Orders.objects.create(name=customerss, order_type=mode, random=rands, amount=amount, date=datedelivered)
-
+            Orders.objects.create(name=customerss, order_type=mode, random=rands, amount=amount, date=datedelivered, total_amount=total_amount)
         
         agent = User.objects.get(username=sess)
         # UnicodeTranslateError
@@ -1575,13 +1594,17 @@ def delvout(request):
         Agents_Records.objects.update_or_create(
             name=User.objects.get(username=sess),
             defaults={
+                'sales_revenue':F('sales_revenue')+ int(amount),
                 'units': F('units') + units, 
                 'commission': F('commission') + int(amount) * 0.007,
                 'random':rands,
             }
         )
 
-    receipt_output = print_receipt(delvivery_ref, items, customerss, rands, datedelivered, location, invono, title)
+    print(f"items:{items}")
+    receipt_output = generate_receipt_txt(delvivery_ref, items, customerss, rands, datedelivered, location, invono, title, document)
+
+    return redirect("/sales")
     # Create an HTTP response with the receipt content
     response = HttpResponse(receipt_output, content_type='text/plain')
     return response
@@ -1596,91 +1619,80 @@ def delvout(request):
 
 # def print_receipt(delivery_ref, items, customerss, rands, datedelivered, location, invono, title):
 # from escpos import printer
-from escpos import printer
+import platform
+import os
 
-def print_receipt(delivery_ref, items, customerss, rands, datedelivered, location, invono, title):
+def generate_receipt_txt(delivery_ref, items, customerss, rands, datedelivered, location, invono, title, document):
     # Generate the receipt content
     receipt = []
-    receipt.append(title)
-    receipt.append("Customer: {}".format(customerss))
-    receipt.append("Date: {}".format(datedelivered))
-    receipt.append("Address: {}".format(location))
-    receipt.append("Phone: {}".format(rands))
-    receipt.append("Delivery No.: {}".format(delivery_ref))
-    receipt.append("Email: {}".format(customerss.lower()))
-    receipt.append("Reference No.: {}".format(invono))
+    receipt.append(title.center(40))  # Center the title in a 40-character width
 
-    # Calculate the maximum length for each field
-    max_type_length = max(len(str(item[0])) for item in items)
-    max_description_length = max(len(item[0] + ' ' + item[0] + ' ' + item[0]) for item in items)
-    max_qty_length = max(len(str(item[10])) for item in items)
+    receipt.append(f"Customer: {customerss}")
+    receipt.append(f"Date: {datedelivered}")
+    receipt.append(f"Address: {location}")
+    receipt.append(f"Phone: {rands}")
+    receipt.append(f"Delivery No.: {delivery_ref}")
+    receipt.append(f"Email: {customerss.lower()}")
+    receipt.append(f"Reference No.: {invono}")
 
     # Header for the "Type  Description  Qty" section
     header = "Type  Description  Qty"
-    receipt.append(header)
+    receipt.append("\n" + header)
 
     # Generate item lines based on the maximum lengths
     for item in items:
-        item_line = "{:<{}} {:<{}} {:<{}}".format(item[0], max_type_length, item[0] + ' ' + item[0] + ' ' + item[0], max_description_length, item[10], max_qty_length)
+
+        print(f"item:{item}")
+        item_line = f"{item[0]}   {item[0]}   {item[0]}   {item[10]}"
         receipt.append(item_line)
 
     # Calculate the total quantity
     total_qty = sum(item[10] for item in items)
-    receipt.append("Total Qty: {}".format(total_qty))
-    output_filename = f"{customerss}.txt"
+    receipt.append("\n" + f"Total Qty: {total_qty}")
 
     # Save the receipt as a text file
-    with open(output_filename, "w") as f:
-        f.write("\n".join(receipt))
+    txt_filename = f"{document}.txt"
+    folder_path = '/main/'
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
+    file_path = os.path.join(folder_path, f"{txt_filename}")
 
+    with open(file_path, "w") as txt_file:
+        txt_file.write("\n".join(receipt))
     # For printing on Windows
     if platform.system() == "Windows":
-        os.startfile(output_filename, "print")
+        os.startfile(file_path, "print")
     else:
         # Add code here for opening/processing files on non-Windows platforms
         print(f"Printing not supported on {platform.system()}")
 
 
+from django.http import HttpResponse
+from escpos.printer import Usb
+import os
 
-    # Print the receipt
-    # for line in receipt:
-    #     p.text(line + '\n')
+def PrintDocument(request, document):
+    # Specify the folder path
+    folder_path = "/main/"
 
-    # # Cut the paper
-    # p.cut()
+    # Construct the file path
+    txt_filename = f"{document}.txt"
+    file_path = os.path.join(folder_path, txt_filename)
 
-    # # Close the printer connection
-    # p.close()
+    # Check if the file exists
+    if os.path.exists(file_path):
+        # Read the content of the file
+        with open(file_path, "r") as txt_file:
+            receipt_content = txt_file.read()
 
-# Usage example
-# items = [('Product1', 'Category1', 'Brand1', 'Description1', 1)]
-# print_receipt("AA001", items, "Customer Name", "1234567890", "2023-11-04", "Delivery Address", "iTEST1", "Receipt Title", "receipt.txt")
-
-
-
-
-def generate_receipt(delivery_ref, items, customerss, rands, datedelivered, location, invono, title):
-    p = printer.Serial("COM1", baudrate=9600)
-    p = printer.Serial("/dev/ttyUSB0", baudrate=9600)
-
-
-    receipt_content = print_receipt(delivery_ref, items, customerss, rands, datedelivered, location, invono, title)
-
-    # Send the receipt content to the printer
-    p.text(receipt_content)
-
-    # Cut the paper and close the printer
-    p.cut()
-    p.close()
-
-
-# Example usage
-# receipt_output = print_receipt(delivery_ref, items, customerss, rands, datedelivered, location, invono, title)
-# print(receipt_output)  # This will print the receipt to the screen
-
-# if __name__ == "__main__":
-#     print_receipt(delivery_ref, items, session_username, Model, customers, rands, datedelivered, location, invono, title)
-
+        # Print the receipt
+        printer = Usb(0x0416, 0x5011)  # Adjust the USB vendor and product ID
+        printer.text(receipt_content)
+        printer.cut()
+        # Return a response
+        return HttpResponse(f"Receipt {document} printed successfully.")
+    else:
+        return HttpResponse(f"Receipt {document} not found.")
 
 def delvcsv(request):
     pass

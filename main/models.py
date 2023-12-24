@@ -102,6 +102,8 @@ class Agents_Records(models.Model):
     commission = models.FloatField(null=True)
     random = models.IntegerField(null=True)
     date = models.DateField(auto_now=True)
+    sales_revenue = models.IntegerField(default=0)
+    refund_amound =  models.IntegerField(default=0)
 
 
 class Masterlist(models.Model):
@@ -125,7 +127,8 @@ class Masterlist(models.Model):
     unit_price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     total = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     vat = models.DecimalField(max_digits=10, decimal_places=2, null=True)
-    price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    bprice = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    sprice = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     sub_total = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     terms = models.CharField(max_length=200, null=True)
     random = models.CharField(max_length=200, null=True)
@@ -133,33 +136,8 @@ class Masterlist(models.Model):
     class Meta:
         ordering = ["-id"]
 
-class Product(models.Model):
-    fname = models.CharField(max_length=200, null=True)
-    lname = models.CharField(max_length=200, null=True)
-    vendor = models.CharField(max_length=200, null=True)
-    customer = models.CharField(max_length=200, null=True)
-    email = models.CharField(max_length=200, null=True)
-    username = models.CharField(max_length=200, null=True)
-    user_name = models.CharField(max_length=200, null=True)
-    id_no = models.CharField(max_length=200, null=True)
-    document = models.CharField(max_length=200, null=True)
-    ref = models.CharField(max_length=200, null=True)
-    random = models.CharField(max_length=200, null=True)
-    address = models.CharField(max_length=200, null=True)
-    phone = models.CharField(max_length=200, null=True)
-    delvnote = models.CharField(max_length=200, null=True)
-    location = models.CharField(max_length=200, null=True)
-    date = models.CharField(max_length=200, null=True)
-    invono = models.CharField(max_length=200, null=True)
-    sold_to = models.CharField(max_length=200, null=True)
-    # sold_to = models.ForeignKey(Customer, on_delete=models.CASCADE, null= True)
-    total = models.IntegerField()
-    amount = models.IntegerField(null=True)
-    mode = models.CharField(blank=True, max_length=200)
 
-    class Meta:
-        db_table = 'product'
-        ordering = ['-date']
+
 class Expense_description(models.Model):
     description = models.CharField(max_length=200, null=True)
 
@@ -209,13 +187,50 @@ class Stockout(models.Model):
     unit_price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     total = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     vat = models.DecimalField(max_digits=10, decimal_places=2, null=True)
-    price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    bprice = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    sprice = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     sub_total = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     terms = models.CharField(max_length=200, null=True)
     random = models.CharField(max_length=200, null=True)
 
     class Meta:
         ordering = ["-id"] 
+
+class Product(models.Model):
+    fname = models.CharField(max_length=200, null=True)
+    lname = models.CharField(max_length=200, null=True)
+    vendor = models.CharField(max_length=200, null=True)
+    customer = models.CharField(max_length=200, null=True)
+    email = models.CharField(max_length=200, null=True)
+    username = models.CharField(max_length=200, null=True)
+    user_name = models.CharField(max_length=200, null=True)
+    id_no = models.CharField(max_length=200, null=True)
+    document = models.CharField(max_length=200, null=True)
+    ref = models.CharField(max_length=200, null=True)
+    random = models.CharField(max_length=200, null=True)
+    address = models.CharField(max_length=200, null=True)
+    phone = models.CharField(max_length=200, null=True)
+    delvnote = models.CharField(max_length=200, null=True)
+    location = models.CharField(max_length=200, null=True)
+    date = models.CharField(max_length=200, null=True)
+    invono = models.CharField(max_length=200, null=True)
+    sold_to = models.CharField(max_length=200, null=True)
+    # sold_to = models.ForeignKey(Customer, on_delete=models.CASCADE, null= True)
+    total = models.IntegerField()
+    amount = models.IntegerField(null=True)
+    mode = models.CharField(blank=True, max_length=200)
+    bprice = models.IntegerField(default=0)
+
+    class Meta:
+        db_table = 'product'
+        ordering = ['-date']
+
+    @property
+    def profit(self):
+        # Assuming 'amount' and 'bprice' are numeric fields
+        if self.amount is not None and self.bprice is not None:
+            return self.amount - self.bprice
+        return 0 
 
 from django.db import models
 from decimal import Decimal
@@ -236,7 +251,8 @@ class Temp(models.Model):
     unit_price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     total = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     vat = models.DecimalField(max_digits=10, decimal_places=2, null=True)
-    price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    bprice = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    sprice = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     sub_total = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     terms = models.CharField(max_length=200, null=True)
     d_type = models.CharField(max_length=200, null=True)
@@ -262,9 +278,11 @@ class Templist(models.Model):
     dels = models.CharField(max_length=200, null=True)
     supplier = models.ForeignKey(Vendor, on_delete=models.CASCADE, null=True)
     unit_price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    sprice = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     total = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     vat = models.DecimalField(max_digits=10, decimal_places=2, null=True)
-    price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    bprice = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    sprice = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     sub_total = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     terms = models.CharField(max_length=200, null=True)
     d_type = models.CharField(max_length=200, null=True)
@@ -275,8 +293,8 @@ class Templist(models.Model):
         ordering = ["-id"]
 
     def save(self, *args, **kwargs):
-        self.vat = Decimal(self.price) * Decimal(0.16) # 16% VAT calculation
-        self.sub_total = Decimal(self.price) + self.vat
+        self.vat = Decimal(self.bprice) * Decimal(0.16) # 16% VAT calculation
+        self.sub_total = Decimal(self.bprice) + self.vat
         super(Templist, self).save(*args, **kwargs)
      
 class Mode(models.Model):

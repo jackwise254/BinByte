@@ -1,0 +1,13 @@
+             DELIVERY NOTE              
+Customer: jack
+Date: 2023-12-22
+Address: nairobi
+Phone: 55416108
+Delivery No.: AA00T
+Email: jack
+Reference No.: Cash
+
+Type  Description  Qty
+Allinone   Allinone   Allinone   1
+
+Total Qty: 1

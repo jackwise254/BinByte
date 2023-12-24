@@ -30,6 +30,8 @@ urlpatterns = [
     path('fetchproduct/<str:title>', FetchProduct, name='fetchproduct'),
     path('fetchstockout/<str:title>', FetchStockout, name='fetchstockout'),
     path('cleardelv/', clear_delv, name='clear_delv'),
+    path('print_document/<str:document>', PrintDocument, name='print_document'),
+    
 
     path('delete_templist/<int:pk>', DeleteTemplist, name='delete_templist'),
     path('sales/', SalesView, name='sales'),
