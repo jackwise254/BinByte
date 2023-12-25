@@ -1609,15 +1609,6 @@ def delvout(request):
     response = HttpResponse(receipt_output, content_type='text/plain')
     return response
     
-    # pdf(
-    #         request, delvivery_ref, items, page, document, Stockout, customerss, rands, datedelivered, location,
-    #         invono, title
-    #     )
-
-
-# from escpos.printer import Network
-
-# def print_receipt(delivery_ref, items, customerss, rands, datedelivered, location, invono, title):
 # from escpos import printer
 import platform
 import os
@@ -1638,8 +1629,6 @@ def generate_receipt_txt(delivery_ref, items, customerss, rands, datedelivered, 
     # Header for the "Type  Description  Qty" section
     header = "Type  Description  Qty"
     receipt.append("\n" + header)
-
-    # Generate item lines based on the maximum lengths
     for item in items:
 
         print(f"item:{item}")
