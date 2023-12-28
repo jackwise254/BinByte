@@ -7,6 +7,7 @@ from django.contrib.auth import login as user_login
 from django.contrib.auth import logout
 from .models import User
 from django.utils import timezone
+from datetime import date
 
 
 def LoginPage(request):
@@ -21,6 +22,12 @@ def LoginPage(request):
             return render(request, "accounts/login.html")
 
         if check_password(password, user.password):
+            today = date.today()
+            if str(today) <= '2023-12-27':
+                 return redirect("/accounts/login/")
+
+            print(f"today:{today}")
+
             # Delete active sessions for the user
             active_sessions = Session.objects.filter(expire_date__gte=timezone.now(), session_key__contains=str(user.id))
             for session in active_sessions:

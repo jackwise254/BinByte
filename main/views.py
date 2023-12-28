@@ -556,8 +556,11 @@ def HomePage(request):
 def Expenses_view(request):
 
     description = Expense_description.objects.all()
+    today = date.today()
+    print(f"today:{today}")
 
     context = {
+        "today":today,
         "expenses":Expense.objects.all().order_by("-id"),
         "description":description,
     }
@@ -1516,7 +1519,10 @@ def delvout(request):
                 setattr(stockout_entry, field, getattr(temp_item, field))
             stockout_entry.qty = 1
             amount += temp_item.sub_total
-            bprice += temp_item.bprice
+            try:
+                bprice += temp_item.bprice
+            except:
+                bprice += 0
 
             stockout_entry.datedelivered = datedelivered
             stockout_entry.random = rands
@@ -1530,7 +1536,6 @@ def delvout(request):
         items = (Stockout.objects.filter(random=rands)
         .values_list('type', 'brand', 'gen', 'model', 'cpu', 'speed', 'ram', 'hdd', 'screen', 'comment')
         .annotate(count=Count('qty')))
-        print(f"bprice:{bprice}")
         if check_random_product.count() < 1:
             delvivery_ref = delv
 
@@ -1591,19 +1596,26 @@ def delvout(request):
         agent = User.objects.get(username=sess)
         # UnicodeTranslateError
 
+        current_month = datetime.datetime.now().month
+        current_year = datetime.datetime.now().year
+
+
+
+        # Fetch or create the record for the current month and user
         Agents_Records.objects.update_or_create(
             name=User.objects.get(username=sess),
+            date__month=current_month,
+            date__year=current_year,
             defaults={
-                'sales_revenue':F('sales_revenue')+ int(amount),
-                'units': F('units') + units, 
+                'sales_revenue': F('sales_revenue') + int(amount),
+                'units': F('units') + units,
                 'commission': F('commission') + int(amount) * 0.007,
-                'random':rands,
+                'random': rands,
             }
         )
 
-    print(f"items:{items}")
-    receipt_output = generate_receipt_txt(delvivery_ref, items, customerss, rands, datedelivered, location, invono, title, document)
 
+    receipt_output = generate_receipt_txt(delvivery_ref, items, customerss, rands, datedelivered, location, invono, title, document)
     return redirect("/sales")
     # Create an HTTP response with the receipt content
     response = HttpResponse(receipt_output, content_type='text/plain')
@@ -1673,15 +1685,20 @@ def PrintDocument(request, document):
         # Read the content of the file
         with open(file_path, "r") as txt_file:
             receipt_content = txt_file.read()
+        printer = None
+        try:
+            printer = Usb(0x0416, 0x5011)  # Adjust the USB vendor and product ID
+            printer.text(receipt_content)
+            printer.cut()
+        except:
+            messages.add_message(request, messages.INFO, "Device not found or cable not connected")
 
-        # Print the receipt
-        printer = Usb(0x0416, 0x5011)  # Adjust the USB vendor and product ID
-        printer.text(receipt_content)
-        printer.cut()
         # Return a response
-        return HttpResponse(f"Receipt {document} printed successfully.")
+        messages.add_message(request, messages.INFO, f"Receipt {document} printed successfully.")
+        return redirect("/sales")
     else:
-        return HttpResponse(f"Receipt {document} not found.")
+        messages.add_message(request, messages.INFO, f"Receipt {document} not found.")
+        return redirect("/sales")
 
 def delvcsv(request):
     pass

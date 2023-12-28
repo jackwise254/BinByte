@@ -243,6 +243,9 @@ z-index: 1;
 background-color: #ffffff;
 } */
 
+.canvas-style.text-nowrap{
+  height: 45vh;
+}
 
 .table-responsive.text-nowrap{
   height: 53vh;
@@ -252,17 +255,37 @@ background-color: #ffffff;
   .table-responsive.text-nowrap {
     height: 55vh;
   }
+
+  .canvas-style{
+  height: 60vh;
+}
+
+.canvas-styles{
+  height: 48vh;
+}
 }
 
 @media (min-width: 1920px){
   .table-responsive.text-nowrap {
     height: 72vh;
   }
+  .canvas-style{
+  height: 50vh;
+}
+
 } 
 @media (min-width: 2560px){
   .table-responsive.text-nowrap {
     height: 80vh;
   }
+  .canvas-style{
+  height: 50vh;
+}
+
+.canvas-styles{
+  height: 43vh;
+}
+
 }
 
 .pagination {
@@ -521,17 +544,22 @@ background-color: #ffffff;
                 <img src="{% static '/img/binbyte.png' %}" alt="" style="max-width: 80px;">
             </a>
     
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-    
+
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-5 mb-lg-0">
+                  {% if request.session.user == "ADMIN"%}
+
                     <li class="nav-item">
                         <a href="#" class="sidebar-toggler nav-link flex-shrink-0 mt-1">
                             <i class="fa fa-bars"></i>
                         </a>
                     </li>
+                  {% endif %}
+
                     <li class="nav-item d-none d-md-block px-12">
                         <a class="nav-link text-dark" style="font-size: 11px" href="#"></a>
                     </li>
@@ -558,7 +586,18 @@ background-color: #ffffff;
             </div>
         </div>
     </nav>
+
+    {% if request.session.user != "ADMIN"%}
+      <script>
+        localStorage.setItem('sidebarState', 'closed');
+        const mainContent1 = document.querySelector('.main-content');
+        mainContent1.style.marginLeft = "0px";
+
+      </script>
+    {%endif%}
     
+    
+
     <script src="{% static 'js/core/popper.min.js' %}"></script>
     <script src="{% static 'js/core/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/plugins/perfect-scrollbar.min.js' %}"></script>

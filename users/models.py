@@ -103,6 +103,19 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.username
 
+class Subscription(models.Model):
+    PLAN_CHOICES = (
+        ('basic', 'Basic'),
+        ('premium', 'Premium'),
+    )
+    plan = models.CharField(max_length=10, choices=PLAN_CHOICES)
+    expiration_date = models.DateField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.user} - {self.plan}"
+
+
 from django.db.models.signals import post_migrate
 from django.dispatch import receiver
 @receiver(post_migrate)

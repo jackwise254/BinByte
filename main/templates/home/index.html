@@ -170,7 +170,7 @@
 
         <div class="col-lg-4 ">
             <div class="card ">
-              <div class="card-header pb-0 px-3">
+              <div class="card-header pb-0 px-3 ">
                 <div class="row">
                   <div class="col-md-6">
                     <h6 class="mb-0">Orders Overview</h6>
@@ -186,7 +186,7 @@
               <div class="card-body pt-4 p-3">
                 <h6 class="text-uppercase text-body text-xs font-weight-bolder mb-3">Latest</h6>
                 
-                <ul class="list-group">
+                <ul class="list-group canvas-styles">
                     {% for order in orders %}
 
 
@@ -240,7 +240,7 @@
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Units Sold</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Sales Revenue</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Returns</th>
-                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Refund Amount</th>
+                        <!-- <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Refund Amount</th> -->
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Commision</th>
                     </tr>
                     </thead>
@@ -251,7 +251,7 @@
                                 <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{agent.units|default_if_none:""|intcomma}} </td>
                                 <td class=" px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{agent.sales_revenue |default_if_none:""|floatformat:2|intcomma|intcomma}} </td>
                                 <td class="px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{agent.returned_units|default_if_none:""|intcomma}}</td>
-                                <td class="px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{agent.refund_amound|default_if_none:""|floatformat:2|intcomma|intcomma}}</td>
+                                <!-- <td class="px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{agent.refund_amound|default_if_none:""|floatformat:2|intcomma|intcomma}}</td> -->
                                 <td class="px-4 text-secondary text-xxs font-weight-bolder opacity-10">{{ agent.commission|default_if_none:''|floatformat:2|intcomma }}
                                 </td>
                                 
@@ -422,7 +422,7 @@
         </div>
         <div class="card-body p-3">
             <div class="chart">
-            <canvas id="chart-line" class="chart-canvas" height="300"></canvas>
+            <canvas id="chart-line" class="chart-canvas canvas-style"></canvas>
             </div>
         </div>
         </div>
