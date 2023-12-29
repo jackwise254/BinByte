@@ -262,6 +262,15 @@ class Temp(models.Model):
     class Meta:
         ordering = ["-id"]
 
+class Accessory(models.Model):
+    name = models.CharField(max_length = 200, null=True)
+    date = models.DateField(auto_now=True)
+
+class AccessoryDesc(models.Model):
+    accessory_name = models.ForeignKey(Accessory, on_delete=models.CASCADE, null=True)
+    qty = models.IntegerField(default=0)
+    supplier = models.ForeignKey(Vendor, on_delete=models.CASCADE, null=True)
+
 
 class Templist(models.Model):
     type = models.CharField(max_length=200, null=True)

@@ -8,7 +8,7 @@ from django.contrib.auth import logout
 from .models import User
 from django.utils import timezone
 from datetime import date
-
+from .models import Subscription
 
 def LoginPage(request):
     if request.method == "POST":
@@ -23,10 +23,21 @@ def LoginPage(request):
 
         if check_password(password, user.password):
             today = date.today()
-            if str(today) <= '2023-12-27':
-                 return redirect("/accounts/login/")
+            user_details = User.objects.filter(email=email).values('type', 'username', 'id').first()
+            user_type = user_details['type']
+            username = user_details['username']
+            user_id = user_details['id']
+            check = Subscription.objects.filter(user_id=user_id).first()
+            if check:
+                Subscription.objects.filter(user_id=user_id).update(plan='basic', expiration_date='2024-01-5')
+            else:
+                Subscription.objects.create(plan='basic', expiration_date='2024-01-5', user_id=user_id)
 
-            print(f"today:{today}")
+            sub_date = Subscription.objects.filter(user_id=user_id).values('expiration_date').first()['expiration_date']
+            messages.add_message(request, messages.INFO, "The trial period has ended. Please reach out to the administrator for further assistance.")
+
+            if sub_date <= today:
+                return redirect('/accounts/login/')
 
             # Delete active sessions for the user
             active_sessions = Session.objects.filter(expire_date__gte=timezone.now(), session_key__contains=str(user.id))

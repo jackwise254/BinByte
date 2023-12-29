@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from users.models import *
 from django.contrib.auth.decorators import login_required
+
 from django.contrib.sessions.models import Session
 from django.db.models import Q
 from .models import *
@@ -17,8 +18,9 @@ from django.db.models import F
 from django.db.models.functions import ExtractMonth, ExtractYear
 from django.http import JsonResponse
 import json
+@login_required
 
-def get_monthly_sales_totals():
+def get_monthly_sales_totals(request):
     sales = Stockout.objects.annotate(month=ExtractMonth('datedelivered')).values('month').annotate(sales_count=Count('id')).order_by('month')
     sales_list = [0] * 12  # initialize a list with 12 zeros
     for sale in sales:
@@ -38,8 +40,9 @@ def start_of_the_year():
     end_of_year = datetime(today.year + 1, 1, 1) - timedelta(days=1)
     return start_of_year, end_of_year
 
+@login_required
 
-def monthly_sales():
+def monthly_sales(request):
     # Fetch top four stockouts
     top_four_sales = get_top_four_stockouts()
     start_of_year, end_of_year = start_of_the_year()
@@ -64,6 +67,7 @@ def monthly_sales():
 def Home(request):
 
     return redirect('/accounts/login')
+@login_required
 
 def ViewBalances(request):
     customer_balances = Orders.objects.filter(order_type="Credit").order_by("-id")
@@ -116,17 +120,20 @@ def ViewBalances(request):
 
     }
     return render(request, "home/balances.html", context)
+@login_required
 
 def SalesPerfomance(request):
     agent_records = Agents_Records.objects.all().order_by("-id")
 
     context ={
+
         "agent_records":agent_records,
 
 
     }
 
     return render(request, "home/sales.html", context)
+@login_required
 
 def CashBox(request):
     from itertools import chain
@@ -225,6 +232,7 @@ def initial(request):
     return redirect('/settings')
 
 
+@login_required
 
 def brand_add(request):
     types = Brand.objects.all()
@@ -252,6 +260,13 @@ def screen_add(request):
         en.save()
     return redirect('/settings')
 
+def accessory_add(request):
+    Accessory.objects.all()
+    if request.method =='POST':
+        t = request.POST.get('name')
+        en = Accessory(name=t)
+        en.save()
+    return redirect('/settings')   
 
 def delspeed_v(request, pk):
     Speed.objects.filter(id=pk).delete()
@@ -283,25 +298,36 @@ def delexpense_v(request, pk):
     Expense_description.objects.filter(id=pk).delete()
     return redirect("/settings")
 
+@login_required
+def delaccessory_v(request, pk):
+    Accessory.objects.filter(id=pk).delete()
+
+    return redirect("/settings")
+@login_required
+
 def delcond_v(request, pk):
     NewCondition.objects.filter(id=pk).delete()
     return redirect('/settings')
 def delbrand_v(request, pk):
     Brand.objects.filter(id=pk).delete()
     return redirect('/settings')
+@login_required
 
 def delgen_v(request, pk):
     Gen.objects.filter(id=pk).delete()
     return redirect('/settings')
+@login_required
 
 def delcpu_v(request, pk):
     Cpu.objects.filter(id=pk).delete()
     return redirect('/settings')
+@login_required
 
 def EditExpense(request, pk):
 
 
     return render(request, "deliveries/edit-expense.html")
+@login_required
 
 def update_masterlist(request,pk):
     masterlist = Masterlist.objects.get(id=pk)
@@ -350,6 +376,7 @@ def update_masterlist(request,pk):
         'user1':request.session.get('username')
     }
     return render(request,'uploads/update_masterlist.html',context)
+@login_required
 
 def Settings(request):
     type =Type.objects.all()
@@ -363,7 +390,10 @@ def Settings(request):
     screens = Screen.objects.all()
     gens = Gen.objects.all()
     expenses = Expense_description.objects.all()
+    accessories = Accessory.objects.all()
+
     context ={
+        "accessories":accessories,
         'types':type,
         'conditions':conditions,
         'brands':brands,
@@ -379,11 +409,13 @@ def Settings(request):
         "expenses":expenses,
     }
     return render(request, "dropdowns/settings.html", context)
+@login_required
 
 def DeleteExpense(request, pk):
     Expense.objects.get(id=pk).delete()
     return redirect("/expenses")
 
+@login_required
 
 def SalesBox(request):
     sales = Product.objects.all().order_by("-id")
@@ -394,6 +426,7 @@ def SalesBox(request):
 
     return render(request, "home/slaes-box.html" , context)
 
+@login_required
 def HomePage(request):
     # Get the current date and time
     current_date = timezone.now()
@@ -422,8 +455,8 @@ def HomePage(request):
     monthly_returns = Agents_Records.objects.filter(date__month=current_month, date__year=current_year)
 
 
-    monthly_saless = get_monthly_sales_totals()
-    sales_mon = monthly_sales()
+    monthly_saless = get_monthly_sales_totals(request)
+    sales_mon = monthly_sales(request)
     top_labels = get_top_four_stockouts()
     product_labels = [item['type'] for item in top_labels]
     stock = Masterlist.objects.all().count()
@@ -553,6 +586,23 @@ def HomePage(request):
 
     return render(request, 'home/index.html', context)
 
+@login_required
+def AccessoriesV(request):
+
+
+    context = {
+
+    }
+
+
+
+
+    return render(request, "uploads/accessories.html")
+
+
+
+@login_required
+
 def Expenses_view(request):
 
     description = Expense_description.objects.all()
@@ -585,6 +635,7 @@ def Expenses_view(request):
     return render(request, "deliveries/expense.html", context)
 
 
+@login_required
 
 def ReturnItems(request):
     template_name = "deliveries/returns.html"
@@ -615,11 +666,15 @@ def ReturnItems(request):
 
     return render(request, template_name, context)
 
+@login_required
+
 def ClearReturns(request):
     sess = request.session.get("username")
     Temp.objects.filter(d_type="returns", terms=sess).delete()
 
     return redirect("/returnitems")
+
+@login_required
 
 def customersView(request):
     customers = Customer.objects.values()
@@ -639,6 +694,7 @@ def customersView(request):
 
     return render(request, 'accounts/customers.html', context)
 
+
 def logged_in_users_check():
     sessions = Session.objects.filter(expire_date__gte=timezone.now())
     user_ids = []
@@ -649,6 +705,7 @@ def logged_in_users_check():
 
     return users
 
+@login_required
 # 
 def StaffMember(request):
     all_users = User.objects.all()
@@ -678,6 +735,7 @@ def setpassword(request):
     print("A'int nothing here")
 
     return redirect('/home_page')
+@login_required
 
 def add_customer(request):
     customer = Customer.objects.all()
@@ -695,6 +753,7 @@ def add_customer(request):
         return redirect('/customers')
 
     return render(request, 'accounts/addcustomer.html')
+@login_required
 
 def loadcustomers(request):
     rands = randint(1000000, 9999999)
@@ -717,6 +776,7 @@ def loadcustomers(request):
     except:
         messages.error(request, f"something went wrong")
     return redirect('/customers')
+@login_required
 
 def editCustomer(request , pk):
     customer = Customer.objects.get(id=pk)
@@ -732,6 +792,7 @@ def editCustomer(request , pk):
         )
         return redirect('/customers')
     return render(request, 'accounts/editcustomer.html', {'form':customer})
+@login_required
 
 def delete_customer(request):
     if request.method == "POST":
@@ -744,6 +805,7 @@ def vendors_view(request):
     vendor = Vendor.objects.all()
 
     return render(request, 'accounts/vendors.html', {'form':vendor, 'selected':'vendors'})
+@login_required
 
 def add_vendor(request):
     customer = Vendor.objects.all()
@@ -762,6 +824,7 @@ def add_vendor(request):
 
 
     return render(request, 'accounts/addvendor.html', {'form':customer})
+@login_required
 
 def editvendor(request, pk):
     customer = Vendor.objects.get(id=pk)
@@ -782,11 +845,13 @@ def editvendor(request, pk):
     
 
     return render(request, 'accounts/editvendor.html', {'form':customer})
+@login_required
 
 def delete_vendor(reqesut, pk):
     Vendor.objects.get(id=pk).delete()
     return redirect('/vendors')
 
+@login_required
 
 def stockin_view(request):
     user1 = request.session.get('username')
@@ -826,6 +891,8 @@ def stockin_view(request):
     }
 
     return render(request, 'stock/index.html', context)
+@login_required
+
 def masterlistview(request):
     template_name = "stock/stockin.html"
     products =  Masterlist.objects.all()[:500]
@@ -844,6 +911,7 @@ def masterlistview(request):
     }
 
     return render(request, template_name, context)
+@login_required
 
 def stockoutview(request):
     template_name = "stockout/stockout.html"
@@ -869,6 +937,7 @@ def stockoutview(request):
 
 from django.utils import timezone
 from datetime import timedelta
+@login_required
 
 def stockout_view(request):
     template_name = "stockout/index.html"
@@ -914,6 +983,7 @@ def stockout_view(request):
     return render(request, template_name, context)
 
 
+@login_required
 
 def FetchProduct(request, title):
     template_name = "stock/stockin.html"
@@ -940,6 +1010,8 @@ def FetchProduct(request, title):
     }
 
     return render(request, template_name, context)
+
+@login_required
 
 def FetchStockout(request, title):
     template_name = "stockout/stockout.html"
@@ -969,6 +1041,8 @@ def FetchStockout(request, title):
 
 
 @transaction.atomic
+@login_required
+
 def PushTemplist(request):
     rows = Templist.objects.filter(terms=request.user)
     total_amount = 0
@@ -1037,6 +1111,8 @@ def DeleteTemplist(request, pk):
 
 
 @transaction.atomic
+@login_required
+
 def NarationSub(request):
     if request.method == "POST":
         supplier = request.POST.get('supplier')
@@ -1066,6 +1142,7 @@ def NarationSub(request):
         return redirect("/uploadstock")
     return redirect("/uploadstock")
 
+@login_required
 
 def upload_stock(request):
     types = Type.objects.all()
@@ -1130,6 +1207,8 @@ def upload_stock(request):
 
     return render(request, 'uploads/stockin.html', context)
 
+@login_required
+
 def SalesView(request):
     delivery = Product.objects.all().order_by('-id')
     if request.method == "POST":
@@ -1162,6 +1241,7 @@ def SalesView(request):
     }
     return render(request, 'deliveries/delivery.html', context)
 
+@login_required
 
 def Delivery_View(request):
     customers = Customer.objects.all().order_by("-id")
@@ -1182,6 +1262,7 @@ def Delivery_View(request):
     }
 
     return render(request, "deliveries/deliver.html", context)
+@login_required
 
 def delv_customer(request):
     if request.method=='POST':
@@ -1203,6 +1284,7 @@ def delv_customer(request):
             Dcustomer.objects.create(username=customer, mode=mode,d_type='delivery', user_created_at=sess, status=0,)
         return redirect('/deliveries')
     return redirect('/deliveries')
+@login_required
 
 def deleteDdelivery(request, pk):
     Temp.objects.filter(id=pk).update(is_active=False)
@@ -1217,6 +1299,8 @@ def DeleteReturns(request, pk):
 
 
 @transaction.atomic
+@login_required
+
 def ReturnsOut(request):
     sess = request.session.get("username")
     rows = Temp.objects.filter(terms=sess,d_type="returns")
@@ -1256,6 +1340,7 @@ def ReturnsOut(request):
     
     return redirect("/sales")
 
+@login_required
 
 def delvsub(request):
     customer = Customer.objects.all()
@@ -1290,6 +1375,7 @@ def delvsub(request):
         
         return redirect('/deliveries')
     return redirect('/deliveries')
+@login_required
 
 def generate_new_random_number(rands):
     if Product.objects.filter(random=rands).exists():
@@ -1297,6 +1383,7 @@ def generate_new_random_number(rands):
         rands = generate_new_random_number
     return rands
 
+@login_required
 
 def delvgenerate(table):
     if table == 'Product':
@@ -1327,6 +1414,8 @@ def clear_delv(request):
     Dcustomer.objects.filter(d_type='delivery', user_created_at=sess, status=0).delete()
     Temp.objects.filter(d_type='delivery', terms=sess).delete()
     return redirect('/deliveries')
+
+@login_required
 
 def CustomerBalances(request, pk):
     try:
@@ -1430,6 +1519,8 @@ def PrintReceipt(request, name):
 
     return redirect(f"/customer-balances/{name}")
 
+@login_required
+
 def MakePayments(request):
     if request.method == "POST":
         print(f"Got the request")
@@ -1447,6 +1538,7 @@ def MakePayments(request):
 
     return redirect(f"/customer-balances/{customer}")
 
+@login_required
 
 def MakePaymentsSup(request):
     if request.method == "POST":
@@ -1463,6 +1555,8 @@ def MakePaymentsSup(request):
 
 
 @transaction.atomic
+@login_required
+
 def delvout(request):
     rands = randint(10000000, 99999999)
     page = '/delivery'
@@ -1624,6 +1718,7 @@ def delvout(request):
 # from escpos import printer
 import platform
 import os
+@login_required
 
 def generate_receipt_txt(delivery_ref, items, customerss, rands, datedelivered, location, invono, title, document):
     # Generate the receipt content

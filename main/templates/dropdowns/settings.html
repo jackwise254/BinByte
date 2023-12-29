@@ -481,6 +481,54 @@
                 </div>
               </div>
         </div>
+
+
+        <div class="col-md-4">
+          <div class="card">
+              <h5 class="card-header">Accessories</h5>
+              <div class="card-body">
+                <div class="table-responsive text-nowrap" style="height:45vh">
+                  <table class="table table-bordered" >
+                    <thead>
+                      <tr>
+                        <th class="text-dark">Accessory</th>
+                        <th class="text-dark">
+                          <span data-url="{% url 'accessory_add' %}" onclick="CreateType(this)">
+
+                              <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                                  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                              </svg>
+                          </span>
+                        </th>
+                        
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for type in accessories %}
+
+                          <tr>
+                              <td>
+                                  <strong class="text-dark">{{type.name}}</strong>
+                              </td>
+                              <td>
+                                  <!-- <a href="/delscreen/{{type.id}}" > -->
+                                  <span data-name="{{type.name}}" data-id="{{type.id}}" onclick="confirmDeleteAccessory(this)">
+
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#dc3545" class="bi bi-x-sm" viewBox="0 0 16 16">
+                                          <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                                          </svg>
+                                  </span>
+                                  <!-- </a> -->
+                              </td>
+                          </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+      </div>
+      
      
     </div>
 
@@ -519,7 +567,20 @@
             }
 
         }
+
+        function confirmDeleteAccessory(element) {
+            var itemName = element.getAttribute('data-name');
+            var inputName = prompt("Type the name of the item to confirm deletion:");
     
+            if (inputName === itemName) {
+                window.location.href = "/delaccessory/" + element.getAttribute('data-id');
+            } else {
+                alert("Name does not match. Please try again.");
+            }
+
+        }
+    
+        
     
     
         function confirmDeleteType(element) {
