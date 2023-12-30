@@ -260,13 +260,6 @@ def screen_add(request):
         en.save()
     return redirect('/settings')
 
-def accessory_add(request):
-    Accessory.objects.all()
-    if request.method =='POST':
-        t = request.POST.get('name')
-        en = Accessory(name=t)
-        en.save()
-    return redirect('/settings')   
 
 def delspeed_v(request, pk):
     Speed.objects.filter(id=pk).delete()
@@ -296,12 +289,6 @@ def deltype_v(request, pk):
 
 def delexpense_v(request, pk):
     Expense_description.objects.filter(id=pk).delete()
-    return redirect("/settings")
-
-@login_required
-def delaccessory_v(request, pk):
-    Accessory.objects.filter(id=pk).delete()
-
     return redirect("/settings")
 @login_required
 
@@ -409,6 +396,41 @@ def Settings(request):
         "expenses":expenses,
     }
     return render(request, "dropdowns/settings.html", context)
+
+@login_required
+def AccessoriesV(request):
+    accessories = Accessory.objects.all().order_by("name")
+    suppliers = Vendor.objects.all()
+    if request.method =="POST":
+        bprice = request.POST.get("bprice")
+        sprice = request.POST.get("sprice")
+        vendor = request.POST.get("vendor")
+        qty = request.POST.get("qty")
+        pk = request.POST.get("id")
+        print(f"bprice:{bprice},sprice:{sprice},vendor:{vendor} qty:{qty}, pk:{pk}")
+        Accessory.objects.filter(id=pk).update(
+            bprice=bprice,
+            sprice=sprice,
+            supplier=Vendor.objects.get(username=vendor),
+            qty=qty,
+        )
+        messages.add_message(request, messages.INFO, "Accessory updated successfully")
+        return redirect("/accessories")
+    context = {
+        "suppliers":suppliers,
+        "accessories":accessories
+    }
+    return render(request, "uploads/accessories.html",context)
+
+
+
+@login_required
+def delaccessory_v(request, pk):
+    Accessory.objects.filter(id=pk).delete()
+
+    return redirect("/settings")
+
+
 @login_required
 
 def DeleteExpense(request, pk):
@@ -585,21 +607,6 @@ def HomePage(request):
     }
 
     return render(request, 'home/index.html', context)
-
-@login_required
-def AccessoriesV(request):
-
-
-    context = {
-
-    }
-
-
-
-
-    return render(request, "uploads/accessories.html")
-
-
 
 @login_required
 
@@ -794,13 +801,13 @@ def editCustomer(request , pk):
     return render(request, 'accounts/editcustomer.html', {'form':customer})
 @login_required
 
-def delete_customer(request):
-    if request.method == "POST":
-        username = request.POST.get('username')
-        Customer.objects.filter(username__icontains=username).delete()
-
+def delete_customer(request, pk):
+    Customer.objects.get(id=pk).delete()
     return redirect('/customers')
 
+def DeleteStaff(request, pk):
+    User.objects.get(id=pk).delete()
+    return redirect("/staff_member")
 def vendors_view(request):
     vendor = Vendor.objects.all()
 
@@ -895,8 +902,35 @@ def stockin_view(request):
 
 def masterlistview(request):
     template_name = "stock/stockin.html"
-    products =  Masterlist.objects.all()[:500]
-    p = Paginator(products, 500)
+    masterlist =  Masterlist.objects.all()[:500]
+    count = masterlist.count()
+    if request.method == 'POST':
+        model_val = request.POST.get('model')
+        q = request.POST.get('q')
+        model = request.POST.get('model')
+        excluded_fields = ['model', 'type']
+        masterlist = Masterlist.objects.none()  # Initialize products as an empty queryset
+        if q:
+            model_fields = [field.name for field in Masterlist._meta.get_fields() if field.name not in excluded_fields]
+            q_conditions = Q()
+            for field in model_fields:
+                field_type = Masterlist._meta.get_field(field).get_internal_type()
+
+                if field_type == 'CharField':
+                    q_conditions |= Q(**{field + '__icontains': q})
+
+                elif field_type == 'DateTimeField':
+                    q_conditions |= Q(**{field: q})
+                elif field_type in ['IntegerField', 'FloatField']:
+                    try:
+                        value = int(q)
+                        q_conditions = Q(**{field: value})
+                    except ValueError:
+                        pass
+            masterlist = Masterlist.objects.filter(q_conditions).order_by('-daterecieved')
+            count = masterlist.count()
+
+    p = Paginator(masterlist, 500)
     page_number = request.GET.get('page')
     try: 
         page_obj = p.get_page(page_number)
@@ -906,6 +940,7 @@ def masterlistview(request):
         page_obj = p.page(p.num_pages)
     title = "Total stock"
     context = {
+        "count":count,
         'title':title,
         'page_obj':page_obj,
     }
@@ -994,6 +1029,32 @@ def FetchProduct(request, title):
     masterlists = Masterlist.objects.filter(type=conditions)
     count = masterlists.count()
     masterlist = Masterlist.objects.filter(type=conditions).order_by('-daterecieved')[:500]
+    if request.method == 'POST':
+        model_val = request.POST.get('model')
+        q = request.POST.get('q')
+        model = request.POST.get('model')
+        excluded_fields = ['model', 'type']
+        masterlist = Masterlist.objects.none()  # Initialize products as an empty queryset
+        if q:
+            model_fields = [field.name for field in Masterlist._meta.get_fields() if field.name not in excluded_fields]
+            q_conditions = Q()
+            for field in model_fields:
+                field_type = Masterlist._meta.get_field(field).get_internal_type()
+
+                if field_type == 'CharField':
+                    q_conditions |= Q(**{field + '__icontains': q, 'type__icontains':types})
+
+                elif field_type == 'DateTimeField':
+                    q_conditions |= Q(**{field: q, 'type__icontains':types})
+                elif field_type in ['IntegerField', 'FloatField']:
+                    try:
+                        value = int(q)
+                        q_conditions = Q(**{field: value, 'type__icontains':types})
+                    except ValueError:
+                        pass
+            masterlist = Masterlist.objects.filter(q_conditions).order_by('-daterecieved')
+            count = masterlist.count()
+
 
     p = Paginator(masterlist, 500)
     page_number = request.GET.get('page')
@@ -1110,6 +1171,35 @@ def DeleteTemplist(request, pk):
     return redirect('/uploadstock')
 
 
+@login_required
+def EditStaff(request, pk):
+    user  = User.objects.get(id=pk)
+    all_type_codes = [type_code for type_code, _ in User.Types.choices]
+    if request.method == "POST":
+        email = request.POST.get('email')
+        firstname = request.POST.get('firstname')
+        username = request.POST.get('username')
+        lastname = request.POST.get('lastname')
+        password = request.POST.get('password')
+        user_type = request.POST.get('user_type')
+        User.objects.filter(id=pk).update(
+            email=email,
+            firstname=firstname,
+            username=username,
+            lastname=lastname,
+            # password=password,
+            type=user_type,
+        )
+
+        messages.add_message(request, messages.SUCCESS, f"{username}'s details updated successfully")
+        return redirect("/staff_member")
+    context = {
+        "types":all_type_codes,
+        "user":user,
+    }
+
+    return render(request, "accounts/edit_staff.html",context)
+
 @transaction.atomic
 @login_required
 
@@ -1123,6 +1213,12 @@ def NarationSub(request):
         vendor = Vendor.objects.get(username=supplier)
 
         balance = SupplierOrders.objects.filter(name=supplier).values("total_amount").order_by("-id").first()
+        remaining_amount = 0
+        if balance:
+            remaining_amount = balance['total_amount']
+        else:
+            remaining_amount = 0
+
 
         # Check if there is an existing record for the vendor with status=0
         if Narations.objects.filter(vendor=vendor, status=0).exists():
@@ -1138,7 +1234,7 @@ def NarationSub(request):
         else:
             acc_balance = amount
         # Create a new Narations instance with the updated acc_balance
-        Narations.objects.create(vendor=vendor, naration=naration, amount=amount, balance=balance['total_amount'], status=0, order_type=mode)
+        Narations.objects.create(vendor=vendor, naration=naration, amount=amount, balance=remaining_amount, status=0, order_type=mode)
         return redirect("/uploadstock")
     return redirect("/uploadstock")
 
@@ -1150,6 +1246,8 @@ def upload_stock(request):
     hdds = Hdd.objects.all()
     rams = Ram.objects.all()
     brands = Brand.objects.all()
+    screens = Screen.objects.all()
+    gens = Gen.objects.all()
     suppliers = Vendor.objects.all()
     products = Templist.objects.filter(terms=request.user)
     count = products.count()
@@ -1162,27 +1260,29 @@ def upload_stock(request):
         balance = balance.balance
     # Templist.objects.all().delete()
     if request.method == 'POST':
-        try:
-            types = request.POST.get('types')
-            model = request.POST.get('model')
-            cpu = request.POST.get('cpu')
-            ram = request.POST.get('ram')
-            hdd = request.POST.get('hdd')
-            bprice = request.POST.get('bprice')
-            sprice = request.POST.get('sprice')
-            brand = request.POST.get('brand')
-            supplier = Narations.objects.get(status=0)
-            vendor = Vendor.objects.get(id=supplier.vendor.id)
-            naration = Narations.objects.get(status=0).naration
-            serialno = request.POST.get('serialno')
-            if Templist.objects.filter(serialno=serialno).exists():
-                return redirect('/uploadstock')
+        # try:
+        types = request.POST.get('types')
+        model = request.POST.get('model')
+        cpu = request.POST.get('cpu')
+        ram = request.POST.get('ram')
+        hdd = request.POST.get('hdd')
+        bprice = request.POST.get('bprice')
+        sprice = request.POST.get('sprice')
+        brand = request.POST.get('brand')
+        gen = request.POST.get('gen')
+        screen = request.POST.get('screen')
+        supplier = Narations.objects.get(status=0)
+        vendor = Vendor.objects.get(id=supplier.vendor.id)
+        naration = Narations.objects.get(status=0).naration
+        serialno = request.POST.get('serialno')
+        if Templist.objects.filter(serialno=serialno).exists():
+            return redirect('/uploadstock')
 
-            Templist.objects.create(
-                terms=request.user, brand=brand,type=types,model=model,cpu=cpu, ram=ram,hdd=hdd,bprice=bprice, supplier=vendor, serialno=serialno,sprice=sprice
-            )
-        except:
-            messages.add_message(request, messages.INFO, "Please add naration add try again")
+        Templist.objects.create(
+            screen=screen,gen=gen, terms=request.user, brand=brand,type=types,model=model,cpu=cpu, ram=ram,hdd=hdd,bprice=bprice, supplier=vendor, serialno=serialno,sprice=sprice
+        )
+        # except:
+        #     messages.add_message(request, messages.INFO, "Please add naration add try again")
 
 
         # supplier.update(status=1)
@@ -1190,6 +1290,8 @@ def upload_stock(request):
         return redirect('/uploadstock')
     
     context = {
+        "gens":gens,
+        "screens":screens,
         "count":count,
         "balance":balance,
         'total_vat':total_vat,
@@ -1203,9 +1305,16 @@ def upload_stock(request):
         'suppliers':suppliers,
         "brands":brands,
     }
-
-
     return render(request, 'uploads/stockin.html', context)
+
+
+def accessory_add(request):
+    Accessory.objects.all()
+    if request.method =='POST':
+        t = request.POST.get('name')
+        en = Accessory(name=t)
+        en.save()
+    return redirect('/settings') 
 
 @login_required
 

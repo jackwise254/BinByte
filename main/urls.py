@@ -12,7 +12,9 @@ urlpatterns = [
     path("addcustomer", add_customer, name="add_customer"),
     path("loadcustomer", loadcustomers, name="loadcustomers"),
     path('edit_customer/<int:pk>', editCustomer, name='editCustomer'),
-    path('deletecustomer/', delete_customer, name='delete_customer'),
+    path('deletecustomer/<str:pk>', delete_customer, name='delete_customer'),
+    path('deletestaff/<str:pk>', DeleteStaff, name='deletestaff'),
+    
     path('vendors/',vendors_view, name='vendors_view'),
     path('addvendor/', add_vendor, name='add_vendor'),
     path('edit_vendor/<int:pk>', editvendor, name='editvendor'),
@@ -31,12 +33,14 @@ urlpatterns = [
     path('fetchstockout/<str:title>', FetchStockout, name='fetchstockout'),
     path('cleardelv/', clear_delv, name='clear_delv'),
     path('print_document/<str:document>', PrintDocument, name='print_document'),
+    path("edit_staff/<str:pk>", EditStaff, name="edit-staff"),
+    path('accessoryadd/' , accessory_add, name='accessory_add'),
+    path('accessories/', AccessoriesV, name='accessories'),
     
+    path('delaccessory/<int:pk>', delaccessory_v, name='delaccessory_v'),
 
     path('delete_templist/<int:pk>', DeleteTemplist, name='delete_templist'),
     path('sales/', SalesView, name='sales'),
-    path('accessories/', AccessoriesV, name='accessories'),
-    
     path('deliveries/', Delivery_View, name='deliveries'),
     path('expenses/', Expenses_view, name='expenses'),
     path('delvcustomer/', delv_customer, name='delv_customer'),
@@ -61,8 +65,6 @@ urlpatterns = [
     path('cpuadd/' , cpu_add, name='cpu_add'),
     path('ramadd/' , ram_add, name='ram_add'),
     path('screenadd/' , screen_add, name='screen_add'),
-    path('accessoryadd/' , accessory_add, name='accessory_add'),
-    
     path('initialdd/' , initial, name='initial'),
     path('descriptionadd/' , description_add, name='description_add'),
     path('makepayments/' , MakePayments, name='makepayments'),
@@ -77,8 +79,6 @@ urlpatterns = [
     path('delhdd/<int:pk>', delhdd_v, name='delhdd_v'),
     path('deltype/<int:pk>', deltype_v, name='deltype_v'),
     path('delexpense/<int:pk>', delexpense_v, name='delexpense_v'),
-    path('delaccessory/<int:pk>', delaccessory_v, name='delaccessory_v'),
-    
     path('delcond/<int:pk>', delcond_v, name='delcond_v'),
     path('delbrand/<int:pk>', delbrand_v, name='delbrand_v'),
     path('delgen/<int:pk>', delgen_v, name='delgen_v'),

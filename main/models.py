@@ -112,6 +112,7 @@ class Masterlist(models.Model):
     model = models.CharField(max_length=200 , null=True)
     cpu = models.CharField(max_length=200 , null=True)
     brand = models.CharField(max_length=200 , null=True)
+    screen = models.CharField(max_length=200 , null=True)
     gen = models.CharField(max_length=200 , null=True)
     ram = models.CharField(max_length=200 , null=True)
     screen = models.CharField(max_length=200 , null=True)
@@ -172,6 +173,7 @@ class Stockout(models.Model):
     model = models.CharField(max_length=200 , null=True)
     cpu = models.CharField(max_length=200 , null=True)
     brand = models.CharField(max_length=200 , null=True)
+    screen = models.CharField(max_length=200 , null=True)
     gen = models.CharField(max_length=200 , null=True)
     ram = models.CharField(max_length=200 , null=True)
     screen = models.CharField(max_length=200 , null=True)
@@ -243,6 +245,7 @@ class Temp(models.Model):
     ram = models.CharField(max_length=200, null=True)
     hdd = models.CharField(max_length=200, null=True)
     brand = models.CharField(max_length=200 , null=True)
+    screen = models.CharField(max_length=200 , null=True)
     daterecieved = models.DateField(auto_now_add=True, null=True)
     datedelivered = models.DateField(auto_now_add=False, null=True)
     qty = models.CharField(max_length=200, null=True)
@@ -265,11 +268,15 @@ class Temp(models.Model):
 class Accessory(models.Model):
     name = models.CharField(max_length = 200, null=True)
     date = models.DateField(auto_now=True)
-
-class AccessoryDesc(models.Model):
-    accessory_name = models.ForeignKey(Accessory, on_delete=models.CASCADE, null=True)
     qty = models.IntegerField(default=0)
+    bprice = models.FloatField(default=0)
+    sprice = models.FloatField(default=0)
     supplier = models.ForeignKey(Vendor, on_delete=models.CASCADE, null=True)
+
+# class AccessoryDesc(models.Model):
+#     accessory_name = models.ForeignKey(Accessory, on_delete=models.CASCADE, null=True)
+#     qty = models.IntegerField(default=0)
+#     supplier = models.ForeignKey(Vendor, on_delete=models.CASCADE, null=True)
 
 
 class Templist(models.Model):
@@ -280,6 +287,7 @@ class Templist(models.Model):
     ram = models.CharField(max_length=200, null=True)
     hdd = models.CharField(max_length=200, null=True)
     brand = models.CharField(max_length=200 , null=True)
+    screen = models.CharField(max_length=200 , null=True)
     gen = models.CharField(max_length=200 , null=True)
     daterecieved = models.DateField(auto_now_add=True, null=True)
     datedelivered = models.DateField(auto_now_add=False, null=True)

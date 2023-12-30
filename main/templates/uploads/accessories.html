@@ -1,0 +1,268 @@
+{% load static %}
+{% load humanize %}
+{% include 'header/header.html' %}
+
+
+<div class="container-fluid mt-5 pt-4 test_continer ">
+    <h5 class="text-center"><u>ACCESSORIES</u></h5>
+    <hr class="my-2" />
+    <div class="card shadow-none">
+        <div class="row mt-3 px-3">
+            <div class="col-lg-2 col-md-2   ">
+                <div class="nav-wrapperr position-relative end-0">
+                  <ul class="nav  nav-fill p-1 bg-transparent" role="tablists">
+    
+                    <li class="nav-item px-1">
+                        <a class="nav-link mb-0 px-0 py-1 btn btn-md p-2"style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);"  href="/stockout">
+                            <i class="fa fa-home text-dark" ></i>
+                          <span class="ms-1 text-dark">Home</span>
+                        </a>
+                      </li>
+                  </ul>
+                </div>
+            </div>
+    
+
+            <div class="col-md-2">
+              
+            </div>
+            <div class="col-md-1"></div>
+
+           
+
+
+        </div>
+        <div class="card-body">
+        <div class="table-responsive tbl-content text-nowrap tbl-content" >
+          <div class="table-container">
+            <table class="table table-bordered table-responsive table-hover text-xls table-sm ">
+              <thead  style="background-color: #87bad4; ">
+                  <tr class="my-1 text-align text-xls" style="padding-left: 0%;">
+                      <th class="text-dark th-style font-weight-bold "></th>
+                      <th class="text-dark th-style font-weight-bold">Name</th>
+                      <th class="text-dark th-style font-weight-bold">Buying Price</th>
+                      <th class="text-dark th-style font-weight-bold">Selling Price</th>
+                      <th class="text-dark th-style font-weight-bold">Qty</th>
+
+                  </tr>
+              </thead>
+              <tbody>
+                {% for delivery in accessories %}
+                    <tr class="">
+
+                      <td class ="text-dark py-1 custom-letter-spacing  text-xs col-1">
+                        <div class="nav-wrapperr position-relative end-0">
+                            <ul class="nav  nav-fill p-1 bg-transparent" role="tablists">
+                                <li class="nav-item px-1">
+                                    <a class="nav-link mb-0 px-0 py-1 btn btn-md"style="box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);"   href="#" onclick="return confirmDeleteCond('{{delivery.name}}', '{{delivery.sprice}}', '{{delivery.bprice}}', '{{delivery.qty}}', '{{delivery.supplier}}', '{{delivery.id}}');">
+                                        <i class="fa fa-plus text-dark" ></i>
+                                      <span class="ms-1 text-dark"></span>
+                                    </a>
+                                  </li>
+                            </ul>
+                        </div>
+                      </td>
+                      <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{delivery.name |default_if_none:""  }} </td>
+                      <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{delivery.bprice |default_if_none:""  }} </td>
+                      <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{delivery.sprice |default_if_none:""  }} </td>
+                      <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{delivery.qty|intcomma |default_if_none:""  }} </td>
+
+                    </tr>
+
+                {% endfor %}
+              </tbody>
+            </table>
+            
+          </div>
+        </div>
+    </div>
+    
+
+  </div>
+</main>
+
+
+<style>    
+  .custom-swal-modal {
+      width: 100%; 
+  }
+  </style>
+  <form >
+      {% csrf_token %}
+      <input type="hidden" name="csrfmiddlewaretoken" id="" value="{% csrf_token %}">
+  </form>
+
+  <script>
+      function confirmDeleteCond(Name, sprice, bprice, qty, supplier, id) {
+
+      Swal.fire({
+          title:  `${Name}`,
+          html: `
+
+              <div class="row">
+                <div class="col-6">
+                  <label for="Buying Price">Buying Price</label>
+                  <input type="text" name="bprice" id="bprice" class="form-control" value="${bprice}">
+                </div>
+                <div class="col-6">
+                  <label for="Selling Price">Selling Price</label>
+                  <input type="text" name="sprice" id="sprice" class="form-control" value="${sprice}">
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col-6">\
+                  <label for="vendor">Supplier</label>
+                  <select name="vendor" id="vendor" class="form-control form-select" required>
+                    <option value="${supplier}">${supplier}</option>
+                    {% for vendor in suppliers %}
+                    <option value="{{vendor.username}}">{{vendor.username}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="col-6">
+                  <label for="qty">qty</label>
+                  <input type="text" name="qty" id="qty" value="${qty}" class="form-control" value="${qty}">
+                  <input type="hidden" name="id" id="id" value="${id}" class="form-control" value="${id}">
+                </div>
+              </div>
+          `,
+          showCancelButton: true,
+          confirmButtonText: 'Submit',
+          cancelButtonText: 'Cancel',
+          reverseButtons: true,
+          preConfirm: () => {
+              return {
+                bprice: document.getElementById('bprice').value,
+                id: document.getElementById('id').value,
+                sprice: document.getElementById('sprice').value,
+                vendor: document.getElementById('vendor').value,
+                qty: document.getElementById('qty').value,
+              };
+          },
+          onOpen: () => {
+              const confirmButton = document.querySelector('.swal2-confirm');
+              const cancelButton = document.querySelector('.swal2-cancel');
+              
+              if (confirmButton) confirmButton.classList.add('py-1 bg-dark');
+              if (cancelButton) cancelButton.classList.add('py-1');
+          }
+      }).then(async (result) => {
+          if (result.isConfirmed && result.value.vendor) {
+
+
+              const id = result.value.id;
+              const bprice = result.value.bprice;
+              const sprice = result.value.sprice;
+              const vendor = result.value.vendor;
+              const qty = result.value.qty;
+  
+              const formData = new FormData();
+              formData.append('id', id);
+              formData.append('bprice', bprice);
+              formData.append('sprice', sprice);
+              formData.append('vendor', vendor);
+              formData.append('qty', qty);
+  
+              const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+              
+              formData.append('csrfmiddlewaretoken', csrfToken);
+              console.log(formData)
+              try {
+                  const response = await fetch("/accessories/", {
+                      method: 'POST',
+                      body: formData
+                  });
+  
+                  if (!response.ok) { 
+                      const data = await response.json(); 
+                      Swal.fire('Error!', data.message || 'There was an error updating accessory.', 'error');
+                  } else {
+                      location.reload();
+                  }
+              } catch (error) {
+                  Swal.fire('Error!', 'There was an error updating accessory.', 'error');
+              }
+          }
+      });
+  }
+  
+  
+  function EditExpenditure(descriptionss, amount, expenseId) {
+      Swal.fire({
+          title: 'Edit Expense',
+          html: `
+              <div class="row">
+                  <div class="col-6">
+  
+                      <select name="editComment" id="editComment" class="form-control"placeholder="Description" >
+                          <option value="${descriptionss}">${descriptionss}</option>
+                      
+                      {% for desc in description %}
+                              <option value="{{desc.description}}" value="${descriptionss}">{{desc.description}}</option>
+                          {% endfor %}
+                      </select>
+  
+                  </div>
+                  <div class="col-6">
+                      <input type="text" name="editAmount" id="editAmount" class="form-control" value="${amount}" placeholder="KES /=">
+                  </div>
+              </div>
+          `,
+          showCancelButton: true,
+          confirmButtonText: 'Submit',
+          cancelButtonText: 'Cancel',
+          reverseButtons: true,
+          preConfirm: () => {
+              return {
+                  editComment: document.getElementById('editComment').value,
+                  editAmount: document.getElementById('editAmount').value,
+              };
+          },
+          customClass: {
+              modal: 'custom-swal-modal' // Add your custom class here
+          },
+          onOpen: () => {
+              const confirmButton = document.querySelector('.swal2-confirm');
+              const cancelButton = document.querySelector('.swal2-cancel');
+              
+              if (confirmButton) confirmButton.classList.add('py-1 bg-dark');
+              if (cancelButton) cancelButton.classList.add('py-1');
+          }
+      }).then(async (result) => {
+          if (result.isConfirmed && result.value.editComment) {
+              const editComment = result.value.editComment;
+              const editAmount = result.value.editAmount;
+  
+              // Submit the request to the backend
+              const formData = new FormData();
+              formData.append('editComment', editComment);
+              formData.append('editAmount', editAmount);
+  
+              const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+              formData.append('csrfmiddlewaretoken', csrfToken);
+  
+              try {
+                  const response = await fetch(`/editexpense/${expenseId}/`, {
+                      method: 'POST',
+                      body: formData,
+                  });
+  
+                  if (!response.ok) { 
+                      const data = await response.json(); 
+                      Swal.fire('Error!', data.message || 'There was an error editing the expense.', 'error');
+                  } else {
+                      location.reload();  // Reload the page after successful edit
+                  }
+              } catch (error) {
+                  Swal.fire('Error!', 'There was an error editing the expense.', 'error');
+              }
+          }
+      });
+  }
+  
+  
+  </script>
+
+{% include 'header/footer.html' %}
+

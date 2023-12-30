@@ -34,7 +34,7 @@ def LoginPage(request):
                 Subscription.objects.create(plan='basic', expiration_date='2024-01-5', user_id=user_id)
 
             sub_date = Subscription.objects.filter(user_id=user_id).values('expiration_date').first()['expiration_date']
-            messages.add_message(request, messages.INFO, "The trial period has ended. Please reach out to the administrator for further assistance.")
+            # messages.add_message(request, messages.INFO, "The trial period has ended. Please reach out to the administrator for further assistance.")
 
             if sub_date <= today:
                 return redirect('/accounts/login/')

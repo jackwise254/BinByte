@@ -63,6 +63,8 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.0/dist/sweetalert2.all.min.js"></script>
 
 {% include 'header/footer.html' %}
+
+
 <style>    
 .custom-swal-modal {
     width: 200px; 
@@ -70,7 +72,7 @@
 </style>
 <form >
     {% csrf_token %}
-    <input type="hidden" name="csrfmiddlewaretoken" id="" value="{% csrf_token %}">
+    <input type="hidden" name="csrfmiddlewaretoken" id="" value="{% csrf_token %}
 
     
 </form>
