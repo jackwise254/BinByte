@@ -1170,6 +1170,14 @@ def DeleteTemplist(request, pk):
     Templist.objects.get(id=pk).delete()
     return redirect('/uploadstock')
 
+@login_required
+def SaleAccessoriesV(request):
+    accessories = Accessory.objects.all()
+    context ={
+        "accessories":accessories
+    }
+
+    return render(request, "deliveries/accessories.html", context)
 
 @login_required
 def EditStaff(request, pk):

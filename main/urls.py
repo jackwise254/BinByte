@@ -36,9 +36,9 @@ urlpatterns = [
     path("edit_staff/<str:pk>", EditStaff, name="edit-staff"),
     path('accessoryadd/' , accessory_add, name='accessory_add'),
     path('accessories/', AccessoriesV, name='accessories'),
+    path('saleaccessories/', SaleAccessoriesV, name='saleaccessories'),
     
     path('delaccessory/<int:pk>', delaccessory_v, name='delaccessory_v'),
-
     path('delete_templist/<int:pk>', DeleteTemplist, name='delete_templist'),
     path('sales/', SalesView, name='sales'),
     path('deliveries/', Delivery_View, name='deliveries'),
