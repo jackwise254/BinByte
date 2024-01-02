@@ -1026,9 +1026,11 @@ def FetchProduct(request, title):
     conditions = k_split[0]
     types = k_split[1:]
     types = ' '.join(types)
-    masterlists = Masterlist.objects.filter(type=conditions)
+
+    print(f"types:{types}, title:{title}")
+    masterlists = Masterlist.objects.filter(type=title)
     count = masterlists.count()
-    masterlist = Masterlist.objects.filter(type=conditions).order_by('-daterecieved')[:500]
+    masterlist = Masterlist.objects.filter(type=title).order_by('-daterecieved')[:500]
     if request.method == 'POST':
         model_val = request.POST.get('model')
         q = request.POST.get('q')
@@ -1213,38 +1215,43 @@ def EditStaff(request, pk):
 
 def NarationSub(request):
     if request.method == "POST":
-        supplier = request.POST.get('supplier')
-        naration = request.POST.get('naration')
-        mode = request.POST.get('mode')
-        amount = 0
-        # amount = request.POST.get('amount')
-        vendor = Vendor.objects.get(username=supplier)
+        try:
+            supplier = request.POST.get('supplier')
+            naration = request.POST.get('naration')
+            mode = request.POST.get('mode')
+            amount = 0
+            # amount = request.POST.get('amount')
+            vendor = Vendor.objects.get(username=supplier)
 
-        balance = SupplierOrders.objects.filter(name=supplier).values("total_amount").order_by("-id").first()
-        remaining_amount = 0
-        if balance:
-            remaining_amount = balance['total_amount']
-        else:
+            balance = SupplierOrders.objects.filter(name=supplier).values("total_amount").order_by("-id").first()
             remaining_amount = 0
+            if balance:
+                remaining_amount = balance['total_amount']
+            else:
+                remaining_amount = 0
 
 
-        # Check if there is an existing record for the vendor with status=0
-        if Narations.objects.filter(vendor=vendor, status=0).exists():
-            # Delete the existing record
-            Narations.objects.filter(vendor=vendor, status=0).delete()
+            # Check if there is an existing record for the vendor with status=0
+            if Narations.objects.filter(vendor=vendor, status=0).exists():
+                # Delete the existing record
+                Narations.objects.filter(vendor=vendor, status=0).delete()
 
-        # Get the latest balance for the vendor
-        latest_balance = Narations.objects.filter(vendor=vendor).aggregate(Max('balance'))['balance__max']
+            # Get the latest balance for the vendor
+            latest_balance = Narations.objects.filter(vendor=vendor).aggregate(Max('balance'))['balance__max']
 
-        # If there is a latest balance, add it to the amount as acc_balance
-        if latest_balance is not None:
-            acc_balance = float(amount) + float(latest_balance)
-        else:
-            acc_balance = amount
-        # Create a new Narations instance with the updated acc_balance
-        Narations.objects.create(vendor=vendor, naration=naration, amount=amount, balance=remaining_amount, status=0, order_type=mode)
-        return redirect("/uploadstock")
+            # If there is a latest balance, add it to the amount as acc_balance
+            if latest_balance is not None:
+                acc_balance = float(amount) + float(latest_balance)
+            else:
+                acc_balance = amount
+            # Create a new Narations instance with the updated acc_balance
+            Narations.objects.create(vendor=vendor, naration=naration, amount=amount, balance=remaining_amount, status=0, order_type=mode)
+            return redirect("/uploadstock")
+        except:
+            messages.add_message(request, messages.INFO, "Kindly add supplier and try again")
     return redirect("/uploadstock")
+    
+    
 
 @login_required
 
@@ -1268,29 +1275,29 @@ def upload_stock(request):
         balance = balance.balance
     # Templist.objects.all().delete()
     if request.method == 'POST':
-        # try:
-        types = request.POST.get('types')
-        model = request.POST.get('model')
-        cpu = request.POST.get('cpu')
-        ram = request.POST.get('ram')
-        hdd = request.POST.get('hdd')
-        bprice = request.POST.get('bprice')
-        sprice = request.POST.get('sprice')
-        brand = request.POST.get('brand')
-        gen = request.POST.get('gen')
-        screen = request.POST.get('screen')
-        supplier = Narations.objects.get(status=0)
-        vendor = Vendor.objects.get(id=supplier.vendor.id)
-        naration = Narations.objects.get(status=0).naration
-        serialno = request.POST.get('serialno')
-        if Templist.objects.filter(serialno=serialno).exists():
-            return redirect('/uploadstock')
-
-        Templist.objects.create(
-            screen=screen,gen=gen, terms=request.user, brand=brand,type=types,model=model,cpu=cpu, ram=ram,hdd=hdd,bprice=bprice, supplier=vendor, serialno=serialno,sprice=sprice
-        )
-        # except:
-        #     messages.add_message(request, messages.INFO, "Please add naration add try again")
+        try:
+            types = request.POST.get('types')
+            model = request.POST.get('model')
+            cpu = request.POST.get('cpu')
+            ram = request.POST.get('ram')
+            hdd = request.POST.get('hdd')
+            bprice = request.POST.get('bprice')
+            sprice = request.POST.get('sprice')
+            brand = request.POST.get('brand')
+            gen = request.POST.get('gen')
+            screen = request.POST.get('screen')
+            supplier = Narations.objects.get(status=0)
+            vendor = Vendor.objects.get(id=supplier.vendor.id)
+            naration = Narations.objects.get(status=0).naration
+            serialno = request.POST.get('serialno')
+            if Templist.objects.filter(serialno=serialno).exists():
+                return redirect('/uploadstock')
+            if not Templist.objects.filter(serialno=serialno):
+                Templist.objects.create(
+                    screen=screen,gen=gen, terms=request.user, brand=brand,type=types,model=model,cpu=cpu, ram=ram,hdd=hdd,bprice=bprice, supplier=vendor, serialno=serialno,sprice=sprice
+                )
+        except:
+            messages.add_message(request, messages.INFO, "Please add supplier add try again")
 
 
         # supplier.update(status=1)

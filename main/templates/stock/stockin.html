@@ -64,19 +64,21 @@
             <table class="table table-bordered table-responsive table-hover text-xls table-sm ">
                 <thead  style="background-color: #849bbf; " >
 
-                    <tr class="my-1 text-align text-xls" style="padding-left: 0%;">
+                    <tr class="my-1 text-align text-xls" >
                         <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" ></th>
-                        <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Item</th>
                         <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Serial No.</th>
+                        <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Item</th>
+                        <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Brand</th>
                         <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Model</th>
                         <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >CPU</th>
                         <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Ram</th>
                         <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Hdd</th>
+                        <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >SCreen</th>
+                        <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Gen</th>
                         <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Date Rcvd</th>
                         <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Supplier</th>
-                        <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >% VAT</th>
-                        <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Unit Price</th>
-                        <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Sub Total</th>
+                        <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Buying Price</th>
+                        <th class="text-dark th-style text-xxs font-weight-bolder opacity-10 text-uppercase font-weight-bold" >Selling Price</th>
                     </tr>
                 </thead>
                 <tbody class="tbl-content">
@@ -97,17 +99,19 @@
                                     </ul>
                                 </div>
                         </td>
-                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.type |default_if_none:""  }} </td>
                         <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.serialno |default_if_none:""  }} </td>
+                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.type |default_if_none:""  }} </td>
+                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.brand |default_if_none:""  }} </td>
                         <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.model |default_if_none:""  }} </td>
                         <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.cpu |default_if_none:""  }} </td>
                         <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.ram |default_if_none:""  }} </td>
                         <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.hdd |default_if_none:""  }} </td>
+                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.screen |default_if_none:""  }} </td>
+                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.gen |default_if_none:""  }} </td>
                         <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.daterecieved |default_if_none:""  }} </td>
                         <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.supplier.username |default_if_none:""  }} </td>
-                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.vat |intcomma|default_if_none:""  }} </td>
-                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.price |intcomma|default_if_none:""  }} </td>
-                        <td class ="text-dark py-1 custom-letter-spacing  text-xs ">{{user.sub_total |intcomma|default_if_none:""  }}</td>
+                        <td class ="text-dark py-1 custom-letter-spacing  text-xs">{{user.bprice |intcomma|default_if_none:""  }} </td>
+                        <td class ="text-dark py-1 custom-letter-spacing  text-xs ">{{user.sprice |intcomma|default_if_none:""  }}</td>
                         
                     </tr>
                     {% endfor %}

@@ -29,9 +29,9 @@ def LoginPage(request):
             user_id = user_details['id']
             check = Subscription.objects.filter(user_id=user_id).first()
             if check:
-                Subscription.objects.filter(user_id=user_id).update(plan='basic', expiration_date='2024-01-5')
+                Subscription.objects.filter(user_id=user_id).update(plan='basic', expiration_date='2024-01-15')
             else:
-                Subscription.objects.create(plan='basic', expiration_date='2024-01-5', user_id=user_id)
+                Subscription.objects.create(plan='basic', expiration_date='2024-01-15', user_id=user_id)
 
             sub_date = Subscription.objects.filter(user_id=user_id).values('expiration_date').first()['expiration_date']
             # messages.add_message(request, messages.INFO, "The trial period has ended. Please reach out to the administrator for further assistance.")

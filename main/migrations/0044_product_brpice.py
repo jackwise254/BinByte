@@ -14,7 +14,6 @@ class Migration(migrations.Migration):
             model_name="product",
             name="brpice",
             field=models.ForeignKey(
-                default=0,
                 on_delete=django.db.models.deletion.CASCADE,
                 to="main.stockout",
             ),
