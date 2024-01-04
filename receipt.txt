@@ -1,11 +1,6 @@
-Receipt Title
-Customer: Customer Name
-Date: 2023-11-04
-Address: Delivery Address
-Phone: 1234567890
-Delivery No.: AA001
-Email: customer name
-Reference No.: iTEST1
-Type  Description  Qty
-Product1 Product1 Product1 Product1 1
-Total Qty: 1
+Receipt
+Item 1: $12.99
+Item 2: $7.50
+Item 3: $5.25
+Total Amount: $25.74
+Payment Method: Credit Card

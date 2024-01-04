@@ -1738,7 +1738,6 @@ def delvout(request):
                 bprice += temp_item.bprice
             except:
                 bprice += 0
-
             stockout_entry.datedelivered = datedelivered
             stockout_entry.random = rands
             stockout_entry.created_by = sess
@@ -1843,7 +1842,15 @@ def delvout(request):
     # Create an HTTP response with the receipt content
     response = HttpResponse(receipt_output, content_type='text/plain')
     return response
-    
+
+
+
+
+
+
+
+
+
 # from escpos import printer
 import platform
 import os
@@ -1909,16 +1916,15 @@ def generate_receipt_txt(request, delivery_ref, items, customerss, rands, datede
     # Generate the receipt content
     receipt = []
 
-    title = f"\033[1mONE TECH COMPUTERS LTD\033[0m"
-    # print(f"This is \033[1mbold\033[0m and my name is \033[1m{name}\033[0m\nI am \033[1m{age}\033[0m years old")
+    title = "\033[1mONE TECH COMPUTERS LTD\033[0m"
     delivery = f"DELIVERY NO: {delivery_ref}"
-    city = f"NAIROBI"
+    city = "NAIROBI"
     date = f"{datedelivered}"
     address = "TOM MBOYA STREET. TEL:0708405238"
     email = "onetechcomputers2@gmail.com  NAIROBI"
     customer = f"{customerss.upper()} #{invono.upper()}"
-    dots = f"................................................"
-    header = f"ITEM NAME                                QTY"
+    dots = "................................................"
+    header = "ITEM NAME                                QTY"
     receipt.append(title.center(45))  # Center the title in a 40-character width
     receipt.append(delivery.center(45))
     receipt.append(city.center(45))
@@ -1930,7 +1936,6 @@ def generate_receipt_txt(request, delivery_ref, items, customerss, rands, datede
     receipt.append("\n" + header)
     receipt.append(dots)
     for item in items:
-        print(f"item:{item}")
         item_line = f"{item[0]}   {item[3]}                         {item[10]}"
         receipt.append(item_line)
     receipt.append(dots)
@@ -1943,21 +1948,29 @@ def generate_receipt_txt(request, delivery_ref, items, customerss, rands, datede
     sess = request.session.get("username")
     receipt.append("\n\n" + f" You were served by: {sess.upper()}")
 
-    # Save the receipt as a text file
+    # Save the receipt as a text file with control characters
     txt_filename = f"{document}.txt"
     folder_path = '/main/'
     if not os.path.exists(folder_path):
         os.makedirs(folder_path)
     file_path = os.path.join(folder_path, f"{txt_filename}")
 
-    with open(file_path, "w") as txt_file:
-        txt_file.write("\n".join(receipt))
+    # Control characters to set left margin and printing width
+    control_characters = b'\x1dL#\x00\x1dW\xa9\x01'
+    
+    # Combine control characters with receipt content
+    receipt_data = control_characters + "\n".join(receipt).encode('utf-8')
+
+    with open(txt_filename, "wb") as txt_file:
+        txt_file.write(receipt_data)
+
     # For printing on Windows
     if platform.system() == "Windows":
-        os.startfile(file_path, "print")
+        os.startfile(txt_filename, "print")
     else:
         # Add code here for opening/processing files on non-Windows platforms
         print(f"Printing not supported on {platform.system()}")
+
 
 
 from django.http import HttpResponse
@@ -1984,46 +1997,6 @@ def find_printer_ids():
 
 
 
-# def PrintDocument(request, document):
-#     # Specify the folder path
-#     folder_path = "/main/"
-
-#     # Construct the file path
-#     txt_filename = f"{document}.txt"
-#     file_path = os.path.join(folder_path, txt_filename)
-
-#     # Check if the file exists
-#     if os.path.exists(file_path):
-#         # Read the content of the file
-#         with open(file_path, "r") as txt_file:
-#             receipt_content = txt_file.read()
-
-#         printer = None
-#         try:
-#             # Get printer IDs dynamically
-#             vendor_id, product_id = find_printer_ids()
-#             print(f"vendor_id:{vendor_id}, product_id:{product_id}")
-
-#             if vendor_id is not None and product_id is not None:
-#                 printer = Usb(vendor_id, product_id)
-#                 printer.text(receipt_content)
-#                 printer.cut()
-#                 messages.add_message(request, messages.SUCCESS, f"Receipt {document} printed successfully.")
-#             else:
-#                 messages.add_message(request, messages.ERROR, "No USB printer found.")
-#         except Exception as e:
-#             messages.add_message(request, messages.ERROR, f"Error printing receipt: {str(e)}")
-#         finally:
-#             # Close the printer connection
-#             if printer is not None:
-#                 printer.close()
-
-#         # Redirect to the sales page
-#         return redirect("/sales")
-#     else:
-#         messages.add_message(request, messages.INFO, f"Receipt {document} not found.")
-#         return redirect("/sales")
-
 def delvcsv(request):
     pass
 
@@ -2049,7 +2022,7 @@ def find_any_usb_printer():
     return vendor_id, product_id
 
 
-def PrintDocument(request, document):
+def PrintDocumentss(request, document):
     # Specify the folder path
     folder_path = "/main/"
 
@@ -2067,15 +2040,18 @@ def PrintDocument(request, document):
         try:
             # Get printer IDs dynamically
             vendor_id, product_id = find_printer_ids()
-            print(f"vendor_id:{vendor_id}, product_id:{product_id}")
-
-            if vendor_id is not None and product_id is not None:
-                printer = Usb(vendor_id, product_id)
-                printer.text(receipt_content)
-                printer.cut()
-                messages.add_message(request, messages.SUCCESS, f"Receipt {document} printed successfully.")
+            if platform.system() == "Windows":
+                os.startfile(receipt_content, "print")
             else:
-                messages.add_message(request, messages.ERROR, "No USB printer found.")
+                print(f"Printing not supported on {platform.system()}")
+
+                if vendor_id is not None and product_id is not None:
+                    printer = Usb(vendor_id, product_id)
+                    printer.text(receipt_content)
+                    printer.cut()
+                    messages.add_message(request, messages.SUCCESS, f"Receipt {document} printed successfully.")
+                else:
+                    messages.add_message(request, messages.ERROR, "No USB printer found.")
         except Exception as e:
             messages.add_message(request, messages.ERROR, f"Error printing receipt: {str(e)}")
         finally:
@@ -2088,3 +2064,76 @@ def PrintDocument(request, document):
     else:
         messages.add_message(request, messages.INFO, f"Receipt {document} not found.")
         return redirect("/sales")
+
+import platform
+import os
+import subprocess
+from django.shortcuts import get_object_or_404, redirect
+from django.db.models import Count
+from colorama import Fore, Style, init
+
+def PrintDocument(request, document):
+    try:
+        init()
+        # Retrieve user details
+        user_details = get_object_or_404(Product, delvnote=document)
+        # Retrieve items and count
+        items = Stockout.objects.filter(random=user_details.random) \
+            .values_list('type', 'brand', 'gen', 'model', 'cpu', 'speed', 'ram', 'hdd', 'screen', 'comment') \
+            .annotate(count=Count('qty'))
+
+        # Header details
+        company_name = "ONE TECH COMPUTERS LTD"
+        delivery = "DELIVERY NO: AA00G"
+        city = "NAIROBI"
+        date = "2024-01-03"
+        address = "TOM MBOYA STREET. TEL:0708405238"
+        email = "onetechcomputers2@gmail.com NAIROBI"
+        customer = f"{user_details.username} #{user_details.invono}"
+        dots = "............................................"
+        header = "ITEM NAME                       QTY"
+        filename = f"{user_details.username}.txt"
+
+        # Construct the receipt content
+        receipt_content = f"\x1B\x21\x01"  # Set font size to small
+        receipt_content += f"{company_name}\n\n{delivery}\n\n{city}\n{date}\n{address}\n{email}\n{customer}\n{dots}\n\n{header}\n{dots}"
+
+        # Include items in the receipt content
+        if items:
+            for item in items:
+                item_line = f"{item[0]} {item[3]:<25}{item[-1]}"
+                receipt_content += f"{item_line}\n"
+
+            total_qty = sum(item[-1] for item in items)
+            receipt_content += f"\n{'TOTAL QTY:':<40} {total_qty}\n"
+        else:
+            receipt_content += "\n\nNo orders for this customer."
+        # Additional information
+        receipt_content += "\n\n\n\n ONE YEAR warranty on new machines and 3 MONTHS warranty for refurbished machines. No warranty on power related issues, rams, hdds, laptop keyboards, screens, and software. Money once received is not refundable. Goods once sold cannot be returned\n"
+
+        # Serving details
+        sess = request.session.get("username")
+        receipt_content += f"\n\n You were served by: {sess.upper()}"
+        receipt_content += "\x1B\x21\x00"  # Reset font size to normal
+        # Write the receipt content to a file
+        with open(filename, "w") as f:
+            f.write(receipt_content)
+        # Print the receipt
+        if platform.system() == "Windows":
+            os.startfile(filename, "print")
+        else:
+            vendor_id, product_id = find_printer_ids()
+            print(f"vendor_id:{vendor_id}, product_id:{product_id}")
+
+            if vendor_id is not None and product_id is not None:
+                printer = Usb(vendor_id, product_id)
+                printer.text(receipt_content)
+                printer.cut()
+                messages.add_message(request, messages.SUCCESS, f"Receipt {document} printed successfully.")
+            else:
+                messages.add_message(request, messages.ERROR, "No USB printer found.")
+
+    except Product.DoesNotExist:
+        messages.add_message(request, messages.INFO, f"User details for receipt {document} not found.")
+        return redirect("/sales")
+    return redirect("/sales")

@@ -1,0 +1,227 @@
+Restock
+
+Sale Receipt
+
+Opp Golden Line Mall
+P.O BOX 3404-20100
+ TEL: 0727441192
+EMAIL: Hiltonltd@yandex.com
+
+Receipt No:19526
+
+______________________________________
+Amount:        0.0
+______________________________________
+
+Paid In:     Debit
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        0.0
+______________________________________
+
+Paid In:     Credit
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        0.0
+______________________________________
+
+Paid In:     Debit
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        0.0
+______________________________________
+
+Paid In:     Debit
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        0.0
+______________________________________
+
+Paid In:     Debit
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        0.0
+______________________________________
+
+Paid In:     Debit
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        0.0
+______________________________________
+
+Paid In:     Debit
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        0.0
+______________________________________
+
+Paid In:     Debit
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        0.0
+______________________________________
+
+Paid In:     Debit
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        0.0
+______________________________________
+
+Paid In:     Debit
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        0.0
+______________________________________
+
+Paid In:     Debit
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        0.0
+______________________________________
+
+Paid In:     Debit
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        0.0
+______________________________________
+
+Paid In:     Debit
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        0.0
+______________________________________
+
+Paid In:     Debit
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        0.0
+______________________________________
+
+Paid In:     Debit
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        0.0
+______________________________________
+
+Paid In:     Debit
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        128500.0
+______________________________________
+
+Paid In:     Debit
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        201500.0
+______________________________________
+
+Paid In:     Debit
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
