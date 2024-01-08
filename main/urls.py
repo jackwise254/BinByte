@@ -37,6 +37,8 @@ urlpatterns = [
     path('accessoryadd/' , accessory_add, name='accessory_add'),
     path('accessories/', AccessoriesV, name='accessories'),
     path('saleaccessories/', SaleAccessoriesV, name='saleaccessories'),
+    path('bank_cashbox/', BankCashBox, name='bank_cashbox'),
+    
     
     path('delaccessory/<int:pk>', delaccessory_v, name='delaccessory_v'),
     path('delete_templist/<int:pk>', DeleteTemplist, name='delete_templist'),
@@ -84,6 +86,8 @@ urlpatterns = [
     path('delgen/<int:pk>', delgen_v, name='delgen_v'),
     path('delspeed/<int:pk>', delspeed_v, name='delspeed_v'),
     path('update_m/<int:pk>', update_masterlist, name='update_masterlist'),
+    path('read_fpdf/<str:document>', readfpdf, name='readfpdf'),
+    
 
     path('edit-expense/' , EditExpense, name='EditExpense'),
     path('customer-balances/<str:pk>' , CustomerBalances, name='customer-balances'),

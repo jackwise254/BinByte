@@ -18,6 +18,11 @@ from django.db.models import F
 from django.db.models.functions import ExtractMonth, ExtractYear
 from django.http import JsonResponse
 import json
+from fpdf import FPDF
+from django.http import FileResponse
+from rest_framework.response import Response
+from django.http import HttpResponseRedirect
+
 @login_required
 
 def get_monthly_sales_totals(request):
@@ -1373,7 +1378,7 @@ def Delivery_View(request):
     products = Temp.objects.filter(terms=sess, d_type="delivery", is_active=True)
     total = products.count()
     modes = Mode.objects.all()
-
+    sales_agents = User.objects.filter(type='sales')
     sess = request.session.get('username')
     d_customer = Dcustomer.objects.filter(user_created_at=sess, d_type="delivery", status=0)
     context ={
@@ -1382,6 +1387,7 @@ def Delivery_View(request):
         "total":total,
         "modes":modes,
         "d_customer":d_customer,
+        "sales_agents":sales_agents,
 
     }
 
@@ -1392,20 +1398,21 @@ def delv_customer(request):
     if request.method=='POST':
         customer = request.POST.get('customer', None)
         mode = request.POST.get('mode', None)
+        sales_agent = request.POST.get('sales_agent', None)
 
         sess = request.session.get('username')
         customer_rows = Customer.objects.filter(username=customer).values()
         check = Dcustomer.objects.filter(user_created_at=sess, status=0)
 
         if customer_rows.exists():
-            batch = [Dcustomer(lname=row['lname'], phone=row['phone'], fname=row['fname'], location=row['location'], email=row['email'], username=row['username'], id_no=row['id_no'], mode=mode, user_created_at=sess, status=0, d_type='delivery') for row in customer_rows]
+            batch = [Dcustomer(sales_agent=sales_agent, lname=row['lname'], phone=row['phone'], fname=row['fname'], location=row['location'], email=row['email'], username=row['username'], id_no=row['id_no'], mode=mode, user_created_at=sess, status=0, d_type='delivery') for row in customer_rows]
             if check.exists():
                 check.delete()
             Dcustomer.objects.bulk_create(batch)
         else:
             if check.exists():
                 check.delete()
-            Dcustomer.objects.create(username=customer, mode=mode,d_type='delivery', user_created_at=sess, status=0,)
+            Dcustomer.objects.create(username=customer, mode=mode,d_type='delivery', user_created_at=sess, status=0,sales_agent=sales_agent)
         return redirect('/deliveries')
     return redirect('/deliveries')
 @login_required
@@ -1447,9 +1454,10 @@ def ReturnsOut(request):
             Stockout.objects.filter(random=row.random).delete()
             Orders.objects.filter(random=row.random).delete()
             Product.objects.filter(random=row.random).delete()
+            sales_agent = Dcustomer.objects.get(random=row.random).sales_agent
 
             Agents_Records.objects.update_or_create(
-                name=User.objects.get(username=sess),
+                name=User.objects.get(username=sales_agent),
                 defaults={
                     'units': F('units') - 1, 
                     'commission': F('commission') - int(row.sub_total) * 0.007,
@@ -1715,13 +1723,15 @@ def delvout(request):
 
         check_random_temp = Temp.objects.filter(terms=sess ).values()
         check_random_product = Product.objects.filter(random=check_random_temp[0]['random']).values()
+        sales_agent = Dcustomer.objects.get(username=customerss, d_type='delivery', status=0, user_created_at=sess).sales_agent
+        print(f"sales_agent:{sales_agent}")
         Dcustomer.objects.filter(username=customerss, d_type='delivery', status=0, user_created_at=sess).update(random=rands, status=1)
         delvivery_ref = None
         table = 'Product'
         delv = delvgenerate(table)
         rands = generate_new_random_number(rands)
         pdfs = '.pdf'
-        document = f"{customerss}{delv}"
+        document = f"{customerss}{delv}.pdf"
         excell = f"{rands}_{customerss}.xls"
         amount = 0
         bprice = 0
@@ -1744,7 +1754,7 @@ def delvout(request):
             stockout_entry.customer = customerss
             stockout_entry.mode ='Sold'
             stockout_entry.invoice = invono
-            stockout_entry.delvno = delv
+            stockout_entry.delvno = sales_agent
             stockout_entry.save()
             Masterlist.objects.filter(serialno=temp_item.serialno).delete()
         items = (Stockout.objects.filter(random=rands)
@@ -1756,7 +1766,7 @@ def delvout(request):
             data = [Product(
                 fname=fname, lname=lname, amount=amount,mode=invono, invono=invono, total=Temp.objects.filter(d_type='delivery', terms=sess, is_active=True).count(),
                 location=location, document=document, delvnote=delv, ref=rands, id_no=excell, random=rands,
-                date=datedelivered, username=customerss, email=email, user_name=sess, sold_to=sold_to,bprice=bprice
+                date=datedelivered, username=customerss, email=email, user_name=sales_agent, sold_to=sold_to,bprice=bprice
             )]
             Product.objects.bulk_create(data)
         else:
@@ -1768,7 +1778,7 @@ def delvout(request):
             Product.objects.filter(random=check_random_temp[0]['random']).update(
                 fname=fname, lname=lname, amount=amount,mode=invono,invono=invono, total=Temp.objects.filter(d_type='delivery', terms=sess, is_active=True).count(),
                 location=location, document=document, ref=rands, id_no=excell, random=rands,
-                date=datedelivered, username=customerss, email=email, user_name=sess,sold_to=sold_to,bprice=bprice
+                date=datedelivered, username=customerss, email=email, user_name=sales_agent,sold_to=sold_to,bprice=bprice
             )
         Temp.objects.filter(terms=sess).delete()
         existing_customer = Orders.objects.filter(name=customerss).order_by("-id").first()
@@ -1807,7 +1817,7 @@ def delvout(request):
         else:
             Orders.objects.create(name=customerss, order_type=mode, random=rands, amount=amount, date=datedelivered, total_amount=total_amount)
         
-        agent = User.objects.get(username=sess)
+        agent = User.objects.get(username=sales_agent)
         # UnicodeTranslateError
 
         current_month = datetime.datetime.now().month
@@ -1815,7 +1825,7 @@ def delvout(request):
 
         # Fetch the existing record for the current month and user
         record, created = Agents_Records.objects.get_or_create(
-            name=User.objects.get(username=sess),
+            name=User.objects.get(username=sales_agent),
             date__month=current_month,
             date__year=current_year,
             defaults={
@@ -1909,10 +1919,163 @@ import os
 #         # Add code here for opening/processing files on non-Windows platforms
 #         print(f"Printing not supported on {platform.system()}")
 
+def generate_receipt_txt(request, delivery_ref, items, customerss, rands, datedelivered, location, invono, title, document):
+    today = date.today()
+    date2 = today.strftime("%Y-%m-%d")
+    sess = request.session.get('username')
+    pdf = FPDF()
+    pdf = FPDF(orientation="landscape",unit="mm", format=[5000,80])
+    pdf.set_font("Arial", 'B', size=10)
+    pdf.add_page()
+    sales_agents = Dcustomer.objects.get(random=rands).sales_agent
+    user_details = get_object_or_404(Product, random=rands)
+    pdf.set_left_margin(0)
+    pdf.ln(10)
+    # Retrieve items and count
+    items = Stockout.objects.filter(random=user_details.random) \
+        .values('type', 'brand', 'gen', 'model', 'cpu', 'speed', 'ram', 'hdd', 'screen', 'comment') \
+        .annotate(dcount=Count('qty'))
+    today = date.today()
+    date2 = today.strftime("%Y-%m-%d")
+    col_width = pdf.w / 4.5
+    pdf.cell(5, 10, " " , 0,0)
+    pdf.cell(100, 5, "ONE TECH COMPUTERS LTD" , 0,1)
+    pdf.cell(10, 5, " " , 0,0)
+    pdf.cell(100, 5, f"DELIVERY NO # {user_details.delvnote}" , 0,1)
+    pdf.cell(20, 10, " " , 0,0)
+    pdf.set_font("Arial", '', size=10)
+    pdf.cell(100, 5, "NAIROBI" , 0,1, )
+    pdf.cell(20, 5, " " , 0,0)
+    pdf.cell(100, 5, f"{user_details.date}" , 0,1,)
+    pdf.cell(5, 5, " " , 0,0)
+    pdf.cell(100, 5, "TOM MBOYA, TEL:0708405238" , 0,1,)
+    pdf.cell(5, 5, " " , 0,0)
+    pdf.cell(100, 8, "onetechcomputers2@gmail.com" , 0,1,)
+    pdf.cell(100,5, f"{user_details.username.upper()} #{user_details.mode}",0,1)
+    pdf.cell(100,5, "...............................................................................",0,1)
+    pdf.set_font("Arial", '', size=8)
+    pdf.cell(60,3,"ITEM NAME",0,0)
+    pdf.cell(30,3,"QTY",0,1)
+    pdf.cell(120,5, "................................................................................................",0,1)
+    item_qty = 0
+    for item in items:
+        item_qty += int(item['dcount'])
+        pdf.cell(60,5, f"{item['type']}  {item['model']}",0,0)
+        pdf.cell(30,5, f"{item['dcount']} ",0,1)
+
+
+    pdf.cell(120,5, "..........................................................................................",0,1)
+    pdf.cell(50,3, "",0,0)
+    pdf.cell(10,3, "ITEMS",0,0)
+    pdf.cell(70,3, f"{item_qty}",0,1)
+    pdf.cell(120,5, "..........................................................................................",0,1)
+    pdf.set_font("Arial", '', size=9)
+    pdf.cell(100,5,'ONE YEAR warranty on new machines and 3',0,1)
+    pdf.cell(100,5,'3 MONTHS warranty for refurbished machines',0,1)
+    pdf.cell(100,5,'No warranty on power related issues,',0,1)
+    pdf.cell(100,5,'rams, hdds, laptop keyboards, screens ',0,1)
+    pdf.cell(100,5,'and software money once recieved is not ',0,1)
+    pdf.cell(100,5,'refundable.',0,1)
+    pdf.cell(100,5,'Goods once sold cannot be returne',0,1)
+    pdf.ln(5)
+    pdf.cell(100,5, f"You were served by: {sales_agents.upper()}",0,1)
+    # pdf.output(document)
+    if not os.path.exists("/main/pdfs/delivery"):
+        os.makedirs("/main/pdfs/delivery")
+    pdf.output(os.path.join("/main/pdfs/delivery/", document))
+
+    return redirect('/sales')
+
+
+
+# def readfpdf(request, document):
+#     try:
+#         documents_path = f"/main/pdfs/delivery/{document}"
+#         return FileResponse(open(documents_path, 'rb'), as_attachment=True, content_type='application/pdf')
+#     except:
+#         messages.add_message(request, messages.INFO, 'document not found')
+#         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+def readfpdf(request, document):
+    try:
+        documents_path = os.path.join("/main/pdfs/delivery/", document)
+
+        return FileResponse(open(documents_path, 'rb'), as_attachment=True, content_type='application/pdf')
+    except:
+        messages.add_message(request, messages.INFO, 'document not found')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+
+def BankCashBox(request):
+        
+    items = Product.objects.filter(mode="Bank").values()
+    if request.method == "POST":
+        amount = request.POST.get("amount")
+        naration = request.POST.get("naration")
+        today = date.today()
+        items = Product.objects.filter(mode="Bank", date=today).values('amount')
+        bank_total = Product.objects.filter(date=today, mode="Bank").order_by('-id').first()
+        cash_total = Product.objects.filter(date=today, mode="Cash").order_by('-id').first()
+        new_bank_total = 0
+        new_cash_total = 0
+        try:
+            new_bank_total = int(bank_total)
+            new_bank_total += int(amount)
+            new_bank_total += int(amount)
+        
+            new_cash_total = int(cash_total)
+            new_cash_total -= int(amount)
+            new_cash_total -= int(amount)
+
+            bank = Product.objects.filter(mode='Bank').order_by('-id').values()
+            bank[0].update(amount=new_bank_total)
+
+            cash = Product.objects.filter(mode='Cash').order_by('-id').values()
+            cash[0].update(amount=new_cash_total)
+        except:
+            messages.add_message(request, messages.INFO, "We could not initiate the transaction at the moment, try again later")
+            return redirect("/home_page")
+
+        print(f"bank_total{bank_total}")
+        return redirect("/home_page")
+
+    context = {
+        "items":items,
+    }
+    return render(request, "home/bank-cahsbox.html", context)
+
+# import os
+# from win32 import win32api
+# from win32 import win32print
+# from django.http import HttpResponse
+# from django.contrib import messages
+
+# def readfpdfs(request, document):
+#     try:
+#         # documents_path = f"/main/pdfs/delivery/{document}"
+#         documents_path = os.path.join("/main/pdfs/delivery/", document)
+#         documents_path = "jack.pdf"
+#         print(f"doucment:{documents_path}")
+#         # Get the default printer name
+#         printer_name = win32print.GetDefaultPrinter()
+#         print(f"printer_name:{printer_name}")
+#         # Print the PDF using the Windows API
+#         win32api.ShellExecute(0, "print", documents_path, f'"{printer_name}"', ".", 0)
+
+#         # Assuming the printing process was successful, return a response
+#         return HttpResponse("Printing in progress...")
+#     except FileNotFoundError:
+#         messages.add_message(request, messages.INFO, 'Document not found')
+#         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+#     except Exception as e:
+#         messages.add_message(request, messages.ERROR, f'Error printing document: {str(e)}')
+#         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+
 import os
 import platform
 
-def generate_receipt_txt(request, delivery_ref, items, customerss, rands, datedelivered, location, invono, title, document):
+def generate_receipt_txtss(request, delivery_ref, items, customerss, rands, datedelivered, location, invono, title, document):
     # Generate the receipt content
     receipt = []
 
@@ -2065,6 +2228,77 @@ def PrintDocumentss(request, document):
         messages.add_message(request, messages.INFO, f"Receipt {document} not found.")
         return redirect("/sales")
 
+#             .values_list('type', 'brand', 'gen', 'model', 'cpu', 'speed', 'ram', 'hdd', 'screen', 'comment') \
+#             .annotate(count=Count('qty'))
+
+#         # Header details
+#         company_name = "ONE TECH COMPUTERS LTD"
+#         delivery = "DELIVERY NO: AA00G"
+#         city = "NAIROBI"
+#         date = "2024-01-03"
+#         address = "TOM MBOYA STREET. TEL:0708405238"
+#         email = "onetechcomputers2@gmail.com NAIROBI"
+#         customer = f"{user_details.username} #{user_details.invono}"
+#         dots = "............................................"
+#         header = "ITEM NAME                       QTY"
+#         filename = f"{user_details.username}.txt"
+
+#         # Construct the receipt content
+#         receipt_content = (
+#             "\x1B\x21\x01"  # Set font size to small
+#             f"{company_name}\n\n{delivery}\n\n{city}\n{date}\n{address}\n{email}\n{customer}\n{dots}\n\n{header}\n{dots}"
+#         )
+
+#         # Include items in the receipt content
+#         if items:
+#             for item in items:
+#                 item_line = f"{item[0]} {item[3]:<25}{item[-1]}"
+#                 receipt_content += f"{item_line}\n"
+
+#             total_qty = sum(item[-1] for item in items)
+#             receipt_content += f"\n{'TOTAL QTY:':<40} {total_qty}\n"
+#         else:
+#             receipt_content += "\n\nNo orders for this customer."
+
+#         # Additional information
+#         receipt_content += (
+#             "\n\n\n\n ONE YEAR warranty on new machines and 3 MONTHS warranty for refurbished machines."
+#             " No warranty on power-related issues, rams, hdds, laptop keyboards, screens, and software."
+#             " Money once received is not refundable. Goods once sold cannot be returned\n"
+#         )
+
+#         # Serving details
+#         sess = request.session.get("username")
+#         receipt_content += f"\n\n You were served by: {sess.upper()}"
+#         receipt_content += "\x1B\x21\x00"  # Reset font size to normal
+
+#         # Write the receipt content to a file
+#         with open(filename, "w") as f:
+#             f.write(receipt_content)
+
+#         # Print the receipt
+#         if platform.system() == "Windows":
+#             os.startfile(filename, "print")
+#         else:
+#             vendor_id, product_id = find_printer_ids()
+#             print(f"vendor_id:{vendor_id}, product_id:{product_id}")
+
+#             if vendor_id is not None and product_id is not None:
+#                 printer = Usb(vendor_id, product_id)
+#                 printer.text(receipt_content)
+#                 printer.cut()
+#                 messages.add_message(request, messages.SUCCESS, f"Receipt {document} printed successfully.")
+#             else:
+#                 messages.add_message(request, messages.ERROR, "No USB printer found.")
+
+#     except Product.DoesNotExist:
+#         messages.add_message(request, messages.INFO, f"User details for receipt {document} not found.")
+#         return redirect("/sales")
+#     return redirect("/sales")
+
+
+
+
 import platform
 import os
 import subprocess
@@ -2072,68 +2306,182 @@ from django.shortcuts import get_object_or_404, redirect
 from django.db.models import Count
 from colorama import Fore, Style, init
 
+# def PrintDocument(request, document):
+#     try:
+#         init()
+#         # Retrieve user details
+#         user_details = get_object_or_404(Product, delvnote=document)
+#         # Retrieve items and count
+#         items = Stockout.objects.filter(random=user_details.random) \
+#             .values_list('type', 'brand', 'gen', 'model', 'cpu', 'speed', 'ram', 'hdd', 'screen', 'comment') \
+#             .annotate(count=Count('qty'))
+
+#         # Header details
+#         company_name = "ONE TECH COMPUTERS LTD"
+#         delivery = "DELIVERY NO: AA00G"
+#         city = "NAIROBI"
+#         date = "2024-01-03"
+#         address = "TOM MBOYA STREET. TEL:0708405238"
+#         email = "onetechcomputers2@gmail.com NAIROBI"
+#         customer = f"{user_details.username} #{user_details.invono}"
+#         dots = "............................................"
+#         header = "ITEM NAME                       QTY"
+#         filename = f"{user_details.username}.txt"
+
+#         # Construct the receipt content
+#         receipt_content = f"\x1B\x21\x01"  # Set font size to small
+#         receipt_content += f"{company_name}\n\n{delivery}\n\n{city}\n{date}\n{address}\n{email}\n{customer}\n{dots}\n\n{header}\n{dots}"
+
+#         # Include items in the receipt content
+#         if items:
+#             for item in items:
+#                 item_line = f"{item[0]} {item[3]:<25}{item[-1]}"
+#                 receipt_content += f"{item_line}\n"
+
+#             total_qty = sum(item[-1] for item in items)
+#             receipt_content += f"\n{'TOTAL QTY:':<40} {total_qty}\n"
+#         else:
+#             receipt_content += "\n\nNo orders for this customer."
+#         # Additional information
+#         receipt_content += "\n\n\n\n ONE YEAR warranty on new machines and 3 MONTHS warranty for refurbished machines. No warranty on power related issues, rams, hdds, laptop keyboards, screens, and software. Money once received is not refundable. Goods once sold cannot be returned\n"
+
+#         # Serving details
+#         sess = request.session.get("username")
+#         receipt_content += f"\n\n You were served by: {sess.upper()}"
+#         receipt_content += "\x1B\x21\x00"  # Reset font size to normal
+#         # Write the receipt content to a file
+#         with open(filename, "w") as f:
+#             f.write(receipt_content)
+#         # Print the receipt
+#         if platform.system() == "Windows":
+#             os.startfile(filename, "print")
+#         else:
+#             vendor_id, product_id = find_printer_ids()
+#             print(f"vendor_id:{vendor_id}, product_id:{product_id}")
+
+#             if vendor_id is not None and product_id is not None:
+#                 printer = Usb(vendor_id, product_id)
+#                 printer.text(receipt_content)
+#                 printer.cut()
+#                 messages.add_message(request, messages.SUCCESS, f"Receipt {document} printed successfully.")
+#             else:
+#                 messages.add_message(request, messages.ERROR, "No USB printer found.")
+
+#     except Product.DoesNotExist:
+#         messages.add_message(request, messages.INFO, f"User details for receipt {document} not found.")
+#         return redirect("/sales")
+#     return redirect("/sales")
+
+
+import platform
+import os
+from django.shortcuts import get_object_or_404, redirect
+from django.db.models import Count
+from django.contrib import messages
+from escpos.printer import Usb
+from .models import Product, Stockout
+
+# def PrintDocument(request, document):
+#     try:
+#         # Initialize
+#         init()
+
+#         # Retrieve user details
+#         user_details = get_object_or_404(Product, delvnote=document)
+
+#         # Retrieve items and count
+#         items = Stockout.objects.filter(random=user_details.random) \
+#             .values_list('type', 'brand', 'gen', 'model', 'cpu', 'speed', 'ram', 'hdd', 'screen', 'comment') \
+#             .annotate(count=Count('qty'))
+
+#         # Header details
+#         company_name = "ONE TECH COMPUTERS LTD"
+#         delivery = f"DELIVERY NO: {document}"
+#         city = "NAIROBI"
+#         date = "2024-01-03"
+#         address = "TOM MBOYA STREET. TEL: 0708405238"
+#         email = "onetechcomputers2@gmail.com NAIROBI"
+#         customer = f"{user_details.username} #{user_details.invono}"
+#         dots = "............................................"
+#         header = "ITEM NAME                       QTY"
+#         filename = f"{user_details.username}.txt"
+
+#         # Adjust the receipt width
+#         left_margin = " " * 10
+
+#         # Construct the receipt content
+#         receipt_content = "\x1B\x21\x01"  # Set font size to small
+#         receipt_content += f"{left_margin}{company_name}\n\n{left_margin}{delivery}\n\n{left_margin}{city}\n{left_margin}{date}\n{left_margin}{address}\n{left_margin}{email}\n{left_margin}{customer}\n{left_margin}{dots}\n\n{left_margin}{header}\n{left_margin}{dots}"
+
+#         # Include items in the receipt content
+#         if items:
+#             for item in items:
+#                 item_line = f"{left_margin}{item[0]} {item[3]:<25}{item[-1]}"
+#                 receipt_content += f"{item_line}\n"
+
+#             total_qty = sum(item[-1] for item in items)
+#             receipt_content += f"\n{left_margin}{'TOTAL QTY:':<40} {total_qty}\n"
+#         else:
+#             receipt_content += f"\n{left_margin}No orders for this customer."
+
+#         # Additional information
+#         receipt_content += "\n\n\n\n ONE YEAR warranty on new machines and 3 MONTHS warranty for refurbished machines. No warranty on power related issues, RAMs, HDDs, laptop keyboards, screens, and software. Money once received is not refundable. Goods once sold cannot be returned\n"
+
+#         # Serving details
+#         sess = request.session.get("username")
+#         receipt_content += f"\n\n{left_margin}You were served by: {sess.upper()}"
+#         receipt_content += "\x1B\x21\x00"  # Reset font size to normal
+
+#         # Write the receipt content to a file
+#         with open(filename, "w") as f:
+#             f.write(receipt_content)
+
+#         # Print the receipt
+#         if platform.system() == "Windows":
+#             os.startfile(filename, "print")
+#         else:
+#             vendor_id, product_id = find_printer_ids()
+
+#             if vendor_id is not None and product_id is not None:
+#                 printer = Usb(vendor_id, product_id)
+#                 printer.text(receipt_content)
+#                 printer.cut()
+#                 messages.success(request, f"Receipt {document} printed successfully.")
+#             else:
+#                 messages.error(request, "No USB printer found.")
+
+#     except Product.DoesNotExist:
+#         messages.info(request, f"User details for receipt {document} not found.")
+#         return redirect("/sales")
+    
+#     return redirect("/sales")
+
+
+# from escpos.connections import getUSBPrinter
+
+# def PrintDocument(request, document):
+#     printer = getUSBPrinter(commandSet='Generic')(idVendor=0x1504, idProduct=0x0006)
+#     printer.lf()
+#     printer.align('center')
+#     printer.text('This text is center aligned')
+#     printer.lf()
+#     printer.align('right')
+#     printer.text('This text is right aligned')
+#     printer.lf()
+#     printer.align('left')
+#     printer.text('This text is left aligned')
+#     printer.lf()
+#     printer.align('full')
+#     printer.text('This text is full justified') # Only available in select models
+
+#     return redirect("/sales")
+
+
 def PrintDocument(request, document):
     try:
-        init()
-        # Retrieve user details
-        user_details = get_object_or_404(Product, delvnote=document)
-        # Retrieve items and count
-        items = Stockout.objects.filter(random=user_details.random) \
-            .values_list('type', 'brand', 'gen', 'model', 'cpu', 'speed', 'ram', 'hdd', 'screen', 'comment') \
-            .annotate(count=Count('qty'))
+        return FileResponse(open(document, 'rb'), as_attachment=True, content_type='application/pdf')
+    except:
+        messages.add_message(request, messages.INFO, 'document not found')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
-        # Header details
-        company_name = "ONE TECH COMPUTERS LTD"
-        delivery = "DELIVERY NO: AA00G"
-        city = "NAIROBI"
-        date = "2024-01-03"
-        address = "TOM MBOYA STREET. TEL:0708405238"
-        email = "onetechcomputers2@gmail.com NAIROBI"
-        customer = f"{user_details.username} #{user_details.invono}"
-        dots = "............................................"
-        header = "ITEM NAME                       QTY"
-        filename = f"{user_details.username}.txt"
-
-        # Construct the receipt content
-        receipt_content = f"\x1B\x21\x01"  # Set font size to small
-        receipt_content += f"{company_name}\n\n{delivery}\n\n{city}\n{date}\n{address}\n{email}\n{customer}\n{dots}\n\n{header}\n{dots}"
-
-        # Include items in the receipt content
-        if items:
-            for item in items:
-                item_line = f"{item[0]} {item[3]:<25}{item[-1]}"
-                receipt_content += f"{item_line}\n"
-
-            total_qty = sum(item[-1] for item in items)
-            receipt_content += f"\n{'TOTAL QTY:':<40} {total_qty}\n"
-        else:
-            receipt_content += "\n\nNo orders for this customer."
-        # Additional information
-        receipt_content += "\n\n\n\n ONE YEAR warranty on new machines and 3 MONTHS warranty for refurbished machines. No warranty on power related issues, rams, hdds, laptop keyboards, screens, and software. Money once received is not refundable. Goods once sold cannot be returned\n"
-
-        # Serving details
-        sess = request.session.get("username")
-        receipt_content += f"\n\n You were served by: {sess.upper()}"
-        receipt_content += "\x1B\x21\x00"  # Reset font size to normal
-        # Write the receipt content to a file
-        with open(filename, "w") as f:
-            f.write(receipt_content)
-        # Print the receipt
-        if platform.system() == "Windows":
-            os.startfile(filename, "print")
-        else:
-            vendor_id, product_id = find_printer_ids()
-            print(f"vendor_id:{vendor_id}, product_id:{product_id}")
-
-            if vendor_id is not None and product_id is not None:
-                printer = Usb(vendor_id, product_id)
-                printer.text(receipt_content)
-                printer.cut()
-                messages.add_message(request, messages.SUCCESS, f"Receipt {document} printed successfully.")
-            else:
-                messages.add_message(request, messages.ERROR, "No USB printer found.")
-
-    except Product.DoesNotExist:
-        messages.add_message(request, messages.INFO, f"User details for receipt {document} not found.")
-        return redirect("/sales")
-    return redirect("/sales")
+    return redirect('/sales')

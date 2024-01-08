@@ -163,6 +163,7 @@ class Dcustomer(models.Model):
     d_type = models.CharField(max_length=200, null=True)
     is_active = models.BooleanField(default=True)
     mode = models.CharField(blank=True, max_length=200)
+    sales_agent = models.CharField(blank=True, max_length=200)
 
     class Meta:
         db_table ='dcustomer'

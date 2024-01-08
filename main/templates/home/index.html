@@ -318,6 +318,7 @@
                     <table class="table align-items-center mb-0 table-bordered" >
                         <thead>
                         <tr id="header">
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12"></th>
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Customer</th>
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Agent</th>
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Amount</th>
@@ -329,6 +330,7 @@
                                 
                                 <tr class="px-4">
                                     <td class="text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.username|default_if_none:""|title}}</td>
+                                    <td class="text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.username|default_if_none:""|title}}</td>
                                     <td class=" text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.user_name|default_if_none:""}} </td>
                                     <td class="text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.amount |default_if_none:""|intcomma}} </td>
                                 </tr>
@@ -338,6 +340,10 @@
                         </tbody>
                         <tfoot id="total_holder">
                             <tr>
+                                <td class="text-uppercase text-secondary text-xxs font-weight-bolder fa fa-university">
+                                    <a href="#" onclick="return CreateExpenditure()">Bank</a>
+                                </td>
+
                                 <td colspan="2" class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Total:</td>
                                 <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">{{ bank_total |default_if_none:0 |intcomma }}</td>
                             </tr>
@@ -430,7 +436,12 @@
     
     
 </div>
+<form >
+    {% csrf_token %}
+    <input type="hidden" name="csrfmiddlewaretoken" id="" value="{% csrf_token %}
 
+    
+</form>
   </main>
   {% include 'header/footer.html' %}
  
@@ -490,12 +501,17 @@ document.getElementById("bank_box").addEventListener("click", function() {
     
     <tr class="px-4">
         <td class="text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.username|default_if_none:""|title}}</td>
+        <td class="text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.username|default_if_none:""|title}}</td>
         <td class=" text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.user_name|default_if_none:""}} </td>
         <td class="text-secondary text-xxs font-weight-bolder opacity-10">{{cash_box.amount |default_if_none:""|intcomma}} </td>
     </tr>
     {%endif %}
 {% endfor %}
 <tr>
+    <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12 fa fa-university">
+        <a href="#" onclick="return CreateExpenditure()">Bank</a>
+
+        </td>
     <td colspan="2" class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Total:</td>
     <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">{{ cash_total |default_if_none:0 |intcomma }}</td>
 </tr>
@@ -635,6 +651,77 @@ document.getElementById("mpesa_box").addEventListener("click", function() {
       }
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
+
+
+
+
+
+    function CreateExpenditure( ) {
+    Swal.fire({
+        title: 'Bank',
+        html: `
+            <div class="row">
+                <div class="col-6">
+                    <input type="text" name="naration" id="naration" class="form-control" placeholder="Naration /=">
+                </div>
+                <div class="col-6">
+                    <input type="text" name="amount" id="amount" class="form-control" placeholder="KES /=">
+                </div>
+            </div>
+        `,
+        showCancelButton: true,
+        confirmButtonText: 'Submit',
+        cancelButtonText: 'Cancel',
+        reverseButtons: true,
+        preConfirm: () => {
+            return {
+                naration: document.getElementById('naration').value,
+                amount: document.getElementById('amount').value,
+            };
+        },
+        onOpen: () => {
+            const confirmButton = document.querySelector('.swal2-confirm');
+            const cancelButton = document.querySelector('.swal2-cancel');
+            
+            if (confirmButton) confirmButton.classList.add('py-1 bg-dark');
+            if (cancelButton) cancelButton.classList.add('py-1');
+        }
+    }).then(async (result) => {
+        if (result.isConfirmed && result.value.naration) {
+            const naration = result.value.naration;
+            const amount = result.value.amount;
+
+            const formData = new FormData();
+            formData.append('naration', naration);
+            formData.append('amount', amount);
+
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            
+            formData.append('csrfmiddlewaretoken', csrfToken);
+
+            try {
+                const response = await fetch("/bank_cashbox/", {
+                    method: 'POST',
+                    body: formData
+                    
+                });
+
+                if (!response.ok) { 
+                    const data = await response.json(); 
+                    Swal.fire('Error!', data.message || 'There was an creating an expense.', 'error');
+                } else {
+                    location.reload();
+                }
+            } catch (error) {
+                Swal.fire('Error!', 'There was an error creating an expense.', 'error');
+            }
+        }
+    });
+}
+
+
+
+
   </script>
 </body>
 
