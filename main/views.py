@@ -1584,7 +1584,89 @@ from jinja2 import Environment, FileSystemLoader
 from random import randint
 import os
 import platform
+
+
+
+
 def generate_html_receiptsup(customer_name, orders):
+    document = f"{customer_name}.pdf"
+    today = date.today()
+    date2 = today.strftime("%Y-%m-%d")
+    pdf = FPDF()
+    pdf = FPDF(orientation="landscape",unit="mm", format=[5000,80])
+    pdf.set_font("Arial", 'B', size=10)
+    pdf.add_page()
+    pdf.set_left_margin(0)
+    pdf.ln(10)
+    # Retrieve items and count
+    today = date.today()
+    date2 = today.strftime("%Y-%m-%d")
+    col_width = pdf.w / 4.5
+    pdf.cell(5, 10, " " , 0,0)
+    pdf.cell(100, 5, "ONE TECH COMPUTERS LTD" , 0,1)
+    pdf.cell(20, 10, " " , 0,0)
+    pdf.set_font("Arial", '', size=10)
+    pdf.cell(100, 5, "NAIROBI" , 0,1, )
+    pdf.cell(5, 5, " " , 0,0)
+    pdf.cell(100, 5, "TOM MBOYA, TEL:0708405238" , 0,1,)
+    pdf.cell(5, 5, " " , 0,0)
+    pdf.cell(100, 8, "onetechcomputers2@gmail.com" , 0,1,)
+    pdf.cell(100, 8, "STATEMENT" , 0,1,)
+
+    pdf.DashedRect(5, 20, 80, 40, 'D')
+
+    pdf.cell(100,5,f"{customer_name.upper()}")
+    pdf.set_font("Arial", 'U', size=10)
+    pdf.cell(40,5,"PRINTED DATE:", 0,0)
+    pdf.cell(40,5,f"{today}",0,1)
+    pdf.set_font("Arial", 'B', size=10)
+    pdf.cell(40,5,"FROM:",0,0)
+    pdf.set_font("Arial", 'B', size=10)
+    pdf.cell(40,5,"FROM:",0,1)
+    pdf.set_font("Arial", 'B', size=10)
+    pdf.cell(40,5,"TO:",0,0)
+    pdf.set_font("Arial", '', size=10)
+    pdf.cell(40,5,"TO:",0,1)
+    pdf.set_font("Arial", 'B', size=10)
+
+
+    pdf.cell(20,5,"DATE: ",0,0)
+    pdf.cell(40,5,"TRANSACTION: ",0,0)
+    pdf.cell(20,5,"AMOUNT: ",0,0)
+    pdf.set_font("Arial", '', size=10)
+
+    balance = 0
+    height = 0
+    orignal_height = 30
+    for order in orders:
+        height += 7
+        pdf.DashedRect(5, orignal_height, 80, 10, 'D')
+        balance = order['total_amount']
+        pdf.cell(20,5,f"{order['date']}",0,0)
+        pdf.cell(20,5,f"delvnote",0,0)
+        pdf.cell(20,5,f"Mode",0,0)
+        pdf.cell(20,5,f"{order['amount']}",0,1)
+
+    pdf.set_font("Arial", 'B', size=10)
+    pdf.cell(40,5,f"BALANCE",0,0)
+    pdf.cell(20,5,f"",0,0)
+    pdf.cell(40,5,f"{balance}",0,1)
+
+
+    # pdf.output(document)
+    if not os.path.exists("/main/pdfs/statements"):
+        os.makedirs("/main/pdfs/statements")
+    pdf.output(os.path.join("/main/pdfs/statements/", document))
+
+    documents_path = os.path.join("/main/pdfs/statements/", document)
+
+    return FileResponse(open(documents_path, 'rb'), as_attachment=True, content_type='application/pdf')
+
+
+    return redirect(f"/customer-balances/{customer_name}")
+
+
+
     companyName = customer_name
     filename = f"{customer_name}.txt"
     companyName = companyName + "\n\nSale Receipt\n\nOpp Golden Line Mall\nP.O BOX 3404-20100\n TEL: 0727441192\nEMAIL: Hiltonltd@yandex.com"
@@ -1610,41 +1692,102 @@ def generate_html_receiptsup(customer_name, orders):
     return redirect(f"/supplier-balances/{customer_name}")
 
 
-def generate_html_receipt(customer_name, orders):
-    companyName = customer_name
-    filename = f"{customer_name}.txt"
-    companyName = companyName + "\n\nSale Receipt\n\nOpp Golden Line Mall\nP.O BOX 3404-20100\n TEL: 0727441192\nEMAIL: Hiltonltd@yandex.com"
-    receiptNo = randint(1, 100000)
-    finalString = companyName + "\n\nReceipt No:" + str(receiptNo) + "\n"
+def generate_html_receipt(customer_name, orders, start_date, end_date, balance):
+    document = f"{customer_name}.pdf"
+    today = date.today()
+    date2 = today.strftime("%Y-%m-%d")
+    pdf = FPDF()
+    pdf = FPDF(orientation="landscape",unit="mm", format=[5000,80])
+    pdf.set_font("Arial", 'B', size=10)
+    pdf.add_page()
+    pdf.set_left_margin(0)
+    pdf.ln(10)
+    # Retrieve items and count
+    today = date.today()
+    date2 = today.strftime("%Y-%m-%d")
+    col_width = pdf.w / 4.5
+    pdf.cell(100, 5, "ONE TECH COMPUTERS LTD" , 0,1)
+    pdf.set_font("Arial", '', size=9)
+    pdf.cell(100, 5, "NAIROBI" , 0,1, )
+    pdf.cell(100, 5, "We trade in celebration" , 0,1, )
+    pdf.cell(100, 5, "TOM MBOYA, TEL:0708405238" , 0,1,)
+    pdf.cell(100, 5, "onetechcomputers2@gmail.com" , 0,1,)
+    pdf.set_font("Arial", 'B', size=9)
+    pdf.cell(100, 5, "STATEMENT" , 0,1)
+    pdf.rect(1, 50, 70, 21, 'D')
+    pdf.cell(5,5,"",0,0)
+    pdf.cell(100,5,f"{customer_name.upper()}",0,1)
+    pdf.set_font("Arial", 'U', size=9)
+    pdf.cell(5,5,"",0,0)
 
-    if orders:
-        for order in orders:
-            finalString += "\n______________________________________\n" + f"Amount:        {order['amount']}" + "\n______________________________________\n\n" + f"Paid In:     {order['order_type']}" + "\n\n" +"\n" + "\nBalance:            {order['total_amount']}"  + "\n\n\nWelcome Back"
-    else:
-        finalString += "\n\nNo orders for this customer."
+    pdf.cell(45,5,"PRINTED DATE:", 0,0)
+    pdf.cell(40,5,f"{today}",0,1)
+    pdf.set_font("Arial", 'B', size=8)
+    pdf.cell(5,5,"",0,0)
+    pdf.cell(45,5,"FROM:",0,0)
+    pdf.set_font("Arial", '', size=8)
+    pdf.cell(40,5,f"{start_date}",0,1)
+    pdf.set_font("Arial", 'B', size=8)
+    pdf.cell(5,5,"",0,0)
+    pdf.cell(45,8,"TO:",0,0)
+    pdf.set_font("Arial", '', size=8)
+    pdf.cell(40,8,f"{end_date}",0,1)
+    pdf.set_font("Arial", 'B', size=8)
+    pdf.cell(20,5,"DATE: ",0,0)
+    pdf.cell(35,5,"TRANSACTION: ",0,0)
+    pdf.cell(20,5,"AMOUNT: ",0,1)
+    pdf.set_font("Arial", '', size=8)
+    pdf.cell(100,5, "..............................................................................................",0,1)
 
-    # try:
-    with open(filename, "w") as f:
-        f.write(finalString)
-    
-    if platform.system() == "Windows":
-        os.startfile(filename, "print")
-    else:
-        # Add code here for opening/processing files on non-Windows platforms
-        print(f"Printing not supported on {platform.system()}")
-    
-    return redirect(f"/customer-balances/{customer_name}")
-    # except Exception as e:
-    #     print(f"Error generating receipt: {e}")
-    #     return None
+    height = 0
+    orignal_height = 60
+    for order in orders:
+        height += 7
+        if order['unique_key'] ==  "INVOICE":
+            # pdf.rect(5, orignal_height, 80, 10, 'D')
+            delvnote = Product.objects.filter(random=order['random']).order_by("-id").first()
+            pdf.set_font("Arial", 'B', size=8)
+            pdf.cell(20,5,f"{order['date']}",0,0)
+            pdf.cell(15,5,f"{delvnote.delvnote}",0,0)
+            pdf.cell(20,5,f"INVOICE",0,0)
+            pdf.cell(20,5,f"{order['amount']}",0,1)
+            pdf.set_font("Arial", '', size=8)
+
+            items = (Stockout.objects.filter(random=order['random'])
+            .values('type', 'brand', 'gen', 'model', 'cpu', 'speed', 'ram', 'hdd', 'screen', 'comment')
+            .annotate(count=Count('qty')))
+            for item in items:
+                total_amount = int(item['count']) * int(order['amount'])
+                pdf.cell(20,3,f"{item['type']} {item['model']} @ {total_amount} * {item['count']} = {total_amount}",0,1)
+        else:
+            pdf.set_font("Arial", 'B', size=8)
+            pdf.cell(20,3,f"{order['date']}",0,0)
+            pdf.cell(15,3,f"{order['random']}",0,0)
+            pdf.cell(20,3,f"SLIP CASH",0,0)
+            pdf.cell(20,3,f"-{order['amount']}",0,1)
+
+        pdf.cell(100,5, ".............................................................................................",0,1)
+    pdf.set_font("Arial", 'B', size=8)
+    pdf.cell(40,5,f"BALANCE",0,0)
+    pdf.cell(15,5,f"",0,0)
+    pdf.cell(40,5,f"{balance}",0,1)
+    # pdf.output(document)
+    if not os.path.exists("/main/pdfs/statements"):
+        os.makedirs("/main/pdfs/statements")
+    pdf.output(os.path.join("/main/pdfs/statements/", document))
+    documents_path = os.path.join("/main/pdfs/statements/", document)
+    return FileResponse(open(documents_path, 'rb'), as_attachment=True, content_type='application/pdf')
+
 
 def PrintReceiptSup(request, name):
     orders = SupplierOrders.objects.filter(name=name).values()
     return generate_html_receiptsup(name, orders)
 
 def PrintReceipt(request, name):
-    orders = Orders.objects.filter(name=name).values()
-    return generate_html_receipt(name, orders)
+    orders = Orders.objects.filter(name=name).order_by("-id").values()
+    start_date = Orders.objects.filter(name=name).order_by("id").first()
+    end_date = Orders.objects.filter(name=name).order_by("-id").first()
+    return generate_html_receipt(name, orders, start_date.date, end_date.date, end_date.total_amount)
 
     return redirect(f"/customer-balances/{name}")
 
@@ -1661,7 +1804,7 @@ def MakePayments(request):
             running_balance = int(orders['total_amount'])
             running_balance -= int(amount)
             rands = orders['random']
-            Orders.objects.create(name=customer, order_type="Debit", random=rands, amount=amount, total_amount=running_balance)
+            Orders.objects.create(name=customer, order_type="Debit",unique_key="SLIP CASH", random=rands, amount=amount, total_amount=running_balance)
 
         print(f"customer:{customer}, amount:{amount}")
 
@@ -1796,13 +1939,13 @@ def delvout(request):
             if existing_customer:
 
                 total_amount += int(amount)
-
                 Orders.objects.create(
                     name=customerss,
                     order_type="Credit",
                     random=rands,
                     amount=amount,
                     date=datedelivered,
+                    unique_key = "INVOICE",
                     total_amount=total_amount
                 )
             else:
@@ -1812,6 +1955,7 @@ def delvout(request):
                     random=rands,
                     amount=amount,
                     date=datedelivered,
+                    unique_key = "INVOICE",
                     total_amount=amount
                 )
         else:
@@ -1841,7 +1985,6 @@ def delvout(request):
         record.units = F('units') + units
         record.commission = F('commission') + int(amount) * 0.007
         record.random = rands
-
         # Save the record
         record.save()
 
@@ -1986,15 +2129,6 @@ def generate_receipt_txt(request, delivery_ref, items, customerss, rands, datede
 
     return redirect('/sales')
 
-
-
-# def readfpdf(request, document):
-#     try:
-#         documents_path = f"/main/pdfs/delivery/{document}"
-#         return FileResponse(open(documents_path, 'rb'), as_attachment=True, content_type='application/pdf')
-#     except:
-#         messages.add_message(request, messages.INFO, 'document not found')
-#         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 def readfpdf(request, document):
     try:

@@ -1,11 +1,119 @@
-DELIVERY NOTE
-Customer: james
-Date: 2023-12-21
-Address: Nairobi
-Phone: 48496728
-Delivery No.: AA00O
-Email: james
-Reference No.: Cash
-Type  Description  Qty
-Laptop Laptop Laptop Laptop 1
-Total Qty: 1
+james
+
+Sale Receipt
+
+Opp Golden Line Mall
+P.O BOX 3404-20100
+ TEL: 0727441192
+EMAIL: Hiltonltd@yandex.com
+
+Receipt No:95724
+
+______________________________________
+Amount:        30000.0
+______________________________________
+
+Paid In:     M-pesa
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        30000.0
+______________________________________
+
+Paid In:     M-pesa
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        30000.0
+______________________________________
+
+Paid In:     M-pesa
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        30000.0
+______________________________________
+
+Paid In:     M-pesa
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        30000.0
+______________________________________
+
+Paid In:     M-pesa
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        30000.0
+______________________________________
+
+Paid In:     M-pesa
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        30000.0
+______________________________________
+
+Paid In:     Cash
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        30000.0
+______________________________________
+
+Paid In:     Credit
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
+______________________________________
+Amount:        30000.0
+______________________________________
+
+Paid In:     Credit
+
+
+
+Balance:            {order['total_amount']}
+
+
+Welcome Back
