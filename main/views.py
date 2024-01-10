@@ -6,7 +6,7 @@ from django.contrib.sessions.models import Session
 from django.db.models import Q
 from .models import *
 from .spreadsheets import *
-import pandas as pd
+# import pandas as pd
 from django.core.files.storage import FileSystemStorage
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db import connection, transaction
@@ -771,20 +771,21 @@ def loadcustomers(request):
     rands = randint(1000000, 9999999)
     try:
         if request.method == 'POST':
-            myfile = request.FILES.get('file') 
-            vendor = request.POST.get('customer')      
-            fs = FileSystemStorage()
-            filename = fs.save(myfile.name, myfile)
-            uploaded_file_url = fs.url(filename)
-            excel_file = uploaded_file_url
+            pass
+            # myfile = request.FILES.get('file') 
+            # vendor = request.POST.get('customer')      
+            # fs = FileSystemStorage()
+            # filename = fs.save(myfile.name, myfile)
+            # uploaded_file_url = fs.url(filename)
+            # excel_file = uploaded_file_url
             
-            empexceldata = pd.read_csv("."+excel_file,encoding='utf-8')
-            dbframe = empexceldata
-            total = len(dbframe.index)
-            for dbframe in dbframe.itertuples():
-                obj = Customer.objects.create(fname=dbframe.FIRSTNAME, lname=dbframe.LASTNAME, phone=dbframe.PHONE, location=dbframe.LOCATION, email=dbframe.EMAIL, username=dbframe.USERNAME, id_no=dbframe.IDNO)
-                obj.save()
-            messages.success(request, f"Success")
+            # empexceldata = pd.read_csv("."+excel_file,encoding='utf-8')
+            # dbframe = empexceldata
+            # total = len(dbframe.index)
+            # for dbframe in dbframe.itertuples():
+            #     obj = Customer.objects.create(fname=dbframe.FIRSTNAME, lname=dbframe.LASTNAME, phone=dbframe.PHONE, location=dbframe.LOCATION, email=dbframe.EMAIL, username=dbframe.USERNAME, id_no=dbframe.IDNO)
+            #     obj.save()
+            # messages.success(request, f"Success")
     except:
         messages.error(request, f"something went wrong")
     return redirect('/customers')
