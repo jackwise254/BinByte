@@ -3,6 +3,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.contrib.auth.models import Group, Permission
+
 class UserManager(BaseUserManager): #override the default user manager
     '''
     args:BaseUserManager
@@ -40,12 +41,12 @@ class UserManager(BaseUserManager): #override the default user manager
         '''
         purpose: create a superuser by overriding the default create_superuser
         '''
-        username = 'Admin'
         firstname = 'Admin'
         lastname = 'Admin'
+        username= "UserName"
         
         # Update the call to include type='ADMIN'
-        user = self._create_user(username, firstname, lastname, email, password, True, True, True, type='ADMIN', **extra_fields)
+        user = self._create_user(username, firstname, lastname, email, password, True, True, True, **extra_fields)
         user.save(using=self._db)
         return user
 
@@ -99,6 +100,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(auto_now_add=True)
     groups = models.ManyToManyField(Group, blank=True, related_name="custom_user_set")
     user_permissions = models.ManyToManyField(Permission, blank=True, related_name="custom_user_permission_set")
+    branch = models.ForeignKey('main.Branches', on_delete=models.CASCADE, null=True)
+
     
     def __str__(self):
         return self.username
@@ -124,8 +127,8 @@ def create_default_user(sender, **kwargs):
         if User.objects.filter(email='test@admin.com').exists():
             return
 
-        User.objects.create_superuser('test@admin.com', 'test123', )
-        default_users = ['test@sales.com', 'test@tech.com' ]
+        User.objects.create_superuser('test@admin.com', 'test123', type='ADMIN')
+        default_users = ['test@sales.com', 'test@tech.com']
         user_types = ['SALES', 'TECHNICIAN']
 
         i = -1
@@ -136,6 +139,16 @@ def create_default_user(sender, **kwargs):
                 pass
             else:
                 User.objects.create_user(username=email.split('@')[1], firstname='Test', lastname='Test', email=email, password='test123', type=user_types[i], )
+        
+        
+@receiver(post_migrate)
+def create_default_user(sender, **kwargs):
+    if sender.name == 'users':
+        if User.objects.filter(email='super@admin.com').exists():
+            return
+
+        User.objects.create_superuser('super@admin.com', 'super123', type='SUPERADMIN')
+        
         
 @receiver(post_migrate)
 def create_default_permissions(sender, **kwargs):
@@ -173,6 +186,7 @@ def create_default_permissions(sender, **kwargs):
 
     user_type_permissions = {
         'ADMIN': {'modules': modules, 'actions': ['create', 'read', 'update', 'delete']},
+        'SUPERADMIN': {'modules': modules, 'actions': ['create', 'read', 'update', 'delete']},
         'SALES': {'modules': ["Stock Verification", "Stock Out", "Faulty In", "Warranty Out", 
                               "Download Speadsheet", "Barcodes", "Delivery notes", "Exchange Notes", 
                               "Warranty Notes", "Credit notes", "Sales"], 

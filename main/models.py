@@ -2,6 +2,10 @@ from django.db import models
 from users.models import User
 # Create your models here.
 
+class Branches(models.Model):
+    name = models.CharField(max_length=200, null=True)
+    date_craeted = models.DateField(auto_now=True)
+
 class Customer(models.Model):
     fname = models.CharField(max_length=200, null=True)
     lname = models.CharField(max_length=200, null=True)
@@ -22,6 +26,7 @@ class Customer(models.Model):
     business_document = models.ImageField(max_length=200, null=True)
     location_document = models.ImageField(max_length=200, null=True)
     other_document = models.ImageField(max_length=200, null=True)
+    branch = models.ForeignKey(Branches, on_delete=models.CASCADE, null=True)
 
     class Meta:
         ordering = ["username"]
@@ -41,7 +46,8 @@ class Vendor(models.Model):
     id_no = models.CharField(max_length=200, null=True)
     status = models.CharField(max_length=200, null=True)
     invono = models.CharField(max_length=200, null=True)
-
+    branch = models.ForeignKey(Branches, on_delete=models.CASCADE, null=True)
+    
 class Narations(models.Model):
     DEBIT = 'Debit'
     CREDIT = 'Credit'
@@ -60,6 +66,7 @@ class Narations(models.Model):
     status = models.IntegerField(default=0)
 
 
+
 class Orders(models.Model):
     DEBIT = 'Debit'
     CREDIT = 'Credit'
@@ -76,7 +83,7 @@ class Orders(models.Model):
     unique_key = models.CharField(null=True, max_length=200)
     random = models.IntegerField(null=True)
     total_amount = models.FloatField(null=True)
-
+    branch = models.ForeignKey(Branches, on_delete=models.CASCADE, null=True)
 
 class SupplierOrders(models.Model):
     DEBIT = 'Debit'
@@ -104,7 +111,7 @@ class Agents_Records(models.Model):
     date = models.DateField(auto_now=True)
     sales_revenue = models.IntegerField(default=0)
     refund_amound =  models.IntegerField(default=0)
-
+    branch = models.ForeignKey(Branches, on_delete=models.CASCADE, null=True)
 
 class Masterlist(models.Model):
     type = models.CharField(max_length=200 , null=True)
@@ -133,7 +140,8 @@ class Masterlist(models.Model):
     sub_total = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     terms = models.CharField(max_length=200, null=True)
     random = models.CharField(max_length=200, null=True)
-
+    branch = models.ForeignKey(Branches, on_delete=models.CASCADE, null=True)
+    
     class Meta:
         ordering = ["-id"]
 
@@ -146,6 +154,7 @@ class Expense(models.Model):
     name = models.ForeignKey(User,on_delete=models.CASCADE, null=True)
     date = models.DateTimeField(auto_now=True)
     description = models.ForeignKey(Expense_description, on_delete=models.CASCADE, null=True)
+    branch = models.ForeignKey(Branches, on_delete=models.CASCADE, null=True)
     amount = models.IntegerField(null=True)
 
 class Dcustomer(models.Model):
@@ -195,7 +204,7 @@ class Stockout(models.Model):
     sub_total = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     terms = models.CharField(max_length=200, null=True)
     random = models.CharField(max_length=200, null=True)
-
+    branch = models.ForeignKey(Branches, on_delete=models.CASCADE, null=True)
     class Meta:
         ordering = ["-id"] 
 
@@ -223,7 +232,7 @@ class Product(models.Model):
     amount = models.IntegerField(null=True)
     mode = models.CharField(blank=True, max_length=200)
     bprice = models.IntegerField(default=0)
-
+    branch = models.ForeignKey(Branches, on_delete=models.CASCADE, null=True)
     class Meta:
         db_table = 'product'
         ordering = ['-date']
@@ -262,7 +271,7 @@ class Temp(models.Model):
     d_type = models.CharField(max_length=200, null=True)
     random = models.CharField(max_length=200, null=True)
     is_active = models.BooleanField(default=True)
-
+    branch = models.ForeignKey(Branches, on_delete=models.CASCADE, null=True)
     class Meta:
         ordering = ["-id"]
 
@@ -306,7 +315,7 @@ class Templist(models.Model):
     d_type = models.CharField(max_length=200, null=True)
     is_active = models.BooleanField(default=True)
     random = models.CharField(max_length=200, null=True)
-
+    branch = models.ForeignKey(Branches, on_delete=models.CASCADE, null=True)
     class Meta:
         ordering = ["-id"]
 
@@ -361,9 +370,9 @@ from django.dispatch import receiver
 @receiver(post_migrate)
 def create_default_items(sender, **kwargs):
     if sender.name == 'users':
-        brands = [ 'hp','Dell','Acer','Lenovo','Samsung','Fujitsu','Toshiba','Asus','Mix','Apple','Philips','Viewsonic']
-        for b in brands:
-            Brand.objects.update_or_create(brand=b)
+        # brands = [ 'hp','Dell','Acer','Lenovo','Samsung','Fujitsu','Toshiba','Asus','Mix','Apple','Philips','Viewsonic']
+        # for b in brands:
+        #     Brand.objects.update_or_create(brand=b)
         
         conditions = ['Used', 'Refurb', 'New']
         for c in conditions:

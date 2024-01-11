@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 30, 2023 at 01:34 PM
+-- Generation Time: Jan 09, 2024 at 01:49 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -228,8 +228,65 @@ CREATE TABLE `dcustomer` (
   `invono` varchar(200) DEFAULT NULL,
   `d_type` varchar(200) DEFAULT NULL,
   `is_active` tinyint(1) NOT NULL,
-  `mode` varchar(200) NOT NULL
+  `mode` varchar(200) NOT NULL,
+  `sales_agent` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `dcustomer`
+--
+
+INSERT INTO `dcustomer` (`id`, `fname`, `lname`, `phone`, `location`, `email`, `user_created_at`, `random`, `username`, `id_no`, `status`, `invono`, `d_type`, `is_active`, `mode`, `sales_agent`) VALUES
+(1, 'Pant5hra', 'Panthra', '0799998999', 'Nairobi', 'panthra@gmauil.com', 'Admin', '94154113', 'Panthra', '', '1', NULL, 'delivery', 1, 'M-pesa', ''),
+(2, 'Pant5hra', 'Panthra', '0799998999', 'Nairobi', 'panthra@gmauil.com', 'Admin', '99457919', 'Panthra', '', '1', NULL, 'delivery', 1, 'M-pesa', ''),
+(4, 'Pant5hra', 'Panthra', '0799998999', 'Nairobi', 'panthra@gmauil.com', 'Admin', '51933670', 'Panthra', '', '1', NULL, 'delivery', 1, 'Bank', ''),
+(5, NULL, NULL, NULL, NULL, NULL, 'Admin', '10265555', 'Tets', NULL, '1', NULL, 'delivery', 1, 'Credit', ''),
+(7, 'erick', '', '', '', 'erick@gmail.com', 'Admin', '89310563', 'Erick', '', '1', NULL, 'delivery', 1, 'Credit', ''),
+(9, 'erick', '', '', '', 'erick@gmail.com', 'Admin', '11400666', 'Erick', '', '1', NULL, 'delivery', 1, 'M-pesa', 'sales'),
+(10, 'Pant5hra', 'Panthra', '0799998999', 'Nairobi', 'panthra@gmauil.com', 'Admin', '50103783', 'Panthra', '', '1', NULL, 'delivery', 1, 'Cash', 'sales'),
+(11, 'erick', '', '', '', 'erick@gmail.com', 'Admin', '58533301', 'Erick', '', '1', NULL, 'delivery', 1, 'M-pesa', 'sales'),
+(12, 'erick', '', '', '', 'erick@gmail.com', 'Admin', '76470648', 'Erick', '', '1', NULL, 'delivery', 1, 'M-pesa', 'sales'),
+(13, 'erick', '', '', '', 'erick@gmail.com', 'Admin', '98127958', 'Erick', '', '1', NULL, 'delivery', 1, 'M-pesa', 'sales'),
+(14, 'erick', '', '', '', 'erick@gmail.com', 'Admin', '25978609', 'Erick', '', '1', NULL, 'delivery', 1, 'M-pesa', 'sales'),
+(15, 'erick', '', '', '', 'erick@gmail.com', 'Admin', '98654042', 'Erick', '', '1', NULL, 'delivery', 1, 'Cash', 'sales'),
+(16, 'erick', '', '', '', 'erick@gmail.com', 'Admin', '27305421', 'Erick', '', '1', NULL, 'delivery', 1, 'Cash', 'sales'),
+(17, 'erick', '', '', '', 'erick@gmail.com', 'Admin', '51780492', 'Erick', '', '1', NULL, 'delivery', 1, 'M-pesa', 'sales'),
+(18, 'erick', '', '', '', 'erick@gmail.com', 'Admin', '77930608', 'Erick', '', '1', NULL, 'delivery', 1, 'M-pesa', 'sales'),
+(19, 'Pant5hra', 'Panthra', '0799998999', 'Nairobi', 'panthra@gmauil.com', 'Admin', '54990845', 'Panthra', '', '1', NULL, 'delivery', 1, 'M-pesa', 'sales'),
+(20, 'erick', '', '', '', 'erick@gmail.com', 'Admin', '80371481', 'Erick', '', '1', NULL, 'delivery', 1, 'M-pesa', 'sales'),
+(21, NULL, NULL, NULL, NULL, NULL, 'Admin', '86690824', 'jame', NULL, '1', NULL, 'delivery', 1, 'M-pesa', 'sales'),
+(22, NULL, NULL, NULL, NULL, NULL, 'Admin', '57438109', 'jame', NULL, '1', NULL, 'delivery', 1, 'M-pesa', 'sales'),
+(23, 'erick', '', '', '', 'erick@gmail.com', 'Admin', '49942625', 'Erick', '', '1', NULL, 'delivery', 1, 'M-pesa', 'sales'),
+(25, NULL, NULL, NULL, NULL, NULL, 'Admin', '55692453', 'jame', NULL, '1', NULL, 'delivery', 1, 'M-pesa', 'sales'),
+(26, 'erick', '', '', '', 'erick@gmail.com', 'Admin', '27971107', 'Erick', '', '1', NULL, 'delivery', 1, 'M-pesa', 'sales'),
+(27, 'erick', '', '', '', 'erick@gmail.com', 'Admin', '57118337', 'Erick', '', '1', NULL, 'delivery', 1, 'M-pesa', 'sales'),
+(28, 'erick', '', '', '', 'erick@gmail.com', 'Admin', '66049139', 'Erick', '', '1', NULL, 'delivery', 1, 'M-pesa', 'sales'),
+(29, NULL, NULL, NULL, NULL, NULL, 'Admin', '88606546', 'jame', NULL, '1', NULL, 'delivery', 1, 'M-pesa', 'sales'),
+(30, NULL, NULL, NULL, NULL, NULL, 'Admin', '28136724', 'jame', NULL, '1', NULL, 'delivery', 1, 'M-pesa', 'sales'),
+(31, NULL, NULL, NULL, NULL, NULL, 'Admin', '15558136', 'jame', NULL, '1', NULL, 'delivery', 1, 'M-pesa', 'sales'),
+(32, 'erick', '', '', '', 'erick@gmail.com', 'Admin', '52847050', 'Erick', '', '1', NULL, 'delivery', 1, 'M-pesa', 'sales'),
+(33, 'erick', '', '', '', 'erick@gmail.com', 'Admin', '47266176', 'Erick', '', '1', NULL, 'delivery', 1, 'M-pesa', 'sales'),
+(34, 'erick', '', '', '', 'erick@gmail.com', 'Admin', '63886352', 'Erick', '', '1', NULL, 'delivery', 1, 'Cash', 'sales'),
+(35, 'erick', '', '', '', 'erick@gmail.com', 'Admin', '40241414', 'Erick', '', '1', NULL, 'delivery', 1, 'M-pesa', 'sales'),
+(36, 'erick', '', '', '', 'erick@gmail.com', 'Admin', '31195390', 'Erick', '', '1', NULL, 'delivery', 1, 'M-pesa', 'sales'),
+(37, NULL, NULL, NULL, NULL, NULL, 'Admin', '92095133', 'james', NULL, '1', NULL, 'delivery', 1, 'M-pesa', 'sales'),
+(38, NULL, NULL, NULL, NULL, NULL, 'Admin', '34377068', 'James', NULL, '1', NULL, 'delivery', 1, 'M-pesa', 'sales'),
+(39, NULL, NULL, NULL, NULL, NULL, 'Admin', '14687196', 'James', NULL, '1', NULL, 'delivery', 1, 'M-pesa', 'sales'),
+(40, 'Pant5hra', 'Panthra', '0799998999', 'Nairobi', 'panthra@gmauil.com', 'Admin', '70619709', 'Panthra', '', '1', NULL, 'delivery', 1, 'M-pesa', 'sales'),
+(41, 'erick', '', '', '', 'erick@gmail.com', 'Admin', '50628937', 'Erick', '', '1', NULL, 'delivery', 1, 'M-pesa', 'sales'),
+(42, 'erick', '', '', '', 'erick@gmail.com', 'Admin', '59399857', 'Erick', '', '1', NULL, 'delivery', 1, 'M-pesa', 'sales'),
+(43, 'erick', '', '', '', 'erick@gmail.com', 'Admin', '68520756', 'Erick', '', '1', NULL, 'delivery', 1, 'M-pesa', 'sales'),
+(44, 'erick', '', '', '', 'erick@gmail.com', 'Admin', '63147293', 'Erick', '', '1', NULL, 'delivery', 1, 'M-pesa', 'sales'),
+(45, 'erick', '', '', '', 'erick@gmail.com', 'Admin', '54682416', 'Erick', '', '1', NULL, 'delivery', 1, 'Cash', 'sales'),
+(46, 'erick', '', '', '', 'erick@gmail.com', 'Admin', '24162461', 'Erick', '', '1', NULL, 'delivery', 1, 'M-pesa', 'sales'),
+(47, 'erick', '', '', '', 'erick@gmail.com', 'Admin', '80121557', 'Erick', '', '1', NULL, 'delivery', 1, 'M-pesa', 'sales'),
+(48, 'erick', '', '', '', 'erick@gmail.com', 'Admin', '68190403', 'Erick', '', '1', NULL, 'delivery', 1, 'M-pesa', 'sales'),
+(49, 'erick', '', '', '', 'erick@gmail.com', 'Admin', '31452487', 'Erick', '', '1', NULL, 'delivery', 1, 'M-pesa', 'sales'),
+(50, 'erick', '', '', '', 'erick@gmail.com', 'Admin', '77141175', 'Erick', '', '1', NULL, 'delivery', 1, 'M-pesa', 'sales'),
+(51, 'erick', '', '', '', 'erick@gmail.com', 'Admin', '69804273', 'Erick', '', '1', NULL, 'delivery', 1, 'M-pesa', 'sales'),
+(52, 'erick', '', '', '', 'erick@gmail.com', 'Admin', '34786510', 'Erick', '', '1', NULL, 'delivery', 1, 'Cash', 'sales'),
+(53, 'Pant5hra', 'Panthra', '0799998999', 'Nairobi', 'panthra@gmauil.com', 'Admin', '21172655', 'Panthra', '', '1', NULL, 'delivery', 1, 'M-pesa', 'sales'),
+(54, NULL, NULL, NULL, NULL, NULL, 'Admin', '16368150', 'James', NULL, '1', NULL, 'delivery', 1, 'Cash', 'sales');
 
 -- --------------------------------------------------------
 
@@ -391,7 +448,8 @@ INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 (69, 'main', '0049_accessory_temp_screen_templist_screen_accessorydesc', '2023-12-30 07:41:56.528442'),
 (70, 'main', '0050_accessory_qty_delete_accessorydesc', '2023-12-30 09:29:15.151840'),
 (71, 'main', '0051_accessory_bprice_accessory_sprice', '2023-12-30 09:44:55.096627'),
-(72, 'main', '0052_accessory_supplier', '2023-12-30 10:21:10.844254');
+(72, 'main', '0052_accessory_supplier', '2023-12-30 10:21:10.844254'),
+(73, 'main', '0053_dcustomer_sales_agent', '2024-01-08 09:54:26.332988');
 
 -- --------------------------------------------------------
 
@@ -410,9 +468,32 @@ CREATE TABLE `django_session` (
 --
 
 INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
+('3j8kvngwrutxtiexeulcmjj4mju73hv3', '.eJxVjDsOwjAQRO_iGll2zGYxHYiGIlzBWn-WBIgj5VMh7k4spYByZt68t3C0zK1bpjS6Loqj0GL323kKz5TLEB-U74MMQ57HzsuCyG2dZDPE9Dpv7J-gpald31QbfUBgNGCjCjWAVb5K-4qYtAJlggVmTAwWWVeIQUEEozwSe4NplRbdajpdmutti5n6VKrYd1l8vszCQcc:1rL1vM:AcYRrm-mT15ajNi_wxzSp4fRy1NSfTIX-Yc0I1ZH3qY', '2024-01-03 17:08:48.099431'),
+('3olg5gbplqi6syxki26nob9ik1q9la7m', '.eJxVjDsOwjAQRO_iGll2zGYxHYiGIlzBWn-WBIgj5VMh7k4spYByZt68t3C0zK1bpjS6Loqj0GL323kKz5TLEB-U74MMQ57HzsuCyG2dZDPE9Dpv7J-gpald31QbfUBgNGCjCjWAVb5K-4qYtAJlggVmTAwWWVeIQUEEozwSe4NplRbdajpdmutti5n6VKrYd1l8vszCQcc:1rLGZf:FKFxmim6n4gZAGXwiUv5bhqINR3DL6E0DUCI8BuihQ4', '2024-01-04 08:47:23.341382'),
+('3uzj347ho2h2yzi1doq4n9ndmpeysgns', '.eJxVjDsOwjAQRO_iGll2zGYxHYiGIlzBWn-WBIgj5VMh7k4spYByZt68t3C0zK1bpjS6Loqj0GL323kKz5TLEB-U74MMQ57HzsuCyG2dZDPE9Dpv7J-gpald31QbfUBgNGCjCjWAVb5K-4qYtAJlggVmTAwWWVeIQUEEozwSe4NplRbdajpdmutti5n6VKrYd1l8vszCQcc:1rKaLm:h9p4SPH7x-aI8OG_O_-Xs9BMJ1VmdX60aG2CIxg_BDE', '2024-01-02 11:42:14.321626'),
+('62s37kuwz9vuwhxfsalawl0xvtd7fznx', '.eJxVjDsOwjAQRO_iGll2zGYxHYiGIlzBWn-WBIgj5VMh7k4spYByZt68t3C0zK1bpjS6Loqj0GL323kKz5TLEB-U74MMQ57HzsuCyG2dZDPE9Dpv7J-gpald31QbfUBgNGCjCjWAVb5K-4qYtAJlggVmTAwWWVeIQUEEozwSe4NplRbdajpdmutti5n6VKrYd1l8vszCQcc:1rLlMP:JEOvK_jhjJUi6se5Il9jxwm53If9WrjpEARjOUr7QP0', '2024-01-05 17:39:45.485231'),
+('7wi7o6yqp0g2qvw4z8y4af54qd338aah', '.eJxVjDsOwjAQRO_iGll2zGYxHYiGIlzBWn-WBIgj5VMh7k4spYByZt68t3C0zK1bpjS6Loqj0GL323kKz5TLEB-U74MMQ57HzsuCyG2dZDPE9Dpv7J-gpald31QbfUBgNGCjCjWAVb5K-4qYtAJlggVmTAwWWVeIQUEEozwSe4NplRbdajpdmutti5n6VKrYd1l8vszCQcc:1rLFIa:Zb7iQcf3sTS_CuhPc92MquV317bmdoFt0o1YUK_wLVA', '2024-01-04 07:25:40.783755'),
+('8jwphfb2elnx07928v70lcbkil0vusju', '.eJxVjDsOwjAQRO_iGll2zGYxHYiGIlzBWn-WBIgj5VMh7k4spYByZt68t3C0zK1bpjS6Loqj0GL323kKz5TLEB-U74MMQ57HzsuCyG2dZDPE9Dpv7J-gpald31QbfUBgNGCjCjWAVb5K-4qYtAJlggVmTAwWWVeIQUEEozwSe4NplRbdajpdmutti5n6VKrYd1l8vszCQcc:1rKyyK:sYyHGqoktalQ8bgDSUblNQ7tCtAFieyCbJ3Yo2PTcCI', '2024-01-03 13:59:40.030891'),
+('af4tk4wfgbek1jz462ennzxtjyxwggn7', '.eJxVjDsOwjAQRO_iGll2zGYxHYiGIlzBWn-WBIgj5VMh7k4spYByZt68t3C0zK1bpjS6Loqj0GL323kKz5TLEB-U74MMQ57HzsuCyG2dZDPE9Dpv7J-gpald31QbfUBgNGCjCjWAVb5K-4qYtAJlggVmTAwWWVeIQUEEozwSe4NplRbdajpdmutti5n6VKrYd1l8vszCQcc:1rKgfm:ipNj6KSG7PImgxjtyN31B22gXTFUx91UWYeV3ORm94U', '2024-01-02 18:27:18.274654'),
+('b5aqb9nqjml46bs58boat6a8dekg5pce', '.eJxVjDsOwjAQRO_iGll2zGYxHYiGIlzBWn-WBIgj5VMh7k4spYByZt68t3C0zK1bpjS6Loqj0GL323kKz5TLEB-U74MMQ57HzsuCyG2dZDPE9Dpv7J-gpald31QbfUBgNGCjCjWAVb5K-4qYtAJlggVmTAwWWVeIQUEEozwSe4NplRbdajpdmutti5n6VKrYd1l8vszCQcc:1rMpJ4:GE8ks-cgh9RPLhDngThkgq62Ng7mRd1IVWg1Wo0ueFg', '2024-01-08 16:04:42.115383'),
+('c7vn5lf51a59ug76tnbg0slroyna9dfg', '.eJxVjDsOwjAQRO_iGll2zGYxHYiGIlzBWn-WBIgj5VMh7k4spYByZt68t3C0zK1bpjS6Loqj0GL323kKz5TLEB-U74MMQ57HzsuCyG2dZDPE9Dpv7J-gpald31QbfUBgNGCjCjWAVb5K-4qYtAJlggVmTAwWWVeIQUEEozwSe4NplRbdajpdmutti5n6VKrYd1l8vszCQcc:1rMpMk:KtrC0oMF9Rdx2m2qx4qykvYST6J156ykdhau88TCzX0', '2024-01-08 16:08:30.568158'),
+('cjf09w25a45542qpm5dl8p33nsdwdb58', '.eJxVjDsOwjAQRO_iGll2zGYxHYiGIlzBWn-WBIgj5VMh7k4spYByZt68t3C0zK1bpjS6Loqj0GL323kKz5TLEB-U74MMQ57HzsuCyG2dZDPE9Dpv7J-gpald31QbfUBgNGCjCjWAVb5K-4qYtAJlggVmTAwWWVeIQUEEozwSe4NplRbdajpdmutti5n6VKrYd1l8vszCQcc:1rLlNR:K0jv2FiBuUglH_DQfcey4Q1A4-zwTNKhEIvMHrfOp4M', '2024-01-05 17:40:49.943397'),
+('fy0gxq9eyyozjf7zmszvvl2plqh7b9ms', '.eJxVjDsOwjAQRO_iGll2zGYxHYiGIlzBWn-WBIgj5VMh7k4spYByZt68t3C0zK1bpjS6Loqj0GL323kKz5TLEB-U74MMQ57HzsuCyG2dZDPE9Dpv7J-gpald31QbfUBgNGCjCjWAVb5K-4qYtAJlggVmTAwWWVeIQUEEozwSe4NplRbdajpdmutti5n6VKrYd1l8vszCQcc:1rLJQ4:6bY3GqwAmy0ZmKRXQeuQmjhvXaxNBgbJRzuXZK_TqbA', '2024-01-04 11:49:40.529871'),
 ('g0nplhn2ztyb7ehgxj2ip7r3t9z40prb', '.eJxVjDsOwjAQRO_iGll2zGYxHYiGIlzBWn-WBIgj5VMh7k4spYByZt68t3C0zK1bpjS6Loqj0GL323kKz5TLEB-U74MMQ57HzsuCyG2dZDPE9Dpv7J-gpald31QbfUBgNGCjCjWAVb5K-4qYtAJlggVmTAwWWVeIQUEEozwSe4NplRbdajpdmutti5n6VKrYd1l8vszCQcc:1rJARr:53JzQefi9qjXwjN3Z34oqKoofEhYYIrE5M0R7T8InTc', '2023-12-29 13:50:39.939592'),
 ('god1vcog54zyaolwwf5mgbg7yy5di5ad', '.eJxVjDsOwjAQRO_iGll2zGYxHYiGIlzBWn-WBIgj5VMh7k4spYByZt68t3C0zK1bpjS6Loqj0GL323kKz5TLEB-U74MMQ57HzsuCyG2dZDPE9Dpv7J-gpald31QbfUBgNGCjCjWAVb5K-4qYtAJlggVmTAwWWVeIQUEEozwSe4NplRbdajpdmutti5n6VKrYd1l8vszCQcc:1rJDGt:s5oNp05dBO-H0smKUpeVzOKWYMJho2vEOE8mxtCa1l4', '2023-12-29 16:51:31.830662'),
-('lsg1up03s0lg2rsfusotgilfwzjpbpx9', '.eJxVjDsOwjAQRO_iGll2zGYxHYiGIlzBWn-WBIgj5VMh7k4spYByZt68t3C0zK1bpjS6Loqj0GL323kKz5TLEB-U74MMQ57HzsuCyG2dZDPE9Dpv7J-gpald31QbfUBgNGCjCjWAVb5K-4qYtAJlggVmTAwWWVeIQUEEozwSe4NplRbdajpdmutti5n6VKrYd1l8vszCQcc:1rJX6W:6XBOv2oLbBOsqFSoAryEBxlVHlVl7_FKKj8rvNUvZ-s', '2023-12-30 14:02:08.608756'),
+('hylvmry7uuzn8evxbpri7sam9izsgkko', '.eJxVjDsOwjAQRO_iGll2zGYxHYiGIlzBWn-WBIgj5VMh7k4spYByZt68t3C0zK1bpjS6Loqj0GL323kKz5TLEB-U74MMQ57HzsuCyG2dZDPE9Dpv7J-gpald31QbfUBgNGCjCjWAVb5K-4qYtAJlggVmTAwWWVeIQUEEozwSe4NplRbdajpdmutti5n6VKrYd1l8vszCQcc:1rL2XY:QF8m5t9uObJKLNk1AST5bVb-htfajH35lGrnwV_jAbk', '2024-01-03 17:48:16.332533'),
+('iz8madwsiz9foc3tig0gikilln8qw6gn', '.eJxVjDsOwjAQRO_iGll2zGYxHYiGIlzBWn-WBIgj5VMh7k4spYByZt68t3C0zK1bpjS6Loqj0GL323kKz5TLEB-U74MMQ57HzsuCyG2dZDPE9Dpv7J-gpald31QbfUBgNGCjCjWAVb5K-4qYtAJlggVmTAwWWVeIQUEEozwSe4NplRbdajpdmutti5n6VKrYd1l8vszCQcc:1rMlxe:KtkznIbGPQkMAY2WaxWCXdPuNncbWFTTxO8HU5Qm-Uc', '2024-01-08 12:30:22.304688'),
+('j3dm2f053bq8r2mtsbndb45vxygn77ar', '.eJxVjDsOwjAQRO_iGll2zGYxHYiGIlzBWn-WBIgj5VMh7k4spYByZt68t3C0zK1bpjS6Loqj0GL323kKz5TLEB-U74MMQ57HzsuCyG2dZDPE9Dpv7J-gpald31QbfUBgNGCjCjWAVb5K-4qYtAJlggVmTAwWWVeIQUEEozwSe4NplRbdajpdmutti5n6VKrYd1l8vszCQcc:1rKxmf:BU2Y4d4EBuDKRG_CKpic7Slc4TRnKaUmXUU09YXk_O4', '2024-01-03 12:43:33.951983'),
+('lgqrhj6npiwq0jjtxpkhb1wgq0ix5o8j', '.eJxVjDsOwjAQRO_iGll2zGYxHYiGIlzBWn-WBIgj5VMh7k4spYByZt68t3C0zK1bpjS6Loqj0GL323kKz5TLEB-U74MMQ57HzsuCyG2dZDPE9Dpv7J-gpald31QbfUBgNGCjCjWAVb5K-4qYtAJlggVmTAwWWVeIQUEEozwSe4NplRbdajpdmutti5n6VKrYd1l8vszCQcc:1rL3mO:I3DtfOASWhKxSFkIFiH3xEUj_ZAQR_gHlVD5DoxHv48', '2024-01-03 19:07:40.258501'),
+('pob69bfxsfn4kp2fi9k3acnlipmnjm9l', '.eJxVjDsOwjAQRO_iGll2zGYxHYiGIlzBWn-WBIgj5VMh7k4spYByZt68t3C0zK1bpjS6Loqj0GL323kKz5TLEB-U74MMQ57HzsuCyG2dZDPE9Dpv7J-gpald31QbfUBgNGCjCjWAVb5K-4qYtAJlggVmTAwWWVeIQUEEozwSe4NplRbdajpdmutti5n6VKrYd1l8vszCQcc:1rN3kS:0fea_R7iBmo8s8l7rETkBGG0x5F_OcOBrFu6hvZcLdY', '2024-01-09 07:29:56.708874'),
+('tlgfz7jbv45yej7smwvv9shk6mtp1a3k', '.eJxVjDsOwjAQRO_iGll2zGYxHYiGIlzBWn-WBIgj5VMh7k4spYByZt68t3C0zK1bpjS6Loqj0GL323kKz5TLEB-U74MMQ57HzsuCyG2dZDPE9Dpv7J-gpald31QbfUBgNGCjCjWAVb5K-4qYtAJlggVmTAwWWVeIQUEEozwSe4NplRbdajpdmutti5n6VKrYd1l8vszCQcc:1rMhka:PZrxwMKbVete1gKdPe6IrVE_Sc0ryFFG-nJZvMDX25w', '2024-01-08 08:00:36.662121'),
+('uqp2qdo9l0n3di6pmgfh8lwcg6vakdd3', '.eJxVjDsOwjAQRO_iGll2zGYxHYiGIlzBWn-WBIgj5VMh7k4spYByZt68t3C0zK1bpjS6Loqj0GL323kKz5TLEB-U74MMQ57HzsuCyG2dZDPE9Dpv7J-gpald31QbfUBgNGCjCjWAVb5K-4qYtAJlggVmTAwWWVeIQUEEozwSe4NplRbdajpdmutti5n6VKrYd1l8vszCQcc:1rLP9f:8bnv3Q8Byz5EkxF_x9Hj4QMUQ7lZLUPFbO6q6bU3sAo', '2024-01-04 17:57:07.187053'),
+('utnwwmlkqcwk6iudgobo63ofdk3n1c36', '.eJxVjDsOwjAQRO_iGll2zGYxHYiGIlzBWn-WBIgj5VMh7k4spYByZt68t3C0zK1bpjS6Loqj0GL323kKz5TLEB-U74MMQ57HzsuCyG2dZDPE9Dpv7J-gpald31QbfUBgNGCjCjWAVb5K-4qYtAJlggVmTAwWWVeIQUEEozwSe4NplRbdajpdmutti5n6VKrYd1l8vszCQcc:1rLe1f:nN6qff5d2RAlQmdKBCMPhq9qRRg-Hp5natAZ5GuQW4g', '2024-01-05 09:49:51.712029'),
+('vb5p3kyjds9vku9a7pn306ct3vg04ybn', '.eJxVjDsOwjAQRO_iGll2zGYxHYiGIlzBWn-WBIgj5VMh7k4spYByZt68t3C0zK1bpjS6Loqj0GL323kKz5TLEB-U74MMQ57HzsuCyG2dZDPE9Dpv7J-gpald31QbfUBgNGCjCjWAVb5K-4qYtAJlggVmTAwWWVeIQUEEozwSe4NplRbdajpdmutti5n6VKrYd1l8vszCQcc:1rL0vg:fN4TZiz14J_Y3vTRh91Z6lAZ5SOXlvvv2IaKMUmhVWY', '2024-01-03 16:05:04.842290'),
+('wqipuhd9uvknw1ejzs9nzwinfjhxuh75', '.eJxVjDsOwjAQRO_iGll2zGYxHYiGIlzBWn-WBIgj5VMh7k4spYByZt68t3C0zK1bpjS6Loqj0GL323kKz5TLEB-U74MMQ57HzsuCyG2dZDPE9Dpv7J-gpald31QbfUBgNGCjCjWAVb5K-4qYtAJlggVmTAwWWVeIQUEEozwSe4NplRbdajpdmutti5n6VKrYd1l8vszCQcc:1rN8tB:bykDxaQfMYWAcZhP7_SbQxGaqRjcD-XCs-YLpqM-_qU', '2024-01-09 12:59:17.697977'),
+('wxhvvn3ngrv0nt9ypf2mc60lfcht6hl6', '.eJxVjDsOwjAQRO_iGll2zGYxHYiGIlzBWn-WBIgj5VMh7k4spYByZt68t3C0zK1bpjS6Loqj0GL323kKz5TLEB-U74MMQ57HzsuCyG2dZDPE9Dpv7J-gpald31QbfUBgNGCjCjWAVb5K-4qYtAJlggVmTAwWWVeIQUEEozwSe4NplRbdajpdmutti5n6VKrYd1l8vszCQcc:1rLFmf:lPmbDUml-9eD_IC2cg5cPmrYdEPcnTGOVp6a6DBZmpQ', '2024-01-04 07:56:45.364917'),
+('xdv25lv5akwnk8xxxlp25trorw2ikpwb', '.eJxVjMEOgjAQRP-lZ9O0paXFmybe9MQHkF12ERRLQuFk_HdLwkGPM_PmvUUD69I3a-K5GUgchRGH3w6hfXLcBnpAvE-yneIyDyg3RO5rkreJeDzv7J-gh9Tnty1VxY69Jt0a8MEV6B1i0NoVVUdWG6dIB7TkXAhKmxJVx2BL44P3SmXppsum-nS91HuM8OJcJRg5ic8XpbRBCQ:1rJZ9Z:rp2-w-0ta2ZttVIMbpUsRx5xBinOxCA_h-NXheBpuLI', '2023-12-30 16:13:25.171193'),
+('y3u92ooeujjr7ht6jvj2xxrv3cfdq955', '.eJxVjDsOwjAQRO_iGll2zGYxHYiGIlzBWn-WBIgj5VMh7k4spYByZt68t3C0zK1bpjS6Loqj0GL323kKz5TLEB-U74MMQ57HzsuCyG2dZDPE9Dpv7J-gpald31QbfUBgNGCjCjWAVb5K-4qYtAJlggVmTAwWWVeIQUEEozwSe4NplRbdajpdmutti5n6VKrYd1l8vszCQcc:1rLMHV:pKguIsS0pDEcOJc87cGyl91j8riTTYcGwgquZVQn1DM', '2024-01-04 14:53:01.275467'),
 ('ype8jcsazrzmoer4tutasoih1q678w50', '.eJxVjDsOwjAQRO_iGll2zGYxHYiGIlzBWn-WBIgj5VMh7k4spYByZt68t3C0zK1bpjS6Loqj0GL323kKz5TLEB-U74MMQ57HzsuCyG2dZDPE9Dpv7J-gpald31QbfUBgNGCjCjWAVb5K-4qYtAJlggVmTAwWWVeIQUEEozwSe4NplRbdajpdmutti5n6VKrYd1l8vszCQcc:1rJTwi:GMGJqgjz4hvnddZQIX0zWvLcOpOF4WiWZNLz_B7X1ok', '2023-12-30 10:39:48.258875');
 
 -- --------------------------------------------------------
@@ -551,6 +632,14 @@ CREATE TABLE `main_agents_records` (
   `sales_revenue` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `main_agents_records`
+--
+
+INSERT INTO `main_agents_records` (`id`, `units`, `returned_units`, `commission`, `name_id`, `random`, `date`, `refund_amound`, `sales_revenue`) VALUES
+(3, -40, 45, -2219, 1, 89310563, '2024-01-08', 0, 88500),
+(4, 45, 0, 2677.5, 2, 16368150, '2024-01-08', 0, 382500);
+
 -- --------------------------------------------------------
 
 --
@@ -579,7 +668,22 @@ INSERT INTO `main_brand` (`id`, `brand`, `created_at`) VALUES
 (9, 'Mix', '2023-12-29'),
 (10, 'Apple', '2023-12-29'),
 (11, 'Philips', '2023-12-29'),
-(12, 'Viewsonic', '2023-12-29');
+(12, 'Viewsonic', '2023-12-29'),
+(14, 'Xprinter', '2024-01-02'),
+(15, 'Benq', '2024-01-02'),
+(16, 'Sotec', '2024-01-02'),
+(17, 'Iodata', '2024-01-02'),
+(18, 'Mitsubishi', '2024-01-02'),
+(19, 'Epson', '2024-01-02'),
+(20, 'Canon', '2024-01-02'),
+(21, 'Double site', '2024-01-03'),
+(22, 'Essentel', '2024-01-04'),
+(23, 'LCD', '2024-01-04'),
+(24, 'LG', '2024-01-04'),
+(25, 'Viewsonic', '2024-01-04'),
+(26, 'EIZO', '2024-01-04'),
+(27, 'DS', '2024-01-04'),
+(28, 'Logitech', '2024-01-05');
 
 -- --------------------------------------------------------
 
@@ -621,7 +725,8 @@ INSERT INTO `main_cpu` (`id`, `cpu`, `created_at`) VALUES
 (21, 'AMD A9', '2023-12-29'),
 (22, 'AMD A10', '2023-12-29'),
 (23, 'AMD A12', '2023-12-29'),
-(24, 'KX', '2023-12-29');
+(24, 'KX', '2023-12-29'),
+(25, 'Core 2 Duo', '2024-01-02');
 
 -- --------------------------------------------------------
 
@@ -651,6 +756,14 @@ CREATE TABLE `main_customer` (
   `location_document` varchar(200) DEFAULT NULL,
   `other_document` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `main_customer`
+--
+
+INSERT INTO `main_customer` (`id`, `fname`, `lname`, `phone`, `location`, `email`, `user_created_at`, `random`, `username`, `id_no`, `status`, `invono`, `date_joined`, `id_document`, `pin_document`, `registration_document`, `l_document`, `business_document`, `location_document`, `other_document`) VALUES
+(2, 'Pant5hra', 'Panthra', '0799998999', 'Nairobi', 'panthra@gmauil.com', NULL, NULL, 'Panthra', '', NULL, NULL, '2024-01-03', '', '', '', '', '', '', ''),
+(3, 'erick', '', '', '', 'erick@gmail.com', NULL, NULL, 'Erick', '', NULL, NULL, '2024-01-04', '', '', '', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -685,7 +798,8 @@ INSERT INTO `main_expense_description` (`id`, `description`) VALUES
 (1, 'Broker'),
 (2, 'Lunch'),
 (3, 'Rent, utilities (electricity, water), and maintenance.'),
-(4, 'Regular upkeep of tools and equipment.');
+(4, 'Regular upkeep of tools and equipment.'),
+(5, 'Delivery');
 
 -- --------------------------------------------------------
 
@@ -994,7 +1108,565 @@ INSERT INTO `main_masterlist` (`id`, `type`, `unit_price`, `serialno`, `model`, 
 (197, 'Monitor', NULL, '0166H4MCA10512L', 'S22P35TH', '', '', '', '2023-12-30', 'None', NULL, 'None', 400.00, 2, 2500.00, 2900.00, 'Admin', 'None', 'Samsung', '', 'None', '22\"', 'None', NULL, 3500.00),
 (198, 'Monitor', NULL, '3CM3400KD9', 'Pavilion 23F', '', '', '', '2023-12-30', 'None', NULL, 'None', 400.00, 2, 10000.00, 2900.00, 'Admin', 'None', 'hp', '', 'None', '23\"', 'None', NULL, 12000.00),
 (199, 'Monitor', NULL, 'AOC', 'AOC', '', '', '', '2023-12-30', 'None', NULL, 'None', 400.00, 2, 2500.00, 2900.00, 'Admin', 'None', 'Dell', '', 'None', '22\"', 'None', NULL, 3500.00),
-(200, 'Monitor', NULL, 'CN0YN68N742611B80JCM', 'P2212HP', '', '', '', '2023-12-30', 'None', NULL, 'None', 640.00, 2, 4000.00, 4640.00, 'Admin', 'None', 'Dell', '', 'None', '22\"', 'None', NULL, 5000.00);
+(200, 'Monitor', NULL, 'CN0YN68N742611B80JCM', 'P2212HP', '', '', '', '2023-12-30', 'None', NULL, 'None', 640.00, 2, 4000.00, 4640.00, 'Admin', 'None', 'Dell', '', 'None', '22\"', 'None', NULL, 5000.00),
+(201, 'Monitor', NULL, '3CSMZ42', 'V3014T', '', '', '', '2024-01-02', 'None', NULL, 'None', 3200.00, 2, 20000.00, 23200.00, 'Admin', 'None', 'Dell', '', 'None', '30\"', 'None', NULL, 25000.00),
+(202, 'Monitor', NULL, '3CQ92504XW', 'V194', '', '', '', '2024-01-02', 'None', NULL, 'None', 560.00, 2, 3500.00, 4060.00, 'Admin', 'None', 'hp', '', 'None', '19\"', 'None', NULL, 4000.00),
+(203, 'Monitor', NULL, '3CQ9250388', 'V194', '', '', '', '2024-01-02', 'None', NULL, 'None', 560.00, 2, 3500.00, 4060.00, 'Admin', 'None', 'hp', '', 'None', '19\"', 'None', NULL, 4000.00),
+(204, 'Monitor', NULL, '3CQ9250HTM', 'V194', '', '', '', '2024-01-02', 'None', NULL, 'None', 560.00, 2, 3500.00, 4060.00, 'Admin', 'None', 'hp', '', 'None', '19\"', 'None', NULL, 4000.00),
+(205, 'Monitor', NULL, '3CQ9250H2W', 'V194', '', '', '', '2024-01-02', 'None', NULL, 'None', 560.00, 2, 3500.00, 4060.00, 'Admin', 'None', 'hp', '', 'None', '19\"', 'None', NULL, 4000.00),
+(206, 'Monitor', NULL, '3CQ9250H5H', 'V194', '', '', '', '2024-01-02', 'None', NULL, 'None', 560.00, 2, 3500.00, 4060.00, 'Admin', 'None', 'hp', '', 'None', '19\"', 'None', NULL, 4000.00),
+(207, 'Monitor', NULL, '3CQ9250HIVB', 'V194', '', '', '', '2024-01-02', 'None', NULL, 'None', 560.00, 2, 3500.00, 4060.00, 'Admin', 'None', 'hp', '', 'None', '19\"', 'None', NULL, 4000.00),
+(208, 'Monitor', NULL, '3CQ9250H5D', 'V194', '', '', '', '2024-01-02', 'None', NULL, 'None', 560.00, 2, 3500.00, 4060.00, 'Admin', 'None', 'hp', '', 'None', '19\"', 'None', NULL, 4000.00),
+(209, 'Monitor', NULL, '3CQ92503QJ', 'V194', '', '', '', '2024-01-02', 'None', NULL, 'None', 560.00, 2, 3500.00, 4060.00, 'Admin', 'None', 'hp', '', 'None', '19\"', 'None', NULL, 4000.00),
+(210, 'Monitor', NULL, '3CQ9250H2N', 'V194', '', '', '', '2024-01-02', 'None', NULL, 'None', 560.00, 2, 3500.00, 4060.00, 'Admin', 'None', 'hp', '', 'None', '19\"', 'None', NULL, 4000.00),
+(211, 'Monitor', NULL, '3CQ9250HTT', 'V194', '', '', '', '2024-01-02', 'None', NULL, 'None', 560.00, 2, 3500.00, 4060.00, 'Admin', 'None', 'hp', '', 'None', '19\"', 'None', NULL, 4000.00),
+(212, 'Monitor', NULL, '3CQ92503QX', 'V194', '', '', '', '2024-01-02', 'None', NULL, 'None', 560.00, 2, 3500.00, 4060.00, 'Admin', 'None', 'hp', '', 'None', '19\"', 'None', NULL, 4000.00),
+(213, 'Monitor', NULL, '3CQ9250357', 'V194', '', '', '', '2024-01-02', 'None', NULL, 'None', 560.00, 2, 3500.00, 4060.00, 'Admin', 'None', 'hp', '', 'None', '19\"', 'None', NULL, 4000.00),
+(214, 'Monitor', NULL, '3CQ925037X', 'V194', '', '', '', '2024-01-02', 'None', NULL, 'None', 560.00, 2, 3500.00, 4060.00, 'Admin', 'None', 'hp', '', 'None', '19\"', 'None', NULL, 4000.00),
+(215, 'Monitor', NULL, '3CQ9250HIZ', 'V194', '', '', '', '2024-01-02', 'None', NULL, 'None', 560.00, 2, 3500.00, 4060.00, 'Admin', 'None', 'hp', '', 'None', '19\"', 'None', NULL, 4000.00),
+(216, 'Monitor', NULL, '3CQ9250HIV', 'V194', '', '', '', '2024-01-02', 'None', NULL, 'None', 560.00, 2, 3500.00, 4060.00, 'Admin', 'None', 'hp', '', 'None', '19\"', 'None', NULL, 4000.00),
+(217, 'Monitor', NULL, '3CQ9250HTQ', 'V194', '', '', '', '2024-01-02', 'None', NULL, 'None', 560.00, 2, 3500.00, 4060.00, 'Admin', 'None', 'hp', '', 'None', '19\"', 'None', NULL, 4000.00),
+(218, 'Monitor', NULL, '3CQ925037V', 'V194', '', '', '', '2024-01-02', 'None', NULL, 'None', 560.00, 2, 3500.00, 4060.00, 'Admin', 'None', 'hp', '', 'None', '19\"', 'None', NULL, 4000.00),
+(219, 'Monitor', NULL, '3CQ9250H54', 'V194', '', '', '', '2024-01-02', 'None', NULL, 'None', 560.00, 2, 3500.00, 4060.00, 'Admin', 'None', 'hp', '', 'None', '19\"', 'None', NULL, 4000.00),
+(220, 'Monitor', NULL, '3CQ0141FH0', 'V194', '', '', '', '2024-01-02', 'None', NULL, 'None', 560.00, 2, 3500.00, 4060.00, 'Admin', 'None', 'hp', '', 'None', '19\"', 'None', NULL, 4000.00),
+(221, 'Monitor', NULL, '3CQ9250HTV', 'V194', '', '', '', '2024-01-02', 'None', NULL, 'None', 560.00, 2, 3500.00, 4060.00, 'Admin', 'None', 'hp', '', 'None', '19\"', 'None', NULL, 4000.00),
+(223, 'Monitor', NULL, '3CQ9250H75', 'V194', '', '', '', '2024-01-02', 'None', NULL, 'None', 560.00, 2, 3500.00, 4060.00, 'Admin', 'None', 'hp', '', 'None', '19\"', 'None', NULL, 4000.00),
+(224, 'Workstation', NULL, 'CZC3381KY2', 'Z620 3Gb graphics', 'Intel Xeon', '8192', '500', '2024-01-02', 'None', NULL, 'None', 4480.00, 2, 28000.00, 32480.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 30000.00),
+(225, 'Workstation', NULL, 'CZC3381KYT', 'Z620 3Gb graphics', 'Intel Xeon', '8192', '500', '2024-01-02', 'None', NULL, 'None', 4480.00, 2, 28000.00, 32480.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 30000.00),
+(226, 'Workstation', NULL, 'CZC33357NW', 'Z620 3Gb graphics', 'Intel Xeon', '8192', '500', '2024-01-02', 'None', NULL, 'None', 4480.00, 2, 28000.00, 32480.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 30000.00),
+(227, 'Workstation', NULL, 'CZC25048H2', 'Z620 3Gb graphics', 'Intel Xeon', '8192', '500', '2024-01-02', 'None', NULL, 'None', 4480.00, 2, 28000.00, 32480.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 30000.00),
+(228, 'Workstation', NULL, 'CZC33357P1', 'Z620 3Gb graphics', 'Intel Xeon', '8192', '500', '2024-01-02', 'None', NULL, 'None', 4480.00, 2, 28000.00, 32480.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 30000.00),
+(229, 'Workstation', NULL, 'CZC3122G2Q', 'Z620 3Gb graphics', 'Intel Xeon', '8192', '500', '2024-01-02', 'None', NULL, 'None', 4480.00, 2, 28000.00, 32480.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 30000.00),
+(230, 'Workstation', NULL, 'CZC3381KYG', 'Z620 3Gb graphics', 'Intel Xeon', '8192', '500', '2024-01-02', 'None', NULL, 'None', 4480.00, 2, 28000.00, 32480.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 30000.00),
+(231, 'Workstation', NULL, 'CZC334090Z', 'Z620 3Gb graphics', 'Intel Xeon', '8192', '500', '2024-01-02', 'None', NULL, 'None', 4480.00, 2, 28000.00, 32480.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 30000.00),
+(232, 'Workstation', NULL, 'CZC3381KZ1', 'Z620 3Gb graphics', 'Intel Xeon', '8192', '500', '2024-01-02', 'None', NULL, 'None', 4480.00, 2, 28000.00, 32480.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 30000.00),
+(233, 'Workstation', NULL, 'CZC3122G23', 'Z620 3Gb graphics', 'Intel Xeon', '8192', '500', '2024-01-02', 'None', NULL, 'None', 4480.00, 2, 28000.00, 32480.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 30000.00),
+(234, 'Workstation', NULL, 'CZC3381KYV', 'Z620 3Gb graphics', 'Intel Xeon', '8192', '500', '2024-01-02', 'None', NULL, 'None', 4480.00, 2, 28000.00, 32480.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 30000.00),
+(235, 'Workstation', NULL, 'CZC3304NG6', 'Z620 3Gb graphics', 'Intel Xeon', '8192', '500', '2024-01-02', 'None', NULL, 'None', 4480.00, 2, 28000.00, 32480.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 30000.00),
+(236, 'Workstation', NULL, 'CZC3122G27', 'Z620 3Gb graphics', 'Intel Xeon', '8192', '500', '2024-01-02', 'None', NULL, 'None', 4480.00, 2, 28000.00, 32480.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 30000.00),
+(237, 'Workstation', NULL, 'CZC3381KYP', 'Z620 3Gb graphics', 'Intel Xeon', '8192', '500', '2024-01-02', 'None', NULL, 'None', 4480.00, 2, 28000.00, 32480.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 30000.00),
+(238, 'Workstation', NULL, '2UA3231R2S', 'Z820 1Gb graphics', 'Intel Xeon', '16384', '2000', '2024-01-02', 'None', NULL, 'None', 12000.00, 2, 75000.00, 87000.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 80000.00),
+(239, 'Workstation', NULL, '2UA3231R2K', 'Z820 1Gb graphics', 'Intel Xeon', '16384', '2000', '2024-01-02', 'None', NULL, 'None', 12000.00, 2, 75000.00, 87000.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 80000.00),
+(240, 'Workstation', NULL, '2UA3231R1Q', 'Z820 1Gb graphics', 'Intel Xeon', '16384', '2000', '2024-01-02', 'None', NULL, 'None', 3200.00, 2, 75000.00, 23200.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 80000.00),
+(241, 'Workstation', NULL, 'LJ452AV', 'Z820 1Gb graphics', 'Intel Xeon', '16384', '2000', '2024-01-02', 'None', NULL, 'None', 3200.00, 2, 75000.00, 23200.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 80000.00),
+(242, 'Workstation', NULL, 'SGH424PRLV', 'Z820 1Gb graphics', 'Intel Xeon', '16384', '2000', '2024-01-02', 'None', NULL, 'None', 3200.00, 2, 75000.00, 23200.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 80000.00),
+(243, 'Workstation', NULL, '2UA3231R2T', 'Z820 1Gb graphics', 'Intel Xeon', '16384', '2000', '2024-01-02', 'None', NULL, 'None', 3200.00, 2, 75000.00, 23200.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 80000.00);
+INSERT INTO `main_masterlist` (`id`, `type`, `unit_price`, `serialno`, `model`, `cpu`, `ram`, `hdd`, `daterecieved`, `qty`, `total`, `dels`, `vat`, `supplier_id`, `bprice`, `sub_total`, `terms`, `random`, `brand`, `gen`, `speed`, `screen`, `comment`, `datedelivered`, `sprice`) VALUES
+(244, 'Workstation', NULL, 'SGH345S3QF', 'Z820 1Gb graphics', 'Intel Xeon', '16384', '2000', '2024-01-02', 'None', NULL, 'None', 3200.00, 2, 75000.00, 23200.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 80000.00),
+(245, 'Workstation', NULL, 'SGH436T29G', 'Z230', 'Intel Xeon', '8192', '500', '2024-01-02', 'None', NULL, 'None', 4000.00, 2, 25000.00, 29000.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 30000.00),
+(246, 'Workstation', NULL, 'SGH350R2RS', 'Z230', 'Intel Xeon', '8192', '500', '2024-01-02', 'None', NULL, 'None', 4000.00, 2, 25000.00, 29000.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 30000.00),
+(247, 'Workstation', NULL, 'SGH350R2RN', 'Z230', 'Intel Xeon', '8192', '500', '2024-01-02', 'None', NULL, 'None', 4000.00, 2, 25000.00, 29000.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 30000.00),
+(248, 'Workstation', NULL, 'SGH451RNS0', 'Z230', 'Intel Xeon', '8192', '500', '2024-01-02', 'None', NULL, 'None', 4000.00, 2, 25000.00, 29000.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 30000.00),
+(249, 'Workstation', NULL, 'SGH350R2R8', 'Z230', 'Intel Xeon', '8192', '500', '2024-01-02', 'None', NULL, 'None', 4000.00, 2, 25000.00, 29000.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 30000.00),
+(250, 'Workstation', NULL, 'SGH516P61K', 'Z230', 'Intel Xeon', '8192', '500', '2024-01-02', 'None', NULL, 'None', 4000.00, 2, 25000.00, 29000.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 30000.00),
+(251, 'Workstation', NULL, 'CZC4521SQ9', 'Z230', 'Intel Xeon', '8192', '500', '2024-01-02', 'None', NULL, 'None', 4000.00, 2, 25000.00, 29000.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 30000.00),
+(252, 'Workstation', NULL, 'SGH350R2RK', 'Z230', 'Intel Xeon', '8192', '500', '2024-01-02', 'None', NULL, 'None', 4000.00, 2, 25000.00, 29000.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 30000.00),
+(253, 'Workstation', NULL, 'SGH444Q3D1', 'Z230', 'Intel Xeon', '8192', '500', '2024-01-02', 'None', NULL, 'None', 4000.00, 2, 25000.00, 29000.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 30000.00),
+(254, 'Workstation', NULL, 'CZC3122G24', 'Z620 3Gb graphics', 'Intel Xeon', '8192', '500', '2024-01-02', 'None', NULL, 'None', 4480.00, 2, 28000.00, 32480.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 30000.00),
+(255, 'Workstation', NULL, 'SGH217QR5Y', 'Z620 3Gb graphics', 'Intel Xeon', '8192', '500', '2024-01-02', 'None', NULL, 'None', 4480.00, 2, 28000.00, 32480.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 30000.00),
+(256, 'Workstation', NULL, 'CZC3381KY1', 'Z620 3Gb graphics', 'Intel Xeon', '8192', '500', '2024-01-02', 'None', NULL, 'None', 4480.00, 2, 28000.00, 32480.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 30000.00),
+(257, 'Workstation', NULL, 'CZC334090P', 'Z620 3Gb graphics', 'Intel Xeon', '8192', '500', '2024-01-02', 'None', NULL, 'None', 4480.00, 2, 28000.00, 32480.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 30000.00),
+(258, 'Mini-Tower', NULL, 'INA603X508', '280 G-1', 'Intel Pentium', '4096', '500', '2024-01-02', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 7500.00),
+(259, 'Workstation', NULL, '7CE451P0M0', 'Proliant ML10', 'Intel Xeon', '4096', '1024', '2024-01-02', 'None', NULL, 'None', 2400.00, 2, 15000.00, 17400.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 2500.00),
+(260, 'Workstation', NULL, '7CE451P0KP', 'Proliant ML10', 'Intel Xeon', '4096', '1024', '2024-01-02', 'None', NULL, 'None', 2400.00, 2, 15000.00, 17400.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 2500.00),
+(261, 'Workstation', NULL, '7CE451P0LN', 'Proliant ML10', 'Intel Xeon', '4096', '1024', '2024-01-02', 'None', NULL, 'None', 2400.00, 2, 15000.00, 17400.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 2500.00),
+(262, 'Workstation', NULL, '7H3W8X1', 'T3600 E5-1620', 'Intel Xeon', '16384', '1024', '2024-01-02', 'None', NULL, 'None', 2400.00, 2, 15000.00, 17400.00, 'Admin', 'None', 'Dell', '', 'None', '', 'None', NULL, 25000.00),
+(263, 'Workstation', NULL, '1JP11AV', 'Z4 512GB graphics', 'Intel Xeon', '16384', '500', '2024-01-02', 'None', NULL, 'None', 12800.00, 2, 80000.00, 92800.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 85000.00),
+(264, 'Workstation', NULL, '4CE8374P5Y', 'Z4 2GB graphics', 'Intel Xeon', '16384', '500', '2024-01-02', 'None', NULL, 'None', 12800.00, 2, 80000.00, 92800.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 85000.00),
+(265, 'Workstation', NULL, '2UA72225J3', 'Z640 4GB graphics', 'Intel Xeon', '3072', '2000', '2024-01-02', 'None', NULL, 'None', 12800.00, 2, 80000.00, 92800.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 85000.00),
+(266, 'Workstation', NULL, '2UA7242GBJ', 'Z640 4GB graphics', 'Intel Xeon', '3072', '2000', '2024-01-02', 'None', NULL, 'None', 12800.00, 2, 80000.00, 92800.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 85000.00),
+(267, 'Workstation', NULL, '2UA7111GYR', 'Z640 4GB graphics', 'Intel Xeon', '3072', '2000', '2024-01-02', 'None', NULL, 'None', 12800.00, 2, 80000.00, 92800.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 85000.00),
+(268, 'Workstation', NULL, '2UA7242GBD', 'Z640 4GB graphics', 'Intel Xeon', '3072', '2000', '2024-01-02', 'None', NULL, 'None', 12800.00, 2, 80000.00, 92800.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 85000.00),
+(269, 'Workstation', NULL, '2UA7242GBM', 'Z640 4GB graphics', 'Intel Xeon', '3072', '2000', '2024-01-02', 'None', NULL, 'None', 12800.00, 2, 80000.00, 92800.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 85000.00),
+(270, 'Workstation', NULL, 'SGH232PYST', 'Z800 2GB graphics', 'Intel Xeon', '16384', '2000', '2024-01-02', 'None', NULL, 'None', 9600.00, 2, 60000.00, 69600.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 65000.00),
+(271, 'Workstation', NULL, 'SGH225Q6PX', 'Z800 2GB graphics', 'Intel Xeon', '16384', '2000', '2024-01-02', 'None', NULL, 'None', 9600.00, 2, 60000.00, 69600.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 65000.00),
+(272, 'Workstation', NULL, 'SGH146PSCN', 'Z800 2GB graphics', 'Intel Xeon', '16384', '2000', '2024-01-02', 'None', NULL, 'None', 9600.00, 2, 60000.00, 69600.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 65000.00),
+(273, 'Workstation', NULL, 'SGH225PX9Z', 'Z800 2GB graphics', 'Intel Xeon', '16384', '2000', '2024-01-02', 'None', NULL, 'None', 9600.00, 2, 60000.00, 69600.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 65000.00),
+(274, 'Workstation', NULL, 'SGH225Q657', 'Z800 2GB graphics', 'Intel Xeon', '16384', '2000', '2024-01-02', 'None', NULL, 'None', 9600.00, 2, 60000.00, 69600.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 65000.00),
+(275, 'Workstation', NULL, 'SGH348TZBR', 'Z420 2GB graphics', 'Intel Xeon', '16384', '2000', '2024-01-02', 'None', NULL, 'None', 3680.00, 2, 23000.00, 26680.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 25000.00),
+(276, 'Workstation', NULL, 'SGH406SDS2', 'Z420 ', 'Intel Xeon', '8192', '500', '2024-01-02', 'None', NULL, 'None', 6080.00, 2, 38000.00, 44080.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 40000.00),
+(277, 'Workstation', NULL, '2UA8341V4G', 'Z240 2GB graphics', 'Intel Xeon', '8192', '1000', '2024-01-02', 'None', NULL, 'None', 2880.00, 2, 18000.00, 20880.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 25000.00),
+(278, 'Workstation', NULL, 'SGH638RMS4', 'Z240 2GB graphics', 'Intel Xeon', '8192', '1000', '2024-01-02', 'None', NULL, 'None', 2880.00, 2, 18000.00, 20880.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 25000.00),
+(279, 'Elite Desk', NULL, 'CZC81285WY', '705 G3', 'AMD A12', '8192', '500', '2024-01-02', 'None', NULL, 'None', 928.00, 2, 5800.00, 6728.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 7500.00),
+(280, 'Elite Desk', NULL, '4CE9090CYW', '705 G3', 'AMD A12', '8192', '500', '2024-01-02', 'None', NULL, 'None', 928.00, 2, 5800.00, 6728.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 7500.00),
+(281, 'Elite Desk', NULL, 'CZC8047VBV', '705 G3', 'AMD A12', '8192', '500', '2024-01-02', 'None', NULL, 'None', 928.00, 2, 5800.00, 6728.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 7500.00),
+(282, 'Elite Desk', NULL, 'CZC8119J9Q', '705 G3', 'AMD A12', '8192', '500', '2024-01-02', 'None', NULL, 'None', 928.00, 2, 5800.00, 6728.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 7500.00),
+(283, 'Elite Desk', NULL, 'CZC74679CP', '705 G3', 'AMD A12', '8192', '500', '2024-01-02', 'None', NULL, 'None', 928.00, 2, 5800.00, 6728.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 7500.00),
+(284, 'Elite Desk', NULL, 'CZC82276YH', '705 G3', 'AMD A12', '8192', '500', '2024-01-02', 'None', NULL, 'None', 928.00, 2, 5800.00, 6728.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 7500.00),
+(285, 'Elite Desk', NULL, 'CZC8147MNG', '705 G3', 'AMD A12', '8192', '500', '2024-01-02', 'None', NULL, 'None', 928.00, 2, 5800.00, 6728.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 7500.00),
+(286, 'Elite Desk', NULL, '4CE9090D07', '705 G3', 'AMD A12', '8192', '500', '2024-01-02', 'None', NULL, 'None', 928.00, 2, 5800.00, 6728.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 7500.00),
+(287, 'Elite Desk', NULL, 'CZC81582CN', '705 G3', 'AMD A12', '8192', '500', '2024-01-02', 'None', NULL, 'None', 928.00, 2, 5800.00, 6728.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 7500.00),
+(288, 'Elite Desk', NULL, '4CE91417DL', '705 G3', 'AMD A12', '8192', '500', '2024-01-02', 'None', NULL, 'None', 928.00, 2, 5800.00, 6728.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 7500.00),
+(289, 'Elite Desk', NULL, '4CE91417DS', '705 G3', 'AMD A12', '8192', '500', '2024-01-02', 'None', NULL, 'None', 928.00, 2, 5800.00, 6728.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 7500.00),
+(290, 'Elite Desk', NULL, 'CZC81285W8', '705 G3', 'AMD A12', '8192', '500', '2024-01-02', 'None', NULL, 'None', 928.00, 2, 5800.00, 6728.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 7500.00),
+(291, 'Elite Desk', NULL, 'CZC8119J7X', '705 G3', 'AMD A12', '8192', '500', '2024-01-02', 'None', NULL, 'None', 928.00, 2, 5800.00, 6728.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 7500.00),
+(292, 'Elite Desk', NULL, '4CE91417FD', '705 G3', 'AMD A12', '8192', '500', '2024-01-02', 'None', NULL, 'None', 928.00, 2, 5800.00, 6728.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 7500.00),
+(293, 'Elite Desk', NULL, '4CE90929BN', '705 G3', 'AMD A12', '8192', '500', '2024-01-02', 'None', NULL, 'None', 928.00, 2, 5800.00, 6728.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 7500.00),
+(294, 'Elite Desk', NULL, 'AUD60106Y3', '800 G2', 'Intel Core i5', '8192', '500', '2024-01-02', 'None', NULL, 'None', 1280.00, 2, 8000.00, 9280.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 85000.00),
+(295, 'Elite Desk', NULL, 'CZC71581KL', '800 G2', 'Intel Pentium', '8192', '500', '2024-01-02', 'None', NULL, 'None', 1760.00, 2, 11000.00, 12760.00, 'Admin', 'None', 'hp', '6th Gen', 'None', '', 'None', NULL, 12000.00),
+(296, 'Elite Desk', NULL, 'CZC6117PTJ', '800 G2', 'Intel Core i3', '8192', '500', '2024-01-02', 'None', NULL, 'None', 2560.00, 2, 16000.00, 18560.00, 'Admin', 'None', 'hp', '6th Gen', 'None', '', 'None', NULL, 18000.00),
+(297, 'Elite Desk', NULL, 'CZC6117PTN', '800 G2', 'Intel Core i3', '8192', '500', '2024-01-02', 'None', NULL, 'None', 2560.00, 2, 16000.00, 18560.00, 'Admin', 'None', 'hp', '6th Gen', 'None', '', 'None', NULL, 18000.00),
+(298, 'Elite Desk', NULL, 'CZC6117PTL', '800 G2', 'Intel Core i3', '8192', '500', '2024-01-02', 'None', NULL, 'None', 2560.00, 2, 16000.00, 18560.00, 'Admin', 'None', 'hp', '6th Gen', 'None', '', 'None', NULL, 18000.00),
+(299, 'Tower', NULL, 'CZC34724GQ', 'Prodesk 600 G1', 'Intel Core i5', '8192', '500', '2024-01-02', 'None', NULL, 'None', 1600.00, 2, 10000.00, 11600.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 12000.00),
+(300, 'Tower', NULL, 'MXL45020KP', 'Prodesk 600 G1', 'Intel Core i5', '8192', '500', '2024-01-02', 'None', NULL, 'None', 1600.00, 2, 10000.00, 11600.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 12000.00),
+(301, 'Mini-Tower', NULL, '22RLZ72', 'VOSTRO 3902 Intel', 'Intel Core i7', '8192', '500', '2024-01-02', 'None', NULL, 'None', 2560.00, 2, 16000.00, 18560.00, 'Admin', 'None', 'Dell', '', 'None', '', 'None', NULL, 20000.00),
+(302, 'Workstation', NULL, '11DG0M2', 'Precision T-3620 512MB graphics', 'Intel Pentium', '16384', '500', '2024-01-02', 'None', NULL, 'None', 4000.00, 2, 25000.00, 29000.00, 'Admin', 'None', 'Dell', '', 'None', '', 'None', NULL, 30000.00),
+(303, 'Workstation', NULL, 'GC2JQK2', 'Precision T-3620 512MB graphics', 'Intel Pentium', '16384', '500', '2024-01-02', 'None', NULL, 'None', 4000.00, 2, 25000.00, 29000.00, 'Admin', 'None', 'Dell', '', 'None', '', 'None', NULL, 30000.00),
+(304, 'Workstation', NULL, 'BPJ7HQ2', 'Precision T-3620 512MB graphics', 'Intel Pentium', '16384', '500', '2024-01-02', 'None', NULL, 'None', 4000.00, 2, 25000.00, 29000.00, 'Admin', 'None', 'Dell', '', 'None', '', 'None', NULL, 30000.00),
+(305, 'Workstation', NULL, 'BPQ4HQ2', 'Precision T-3620 512MB graphics', 'Intel Pentium', '16384', '500', '2024-01-02', 'None', NULL, 'None', 4000.00, 2, 25000.00, 29000.00, 'Admin', 'None', 'Dell', '', 'None', '', 'None', NULL, 30000.00),
+(306, 'Workstation', NULL, 'GBWGQK2', 'Precision T-3620 512MB graphics', 'Intel Pentium', '16384', '500', '2024-01-02', 'None', NULL, 'None', 4000.00, 2, 25000.00, 29000.00, 'Admin', 'None', 'Dell', '', 'None', '', 'None', NULL, 30000.00),
+(307, 'Workstation', NULL, '4Z2Q9N2', 'Precision T-3620 512MB graphics', 'Intel Pentium', '16384', '500', '2024-01-02', 'None', NULL, 'None', 4000.00, 2, 25000.00, 29000.00, 'Admin', 'None', 'Dell', '', 'None', '', 'None', NULL, 30000.00),
+(308, 'Workstation', NULL, 'C1CMD5J', 'Precision T-3620 512MB graphics', 'Intel Pentium', '16384', '500', '2024-01-02', 'None', NULL, 'None', 4000.00, 2, 25000.00, 29000.00, 'Admin', 'None', 'Dell', '', 'None', '', 'None', NULL, 30000.00),
+(309, 'Workstation', NULL, '7X4KMR2', 'Precision T-3620 512MB graphics', 'Intel Pentium', '16384', '500', '2024-01-02', 'None', NULL, 'None', 4000.00, 2, 25000.00, 29000.00, 'Admin', 'None', 'Dell', '', 'None', '', 'None', NULL, 30000.00),
+(310, 'Workstation', NULL, '2HN7DS2', 'Precision T-3620 512MB graphics', 'Intel Pentium', '16384', '500', '2024-01-02', 'None', NULL, 'None', 4000.00, 2, 25000.00, 29000.00, 'Admin', 'None', 'Dell', '', 'None', '', 'None', NULL, 30000.00),
+(311, 'Workstation', NULL, 'BPW2HQ2', 'Precision T-3620 512MB graphics', 'Intel Pentium', '16384', '500', '2024-01-02', 'None', NULL, 'None', 4000.00, 2, 25000.00, 29000.00, 'Admin', 'None', 'Dell', '', 'None', '', 'None', NULL, 30000.00),
+(312, 'Tower', NULL, 'JNHB2', 'Optiplex 3050', 'Intel Core i5', '8192', '500', '2024-01-02', 'None', NULL, 'None', 1600.00, 2, 10000.00, 11600.00, 'Admin', 'None', 'Dell', '6th Gen', 'None', '', 'None', NULL, 13000.00),
+(313, 'Tower', NULL, '3PQ8HK2', 'Optiplex 3050', 'Intel Core i5', '8192', '500', '2024-01-02', 'None', NULL, 'None', 1600.00, 2, 10000.00, 11600.00, 'Admin', 'None', 'Dell', '6th Gen', 'None', '', 'None', NULL, 13000.00),
+(314, 'Tower', NULL, '3MCH2K2', 'Precision 3420', 'Intel Core i7', '8192', '500', '2024-01-02', 'None', NULL, 'None', 2560.00, 2, 16000.00, 18560.00, 'Admin', 'None', 'Dell', '6th Gen', 'None', '', 'None', NULL, 18000.00),
+(315, 'Elite Desk', NULL, 'G754QM2', 'Optiplex 5040', 'Intel Core i5', '8192', '500', '2024-01-02', 'None', NULL, 'None', 1872.00, 2, 11700.00, 13572.00, 'Admin', 'None', 'Dell', '7th Gen', 'None', '', 'None', NULL, 12500.00),
+(316, 'Elite Desk', NULL, 'CJTC9V2', 'Optiplex 3060', 'Intel Core i3', '8192', '500', '2024-01-02', 'None', NULL, 'None', 1600.00, 2, 10000.00, 11600.00, 'Admin', 'None', 'Dell', '8th Gen', 'None', '', 'None', NULL, 15000.00),
+(317, 'Elite Desk', NULL, '4CE9090D0V', '705 G3', 'AMD A12', '8192', '500', '2024-01-02', 'None', NULL, 'None', 928.00, 2, 5800.00, 6728.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 7500.00),
+(318, 'Elite Desk', NULL, '4CE9090CYT', '705 G3', 'AMD A12', '8192', '500', '2024-01-02', 'None', NULL, 'None', 928.00, 2, 5800.00, 6728.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 7500.00),
+(319, 'Elite Desk', NULL, 'CZC8147LPQ', '705 G3', 'AMD A12', '8192', '500', '2024-01-02', 'None', NULL, 'None', 928.00, 2, 5800.00, 6728.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 7500.00),
+(320, 'Elite Desk', NULL, 'CZC7467CY8', '705 G3', 'AMD A12', '8192', '500', '2024-01-02', 'None', NULL, 'None', 928.00, 2, 5800.00, 6728.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 7500.00),
+(321, 'Elite Desk', NULL, 'CZC81582F2', '705 G3', 'AMD A12', '8192', '500', '2024-01-02', 'None', NULL, 'None', 928.00, 2, 5800.00, 6728.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 7500.00),
+(322, 'Elite Desk', NULL, 'CZC81285T7', '705 G3', 'AMD A12', '8192', '500', '2024-01-02', 'None', NULL, 'None', 928.00, 2, 5800.00, 6728.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 7500.00),
+(323, 'Elite Desk', NULL, '4CE91417DN', '705 G3', 'AMD A12', '8192', '500', '2024-01-02', 'None', NULL, 'None', 928.00, 2, 5800.00, 6728.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 7500.00),
+(324, 'Elite Desk', NULL, '4CE9090D0R', '705 G3', 'AMD A12', '8192', '500', '2024-01-02', 'None', NULL, 'None', 928.00, 2, 5800.00, 6728.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 7500.00),
+(325, 'Elite Desk', NULL, 'CZC81285SZ', '705 G3', 'AMD A12', '8192', '500', '2024-01-02', 'None', NULL, 'None', 928.00, 2, 5800.00, 6728.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 7500.00),
+(326, 'Elite Desk', NULL, 'CZC8047TNL', '705 G3', 'AMD A12', '8192', '500', '2024-01-02', 'None', NULL, 'None', 928.00, 2, 5800.00, 6728.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 7500.00),
+(327, 'Elite Desk', NULL, '4CE9090CYK', '705 G3', 'AMD A12', '8192', '500', '2024-01-02', 'None', NULL, 'None', 928.00, 2, 5800.00, 6728.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 7500.00),
+(328, 'Elite Desk', NULL, '4CE9090D0P', '705 G3', 'AMD A12', '8192', '500', '2024-01-02', 'None', NULL, 'None', 928.00, 2, 5800.00, 6728.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 7500.00),
+(329, 'Elite Desk', NULL, 'CZC8119J8K', '705 G3', 'AMD A12', '8192', '500', '2024-01-02', 'None', NULL, 'None', 928.00, 2, 5800.00, 6728.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 7500.00),
+(330, 'Workstation', NULL, '2UA611191F', 'Z240', 'Intel Core i5', '4096', '500', '2024-01-02', 'None', NULL, 'None', 1600.00, 2, 10000.00, 11600.00, 'Admin', 'None', 'hp', '6th Gen', 'None', '', 'None', NULL, 12000.00),
+(331, 'Workstation', NULL, 'SGH717SH1K', 'Z240', 'Intel Core i5', '4096', '500', '2024-01-02', 'None', NULL, 'None', 1600.00, 2, 10000.00, 11600.00, 'Admin', 'None', 'hp', '6th Gen', 'None', '', 'None', NULL, 12000.00),
+(332, 'Workstation', NULL, '2UA611190Y', 'Z240', 'Intel Core i5', '4096', '500', '2024-01-02', 'None', NULL, 'None', 1600.00, 2, 10000.00, 11600.00, 'Admin', 'None', 'hp', '6th Gen', 'None', '', 'None', NULL, 12000.00),
+(333, 'Desktop', NULL, '2V52F2S', 'Optiplex 990', 'Intel Core i5', '4096', '250', '2024-01-02', 'None', NULL, 'None', 1600.00, 2, 10000.00, 11600.00, 'Admin', 'None', 'Dell', '2nd Gen', 'None', '', 'None', NULL, 12000.00),
+(334, 'Desktop', NULL, 'JRJQBY1', 'Optiplex 9010', 'Intel Core i7', '4096', '500', '2024-01-02', 'None', NULL, 'None', 1600.00, 2, 10000.00, 11600.00, 'Admin', 'None', 'Dell', '3rd Gen', 'None', '', 'None', NULL, 12000.00),
+(335, 'Tower', NULL, 'FBQ7P52', 'Optiplex 3020', 'Intel Core i5', '4096', '500', '2024-01-02', 'None', NULL, 'None', 1200.00, 2, 7500.00, 8700.00, 'Admin', 'None', 'hp', '4th Gen', 'None', '', 'None', NULL, 8000.00),
+(336, 'Tower', NULL, 'JPA32912YB', 'Compaq', 'Intel Core i3', '4096', '500', '2024-01-02', 'None', NULL, 'None', 0.00, 2, 0.00, 0.00, 'Admin', 'None', 'hp', '3rd Gen', 'None', '', 'None', NULL, 0.00),
+(337, 'Tower', NULL, '7JPPGM2', 'VOSTRO 3267', 'Intel Core i3', '8192', '500', '2024-01-02', 'None', NULL, 'None', 4000.00, 2, 25000.00, 29000.00, 'Admin', 'None', 'Dell', '6th Gen', 'None', '', 'None', NULL, 26000.00),
+(338, 'Tower', NULL, '7D8VGM2', 'VOSTRO 3267', 'Intel Core i3', '8192', '500', '2024-01-02', 'None', NULL, 'None', 4000.00, 2, 25000.00, 29000.00, 'Admin', 'None', 'Dell', '6th Gen', 'None', '', 'None', NULL, 26000.00),
+(339, 'Tower', NULL, '7RVLGM2', 'VOSTRO 3267', 'Intel Core i3', '8192', '500', '2024-01-02', 'None', NULL, 'None', 4000.00, 2, 25000.00, 29000.00, 'Admin', 'None', 'Dell', '6th Gen', 'None', '', 'None', NULL, 26000.00),
+(340, 'Tower', NULL, 'DLSJCD2', 'VOSTRO D14s ', 'Intel Pentium', '4096', '500', '2024-01-02', 'None', NULL, 'None', 4000.00, 2, 25000.00, 29000.00, 'Admin', 'None', 'Dell', '8th Gen', 'None', '', 'None', NULL, 26000.00),
+(341, 'Tower', NULL, 'DFD80T2', 'Optiplex 7060', 'Intel Core i5', '8192', '500', '2024-01-02', 'None', NULL, 'None', 4000.00, 2, 25000.00, 29000.00, 'Admin', 'None', 'Dell', '8th Gen', 'None', '', 'None', NULL, 26000.00),
+(342, 'Tower', NULL, 'JPH701PCS7', 'Prodesk 400 G3 SFF', 'Intel Core i3', '8192', '500', '2024-01-02', 'None', NULL, 'None', 4000.00, 2, 25000.00, 29000.00, 'Admin', 'None', 'hp', '6th Gen', 'None', '', 'None', NULL, 26000.00),
+(343, 'Tower', NULL, 'JPH711YXLR', 'Prodesk 400 G3 SFF', 'Intel Core i3', '8192', '500', '2024-01-02', 'None', NULL, 'None', 4000.00, 2, 25000.00, 29000.00, 'Admin', 'None', 'hp', '6th Gen', 'None', '', 'None', NULL, 26000.00),
+(344, 'Tower', NULL, '1CZ82800MT', 'Prodesk 600 G4 SFF', 'Intel Core i5', '8192', '500', '2024-01-02', 'None', NULL, 'None', 4000.00, 2, 25000.00, 29000.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 26000.00),
+(345, 'Tower', NULL, 'JPH9238YFL', 'Prodesk 600 G4 SFF', 'Intel Core i5', '8192', '500', '2024-01-02', 'None', NULL, 'None', 4000.00, 2, 25000.00, 29000.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 26000.00),
+(346, 'Tower', NULL, 'JPH828M159', 'Prodesk 600G3 SFF', 'Intel Core i7', '8192', '500', '2024-01-02', 'None', NULL, 'None', 3200.00, 2, 20000.00, 23200.00, 'Admin', 'None', 'hp', '6th Gen', 'None', '', 'None', NULL, 22000.00),
+(347, 'Tower', NULL, 'MXL74410X4', 'Prodesk 600G3 SFF', 'Intel Core i7', '8192', '500', '2024-01-02', 'None', NULL, 'None', 3200.00, 2, 20000.00, 23200.00, 'Admin', 'None', 'hp', '6th Gen', 'None', '', 'None', NULL, 22000.00),
+(348, 'Tower', NULL, 'JPH92044CT', 'Prodesk 400G5 SFF', 'Intel Core i5', '8192', '500', '2024-01-02', 'None', NULL, 'None', 5280.00, 2, 33000.00, 38280.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 34000.00),
+(349, 'Desktop', NULL, '2UA4360FK4', 'Z230', 'Intel Core i5', '8192', '500', '2024-01-02', 'None', NULL, 'None', 1360.00, 2, 8500.00, 9860.00, 'Admin', 'None', 'hp', '4th Gen', 'None', '', 'None', NULL, 9000.00),
+(350, 'Desktop', NULL, '2UA5291RQF', 'Z230', 'Intel Xeon', '8192', '500', '2024-01-02', 'None', NULL, 'None', 1360.00, 2, 8500.00, 9860.00, 'Admin', 'None', 'hp', '4th Gen', 'None', '', 'None', NULL, 9000.00),
+(351, 'Desktop', NULL, '2UA611178N', 'Z240', 'Intel Xeon', '8192', '1000', '2024-01-02', 'None', NULL, 'None', 2880.00, 2, 18000.00, 20880.00, 'Admin', 'None', 'hp', '6th Gen', 'None', '', 'None', NULL, 20000.00),
+(352, 'Desktop', NULL, 'SGH743QBLK', 'Z240', 'Intel Xeon', '8192', '1000', '2024-01-02', 'None', NULL, 'None', 2880.00, 2, 18000.00, 20880.00, 'Admin', 'None', 'hp', '6th Gen', 'None', '', 'None', NULL, 20000.00),
+(353, 'Elite Desk', NULL, 'JPA146LWC0', 'Z210', 'Intel Xeon', '4096', '1024', '2024-01-02', 'None', NULL, 'None', 1200.00, 2, 7500.00, 8700.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 8000.00),
+(354, 'Core 2 Duo', NULL, '00186159905227', '5700', 'Intel Core i3', '2048', '250', '2024-01-02', 'None', NULL, 'None', 560.00, 2, 3500.00, 4060.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 4000.00),
+(355, 'Core 2 Duo', NULL, 'CAC02202RH', '8000', '', '2048', '250', '2024-01-02', 'None', NULL, 'None', 560.00, 2, 3500.00, 4060.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 4000.00),
+(356, 'Core 2 Duo', NULL, '2UA10317G7', '6000', '', '2048', '250', '2024-01-02', 'None', NULL, 'None', 560.00, 2, 3500.00, 4060.00, 'Admin', 'None', 'hp', '6th Gen', 'None', '', 'None', NULL, 4000.00),
+(357, 'Desktop', NULL, 'AUD6270CW7', '800 G2', 'Intel Core i5', '8192', '500', '2024-01-02', 'None', NULL, 'None', 1440.00, 2, 9000.00, 10440.00, 'Admin', 'None', 'hp', '6th Gen', 'None', '', 'None', NULL, 9500.00),
+(358, 'Desktop', NULL, 'JPA514GGY8', '600 G1', 'Intel Core i5', '8192', '500', '2024-01-02', 'None', NULL, 'None', 1600.00, 2, 10000.00, 11600.00, 'Admin', 'None', 'hp', '4th Gen', 'None', '', 'None', NULL, 11000.00),
+(359, 'Desktop', NULL, '3661GK2', 'Optiplex 3040', 'Intel Pentium', '8192', '500', '2024-01-02', 'None', NULL, 'None', 800.00, 2, 5000.00, 5800.00, 'Admin', 'None', 'hp', '4th Gen', 'None', '', 'None', NULL, 6000.00),
+(360, 'Desktop', NULL, 'F8FP9R2', 'Optiplex 3050', 'Intel Pentium', '8192', '500', '2024-01-02', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'hp', '4th Gen', 'None', '', 'None', NULL, 7500.00),
+(361, 'Desktop', NULL, 'HDFP9R2', 'Optiplex 3050', 'Intel Pentium', '8192', '500', '2024-01-02', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'hp', '4th Gen', 'None', '', 'None', NULL, 7500.00),
+(362, 'Workstation', NULL, 'HGDPJ02', 'Optiplex 7010', 'Intel Core i3', '4096', '500', '2024-01-02', 'None', NULL, 'None', 1280.00, 2, 8000.00, 9280.00, 'Admin', 'None', 'hp', '3rd Gen', 'None', '', 'None', NULL, 8500.00),
+(363, 'Workstation', NULL, '2UA1111GBJ', 'Z200 768mb Graphics', '', '8192', '500', '2024-01-02', 'None', NULL, 'None', 1280.00, 2, 8000.00, 9280.00, 'Admin', 'None', 'hp', '6th Gen', 'None', '', 'None', NULL, 8500.00),
+(364, 'Desktop', NULL, '582QQN1', 'Optiplex 780', '', '4096', '500', '2024-01-02', 'None', NULL, 'None', 1440.00, 2, 9000.00, 10440.00, 'Admin', 'None', 'Dell', '6th Gen', 'None', '', 'None', NULL, 9500.00),
+(365, 'Desktop', NULL, 'CZC60784NY', 'ProDesk 600 G2', 'Intel Pentium', '8192', '500', '2024-01-02', 'None', NULL, 'None', 1440.00, 2, 9000.00, 10440.00, 'Admin', 'None', 'hp', '6th Gen', 'None', '', 'None', NULL, 9500.00),
+(366, 'Desktop', NULL, '2UA6501TQ3', '800 G2', 'Intel Core i5', '8192', '500', '2024-01-02', 'None', NULL, 'None', 1440.00, 2, 9000.00, 10440.00, 'Admin', 'None', 'hp', '6th Gen', 'None', '', 'None', NULL, 9500.00),
+(367, 'Desktop', NULL, 'MXL7151BKD', 'ProDesk 600 G2', 'Intel Core i5', '8192', '500', '2024-01-02', 'None', NULL, 'None', 1600.00, 2, 10000.00, 11600.00, 'Admin', 'None', 'hp', '6th Gen', 'None', '', 'None', NULL, 10500.00),
+(368, 'Tower', NULL, 'PC0EHAU2', 'ThinkCenter M800', 'Intel Celeron', '4096', '500', '2024-01-02', 'None', NULL, 'None', 1600.00, 2, 10000.00, 11600.00, 'Admin', 'None', 'Lenovo', '', 'None', '', 'None', NULL, 10500.00),
+(369, 'Tower', NULL, '1S10FXA02KAUPC0EHAQV', 'ThinkCenter M800', 'Intel Celeron', '4096', '500', '2024-01-02', 'None', NULL, 'None', 1600.00, 2, 10000.00, 11600.00, 'Admin', 'None', 'Lenovo', '', 'None', '', 'None', NULL, 10500.00),
+(370, 'Tower', NULL, '1S2742CQ9PB01GBF', 'ThinkCenter M8', 'Intel Pentium', '4096', '500', '2024-01-02', 'None', NULL, 'None', 1440.00, 2, 9000.00, 10440.00, 'Admin', 'None', 'Lenovo', '', 'None', '', 'None', NULL, 10000.00),
+(371, 'Tower', NULL, '1S2742CQ9PBV9VHE', 'ThinkCenter M8', 'Intel Pentium', '4096', '500', '2024-01-02', 'None', NULL, 'None', 1440.00, 2, 9000.00, 10440.00, 'Admin', 'None', 'Lenovo', '', 'None', '', 'None', NULL, 10000.00),
+(372, 'Tower', NULL, '1S2742CQ9PBV9VKF', 'ThinkCenter M8', 'Intel Pentium', '4096', '500', '2024-01-02', 'None', NULL, 'None', 1440.00, 2, 9000.00, 10440.00, 'Admin', 'None', 'Lenovo', '', 'None', '', 'None', NULL, 10000.00),
+(373, 'Elite Desk', NULL, 'QV996AV', '800 G2', 'Intel Core i5', '8192', '500', '2024-01-02', 'None', NULL, 'None', 1440.00, 2, 9000.00, 10440.00, 'Admin', 'None', 'hp', '6th Gen', 'None', '', 'None', NULL, 9500.00),
+(374, 'Elite Desk', NULL, '2UA12708FG', '800 G2', 'Intel Core i5', '8192', '500', '2024-01-02', 'None', NULL, 'None', 1440.00, 2, 9000.00, 10440.00, 'Admin', 'None', 'hp', '6th Gen', 'None', '', 'None', NULL, 9500.00),
+(375, 'Elite Desk', NULL, 'CZC22138GS', '800 G2', 'Intel Core i5', '8192', '500', '2024-01-02', 'None', NULL, 'None', 1440.00, 2, 9000.00, 10440.00, 'Admin', 'None', 'hp', '6th Gen', 'None', '', 'None', NULL, 9500.00),
+(376, 'Elite Desk', NULL, '2UA64625Z4', '800 G2', 'Intel Core i5', '8192', '500', '2024-01-02', 'None', NULL, 'None', 1440.00, 2, 9000.00, 10440.00, 'Admin', 'None', 'hp', '6th Gen', 'None', '', 'None', NULL, 9500.00),
+(377, 'Desktop', NULL, '1S10FCS02002MJ03Y3C2', 'ThinkCenter M900', 'Intel Core i5', '8192', '500', '2024-01-02', 'None', NULL, 'None', 1280.00, 2, 8000.00, 9280.00, 'Admin', 'None', 'Lenovo', '6th Gen', 'None', '', 'None', NULL, 8500.00),
+(378, 'Workstation', NULL, 'DXL8SCY', 'Optiplex 745', 'Core 2 Duo', '2048', '250', '2024-01-02', 'None', NULL, 'None', 1280.00, 2, 8000.00, 9280.00, 'Admin', 'None', 'Dell', '', 'None', '', 'None', NULL, 8500.00),
+(379, 'Workstation', NULL, '8SYP65J', 'Optiplex 780', 'Core 2 Duo', '2048', '250', '2024-01-02', 'None', NULL, 'None', 1280.00, 2, 8000.00, 9280.00, 'Admin', 'None', 'Dell', '', 'None', '', 'None', NULL, 8500.00),
+(380, 'Thermal Receipt Printer', NULL, 'XPQ80A-BU2311210416', 'Xprinter', '', '', '', '2024-01-02', 'None', NULL, 'None', 880.00, 2, 5500.00, 6380.00, 'Admin', 'None', 'Xprinter', '', 'None', '', 'None', NULL, 6500.00),
+(381, 'Thermal Receipt Printer', NULL, 'XPQ80A-BU2311210418', 'Xprinter', '', '', '', '2024-01-02', 'None', NULL, 'None', 880.00, 2, 5500.00, 6380.00, 'Admin', 'None', 'Xprinter', '', 'None', '', 'None', NULL, 6500.00),
+(382, 'Thermal Receipt Printer', NULL, 'XPQ80A-BU2311210417', 'Xprinter', '', '', '', '2024-01-02', 'None', NULL, 'None', 880.00, 2, 5500.00, 6380.00, 'Admin', 'None', 'Xprinter', '', 'None', '', 'None', NULL, 6500.00),
+(383, 'Thermal Receipt Printer', NULL, 'XPQ80A-BU2311210420', 'Xprinter', '', '', '', '2024-01-02', 'None', NULL, 'None', 880.00, 2, 5500.00, 6380.00, 'Admin', 'None', 'Xprinter', '', 'None', '', 'None', NULL, 6500.00),
+(384, 'Thermal Receipt Printer', NULL, 'XPQ80A-BU2311210410', 'Xprinter', '', '', '', '2024-01-02', 'None', NULL, 'None', 880.00, 2, 5500.00, 6380.00, 'Admin', 'None', 'Xprinter', '', 'None', '', 'None', NULL, 6500.00),
+(385, 'Thermal Receipt Printer', NULL, 'XPQ80A-BU2311210411', 'Xprinter', '', '', '', '2024-01-02', 'None', NULL, 'None', 880.00, 2, 5500.00, 6380.00, 'Admin', 'None', 'Xprinter', '', 'None', '', 'None', NULL, 6500.00),
+(386, 'Thermal Receipt Printer', NULL, 'XPQ80A-BU2311210412', 'Xprinter', '', '', '', '2024-01-02', 'None', NULL, 'None', 880.00, 2, 5500.00, 6380.00, 'Admin', 'None', 'Xprinter', '', 'None', '', 'None', NULL, 6500.00),
+(387, 'Thermal Receipt Printer', NULL, 'XPQ80A-BU2311210414', 'Xprinter', '', '', '', '2024-01-02', 'None', NULL, 'None', 880.00, 2, 5500.00, 6380.00, 'Admin', 'None', 'Xprinter', '', 'None', '', 'None', NULL, 6500.00),
+(388, 'Thermal Receipt Printer', NULL, 'XPQ80A-BU2311210231', 'Xprinter', '', '', '', '2024-01-02', 'None', NULL, 'None', 880.00, 2, 5500.00, 6380.00, 'Admin', 'None', 'Xprinter', '', 'None', '', 'None', NULL, 6500.00),
+(389, 'Thermal Receipt Printer', NULL, 'XPQ80A-BU2311210234', 'Xprinter', '', '', '', '2024-01-02', 'None', NULL, 'None', 880.00, 2, 5500.00, 6380.00, 'Admin', 'None', 'Xprinter', '', 'None', '', 'None', NULL, 6500.00),
+(390, 'Thermal Receipt Printer', NULL, 'XPQ80A-BU2311210232', 'Xprinter', '', '', '', '2024-01-02', 'None', NULL, 'None', 880.00, 2, 5500.00, 6380.00, 'Admin', 'None', 'Xprinter', '', 'None', '', 'None', NULL, 6500.00),
+(391, 'Thermal Receipt Printer', NULL, 'XPQ80A-BU2311210233', 'Xprinter', '', '', '', '2024-01-02', 'None', NULL, 'None', 880.00, 2, 5500.00, 6380.00, 'Admin', 'None', 'Xprinter', '', 'None', '', 'None', NULL, 6500.00),
+(392, 'Thermal Receipt Printer', NULL, 'XPQ80A-BU2311210239', 'Xprinter', '', '', '', '2024-01-02', 'None', NULL, 'None', 880.00, 2, 5500.00, 6380.00, 'Admin', 'None', 'Xprinter', '', 'None', '', 'None', NULL, 6500.00),
+(393, 'Thermal Receipt Printer', NULL, 'XPQ80A-BU2311210229', 'Xprinter', '', '', '', '2024-01-02', 'None', NULL, 'None', 880.00, 2, 5500.00, 6380.00, 'Admin', 'None', 'Xprinter', '', 'None', '', 'None', NULL, 6500.00),
+(394, 'Thermal Receipt Printer', NULL, 'XPQ80A-BU2311210236', 'Xprinter', '', '', '', '2024-01-02', 'None', NULL, 'None', 880.00, 2, 5500.00, 6380.00, 'Admin', 'None', 'Xprinter', '', 'None', '', 'None', NULL, 6500.00),
+(395, 'Thermal Receipt Printer', NULL, 'XPQ80A-BU2311210235', 'Xprinter', '', '', '', '2024-01-02', 'None', NULL, 'None', 880.00, 2, 5500.00, 6380.00, 'Admin', 'None', 'Xprinter', '', 'None', '', 'None', NULL, 6500.00),
+(396, 'Thermal Receipt Printer', NULL, 'XPQ80A-BU2311210237', 'Xprinter', '', '', '', '2024-01-02', 'None', NULL, 'None', 880.00, 2, 5500.00, 6380.00, 'Admin', 'None', 'Xprinter', '', 'None', '', 'None', NULL, 6500.00),
+(397, 'Thermal Receipt Printer', NULL, 'XPQ80A-BU2311210238', 'Xprinter', '', '', '', '2024-01-02', 'None', NULL, 'None', 880.00, 2, 5500.00, 6380.00, 'Admin', 'None', 'Xprinter', '', 'None', '', 'None', NULL, 6500.00),
+(398, 'Thermal Receipt Printer', NULL, 'XPQ80A-BU2311210240', 'Xprinter', '', '', '', '2024-01-02', 'None', NULL, 'None', 880.00, 2, 5500.00, 6380.00, 'Admin', 'None', 'Xprinter', '', 'None', '', 'None', NULL, 6500.00),
+(399, 'Thermal Receipt Printer', NULL, 'XPQ80A-BU2311210230', 'Xprinter', '', '', '', '2024-01-02', 'None', NULL, 'None', 880.00, 2, 5500.00, 6380.00, 'Admin', 'None', 'Xprinter', '', 'None', '', 'None', NULL, 6500.00),
+(400, 'Monitor', NULL, 'G062HYCF202515T', 'S19D300NY', '', '', '', '2024-01-02', 'None', NULL, 'None', 320.00, 2, 2000.00, 2320.00, 'Admin', 'None', 'Samsung', '', 'None', '19\"', 'None', NULL, 2500.00),
+(401, 'Allinone', NULL, '1S10B80007USMJ004MVE', 'thinkCenter E93Z', 'Intel Core i5', '16384', '500', '2024-01-02', 'None', NULL, 'None', 320.00, 2, 2000.00, 2320.00, 'Admin', 'None', 'Lenovo', '4th Gen', 'None', '24\"', 'None', NULL, 2500.00),
+(402, 'Monitor', NULL, '89200701CJ', 'RDT201WB', '', '', '', '2024-01-02', 'None', NULL, 'None', 320.00, 2, 2000.00, 2320.00, 'Admin', 'None', 'Mitsubishi', '', 'None', '19\"', 'None', NULL, 2500.00),
+(403, 'Monitor', NULL, 'CN0JT8907287277A5H1S', 'SE177FP', '', '', '', '2024-01-02', 'None', NULL, 'None', 320.00, 2, 2000.00, 2320.00, 'Admin', 'None', 'Dell', '', 'None', '17\"', 'None', NULL, 2500.00),
+(404, 'Monitor', NULL, 'CN0FC2377161869NCBZG', '1707FPT', '', '', '', '2024-01-02', 'None', NULL, 'None', 320.00, 2, 2000.00, 2320.00, 'Admin', 'None', 'Dell', '', 'None', '17\"', 'None', NULL, 2500.00),
+(405, '', NULL, 'CN0W49167161857PBA8Z', '1704FPT', '', '', '', '2024-01-02', 'None', NULL, 'None', 320.00, 2, 2000.00, 2320.00, 'Admin', 'None', 'Dell', '', 'None', '17\"', 'None', NULL, 2500.00),
+(406, 'Monitor', NULL, 'CN0K419D6418093N2E3L', 'S1709WC', '', '', '', '2024-01-02', 'None', NULL, 'None', 320.00, 2, 2000.00, 2320.00, 'Admin', 'None', 'Dell', '', 'None', '17\"', 'None', NULL, 2500.00),
+(407, 'Monitor', NULL, 'G3J600403467', 'AD201XW', '', '', '', '2024-01-02', 'None', NULL, 'None', 320.00, 2, 2000.00, 2320.00, 'Admin', 'None', 'Iodata', '', 'None', '19\"', 'None', NULL, 2500.00),
+(408, 'Monitor', NULL, 'CN0J672H641808AV7E3L', 'E1709WC', '', '', '', '2024-01-02', 'None', NULL, 'None', 320.00, 2, 2000.00, 2320.00, 'Admin', 'None', 'Dell', '', 'None', '17\"', 'None', NULL, 2500.00),
+(409, 'Monitor', NULL, '886541944009', 'V19SWL', '', '', '', '2024-01-02', 'None', NULL, 'None', 320.00, 2, 2000.00, 2320.00, 'Admin', 'None', 'Acer', '', 'None', '19\"', 'None', NULL, 2500.00),
+(410, 'Monitor', NULL, 'CN0FC2377161865BA779', '1707FPT', '', '', '', '2024-01-02', 'None', NULL, 'None', 400.00, 2, 2500.00, 2900.00, 'Admin', 'None', 'Dell', '', 'None', '17\"', 'None', NULL, 3000.00),
+(411, 'Monitor', NULL, 'U3S0003251H8', 'LCD-AD17$CW', '', '', '', '2024-01-02', 'None', NULL, 'None', 800.00, 2, 5000.00, 5800.00, 'Admin', 'None', 'Iodata', '', 'None', '17\"', 'None', NULL, 5500.00),
+(412, 'Monitor', NULL, 'CN0TH63846633681AFPU', 'E177FPB', '', '', '', '2024-01-02', 'None', NULL, 'None', 800.00, 2, 5000.00, 5800.00, 'Admin', 'None', 'Dell', '', 'None', '17\"', 'None', NULL, 5500.00),
+(413, 'Monitor', NULL, 'ET2804412SL0', 'GL2250', '', '', '', '2024-01-02', 'None', NULL, 'None', 800.00, 2, 5000.00, 5800.00, 'Admin', 'None', 'Benq', '', 'None', '22\"', 'None', NULL, 5500.00),
+(414, 'Monitor', NULL, 'CN0H855F6418084C4FUS', 'E178FPC', '', '', '', '2024-01-02', 'None', NULL, 'None', 400.00, 2, 2500.00, 2900.00, 'Admin', 'None', 'Dell', '', 'None', '17\"', 'None', NULL, 3000.00),
+(415, 'Monitor', NULL, 'CNK81613PM', 'L1910', '', '', '', '2024-01-02', 'None', NULL, 'None', 480.00, 2, 3000.00, 3480.00, 'Admin', 'None', 'hp', '', 'None', '19\"', 'None', NULL, 3500.00),
+(416, 'Monitor', NULL, 'SOT74344011126', 'LB19JW', '', '', '', '2024-01-02', 'None', NULL, 'None', 480.00, 2, 3000.00, 3480.00, 'Admin', 'None', 'Sotec', '', 'None', '19\"', 'None', NULL, 3500.00),
+(417, 'Monitor', NULL, 'CNK7040R11', 'L1706', '', '', '', '2024-01-02', 'None', NULL, 'None', 400.00, 2, 2500.00, 2900.00, 'Admin', 'None', 'hp', '', 'None', '17\"', 'None', NULL, 3000.00),
+(418, 'Monitor', NULL, 'CN0GT2KK7444506B217U', 'G2410T', '', '', '', '2024-01-02', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'Dell', '', 'None', '24\"', 'None', NULL, 7500.00),
+(419, 'Monitor', NULL, 'CN0J257M7287228RA98L', 'U2410F', '', '', '', '2024-01-02', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'Dell', '', 'None', '24\"', 'None', NULL, 7500.00),
+(420, 'Monitor', NULL, 'CN0MNR9Y72872321ATKL', 'U2413F', '', '', '', '2024-01-02', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'Dell', '', 'None', '24\"', 'None', NULL, 7500.00),
+(421, 'Monitor', NULL, 'CN0J257M7287203108FL', 'U2410F', '', '', '', '2024-01-02', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'Dell', '', 'None', '24\"', 'None', NULL, 7500.00),
+(422, 'Monitor', NULL, 'CN0J257M728720390D8L', 'U2410F', '', '', '', '2024-01-02', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'Dell', '', 'None', '24\"', 'None', NULL, 7500.00),
+(423, 'Monitor', NULL, '1F2J9AAR#ABU', '27MQ frameless', '', '', '', '2024-01-02', 'None', NULL, 'None', 4480.00, 2, 28000.00, 32480.00, 'Admin', 'None', 'hp', '', 'None', '27\"', 'None', NULL, 30000.00),
+(424, 'Monitor', NULL, 'CNC2211CLV', '24MQ frameless', '', '', '', '2024-01-02', 'None', NULL, 'None', 3200.00, 2, 20000.00, 23200.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 22000.00),
+(425, 'Monitor', NULL, 'ZU7THMAC101758J', 'S22A450BW', '', '', '', '2024-01-02', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'Samsung', '', 'None', '22\"', 'None', NULL, 5000.00),
+(426, 'Monitor', NULL, '3CQ31203KY', 'Compaq LA2306X', '', '', '', '2024-01-02', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'hp', '', 'None', '23\"', 'None', NULL, 7500.00),
+(427, 'Monitor', NULL, 'CN0MW796466337391DRS', '2407W', '', '', '', '2024-01-02', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'Dell', '', 'None', '24\"', 'None', NULL, 7500.00),
+(428, 'Monitor', NULL, 'CN0J257M7287209J07GL', 'U2410F', '', '', '', '2024-01-02', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'Dell', '', 'None', '24\"', 'None', NULL, 7500.00),
+(429, 'Monitor', NULL, 'ET28E04412SL0', 'GL2250', '', '', '', '2024-01-02', 'None', NULL, 'None', 800.00, 2, 5000.00, 5800.00, 'Admin', 'None', 'Benq', '', 'None', '22\"', 'None', NULL, 5500.00),
+(430, 'Monitor', NULL, 'CNK62814YS', '24UH', '', '', '', '2024-01-02', 'None', NULL, 'None', 800.00, 2, 5000.00, 5800.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 5500.00),
+(431, 'Monitor', NULL, 'VN786406', 'LT2423WC', '', '', '', '2024-01-02', 'None', NULL, 'None', 960.00, 2, 6000.00, 6960.00, 'Admin', 'None', 'Lenovo', '', 'None', '24\"', 'None', NULL, 6500.00),
+(432, 'Workstation', NULL, 'BPW2HQ2', 'Prcision T3620', 'Intel Xeon', '16384', '500', '2024-01-02', 'None', NULL, 'None', 4000.00, 2, 25000.00, 29000.00, 'Admin', 'None', 'Dell', '', 'None', '', 'None', NULL, 28000.00),
+(433, 'Workstation', NULL, 'C1CMD5J', 'Prcision T1650', 'Intel Core i3', '65536', '2000', '2024-01-02', 'None', NULL, 'None', 1600.00, 2, 10000.00, 11600.00, 'Admin', 'None', 'Dell', '2nd Gen', 'None', '', 'None', NULL, 12000.00),
+(434, 'Allinone', NULL, '2TF62200C5', 'T310', '', '', '', '2024-01-02', 'None', NULL, 'None', 320.00, 2, 2000.00, 2320.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 2500.00),
+(435, 'Allinone', NULL, '2TF7340010', 'T310', '', '', '', '2024-01-02', 'None', NULL, 'None', 320.00, 2, 2000.00, 2320.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 2500.00),
+(436, 'Allinone', NULL, '2TF605009T', 'T310', '', '', '', '2024-01-02', 'None', NULL, 'None', 320.00, 2, 2000.00, 2320.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 2500.00),
+(437, 'Allinone', NULL, '2TF734005M', 'T310', '', '', '', '2024-01-02', 'None', NULL, 'None', 320.00, 2, 2000.00, 2320.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 2500.00),
+(438, 'Allinone', NULL, '2TF622009T', 'T310', '', '', '', '2024-01-02', 'None', NULL, 'None', 320.00, 2, 2000.00, 2320.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 2500.00),
+(439, 'Allinone', NULL, '2TF6050098', 'T310', '', '', '', '2024-01-02', 'None', NULL, 'None', 320.00, 2, 2000.00, 2320.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 2500.00),
+(440, 'Allinone', NULL, '2TF62000S2', 'T310', '', '', '', '2024-01-02', 'None', NULL, 'None', 320.00, 2, 2000.00, 2320.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 2500.00),
+(441, 'Allinone', NULL, '2TF62000JL', 'T310', '', '', '', '2024-01-02', 'None', NULL, 'None', 320.00, 2, 2000.00, 2320.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 2500.00),
+(442, 'Allinone', NULL, '2TF6050096', 'T310', '', '', '', '2024-01-02', 'None', NULL, 'None', 320.00, 2, 2000.00, 2320.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 2500.00),
+(443, 'Allinone', NULL, '2TF616008T', 'T310', '', '', '', '2024-01-02', 'None', NULL, 'None', 320.00, 2, 2000.00, 2320.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 2500.00),
+(444, 'Allinone', NULL, '2TF6220007', 'T310', '', '', '', '2024-01-02', 'None', NULL, 'None', 320.00, 2, 2000.00, 2320.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 2500.00),
+(445, 'Allinone', NULL, '2TF734002X', 'T310', '', '', '', '2024-01-02', 'None', NULL, 'None', 320.00, 2, 2000.00, 2320.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 2500.00),
+(446, 'Allinone', NULL, '2TF60500D7', 'T310', '', '', '', '2024-01-02', 'None', NULL, 'None', 320.00, 2, 2000.00, 2320.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 2500.00),
+(447, 'Allinone', NULL, '2TF60500D3', 'T310', '', '', '', '2024-01-02', 'None', NULL, 'None', 320.00, 2, 2000.00, 2320.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 2500.00),
+(448, 'Allinone', NULL, '2TF616008R', 'T310', '', '', '', '2024-01-02', 'None', NULL, 'None', 320.00, 2, 2000.00, 2320.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 2500.00),
+(449, 'Allinone', NULL, '2TF734000F', 'T310', '', '', '', '2024-01-02', 'None', NULL, 'None', 320.00, 2, 2000.00, 2320.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 2500.00),
+(450, 'Allinone', NULL, '2TF6050093', 'T310', '', '', '', '2024-01-02', 'None', NULL, 'None', 320.00, 2, 2000.00, 2320.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 2500.00),
+(451, 'Allinone', NULL, '2TF734001P', 'T310', '', '', '', '2024-01-02', 'None', NULL, 'None', 320.00, 2, 2000.00, 2320.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 2500.00),
+(452, 'Allinone', NULL, '2TF616008M', 'T310', '', '', '', '2024-01-02', 'None', NULL, 'None', 320.00, 2, 2000.00, 2320.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 2500.00),
+(453, 'Allinone', NULL, '2TF734001G', 'T310', '', '', '', '2024-01-02', 'None', NULL, 'None', 320.00, 2, 2000.00, 2320.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 2500.00),
+(454, 'Allinone', NULL, 'SMP24RA1V', 'AIO 324ALC6', 'AMD Ryzen 3', '65536', '256', '2024-01-02', 'None', NULL, 'None', 8000.00, 2, 50000.00, 58000.00, 'Admin', 'None', 'Lenovo', '', 'None', '24\"', 'None', NULL, 55000.00),
+(455, 'Allinone', NULL, 'SMP24R9NZ', 'AIO 324ALC6', 'AMD Ryzen 3', '65536', '256', '2024-01-02', 'None', NULL, 'None', 8000.00, 2, 50000.00, 58000.00, 'Admin', 'None', 'Lenovo', '', 'None', '24\"', 'None', NULL, 55000.00),
+(456, 'Monitor', NULL, 'CNK2260PYW', 'E27QG4', '', '', '', '2024-01-02', 'None', NULL, 'None', 320.00, 2, 2000.00, 2320.00, 'Admin', 'None', 'hp', '', 'None', '27\"', 'None', NULL, 2500.00),
+(457, 'Monitor', NULL, 'CNK2241BMX', 'E27QG4', '', '', '', '2024-01-02', 'None', NULL, 'None', 320.00, 2, 2000.00, 2320.00, 'Admin', 'None', 'hp', '', 'None', '27\"', 'None', NULL, 2500.00),
+(458, 'Monitor', NULL, 'CNK24510JW', 'E27QG4', '', '', '', '2024-01-02', 'None', NULL, 'None', 320.00, 2, 2000.00, 2320.00, 'Admin', 'None', 'hp', '', 'None', '27\"', 'None', NULL, 2500.00),
+(459, 'Monitor', NULL, 'CNK24510L3', 'E27QG4', '', '', '', '2024-01-02', 'None', NULL, 'None', 320.00, 2, 2000.00, 2320.00, 'Admin', 'None', 'hp', '', 'None', '27\"', 'None', NULL, 2500.00),
+(460, 'Monitor', NULL, 'CNK23708H0', 'E27QG4', '', '', '', '2024-01-02', 'None', NULL, 'None', 320.00, 2, 2000.00, 2320.00, 'Admin', 'None', 'hp', '', 'None', '27\"', 'None', NULL, 2500.00),
+(461, 'Monitor', NULL, 'CNK2241BMW', 'E27QG4', '', '', '', '2024-01-02', 'None', NULL, 'None', 320.00, 2, 2000.00, 2320.00, 'Admin', 'None', 'hp', '', 'None', '27\"', 'None', NULL, 2500.00),
+(462, 'Monitor', NULL, '9VG82AA', 'E27QG4', '', '', '', '2024-01-02', 'None', NULL, 'None', 320.00, 2, 2000.00, 2320.00, 'Admin', 'None', 'hp', '', 'None', '27\"', 'None', NULL, 2500.00),
+(463, 'Allinone', NULL, '2TF60500CP', 'T310', '', '', '', '2024-01-02', 'None', NULL, 'None', 320.00, 2, 2000.00, 2320.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 2500.00),
+(464, 'Allinone', NULL, '2TF62200BK', 'T310', '', '', '', '2024-01-02', 'None', NULL, 'None', 320.00, 2, 2000.00, 2320.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 2500.00),
+(465, 'Printer', NULL, 'XATW015403', 'L3250', '', '', '', '2024-01-02', 'None', NULL, 'None', 3840.00, 2, 24000.00, 27840.00, 'Admin', 'None', 'Epson', '', 'None', '', 'None', NULL, 25000.00),
+(466, 'Printer', NULL, 'XATW016840', 'L3250', '', '', '', '2024-01-02', 'None', NULL, 'None', 3840.00, 2, 24000.00, 27840.00, 'Admin', 'None', 'Epson', '', 'None', '', 'None', NULL, 25000.00),
+(467, 'Printer', NULL, 'XATW016810', 'L3250', '', '', '', '2024-01-02', 'None', NULL, 'None', 3840.00, 2, 24000.00, 27840.00, 'Admin', 'None', 'Epson', '', 'None', '', 'None', NULL, 25000.00),
+(468, 'Printer', NULL, 'XATW017016', 'L3250', '', '', '', '2024-01-02', 'None', NULL, 'None', 3840.00, 2, 24000.00, 27840.00, 'Admin', 'None', 'Epson', '', 'None', '', 'None', NULL, 25000.00),
+(469, 'Printer', NULL, 'XATW016794', 'L3250', '', '', '', '2024-01-02', 'None', NULL, 'None', 3840.00, 2, 24000.00, 27840.00, 'Admin', 'None', 'Epson', '', 'None', '', 'None', NULL, 25000.00),
+(470, 'Printer', NULL, 'XATW015397', 'L3250', '', '', '', '2024-01-02', 'None', NULL, 'None', 3840.00, 2, 24000.00, 27840.00, 'Admin', 'None', 'Epson', '', 'None', '', 'None', NULL, 25000.00),
+(471, 'Printer', NULL, 'XATW016841', 'L3250', '', '', '', '2024-01-02', 'None', NULL, 'None', 3840.00, 2, 24000.00, 27840.00, 'Admin', 'None', 'Epson', '', 'None', '', 'None', NULL, 25000.00),
+(472, 'Printer', NULL, '8715946700458', 'L3250', '', '', '', '2024-01-02', 'None', NULL, 'None', 3840.00, 2, 24000.00, 27840.00, 'Admin', 'None', 'Epson', '', 'None', '', 'None', NULL, 25000.00),
+(473, 'Monitor', NULL, 'CN421009S2', 'P22VA G4', '', '', '', '2024-01-02', 'None', NULL, 'None', 8000.00, 2, 50000.00, 58000.00, 'Admin', 'None', 'hp', '', 'None', '22\"', 'None', NULL, 55000.00),
+(474, 'Monitor', NULL, '6CM0510L1G', 'Z22N G2', '', '', '', '2024-01-02', 'None', NULL, 'None', 8000.00, 2, 50000.00, 58000.00, 'Admin', 'None', 'hp', '', 'None', '22\"', 'None', NULL, 55000.00),
+(475, 'Monitor', NULL, '3CM228169C', 'M27F', '', '', '', '2024-01-02', 'None', NULL, 'None', 8000.00, 2, 50000.00, 58000.00, 'Admin', 'None', 'hp', '', 'None', '27\"', 'None', NULL, 55000.00),
+(476, 'Monitor', NULL, '3CM2112052', 'M27F', '', '', '', '2024-01-02', 'None', NULL, 'None', 8000.00, 2, 50000.00, 58000.00, 'Admin', 'None', 'hp', '', 'None', '27\"', 'None', NULL, 55000.00),
+(477, 'Allinone', NULL, '6AE31AV', 'Pro 1 600 G5', 'Intel Core i5', '16384', '1000', '2024-01-02', 'None', NULL, 'None', 8000.00, 2, 50000.00, 58000.00, 'Admin', 'None', 'hp', '9th Gen', 'None', '21\"', 'None', NULL, 55000.00),
+(478, 'Monitor', NULL, 'CNC2090V2X', '27MQ', '', '', '', '2024-01-02', 'None', NULL, 'None', 8000.00, 2, 50000.00, 58000.00, 'Admin', 'None', 'hp', '', 'None', '27\"', 'None', NULL, 55000.00),
+(479, 'Monitor', NULL, '9VG82AA', 'E27QG4', '', '', '', '2024-01-02', 'None', NULL, 'None', 8000.00, 2, 50000.00, 58000.00, 'Admin', 'None', 'hp', '', 'None', '27\"', 'None', NULL, 55000.00),
+(480, 'Monitor', NULL, 'CNK2451020', 'E27QG4', '', '', '', '2024-01-02', 'None', NULL, 'None', 8000.00, 2, 50000.00, 58000.00, 'Admin', 'None', 'hp', '', 'None', '27\"', 'None', NULL, 55000.00);
+INSERT INTO `main_masterlist` (`id`, `type`, `unit_price`, `serialno`, `model`, `cpu`, `ram`, `hdd`, `daterecieved`, `qty`, `total`, `dels`, `vat`, `supplier_id`, `bprice`, `sub_total`, `terms`, `random`, `brand`, `gen`, `speed`, `screen`, `comment`, `datedelivered`, `sprice`) VALUES
+(481, 'Monitor', NULL, 'CNK24510M1', 'E27QG4', '', '', '', '2024-01-02', 'None', NULL, 'None', 8000.00, 2, 50000.00, 58000.00, 'Admin', 'None', 'hp', '', 'None', '27\"', 'None', NULL, 55000.00),
+(482, 'Desktop', NULL, '8CN23608JS', 'PRO 1 440 G6', 'Intel Core i7', '8192', '256', '2024-01-02', 'None', NULL, 'None', 16000.00, 2, 100000.00, 116000.00, 'Admin', 'None', 'hp', '7th Gen', 'None', '27\"', 'None', NULL, 115000.00),
+(483, 'Monitor', NULL, 'CNK24510JR', 'E27QG4', '', '', '', '2024-01-02', 'None', NULL, 'None', 8000.00, 2, 50000.00, 58000.00, 'Admin', 'None', 'hp', '', 'None', '27\"', 'None', NULL, 55000.00),
+(484, 'Monitor', NULL, 'CNK24510JT', 'E27QG4', '', '', '', '2024-01-02', 'None', NULL, 'None', 8000.00, 2, 50000.00, 58000.00, 'Admin', 'None', 'hp', '', 'None', '27\"', 'None', NULL, 55000.00),
+(485, 'Monitor', NULL, 'CNK2221FZ5', 'E27QG4', '', '', '', '2024-01-02', 'None', NULL, 'None', 8000.00, 2, 50000.00, 58000.00, 'Admin', 'None', 'hp', '', 'None', '27\"', 'None', NULL, 55000.00),
+(486, 'Allinone', NULL, 'SMP24XPWL', 'AIO 324ALC6', 'AMD Ryzen 3', '65536', '256', '2024-01-02', 'None', NULL, 'None', 8000.00, 2, 50000.00, 58000.00, 'Admin', 'None', 'Lenovo', '', 'None', '24\"', 'None', NULL, 55000.00),
+(487, 'Allinone', NULL, 'SMP24R8T2', 'AIO 324ALC6', 'AMD Ryzen 3', '65536', '256', '2024-01-02', 'None', NULL, 'None', 8000.00, 2, 50000.00, 58000.00, 'Admin', 'None', 'Lenovo', '', 'None', '24\"', 'None', NULL, 55000.00),
+(488, 'Printer', NULL, '914467C00992AA21KNSW63123', 'Pixma G3420', '', '', '', '2024-01-02', 'None', NULL, 'None', 2880.00, 2, 18000.00, 20880.00, 'Admin', 'None', 'Canon', '', 'None', '', 'None', NULL, 20000.00),
+(489, 'Printer', NULL, '4549292167733', 'Pixma G2420', '', '', '', '2024-01-02', 'None', NULL, 'None', 2880.00, 2, 18000.00, 20880.00, 'Admin', 'None', 'Canon', '', 'None', '', 'None', NULL, 20000.00),
+(490, 'Mini-Tower', NULL, '1X9E6PA#AB2', '268 Pro G1', '', '4096', '1000', '2024-01-02', 'None', NULL, 'None', 3520.00, 2, 22000.00, 25520.00, 'Admin', 'None', 'hp', '', 'None', '', 'None', NULL, 27000.00),
+(491, 'Monitor', NULL, 'cn0j257m728721a5ad3l', 'U2410F', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 7500.00),
+(492, 'Monitor', NULL, 'cn0j257m728721380mwl', 'U2410F', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 7500.00),
+(493, 'Monitor', NULL, 'cn0j257m72872214a9fl', 'U2410F', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 7500.00),
+(494, 'Monitor', NULL, 'cn0j257m728721540ael', 'U2410F', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 7500.00),
+(495, 'Monitor', NULL, 'cn0j257m728729ag1p6l', 'U2410F', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 7500.00),
+(496, 'Monitor', NULL, 'cn0j257m7287219paawl', 'U2410F', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 7500.00),
+(497, 'Monitor', NULL, 'cn0j257m7287228ra3kl', 'U2410F', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 7500.00),
+(498, 'Monitor', NULL, 'cn0j257m7287216m08ll', 'U2410F', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 7500.00),
+(499, 'Monitor', NULL, 'cn0j257m7287216m0ajl', 'U2410F', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 7500.00),
+(500, 'Monitor', NULL, 'cn0j257m72872196a3el', 'U2410F', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 7500.00),
+(501, 'Monitor', NULL, 'cn0j257m7287219fa4al', 'U2410F', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 7500.00),
+(502, 'Monitor', NULL, 'cn0j257m728722a8a8ml', 'U2410F', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 7500.00),
+(503, 'Monitor', NULL, 'cn0j257m7287201i02vl', 'U2410F', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 7500.00),
+(504, 'Monitor', NULL, 'cn0j257m7287211o07pl', 'U2410F', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 7500.00),
+(505, 'Monitor', NULL, 'cn0j257m728720390cwl', 'U2410F', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 7500.00),
+(506, 'Monitor', NULL, 'cn0j257m7287221ra0rl', 'U2410F', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 7500.00),
+(507, 'Monitor', NULL, 'cn0j257m7287219paanl', 'U2410F', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 7500.00),
+(508, 'Monitor', NULL, 'cn0j257m728722a8a7yl', 'U2410F', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 7500.00),
+(509, 'Monitor', NULL, 'CN0J257M728722A8A6CL', 'U2410F', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 7500.00),
+(510, 'Monitor', NULL, 'CN0J257M7287211O03ML', 'U2410F', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 7500.00),
+(511, 'Monitor', NULL, 'CN0J257M728722A8A97L', 'U2410F', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 7500.00),
+(512, 'Monitor', NULL, 'CN0J257M728720CN03HL', 'U2410F', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 7500.00),
+(513, 'Monitor', NULL, 'CN0J257M7287228RAPEL', 'U2410F', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 7500.00),
+(515, 'Monitor', NULL, 'CN0J257M7287298502ML', 'U2410F', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 7500.00),
+(516, 'Monitor', NULL, 'CN0H390M7287203M00ML', 'U2410F', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 7500.00),
+(705, 'Monitor', NULL, '	2TF616002Q', 't310', '', '', '', '2024-01-04', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 7500.00),
+(706, 'Monitor', NULL, '2TF6160096', 't310', '', '', '', '2024-01-04', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 7500.00),
+(707, 'Monitor', NULL, 'cn05ymt07426115b1p7l', 'P19OSB', '', '', '', '2024-01-03', 'None', NULL, 'None', 400.00, 2, 2500.00, 2900.00, 'Admin', 'None', 'Dell', '', 'None', '19\"', 'None', NULL, 3000.00),
+(708, 'Monitor', NULL, 'cn0pm0627161879irh67', '1908FPT', '', '', '', '2024-01-03', 'None', NULL, 'None', 400.00, 2, 2500.00, 2900.00, 'Admin', 'None', 'Dell', '', 'None', '19\"', 'None', NULL, 3000.00),
+(709, 'Monitor', NULL, 'fw742611a50g4c', '1708FPT', '', '', '', '2024-01-03', 'None', NULL, 'None', 400.00, 2, 2500.00, 2900.00, 'Admin', 'None', 'Dell', '', 'None', '15\"', 'None', NULL, 3000.00),
+(710, 'Monitor', NULL, 'T32VA4400144', '1708FPT', '', '', '', '2024-01-03', 'None', NULL, 'None', 400.00, 2, 2500.00, 2900.00, 'Admin', 'None', 'Double site', '', 'None', '15\"', 'None', NULL, 3000.00),
+(711, 'Monitor', NULL, '0C1823', '1708FPT', '', '', '', '2024-01-03', 'None', NULL, 'None', 400.00, 2, 2500.00, 2900.00, 'Admin', 'None', 'hp', '', 'None', '17\"', 'None', NULL, 3000.00),
+(712, 'Monitor', NULL, 'cnc922pvrx', 'L1910', '', '', '', '2024-01-03', 'None', NULL, 'None', 400.00, 2, 2500.00, 2900.00, 'Admin', 'None', 'hp', '', 'None', '17\"', 'None', NULL, 3000.00),
+(713, 'Monitor', NULL, 'FCJKTK2', 'P2417H', '', '', '', '2024-01-03', 'None', NULL, 'None', 400.00, 2, 2500.00, 2900.00, 'Admin', 'None', 'Dell', '', 'None', '17\"', 'None', NULL, 3000.00),
+(714, 'Monitor', NULL, '0C182J', '1708FPT', '', '', '', '2024-01-03', 'None', NULL, 'None', 400.00, 2, 2500.00, 2900.00, 'Admin', 'None', 'Dell', '', 'None', '17\"', 'None', NULL, 3000.00),
+(715, 'Monitor', NULL, 'cn0f019j7426191u0nhs', '1708FPT', '', '', '', '2024-01-03', 'None', NULL, 'None', 400.00, 2, 2500.00, 2900.00, 'Admin', 'None', 'Dell', '', 'None', '17\"', 'None', NULL, 3000.00),
+(716, 'Monitor', NULL, 'cn0j672h6418091j11gl', 'E1709WC', '', '', '', '2024-01-03', 'None', NULL, 'None', 400.00, 2, 2500.00, 2900.00, 'Admin', 'None', 'Dell', '', 'None', '17\"', 'None', NULL, 3000.00),
+(717, 'Monitor', NULL, 'CN474503H', 'E190I IPS Display', '', '', '', '2024-01-03', 'None', NULL, 'None', 400.00, 2, 2500.00, 2900.00, 'Admin', 'None', 'hp', '', 'None', '17\"', 'None', NULL, 3000.00),
+(718, 'Monitor', NULL, 'CN481304DW', 'E190I IPS Display', '', '', '', '2024-01-03', 'None', NULL, 'None', 400.00, 2, 2500.00, 2900.00, 'Admin', 'None', 'hp', '', 'None', '17\"', 'None', NULL, 3000.00),
+(719, 'Monitor', NULL, 'CN4627080T', 'E190I IPS Display', '', '', '', '2024-01-03', 'None', NULL, 'None', 400.00, 2, 2500.00, 2900.00, 'Admin', 'None', 'hp', '', 'None', '17\"', 'None', NULL, 3000.00),
+(720, 'Monitor', NULL, 'CN44180NNQ', 'E190I IPS Display', '', '', '', '2024-01-03', 'None', NULL, 'None', 400.00, 2, 2500.00, 2900.00, 'Admin', 'None', 'hp', '', 'None', '17\"', 'None', NULL, 3000.00),
+(721, 'Monitor', NULL, 'CN43240P42', 'E190I IPS Display', '', '', '', '2024-01-03', 'None', NULL, 'None', 400.00, 2, 2500.00, 2900.00, 'Admin', 'None', 'hp', '', 'None', '17\"', 'None', NULL, 3000.00),
+(722, 'Monitor', NULL, 'CN43289B', 'E190I IPS Display', '', '', '', '2024-01-03', 'None', NULL, 'None', 400.00, 2, 2500.00, 2900.00, 'Admin', 'None', 'hp', '', 'None', '17\"', 'None', NULL, 3000.00),
+(723, 'Monitor', NULL, '3cq3212rkr', 'E190I IPS Display', '', '', '', '2024-01-03', 'None', NULL, 'None', 400.00, 2, 2500.00, 2900.00, 'Admin', 'None', 'hp', '', 'None', '17\"', 'None', NULL, 3000.00),
+(724, 'Monitor', NULL, 'cn463708gg', 'E190I IPS Display', '', '', '', '2024-01-03', 'None', NULL, 'None', 400.00, 2, 2500.00, 2900.00, 'Admin', 'None', 'hp', '', 'None', '17\"', 'None', NULL, 3000.00),
+(725, 'Monitor', NULL, 'cn0f019j7426191u5ees', '1708FPB', '', '', '', '2024-01-03', 'None', NULL, 'None', 400.00, 2, 2500.00, 2900.00, 'Admin', 'None', 'Dell', '', 'None', '17\"', 'None', NULL, 3000.00),
+(726, 'Monitor', NULL, 'cn0mnmtg641804aq0pwu', 'E1715SC', '', '', '', '2024-01-03', 'None', NULL, 'None', 400.00, 2, 2500.00, 2900.00, 'Admin', 'None', 'Dell', '', 'None', '17\"', 'None', NULL, 3000.00),
+(727, 'Monitor', NULL, 'cn0jwrmg641803ck05tu', 'E171PSB', '', '', '', '2024-01-03', 'None', NULL, 'None', 400.00, 2, 2500.00, 2900.00, 'Admin', 'None', 'Dell', '', 'None', '17\"', 'None', NULL, 3000.00),
+(728, 'Monitor', NULL, 'cn0jwrmg641803ck08bu', 'E171PSB', '', '', '', '2024-01-03', 'None', NULL, 'None', 400.00, 2, 2500.00, 2900.00, 'Admin', 'None', 'Dell', '', 'None', '17\"', 'None', NULL, 3000.00),
+(729, 'Monitor', NULL, 'cn0jwrmg641803ck05eu', 'E171PSB', '', '', '', '2024-01-03', 'None', NULL, 'None', 400.00, 2, 2500.00, 2900.00, 'Admin', 'None', 'Dell', '', 'None', '17\"', 'None', NULL, 3000.00),
+(730, 'Monitor', NULL, 'cn0jwrmg641803cj00ku', 'E171PSB', '', '', '', '2024-01-03', 'None', NULL, 'None', 400.00, 2, 2500.00, 2900.00, 'Admin', 'None', 'Dell', '', 'None', '17\"', 'None', NULL, 3000.00),
+(731, 'Monitor', NULL, 'cn0jwrmg641803cj0cju', 'E171PSB', '', '', '', '2024-01-03', 'None', NULL, 'None', 400.00, 2, 2500.00, 2900.00, 'Admin', 'None', 'Dell', '', 'None', '17\"', 'None', NULL, 3000.00),
+(732, 'Monitor', NULL, 'cn0jwrmg641803cj05ru', 'E171PSB', '', '', '', '2024-01-03', 'None', NULL, 'None', 400.00, 2, 2500.00, 2900.00, 'Admin', 'None', 'Dell', '', 'None', '17\"', 'None', NULL, 3000.00),
+(733, 'Monitor', NULL, 'cn0jwrmg641803cj0tqu', 'E171PSB', '', '', '', '2024-01-03', 'None', NULL, 'None', 400.00, 2, 2500.00, 2900.00, 'Admin', 'None', 'Dell', '', 'None', '17\"', 'None', NULL, 3000.00),
+(734, 'Monitor', NULL, 'cn0hx1kw742613bq2n1l', 'E171PSB', '', '', '', '2024-01-03', 'None', NULL, 'None', 400.00, 2, 2500.00, 2900.00, 'Admin', 'None', 'Dell', '', 'None', '17\"', 'None', NULL, 3000.00),
+(735, 'Monitor', NULL, 'cn0mnmtg6418043v1pmu', 'E1715S', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'Dell', '', 'None', '17\"', 'None', NULL, 7500.00),
+(736, 'Monitor', NULL, 'cn0mnmtg6418045b51uu', 'E1715S', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'Dell', '', 'None', '17\"', 'None', NULL, 7500.00),
+(737, 'Monitor', NULL, 'cn0mnmtg6418043v0gbu', 'E1715S', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'Dell', '', 'None', '17\"', 'None', NULL, 7500.00),
+(738, 'Monitor', NULL, 'cn0mnmtg6418044q2qeu', 'E1715S', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'Dell', '', 'None', '17\"', 'None', NULL, 7500.00),
+(739, 'Monitor', NULL, 'cn0mnmtg6418043k0ahu', 'E1715S', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'Dell', '', 'None', '17\"', 'None', NULL, 7500.00),
+(740, 'Monitor', NULL, '5VXMM92', 'E1715S', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'Dell', '', 'None', '17\"', 'None', NULL, 7500.00),
+(741, 'Monitor', NULL, 'CN0504H17426138446WS', 'U2413F', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'Dell', '', 'None', '24\"', 'None', NULL, 7500.00),
+(742, 'Monitor', NULL, 'CN0PPNN1641805BR0GBS', 'U2413F', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'Dell', '', 'None', '24\"', 'None', NULL, 7500.00),
+(743, 'Monitor', NULL, 'CN0YCM0F7287245DA8VL', 'U2413F', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'Dell', '', 'None', '24\"', 'None', NULL, 7500.00),
+(744, 'Monitor', NULL, 'CN0YCM0F72872434A75L', 'U2413F', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'Dell', '', 'None', '24\"', 'None', NULL, 7500.00),
+(745, 'Monitor', NULL, 'CN0MNR9Y72872319AA4L', 'U2413F', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'Dell', '', 'None', '24\"', 'None', NULL, 7500.00),
+(746, 'Monitor', NULL, 'CN0NN7927426181L2KVS', '240WPD', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'Dell', '', 'None', '24\"', 'None', NULL, 7500.00),
+(747, 'Monitor', NULL, 'CN0J257M728729AG1VVL', 'U2410F', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 7500.00),
+(748, 'Monitor', NULL, 'CN0J257M7287222JA9PL', 'U2410F', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 7500.00),
+(749, 'Monitor', NULL, 'CN0J257M7287228RA9AL', 'U2410F', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 7500.00),
+(750, 'Monitor', NULL, 'CN0J257M728729AG1RML', 'U2410F', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 7500.00),
+(751, 'Monitor', NULL, 'CN0J257M728722A8A83L', 'U2410F', '', '', '', '2024-01-03', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 7500.00),
+(752, 'Monitor', NULL, 'falmtf229369', 'VS228', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'Asus', '', 'None', '22\"', 'None', NULL, 5000.00),
+(753, 'Monitor', NULL, 'cnk5090mhb', 'E221C', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'hp', '', 'None', '22\"', 'None', NULL, 5000.00),
+(754, 'Monitor', NULL, '2TF7340045', 'T310', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 5000.00),
+(755, 'Monitor', NULL, '2TF60500DJ', 'T310', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'hp', '', 'None', '23\"', 'None', NULL, 5000.00),
+(756, 'Monitor', NULL, 'V5H3245560EDJAR1WW', 'T2224DA', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'Lenovo', '', 'None', '22\"', 'None', NULL, 5000.00),
+(757, 'Monitor', NULL, 'ETLBQ0C16711206F5440J5', 'V223W', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'Acer', '', 'None', '22\"', 'None', NULL, 5000.00),
+(758, 'Monitor', NULL, 'CN0N01VP6418021V0F0B', 'E1911C', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'Dell', '', 'None', '19\"', 'None', NULL, 5000.00),
+(759, 'Monitor', NULL, 'CN0YJGD1742612CR1GWM', 'P1913B', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'Dell', '', 'None', '19\"', 'None', NULL, 5000.00),
+(760, 'Monitor', NULL, 'CN0C2JMK74445034393U', 'P170st', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'Dell', '', 'None', '17\"', 'None', NULL, 5000.00),
+(761, 'Monitor', NULL, 'cn0hc51672726r21gs', 'E196FPF', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'Dell', '', 'None', '19\"', 'None', NULL, 5000.00),
+(762, 'Monitor', NULL, 't32va4300143', 'DS1900WA', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'DS', '', 'None', '19\"', 'None', NULL, 5000.00),
+(763, 'Monitor', NULL, 'CN4727181P', 'E232', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'hp', '', 'None', '23\"', 'None', NULL, 5000.00),
+(764, 'Monitor', NULL, '2tf6220005', 'T310', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 5000.00),
+(765, 'Monitor', NULL, 'CN44370L1V', 'E24NI', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 5000.00),
+(766, 'Monitor', NULL, 'CN44370BP9', 'E241I', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 5000.00),
+(767, 'Monitor', NULL, 'cn0fc255466337360kmu', '2407WFPB', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'Dell', '', 'None', '24\"', 'None', NULL, 5000.00),
+(768, 'Monitor', NULL, '45505117SD', 'EV2455', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'EIZO', '', 'None', '24\"', 'None', NULL, 5000.00),
+(769, 'Monitor', NULL, '45504117', 'EV2455', '', '', '', '2024-01-04', 'None', NULL, 'None', 640.00, 2, 4000.00, 4640.00, 'Admin', 'None', 'EIZO', '', 'None', '24\"', 'None', NULL, 4500.00),
+(770, 'Monitor', NULL, '904makre5733', 'W2242TT', '', '', '', '2024-01-04', 'None', NULL, 'None', 640.00, 2, 4000.00, 4640.00, 'Admin', 'None', 'LG', '', 'None', '22\"', 'None', NULL, 4500.00),
+(771, 'Monitor', NULL, 'cn02rk1y7426137p0cmm', 'E2214HB', '', '', '', '2024-01-04', 'None', NULL, 'None', 640.00, 2, 4000.00, 4640.00, 'Admin', 'None', 'Dell', '', 'None', '22\"', 'None', NULL, 4500.00),
+(772, 'Monitor', NULL, 'U99162020653', 'VS16029', '', '', '', '2024-01-04', 'None', NULL, 'None', 640.00, 2, 4000.00, 4640.00, 'Admin', 'None', 'Viewsonic', '', 'None', '22\"', 'None', NULL, 4500.00),
+(773, 'Monitor', NULL, '111lthr2m833', 'E2251VRT', '', '', '', '2024-01-04', 'None', NULL, 'None', 640.00, 2, 4000.00, 4640.00, 'Admin', 'None', 'LG', '', 'None', '22\"', 'None', NULL, 4500.00),
+(774, 'Monitor', NULL, '3cq3361ng8', 'LA2206XC', '', '', '', '2024-01-04', 'None', NULL, 'None', 640.00, 2, 4000.00, 4640.00, 'Admin', 'None', 'hp', '', 'None', '22\"', 'None', NULL, 4500.00),
+(775, 'Monitor', NULL, 'cnk4220r62', 'E221C', '', '', '', '2024-01-04', 'None', NULL, 'None', 640.00, 2, 4000.00, 4640.00, 'Admin', 'None', 'hp', '', 'None', '22\"', 'None', NULL, 4500.00),
+(776, 'Monitor', NULL, '2TF616000K', 'T310', '', '', '', '2024-01-04', 'None', NULL, 'None', 640.00, 2, 4000.00, 4640.00, 'Admin', 'None', 'hp', '', 'None', '23\"', 'None', NULL, 4500.00),
+(777, 'Monitor', NULL, 'VFV5F26661', 'E2224A', '', '', '', '2024-01-04', 'None', NULL, 'None', 640.00, 2, 4000.00, 4640.00, 'Admin', 'None', 'Lenovo', '', 'None', '22\"', 'None', NULL, 4500.00),
+(778, 'Monitor', NULL, 'uk4a1406019656', '220V4LSB', '', '', '', '2024-01-04', 'None', NULL, 'None', 640.00, 2, 4000.00, 4640.00, 'Admin', 'None', 'Philips', '', 'None', '22\"', 'None', NULL, 4500.00),
+(779, 'Monitor', NULL, '1YPR5D2', 'E1916HV', '', '', '', '2024-01-04', 'None', NULL, 'None', 640.00, 2, 4000.00, 4640.00, 'Admin', 'None', 'Dell', '', 'None', '19\"', 'None', NULL, 4500.00),
+(780, 'Monitor', NULL, 'mmlxkaa00343703ad84214', 'V206H', '', '', '', '2024-01-04', 'None', NULL, 'None', 640.00, 2, 4000.00, 4640.00, 'Admin', 'None', 'Acer', '', 'None', '20\"', 'None', NULL, 4500.00),
+(781, 'Monitor', NULL, 'T32VA4500145', 'DS1900', '', '', '', '2024-01-04', 'None', NULL, 'None', 640.00, 2, 4000.00, 4640.00, 'Admin', 'None', 'LCD', '', 'None', '19\"', 'None', NULL, 4500.00),
+(782, 'Monitor', NULL, 'T32VA4800138', 'DS1900', '', '', '', '2024-01-04', 'None', NULL, 'None', 640.00, 2, 4000.00, 4640.00, 'Admin', 'None', 'LCD', '', 'None', '19\"', 'None', NULL, 4500.00),
+(783, 'Monitor', NULL, 'T32VA4900129', 'DS1900', '', '', '', '2024-01-04', 'None', NULL, 'None', 640.00, 2, 4000.00, 4640.00, 'Admin', 'None', 'LCD', '', 'None', '19\"', 'None', NULL, 4500.00),
+(784, 'Monitor', NULL, 'T32VA4100151', 'DS1900', '', '', '', '2024-01-04', 'None', NULL, 'None', 640.00, 2, 4000.00, 4640.00, 'Admin', 'None', 'LCD', '', 'None', '19\"', 'None', NULL, 4500.00),
+(785, 'Monitor', NULL, '906LWV2', 'E24', '', '', '', '2024-01-04', 'None', NULL, 'None', 640.00, 2, 4000.00, 4640.00, 'Admin', 'None', 'Dell', '', 'None', '17\"', 'None', NULL, 4500.00),
+(786, 'Monitor', NULL, 'ndfv3mjza00201h', 'LA22C', '', '', '', '2024-01-04', 'None', NULL, 'None', 640.00, 2, 4000.00, 4640.00, 'Admin', 'None', 'Samsung', '', 'None', '22\"', 'None', NULL, 4500.00),
+(787, 'Monitor', NULL, 'cn0j257m728729ag13dl', '2410F', '', '', '', '2024-01-04', 'None', NULL, 'None', 640.00, 2, 4000.00, 4640.00, 'Admin', 'None', 'Dell', '', 'None', '24\"', 'None', NULL, 4500.00),
+(788, 'Monitor', NULL, 'JK8VH92', 'E2416JKH', '', '', '', '2024-01-04', 'None', NULL, 'None', 640.00, 2, 4000.00, 4640.00, 'Admin', 'None', 'Dell', '', 'None', '24\"', 'None', NULL, 4500.00),
+(789, 'Monitor', NULL, '1005159', 'Photo 22', '', '', '', '2024-01-04', 'None', NULL, 'None', 640.00, 2, 4000.00, 4640.00, 'Admin', 'None', 'Essentel', '', 'None', '22\"', 'None', NULL, 4500.00),
+(790, 'Monitor', NULL, '3CQ3050D60', 'LA2206', '', '', '', '2024-01-04', 'None', NULL, 'None', 640.00, 2, 4000.00, 4640.00, 'Admin', 'None', 'hp', '', 'None', '22\"', 'None', NULL, 4500.00),
+(791, 'Monitor', NULL, 'mmt0esa0018341366a8517', 'K22H', '', '', '', '2024-01-04', 'None', NULL, 'None', 640.00, 2, 4000.00, 4640.00, 'Admin', 'None', 'Acer', '', 'None', '22\"', 'None', NULL, 4500.00),
+(792, 'Monitor', NULL, 'cn0504h17426139r0els', 'U2412MB', '', '', '', '2024-01-04', 'None', NULL, 'None', 960.00, 2, 6000.00, 6960.00, 'Admin', 'None', 'Dell', '', 'None', '22\"', 'None', NULL, 6500.00),
+(793, 'Monitor', NULL, 'V8WM201', 'LT223', '', '', '', '2024-01-04', 'None', NULL, 'None', 960.00, 2, 6000.00, 6960.00, 'Admin', 'None', 'Lenovo', '', 'None', '22\"', 'None', NULL, 6500.00),
+(794, 'Monitor', NULL, '2tf7340021', 'T310', '', '', '', '2024-01-04', 'None', NULL, 'None', 1280.00, 2, 8000.00, 9280.00, 'Admin', 'None', 'hp', '', 'None', '23\"', 'None', NULL, 8500.00),
+(795, 'Monitor', NULL, '2tf616009z', 'T310', '', '', '', '2024-01-04', 'None', NULL, 'None', 1280.00, 2, 8000.00, 9280.00, 'Admin', 'None', 'hp', '', 'None', '23\"', 'None', NULL, 8500.00),
+(796, 'Monitor', NULL, '2tf62000jk', 'T310', '', '', '', '2024-01-04', 'None', NULL, 'None', 1280.00, 2, 8000.00, 9280.00, 'Admin', 'None', 'hp', '', 'None', '23\"', 'None', NULL, 8500.00),
+(797, 'Monitor', NULL, '2tf60500dl', 'T310', '', '', '', '2024-01-04', 'None', NULL, 'None', 1280.00, 2, 8000.00, 9280.00, 'Admin', 'None', 'hp', '', 'None', '23\"', 'None', NULL, 8500.00),
+(798, 'Monitor', NULL, '2tf731005s', 'T310', '', '', '', '2024-01-04', 'None', NULL, 'None', 1280.00, 2, 8000.00, 9280.00, 'Admin', 'None', 'hp', '', 'None', '23\"', 'None', NULL, 8500.00),
+(799, 'Monitor', NULL, '2tf734001h', 'T310', '', '', '', '2024-01-04', 'None', NULL, 'None', 1280.00, 2, 8000.00, 9280.00, 'Admin', 'None', 'hp', '', 'None', '23\"', 'None', NULL, 8500.00),
+(800, 'Monitor', NULL, '2tf734001t', 'T310', '', '', '', '2024-01-04', 'None', NULL, 'None', 1280.00, 2, 8000.00, 9280.00, 'Admin', 'None', 'hp', '', 'None', '23\"', 'None', NULL, 8500.00),
+(801, 'Monitor', NULL, '2tf62200db', 'T310', '', '', '', '2024-01-04', 'None', NULL, 'None', 1280.00, 2, 8000.00, 9280.00, 'Admin', 'None', 'hp', '', 'None', '23\"', 'None', NULL, 8500.00),
+(802, 'Monitor', NULL, '2tf734002m', 'T310', '', '', '', '2024-01-04', 'None', NULL, 'None', 1280.00, 2, 8000.00, 9280.00, 'Admin', 'None', 'hp', '', 'None', '23\"', 'None', NULL, 8500.00),
+(803, 'Monitor', NULL, '2tf734001n', 'T310', '', '', '', '2024-01-04', 'None', NULL, 'None', 1280.00, 2, 8000.00, 9280.00, 'Admin', 'None', 'hp', '', 'None', '23\"', 'None', NULL, 8500.00),
+(804, 'Monitor', NULL, '2tf622009z', 'T310', '', '', '', '2024-01-04', 'None', NULL, 'None', 1280.00, 2, 8000.00, 9280.00, 'Admin', 'None', 'hp', '', 'None', '23\"', 'None', NULL, 8500.00),
+(805, 'Monitor', NULL, '3HQFHZ2', 'P2319H', '', '', '', '2024-01-04', 'None', NULL, 'None', 1280.00, 2, 8000.00, 9280.00, 'Admin', 'None', 'Dell', '', 'None', '23\"', 'None', NULL, 8500.00),
+(806, 'Monitor', NULL, 'H6QFHZ2', 'P2319H', '', '', '', '2024-01-04', 'None', NULL, 'None', 1280.00, 2, 8000.00, 9280.00, 'Admin', 'None', 'Dell', '', 'None', '23\"', 'None', NULL, 8500.00),
+(807, 'Monitor', NULL, '61YMR03', 'P2319H', '', '', '', '2024-01-04', 'None', NULL, 'None', 1280.00, 2, 8000.00, 9280.00, 'Admin', 'None', 'Dell', '', 'None', '23\"', 'None', NULL, 8500.00),
+(808, 'Monitor', NULL, 'DTUSHZ2', 'P2319H', '', '', '', '2024-01-04', 'None', NULL, 'None', 1280.00, 2, 8000.00, 9280.00, 'Admin', 'None', 'Dell', '', 'None', '23\"', 'None', NULL, 8500.00),
+(809, 'Monitor', NULL, '23SBVX2', 'P2319H', '', '', '', '2024-01-04', 'None', NULL, 'None', 1280.00, 2, 8000.00, 9280.00, 'Admin', 'None', 'Dell', '', 'None', '23\"', 'None', NULL, 8500.00),
+(811, 'Monitor', NULL, '2HL9VX2', 'P2319H', '', '', '', '2024-01-04', 'None', NULL, 'None', 1280.00, 2, 8000.00, 9280.00, 'Admin', 'None', 'Dell', '', 'None', '23\"', 'None', NULL, 8500.00),
+(814, 'Monitor', NULL, '8Y201209CJ', 'AC625', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'None', '', 'None', '19\"', 'None', NULL, 5000.00),
+(815, 'Monitor', NULL, 'cnk603039y', 'L1706', '', '', '', '2024-01-04', 'None', NULL, 'None', 800.00, 2, 5000.00, 5800.00, 'Admin', 'None', 'hp', '', 'None', '17\"', 'None', NULL, 5500.00),
+(816, 'Monitor', NULL, '6cm7081vf1', 'P23', '', '', '', '2024-01-04', 'None', NULL, 'None', 800.00, 2, 5000.00, 5800.00, 'Admin', 'None', 'hp', '', 'None', '23\"', 'None', NULL, 5500.00),
+(817, 'Monitor', NULL, 'CLC129PMYK', '2011X', '', '', '', '2024-01-04', 'None', NULL, 'None', 800.00, 2, 5000.00, 5800.00, 'Admin', 'None', 'hp', '', 'None', '22\"', 'None', NULL, 5500.00),
+(818, 'Monitor', NULL, '712uxsk3m806', 'L1718SSN', '', '', '', '2024-01-04', 'None', NULL, 'None', 800.00, 2, 5000.00, 5800.00, 'Admin', 'None', 'LG', '', 'None', '17\"', 'None', NULL, 5500.00),
+(819, 'Monitor', NULL, '2TF734001D', 't310', '', '', '', '2024-01-04', 'None', NULL, 'None', 800.00, 2, 5000.00, 5800.00, 'Admin', 'None', 'hp', '', 'None', '23\"', 'None', NULL, 5500.00),
+(820, 'Monitor', NULL, '301ndvwht959', '22EN33SA', '', '', '', '2024-01-04', 'None', NULL, 'None', 800.00, 2, 5000.00, 5800.00, 'Admin', 'None', 'LG', '', 'None', '22\"', 'None', NULL, 5500.00),
+(821, 'Monitor', NULL, 'ZY29HTPD500227F', 'S24C450BW', '', '', '', '2024-01-04', 'None', NULL, 'None', 800.00, 2, 5000.00, 5800.00, 'Admin', 'None', 'Samsung', '', 'None', '24\"', 'None', NULL, 5500.00),
+(822, 'Monitor', NULL, 'cn0j257m728720540kvl', 'U2410F', '', '', '', '2024-01-04', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'Dell', '', 'None', '24\"', 'None', NULL, 7500.00),
+(823, 'Monitor', NULL, 'cn0g293h742619391ges', '248WFPB', '', '', '', '2024-01-04', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'Dell', '', 'None', '24\"', 'None', NULL, 7500.00),
+(824, 'Monitor', NULL, 'CN0DP02974618403RJS', '2408WFPB', '', '', '', '2024-01-04', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'Dell', '', 'None', '24\"', 'None', NULL, 7500.00),
+(825, 'Monitor', NULL, '0166h4mca10903e', 'S22B3500H', '', '', '', '2024-01-04', 'None', NULL, 'None', 800.00, 2, 5000.00, 5800.00, 'Admin', 'None', 'Samsung', '', 'None', '22\"', 'None', NULL, 5500.00),
+(826, 'Monitor', NULL, 'cn0j257m7287211o04jl', 'U2410F', '', '', '', '2024-01-04', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'Dell', '', 'None', '24\"', 'None', NULL, 7500.00),
+(827, 'Monitor', NULL, 'cn0g293h742619430h4s', '2408WFPB', '', '', '', '2024-01-04', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'Dell', '', 'None', '24\"', 'None', NULL, 7500.00),
+(828, 'Monitor', NULL, 'mmlydsa0013270c1a08510', 'B246HL', '', '', '', '2024-01-04', 'None', NULL, 'None', 800.00, 2, 5000.00, 5800.00, 'Admin', 'None', 'Acer', '', 'None', '24\"', 'None', NULL, 6000.00),
+(829, 'Monitor', NULL, 'ZY29HTPD501995P', 'S24C450BW', '', '', '', '2024-01-04', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'Samsung', '', 'None', '24\"', 'None', NULL, 7500.00),
+(830, 'Monitor', NULL, '3cq0340s0r', 'NA2205WV', '', '', '', '2024-01-04', 'None', NULL, 'None', 800.00, 2, 5000.00, 5800.00, 'Admin', 'None', 'hp', '', 'None', '22\"', 'None', NULL, 5500.00),
+(831, 'Monitor', NULL, 'cnc01900qq', 'LP2475W', '', '', '', '2024-01-04', 'None', NULL, 'None', 1120.00, 2, 7000.00, 8120.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 7500.00),
+(832, 'Monitor', NULL, 'cn05ymt07426115639yl', 'P190SB', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'Dell', '', 'None', '19\"', 'None', NULL, 5000.00),
+(833, 'Monitor', NULL, 'cn062wp2744459abbmts', 'P190ST', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'Dell', '', 'None', '19\"', 'None', NULL, 5000.00),
+(834, 'Monitor', NULL, 'cnc853ns8q', 'LV2011', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'hp', '', 'None', '20\"', 'None', NULL, 5000.00),
+(835, 'Monitor', NULL, 'cnc853nrxb', 'LV2011', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'hp', '', 'None', '20\"', 'None', NULL, 5000.00),
+(836, 'Monitor', NULL, 'V1WM8483024HC103X7958', 'LT2323PWA', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'Lenovo', '', 'None', '23\"', 'None', NULL, 5000.00),
+(837, 'Monitor', NULL, 'LY22HMDQ795253H', '2243BW', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'Samsung', '', 'None', '22\"', 'None', NULL, 5000.00),
+(838, 'Monitor', NULL, '2TF6290001', 'T310', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 5000.00),
+(839, 'Monitor', NULL, '2TF62000KG', 'T310', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 5000.00),
+(840, 'Monitor', NULL, '2TF734001C', 'T310', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 5000.00),
+(841, 'Monitor', NULL, '2TF62200B3', 'T310', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 5000.00),
+(842, 'Monitor', NULL, '2TF616006V', 'T310', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 5000.00),
+(843, 'Monitor', NULL, '2TF62200B4', 'T310', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 5000.00),
+(844, 'Monitor', NULL, '2TF734002F', 'T310', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 5000.00),
+(845, 'Monitor', NULL, '2TF62200BM', 'T310', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 5000.00),
+(846, 'Monitor', NULL, 'cn4541012g', 'E241I', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 5000.00),
+(847, 'Monitor', NULL, 'cn04v38g', 'P2417H', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'Dell', '', 'None', '22\"', 'None', NULL, 5000.00),
+(848, 'Monitor', NULL, 'CNK35201BB', 'E221C', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'hp', '', 'None', '22\"', 'None', NULL, 5000.00),
+(849, 'Monitor', NULL, 'v5282463', 'E2223s', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'Lenovo', '', 'None', '22\"', 'None', NULL, 5000.00),
+(850, 'Monitor', NULL, '2TF734001W', 'T310', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'hp', '', 'None', '22\"', 'None', NULL, 5000.00),
+(851, 'Monitor', NULL, '2tf734000c', 'T310', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'hp', '', 'None', '22\"', 'None', NULL, 5000.00),
+(852, 'Monitor', NULL, 'CL0G7W79QDC007AC11UUA05', 'U2415B', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'Dell', '', 'None', '24\"', 'None', NULL, 5000.00),
+(853, 'Monitor', NULL, 'CN47021GL3', 'Z24N', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'hp', '', 'None', '24\"', 'None', NULL, 5000.00),
+(854, 'Monitor', NULL, 'cnc853ns5z', 'LV2011', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'hp', '', 'None', '20\"', 'None', NULL, 5000.00),
+(855, 'Monitor', NULL, 'cnc853nrmf', 'LV2011', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'hp', '', 'None', '20\"', 'None', NULL, 5000.00),
+(856, 'Monitor', NULL, '75552088', 'EV2456', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'EIZO', '', 'None', '24\"', 'None', NULL, 5000.00),
+(857, 'Monitor', NULL, 'V1K0170100EC015', 'T2424PA', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'Lenovo', '', 'None', '24\"', 'None', NULL, 5000.00),
+(858, 'Monitor', NULL, 'ZTTBHMABA00061B', 'S22A450DW', '', '', '', '2024-01-04', 'None', NULL, 'None', 720.00, 2, 4500.00, 5220.00, 'Admin', 'None', 'Samsung', '', 'None', '22\"', 'None', NULL, 5000.00),
+(859, 'Laptop', NULL, 'MP1DM10L', 'yoga 370', 'Intel Core i5', '8192', '256', '2024-01-04', 'None', NULL, 'None', 3120.00, 6, 19500.00, 22620.00, 'Admin', 'None', 'Lenovo', '7th Gen', 'None', '14\"', 'None', NULL, 22000.00),
+(860, 'Laptop', NULL, 'MP1CYRLQ', 'yoga 370', 'Intel Core i5', '8192', '256', '2024-01-04', 'None', NULL, 'None', 3120.00, 6, 19500.00, 22620.00, 'Admin', 'None', 'Lenovo', '7th Gen', 'None', '14\"', 'None', NULL, 22000.00),
+(861, 'Laptop', NULL, 'MP1CYZV5', 'yoga 370', 'Intel Core i5', '8192', '256', '2024-01-04', 'None', NULL, 'None', 3120.00, 6, 19500.00, 22620.00, 'Admin', 'None', 'Lenovo', '7th Gen', 'None', '14\"', 'None', NULL, 22000.00),
+(862, 'Laptop', NULL, 'MP1C8S7L', 'yoga 370', 'Intel Core i5', '8192', '256', '2024-01-04', 'None', NULL, 'None', 3120.00, 6, 19500.00, 22620.00, 'Admin', 'None', 'Lenovo', '7th Gen', 'None', '14\"', 'None', NULL, 22000.00),
+(863, 'Laptop', NULL, 'MP1C8S8P', 'yoga 370', 'Intel Core i5', '8192', '256', '2024-01-04', 'None', NULL, 'None', 3120.00, 6, 19500.00, 22620.00, 'Admin', 'None', 'Lenovo', '7th Gen', 'None', '14\"', 'None', NULL, 22000.00),
+(864, 'Laptop', NULL, '5cd915288l', '1030 G3', 'Intel Core i7', '16384', '256', '2024-01-04', 'None', NULL, 'None', 8000.00, 6, 50000.00, 58000.00, 'Admin', 'None', 'hp', '8th Gen', 'None', '13\"', 'None', NULL, 52000.00),
+(865, 'Laptop', NULL, '5CD938FFTP', '1030 G3', 'Intel Core i7', '16384', '256', '2024-01-04', 'None', NULL, 'None', 8000.00, 6, 50000.00, 58000.00, 'Admin', 'None', 'hp', '8th Gen', 'None', '13\"', 'None', NULL, 52000.00),
+(866, 'Laptop', NULL, '5CD9094LLB', '1030 G3', 'Intel Core i7', '16384', '256', '2024-01-04', 'None', NULL, 'None', 8000.00, 6, 50000.00, 58000.00, 'Admin', 'None', 'hp', '8th Gen', 'None', '13\"', 'None', NULL, 52000.00),
+(867, 'Laptop', NULL, '5CG9284ZXV', '1030 G3', 'Intel Core i7', '16384', '256', '2024-01-04', 'None', NULL, 'None', 8000.00, 6, 50000.00, 58000.00, 'Admin', 'None', 'hp', '8th Gen', 'None', '13\"', 'None', NULL, 52000.00),
+(868, 'Laptop', NULL, '5CG9416W2', '840 G6', 'Intel Core i5', '8192', '256', '2024-01-04', 'None', NULL, 'None', 4800.00, 6, 30000.00, 34800.00, 'Admin', 'None', 'hp', '8th Gen', 'None', '14\"', 'None', NULL, 32000.00),
+(869, 'Laptop', NULL, '5CG9465GC9', '840 G6', 'Intel Core i5', '8192', '256', '2024-01-04', 'None', NULL, 'None', 4800.00, 6, 30000.00, 34800.00, 'Admin', 'None', 'hp', '8th Gen', 'None', '14\"', 'None', NULL, 32000.00),
+(870, 'Laptop', NULL, '5CG9441YC4', '840 G6', 'Intel Core i5', '8192', '256', '2024-01-04', 'None', NULL, 'None', 4800.00, 6, 30000.00, 34800.00, 'Admin', 'None', 'hp', '8th Gen', 'None', '14\"', 'None', NULL, 32000.00),
+(871, 'Laptop', NULL, '5CG0031WP9', '840 G6', 'Intel Core i5', '8192', '256', '2024-01-04', 'None', NULL, 'None', 4800.00, 6, 30000.00, 34800.00, 'Admin', 'None', 'hp', '8th Gen', 'None', '14\"', 'None', NULL, 32000.00),
+(872, 'Laptop', NULL, '5CG94986SR', '840 G6', 'Intel Core i5', '8192', '256', '2024-01-04', 'None', NULL, 'None', 4800.00, 6, 30000.00, 34800.00, 'Admin', 'None', 'hp', '8th Gen', 'None', '14\"', 'None', NULL, 32000.00),
+(873, 'Laptop', NULL, '5CG93960JN', '840 G6', 'Intel Core i5', '8192', '256', '2024-01-04', 'None', NULL, 'None', 4800.00, 6, 30000.00, 34800.00, 'Admin', 'None', 'hp', '8th Gen', 'None', '14\"', 'None', NULL, 32000.00),
+(874, 'Laptop', NULL, '5CG9399W49', '840 G6', 'Intel Core i5', '8192', '256', '2024-01-04', 'None', NULL, 'None', 4800.00, 6, 30000.00, 34800.00, 'Admin', 'None', 'hp', '8th Gen', 'None', '14\"', 'None', NULL, 32000.00),
+(875, 'Laptop', NULL, '5CG9399QTW', '840 G6', 'Intel Core i5', '8192', '256', '2024-01-04', 'None', NULL, 'None', 4800.00, 6, 30000.00, 34800.00, 'Admin', 'None', 'hp', '8th Gen', 'None', '14\"', 'None', NULL, 32000.00),
+(876, 'Laptop', NULL, '5CG939578J', '840 G6', 'Intel Core i5', '8192', '256', '2024-01-04', 'None', NULL, 'None', 4800.00, 6, 30000.00, 34800.00, 'Admin', 'None', 'hp', '8th Gen', 'None', '14\"', 'None', NULL, 32000.00),
+(877, 'Laptop', NULL, '5CG00926GX', '840 G6', 'Intel Core i5', '8192', '256', '2024-01-04', 'None', NULL, 'None', 4800.00, 6, 30000.00, 34800.00, 'Admin', 'None', 'hp', '8th Gen', 'None', '14\"', 'None', NULL, 32000.00),
+(878, 'P.O.S', NULL, 'czc9018j97', 'RP9 9015', 'Intel Celeron', '4096', '128', '2024-01-04', 'None', NULL, 'None', 4000.00, 6, 25000.00, 29000.00, 'Admin', 'None', 'hp', '5th Gen', 'None', '13\"', 'None', NULL, 28000.00),
+(879, 'P.O.S', NULL, 'czc6528pgb', 'RP9 9015', 'Intel Celeron', '4096', '128', '2024-01-04', 'None', NULL, 'None', 4000.00, 6, 25000.00, 29000.00, 'Admin', 'None', 'hp', '5th Gen', 'None', '13\"', 'None', NULL, 28000.00),
+(880, 'P.O.S', NULL, 'czc83078p8', 'RP9 9015', 'Intel Celeron', '4096', '128', '2024-01-04', 'None', NULL, 'None', 4000.00, 6, 25000.00, 29000.00, 'Admin', 'None', 'hp', '5th Gen', 'None', '13\"', 'None', NULL, 28000.00),
+(881, 'P.O.S', NULL, 'czc84777xk', 'RP9 9015', 'Intel Celeron', '4096', '128', '2024-01-04', 'None', NULL, 'None', 4000.00, 6, 25000.00, 29000.00, 'Admin', 'None', 'hp', '5th Gen', 'None', '13\"', 'None', NULL, 28000.00),
+(882, 'P.O.S', NULL, 'czc75085ry', 'RP9 9015', 'Intel Celeron', '4096', '128', '2024-01-04', 'None', NULL, 'None', 4000.00, 6, 25000.00, 29000.00, 'Admin', 'None', 'hp', '5th Gen', 'None', '13\"', 'None', NULL, 28000.00),
+(883, 'P.O.S', NULL, 'czc8398088', 'RP9 9015', 'Intel Celeron', '4096', '128', '2024-01-04', 'None', NULL, 'None', 4000.00, 6, 25000.00, 29000.00, 'Admin', 'None', 'hp', '5th Gen', 'None', '13\"', 'None', NULL, 28000.00),
+(884, 'P.O.S', NULL, 'czc9019h7c', 'RP9 9015', 'Intel Celeron', '4096', '128', '2024-01-04', 'None', NULL, 'None', 4000.00, 6, 25000.00, 29000.00, 'Admin', 'None', 'hp', '5th Gen', 'None', '13\"', 'None', NULL, 28000.00),
+(885, 'P.O.S', NULL, 'czc903cgbx', 'RP9 9015', 'Intel Celeron', '4096', '128', '2024-01-04', 'None', NULL, 'None', 4000.00, 6, 25000.00, 29000.00, 'Admin', 'None', 'hp', '5th Gen', 'None', '13\"', 'None', NULL, 28000.00),
+(886, 'P.O.S', NULL, 'czc9019h7p', 'RP9 9015', 'Intel Celeron', '4096', '128', '2024-01-04', 'None', NULL, 'None', 4000.00, 6, 25000.00, 29000.00, 'Admin', 'None', 'hp', '5th Gen', 'None', '13\"', 'None', NULL, 28000.00),
+(887, 'P.O.S', NULL, 'czc8087q3g', 'RP9 9015', 'Intel Celeron', '4096', '128', '2024-01-04', 'None', NULL, 'None', 4000.00, 6, 25000.00, 29000.00, 'Admin', 'None', 'hp', '5th Gen', 'None', '13\"', 'None', NULL, 27000.00),
+(888, 'P.O.S', NULL, 'czc8167y3s', 'RP9 9015', 'Intel Celeron', '4096', '128', '2024-01-04', 'None', NULL, 'None', 4000.00, 6, 25000.00, 29000.00, 'Admin', 'None', 'hp', '5th Gen', 'None', '13\"', 'None', NULL, 28000.00),
+(889, 'Laptop', NULL, '5CG9433GCS', '830G6', 'Intel Core i7', '16384', '512', '2024-01-04', 'None', NULL, 'None', 6400.00, 6, 40000.00, 46400.00, 'Admin', 'None', 'hp', '8th Gen', 'None', '13\"', 'None', NULL, 42000.00),
+(890, 'Laptop', NULL, '5CG9433GFL', '830G6', 'Intel Core i7', '16384', '512', '2024-01-04', 'None', NULL, 'None', 6400.00, 6, 40000.00, 46400.00, 'Admin', 'None', 'hp', '8th Gen', 'None', '13\"', 'None', NULL, 42000.00),
+(891, 'Laptop', NULL, 'JPH012FKKP', 'DRAGONFLY X360', 'Intel Core i5', '8192', '256', '2024-01-04', 'None', NULL, 'None', 7680.00, 6, 48000.00, 55680.00, 'Admin', 'None', 'hp', '8th Gen', 'None', '13\"', 'None', NULL, 50000.00),
+(892, 'Laptop', NULL, 'JPH012FKKS', 'DRAGONFLY X360', 'Intel Core i5', '8192', '256', '2024-01-04', 'None', NULL, 'None', 7680.00, 6, 48000.00, 55680.00, 'Admin', 'None', 'hp', '8th Gen', 'None', '13\"', 'None', NULL, 50000.00),
+(893, 'Laptop', NULL, 'JPH012FKHC', 'DRAGONFLY X360', 'Intel Core i5', '8192', '256', '2024-01-04', 'None', NULL, 'None', 7680.00, 6, 48000.00, 55680.00, 'Admin', 'None', 'hp', '8th Gen', 'None', '13\"', 'None', NULL, 50000.00),
+(894, 'Laptop', NULL, 'JPH012FKK7', 'DRAGONFLY X360', 'Intel Core i5', '8192', '256', '2024-01-04', 'None', NULL, 'None', 7680.00, 6, 48000.00, 55680.00, 'Admin', 'None', 'hp', '8th Gen', 'None', '13\"', 'None', NULL, 50000.00),
+(895, 'Laptop', NULL, 'JPH012FKQF', 'DRAGONFLY X360', 'Intel Core i5', '8192', '256', '2024-01-04', 'None', NULL, 'None', 7680.00, 6, 48000.00, 55680.00, 'Admin', 'None', 'hp', '', 'None', '13\"', 'None', NULL, 50000.00),
+(896, 'Laptop', NULL, '5CG9472LR7', '830G6', 'Intel Core i7', '16384', '512', '2024-01-04', 'None', NULL, 'None', 6400.00, 6, 40000.00, 46400.00, 'Admin', 'None', 'hp', '8th Gen', 'None', '13\"', 'None', NULL, 42000.00),
+(897, 'Monitor', NULL, 'CNC742NT6T', 'LV2011', '', '', '', '2024-01-05', 'None', NULL, 'None', 592.00, 2, 3700.00, 4292.00, 'Admin', 'None', 'hp', '7th Gen', 'None', '20\"', 'None', NULL, 4500.00),
+(898, 'Monitor', NULL, 'CNC853NS26', 'LV2011', '', '', '', '2024-01-05', 'None', NULL, 'None', 592.00, 2, 3700.00, 4292.00, 'Admin', 'None', 'hp', '7th Gen', 'None', '20\"', 'None', NULL, 4500.00),
+(899, 'Monitor', NULL, 'CNC853NRV0', 'LV2011', '', '', '', '2024-01-05', 'None', NULL, 'None', 592.00, 2, 3700.00, 4292.00, 'Admin', 'None', 'hp', '7th Gen', 'None', '20\"', 'None', NULL, 4500.00),
+(900, 'Monitor', NULL, 'CNC853NS85', 'LV2011', '', '', '', '2024-01-05', 'None', NULL, 'None', 592.00, 2, 3700.00, 4292.00, 'Admin', 'None', 'hp', '7th Gen', 'None', '20\"', 'None', NULL, 4500.00),
+(901, 'Monitor', NULL, 'CNC853NS62', 'LV2011', '', '', '', '2024-01-05', 'None', NULL, 'None', 592.00, 2, 3700.00, 4292.00, 'Admin', 'None', 'hp', '7th Gen', 'None', '20\"', 'None', NULL, 4500.00),
+(902, 'Monitor', NULL, 'CNC853NS23', 'LV2011', '', '', '', '2024-01-05', 'None', NULL, 'None', 592.00, 2, 3700.00, 4292.00, 'Admin', 'None', 'hp', '7th Gen', 'None', '20\"', 'None', NULL, 4500.00),
+(903, 'Monitor', NULL, 'CNC853NS5W', 'LV2011', '', '', '', '2024-01-05', 'None', NULL, 'None', 592.00, 2, 3700.00, 4292.00, 'Admin', 'None', 'hp', '7th Gen', 'None', '20\"', 'None', NULL, 4500.00),
+(904, 'Monitor', NULL, 'CNC811P04N', 'LV2011', '', '', '', '2024-01-05', 'None', NULL, 'None', 592.00, 2, 3700.00, 4292.00, 'Admin', 'None', 'hp', '7th Gen', 'None', '20\"', 'None', NULL, 4500.00),
+(905, 'Monitor', NULL, 'CNC853NRJ4', 'LV2011', '', '', '', '2024-01-05', 'None', NULL, 'None', 592.00, 2, 3700.00, 4292.00, 'Admin', 'None', 'hp', '7th Gen', 'None', '20\"', 'None', NULL, 4500.00),
+(906, 'Monitor', NULL, 'CNC801NS7P', 'LV2011', '', '', '', '2024-01-05', 'None', NULL, 'None', 592.00, 2, 3700.00, 4292.00, 'Admin', 'None', 'hp', '7th Gen', 'None', '20\"', 'None', NULL, 4500.00),
+(907, 'Monitor', NULL, 'CNC853NRV2', 'LV2011', '', '', '', '2024-01-05', 'None', NULL, 'None', 592.00, 2, 3700.00, 4292.00, 'Admin', 'None', 'hp', '7th Gen', 'None', '20\"', 'None', NULL, 4500.00),
+(908, 'Monitor', NULL, 'CNC811P07V', 'LV2011', '', '', '', '2024-01-05', 'None', NULL, 'None', 592.00, 2, 3700.00, 4292.00, 'Admin', 'None', 'hp', '7th Gen', 'None', '20\"', 'None', NULL, 4500.00),
+(909, 'Monitor', NULL, 'CNC811P07R', 'LV2011', '', '', '', '2024-01-05', 'None', NULL, 'None', 592.00, 2, 3700.00, 4292.00, 'Admin', 'None', 'hp', '7th Gen', 'None', '20\"', 'None', NULL, 4500.00),
+(910, 'Monitor', NULL, 'CNC853NRWX', 'LV2011', '', '', '', '2024-01-05', 'None', NULL, 'None', 592.00, 2, 3700.00, 4292.00, 'Admin', 'None', 'hp', '7th Gen', 'None', '20\"', 'None', NULL, 4500.00),
+(911, 'Monitor', NULL, 'CNC853NRM3', 'LV2011', '', '', '', '2024-01-05', 'None', NULL, 'None', 592.00, 2, 3700.00, 4292.00, 'Admin', 'None', 'hp', '7th Gen', 'None', '20\"', 'None', NULL, 4500.00),
+(912, 'Monitor', NULL, 'CNC853NRJ7', 'LV2011', '', '', '', '2024-01-05', 'None', NULL, 'None', 592.00, 2, 3700.00, 4292.00, 'Admin', 'None', 'hp', '7th Gen', 'None', '20\"', 'None', NULL, 4500.00),
+(913, 'Monitor', NULL, 'CNC801NW94', 'LV2011', '', '', '', '2024-01-05', 'None', NULL, 'None', 592.00, 2, 3700.00, 4292.00, 'Admin', 'None', 'hp', '7th Gen', 'None', '20\"', 'None', NULL, 4500.00),
+(914, 'Monitor', NULL, 'CNC853NRJB', 'LV2011', '', '', '', '2024-01-05', 'None', NULL, 'None', 592.00, 2, 3700.00, 4292.00, 'Admin', 'None', 'hp', '7th Gen', 'None', '20\"', 'None', NULL, 4500.00),
+(915, 'Monitor', NULL, 'CNC853NRZR', 'LV2011', '', '', '', '2024-01-05', 'None', NULL, 'None', 592.00, 2, 3700.00, 4292.00, 'Admin', 'None', 'hp', '7th Gen', 'None', '20\"', 'None', NULL, 4500.00),
+(916, 'Monitor', NULL, 'CNC811NZZ0', 'LV2011', '', '', '', '2024-01-05', 'None', NULL, 'None', 592.00, 2, 3700.00, 4292.00, 'Admin', 'None', 'hp', '7th Gen', 'None', '20\"', 'None', NULL, 4500.00),
+(917, 'Monitor', NULL, 'CNC853NS61', 'LV2011', '', '', '', '2024-01-05', 'None', NULL, 'None', 592.00, 2, 3700.00, 4292.00, 'Admin', 'None', 'hp', '7th Gen', 'None', '20\"', 'None', NULL, 4500.00),
+(918, 'Monitor', NULL, 'CNC748NNNP', 'LV2011', '', '', '', '2024-01-05', 'None', NULL, 'None', 592.00, 2, 3700.00, 4292.00, 'Admin', 'None', 'hp', '7th Gen', 'None', '20\"', 'None', NULL, 4500.00),
+(919, 'Monitor', NULL, 'CNC648P2Z3', 'LV2011', '', '', '', '2024-01-05', 'None', NULL, 'None', 592.00, 2, 3700.00, 4292.00, 'Admin', 'None', 'hp', '7th Gen', 'None', '20\"', 'None', NULL, 4500.00),
+(920, 'Monitor', NULL, 'CNC811NZZT', 'LV2011', '', '', '', '2024-01-05', 'None', NULL, 'None', 592.00, 2, 3700.00, 4292.00, 'Admin', 'None', 'hp', '7th Gen', 'None', '20\"', 'None', NULL, 4500.00);
+INSERT INTO `main_masterlist` (`id`, `type`, `unit_price`, `serialno`, `model`, `cpu`, `ram`, `hdd`, `daterecieved`, `qty`, `total`, `dels`, `vat`, `supplier_id`, `bprice`, `sub_total`, `terms`, `random`, `brand`, `gen`, `speed`, `screen`, `comment`, `datedelivered`, `sprice`) VALUES
+(921, 'Monitor', NULL, 'CNC811P031', 'LV2011', '', '', '', '2024-01-05', 'None', NULL, 'None', 592.00, 2, 3700.00, 4292.00, 'Admin', 'None', 'hp', '7th Gen', 'None', '20\"', 'None', NULL, 4500.00),
+(922, 'Monitor', NULL, 'CNC853NRM9', 'LV2011', '', '', '', '2024-01-05', 'None', NULL, 'None', 592.00, 2, 3700.00, 4292.00, 'Admin', 'None', 'hp', '7th Gen', 'None', '20\"', 'None', NULL, 4500.00),
+(923, 'Monitor', NULL, 'CNC853NS02', 'LV2011', '', '', '', '2024-01-05', 'None', NULL, 'None', 592.00, 2, 3700.00, 4292.00, 'Admin', 'None', 'hp', '7th Gen', 'None', '20\"', 'None', NULL, 4500.00),
+(924, 'Monitor', NULL, 'CNC903NYJQ', 'LV2011', '', '', '', '2024-01-05', 'None', NULL, 'None', 592.00, 2, 3700.00, 4292.00, 'Admin', 'None', 'hp', '7th Gen', 'None', '20\"', 'None', NULL, 4500.00),
+(925, 'Monitor', NULL, 'CNC853NRQC', 'LV2011', '', '', '', '2024-01-05', 'None', NULL, 'None', 592.00, 2, 3700.00, 4292.00, 'Admin', 'None', 'hp', '7th Gen', 'None', '20\"', 'None', NULL, 4500.00),
+(926, 'Monitor', NULL, 'CNC853NRJH', 'LV2011', '', '', '', '2024-01-05', 'None', NULL, 'None', 592.00, 2, 3700.00, 4292.00, 'Admin', 'None', 'hp', '7th Gen', 'None', '20\"', 'None', NULL, 4500.00),
+(927, 'Monitor', NULL, 'CNC835NPK3', 'LV2011', '', '', '', '2024-01-05', 'None', NULL, 'None', 592.00, 2, 3700.00, 4292.00, 'Admin', 'None', 'hp', '7th Gen', 'None', '20\"', 'None', NULL, 4500.00),
+(928, 'Monitor', NULL, 'CNC853NRMH', 'LV2011', '', '', '', '2024-01-05', 'None', NULL, 'None', 592.00, 2, 3700.00, 4292.00, 'Admin', 'None', 'hp', '7th Gen', 'None', '20\"', 'None', NULL, 4500.00),
+(929, 'Monitor', NULL, 'CNC811P08H', 'LV2011', '', '', '', '2024-01-05', 'None', NULL, 'None', 592.00, 2, 3700.00, 4292.00, 'Admin', 'None', 'hp', '7th Gen', 'None', '20\"', 'None', NULL, 4500.00),
+(930, 'Desktop', NULL, 'MJ07MTBA', 'M710Q', 'Intel Core i5', '8192', '500', '2024-01-05', 'None', NULL, 'None', 1360.00, 6, 8500.00, 9860.00, 'Admin', 'None', 'Lenovo', '6th Gen', 'None', '', 'None', NULL, 10000.00),
+(931, 'Desktop', NULL, 'MJ07SQA1', 'M710Q', 'Intel Core i5', '8192', '500', '2024-01-05', 'None', NULL, 'None', 1360.00, 6, 8500.00, 9860.00, 'Admin', 'None', 'Lenovo', '6th Gen', 'None', '', 'None', NULL, 10000.00),
+(932, 'Desktop', NULL, '1s10mus1ps00mj07mt9w', 'M710Q', 'Intel Core i5', '8192', '500', '2024-01-05', 'None', NULL, 'None', 1360.00, 6, 8500.00, 9860.00, 'Admin', 'None', 'Lenovo', '6th Gen', 'None', '', 'None', NULL, 10000.00),
+(933, 'Desktop', NULL, '1s10mqscwx00mj07vyr9', 'M710Q', 'Intel Core i5', '8192', '500', '2024-01-05', 'None', NULL, 'None', 1360.00, 6, 8500.00, 9860.00, 'Admin', 'None', 'Lenovo', '6th Gen', 'None', '', 'None', NULL, 10000.00),
+(934, 'Desktop', NULL, 'MJ07SQ7V', 'M710Q', 'Intel Core i5', '8192', '500', '2024-01-05', 'None', NULL, 'None', 1360.00, 6, 8500.00, 9860.00, 'Admin', 'None', 'Lenovo', '6th Gen', 'None', '', 'None', NULL, 10000.00),
+(935, 'Desktop', NULL, '1s10mqscwx00mj07vyt4', 'M710Q', 'Intel Core i5', '8192', '500', '2024-01-05', 'None', NULL, 'None', 1360.00, 6, 8500.00, 9860.00, 'Admin', 'None', 'Lenovo', '6th Gen', 'None', '', 'None', NULL, 10000.00),
+(936, 'Desktop', NULL, '1s10mqscwx00mj07xq9e', 'M710Q', 'Intel Core i5', '8192', '500', '2024-01-05', 'None', NULL, 'None', 1360.00, 6, 8500.00, 9860.00, 'Admin', 'None', 'Lenovo', '6th Gen', 'None', '', 'None', NULL, 10000.00),
+(937, 'Desktop', NULL, '1s10mqscwx00mj07xqxm', 'M710Q', 'Intel Core i5', '8192', '500', '2024-01-05', 'None', NULL, 'None', 1360.00, 6, 8500.00, 9860.00, 'Admin', 'None', 'Lenovo', '6th Gen', 'None', '', 'None', NULL, 10000.00),
+(938, 'Desktop', NULL, '1s10mqscwx00mj07xqcz', 'M710Q', 'Intel Core i5', '8192', '500', '2024-01-05', 'None', NULL, 'None', 1360.00, 6, 8500.00, 9860.00, 'Admin', 'None', 'Lenovo', '6th Gen', 'None', '', 'None', NULL, 10000.00),
+(939, 'Desktop', NULL, '1s10mqscwx00mj07w23e', 'M710Q', 'Intel Core i5', '8192', '500', '2024-01-05', 'None', NULL, 'None', 1360.00, 6, 8500.00, 9860.00, 'Admin', 'None', 'Lenovo', '6th Gen', 'None', '', 'None', NULL, 10000.00),
+(940, 'P.O.S', NULL, 'czc9018jcg', 'RP9 G1 9015', 'Intel Celeron', '4096', '128', '2024-01-05', 'None', NULL, 'None', 3520.00, 6, 22000.00, 25520.00, 'Admin', 'None', 'hp', '4th Gen', 'None', '15\"', 'None', NULL, 28000.00),
+(941, 'P.O.S', NULL, 'czc82277dw', 'RP9 G1 9015', 'Intel Celeron', '4096', '128', '2024-01-05', 'None', NULL, 'None', 3520.00, 6, 22000.00, 25520.00, 'Admin', 'None', 'hp', '4th Gen', 'None', '15\"', 'None', NULL, 28000.00),
+(942, 'P.O.S', NULL, 'czc8087q1y', 'RP9 G1 9015', 'Intel Celeron', '4096', '128', '2024-01-05', 'None', NULL, 'None', 3520.00, 6, 22000.00, 25520.00, 'Admin', 'None', 'hp', '4th Gen', 'None', '15\"', 'None', NULL, 28000.00),
+(943, 'P.O.S', NULL, 'czc8087t2b', 'RP9 G1 9015', 'Intel Celeron', '4096', '128', '2024-01-05', 'None', NULL, 'None', 3520.00, 6, 22000.00, 25520.00, 'Admin', 'None', 'hp', '4th Gen', 'None', '15\"', 'None', NULL, 28000.00),
+(944, 'P.O.S', NULL, 'czc9019h7d', 'RP9 G1 9015', 'Intel Celeron', '4096', '128', '2024-01-05', 'None', NULL, 'None', 3520.00, 6, 22000.00, 25520.00, 'Admin', 'None', 'hp', '4th Gen', 'None', '15\"', 'None', NULL, 28000.00),
+(945, 'P.O.S', NULL, 'czc822750h', 'RP9 G1 9015', 'Intel Celeron', '4096', '128', '2024-01-05', 'None', NULL, 'None', 3520.00, 6, 22000.00, 25520.00, 'Admin', 'None', 'hp', '4th Gen', 'None', '15\"', 'None', NULL, 28000.00),
+(946, 'P.O.S', NULL, 'czc84777tf', 'RP9 G1 9015', 'Intel Celeron', '4096', '128', '2024-01-05', 'None', NULL, 'None', 3520.00, 6, 22000.00, 25520.00, 'Admin', 'None', 'hp', '4th Gen', 'None', '15\"', 'None', NULL, 28000.00),
+(947, 'P.O.S', NULL, 'czc80884q4', 'RP9 G1 9015', 'Intel Celeron', '4096', '128', '2024-01-05', 'None', NULL, 'None', 3520.00, 6, 22000.00, 25520.00, 'Admin', 'None', 'hp', '4th Gen', 'None', '15\"', 'None', NULL, 28000.00),
+(948, 'P.O.S', NULL, 'czc84777t6', 'RP9 G1 9015', 'Intel Celeron', '4096', '128', '2024-01-05', 'None', NULL, 'None', 3520.00, 6, 22000.00, 25520.00, 'Admin', 'None', 'hp', '4th Gen', 'None', '15\"', 'None', NULL, 28000.00);
 
 -- --------------------------------------------------------
 
@@ -1013,10 +1685,10 @@ CREATE TABLE `main_mode` (
 --
 
 INSERT INTO `main_mode` (`id`, `name`, `created_at`) VALUES
-(1, 'M-pesa', '2023-12-30'),
-(2, 'Cash', '2023-12-30'),
-(3, 'Bank', '2023-12-30'),
-(4, 'Credit', '2023-12-30');
+(1, 'M-pesa', '2024-01-04'),
+(2, 'Cash', '2024-01-04'),
+(3, 'Bank', '2024-01-04'),
+(4, 'Credit', '2024-01-04');
 
 -- --------------------------------------------------------
 
@@ -1057,7 +1729,37 @@ INSERT INTO `main_narations` (`id`, `naration`, `date`, `balance`, `amount`, `ve
 (15, 'restock', '2023-12-29', 0, 0, 2, 1, 'Debit'),
 (17, 'restock', '2023-12-29', 0, 0, 2, 1, 'Debit'),
 (18, 'restock', '2023-12-30', 0, 0, 2, 1, 'Debit'),
-(19, 'restock', '2023-12-30', 0, 0, 2, 1, 'Debit');
+(19, 'restock', '2023-12-30', 0, 0, 2, 1, 'Debit'),
+(20, 'restock', '2024-01-02', 0, 0, 2, 1, 'Debit'),
+(22, 'restock', '2024-01-02', 0, 0, 2, 1, 'Debit'),
+(23, 'restock', '2024-01-02', 0, 0, 2, 1, 'Credit'),
+(26, 'restock', '2024-01-02', 337000, 0, 2, 1, 'Debit'),
+(27, 'restock', '2024-01-02', 337000, 0, 2, 1, 'Debit'),
+(28, 'restock', '2024-01-02', 337000, 0, 2, 1, 'Debit'),
+(30, 'restock', '2024-01-02', 337000, 0, 2, 1, 'Debit'),
+(31, 'restock', '2024-01-02', 337000, 0, 2, 1, 'Credit'),
+(32, 'restock', '2024-01-02', 390000, 0, 2, 1, 'Debit'),
+(33, 'restock', '2024-01-02', 390000, 0, 2, 1, 'Debit'),
+(34, 'restock', '2024-01-02', 390000, 0, 2, 1, 'Debit'),
+(35, 'restock', '2024-01-02', 390000, 0, 2, 1, 'Debit'),
+(36, 'restock', '2024-01-02', 390000, 0, 2, 1, 'Debit'),
+(37, 'restock', '2024-01-02', 390000, 0, 2, 1, 'Debit'),
+(38, 'restock', '2024-01-02', 390000, 0, 2, 1, 'Debit'),
+(39, 'restock', '2024-01-02', 390000, 0, 2, 1, 'Debit'),
+(40, 'restock2TF60500CP', '2024-01-02', 390000, 0, 2, 1, 'Credit'),
+(41, 'restock', '2024-01-02', 508000, 0, 2, 1, 'Debit'),
+(42, 'restock', '2024-01-02', 508000, 0, 2, 1, 'Debit'),
+(43, 'restock', '2024-01-02', 508000, 0, 2, 1, 'Debit'),
+(45, 'TT GLOBAL', '2024-01-03', 508000, 0, 2, 1, 'Credit'),
+(46, 'restock', '2024-01-03', 634000, 0, 2, 1, 'Debit'),
+(69, 'restock', '2024-01-04', 0, 0, 6, 1, 'Credit'),
+(70, 'restock', '2024-01-04', 634000, 0, 2, 1, 'Debit'),
+(72, 'restock', '2024-01-04', 634000, 0, 2, 1, 'Debit'),
+(73, 'restock', '2024-01-04', 634000, 0, 2, 1, 'Debit'),
+(74, 'restock', '2024-01-04', 0, 0, 6, 1, 'Debit'),
+(75, 'restock', '2024-01-05', 634000, 0, 2, 1, 'Debit'),
+(76, 'restock', '2024-01-05', 0, 0, 6, 1, 'Credit'),
+(77, 'restock', '2024-01-05', 0, 0, 7, 0, 'Debit');
 
 -- --------------------------------------------------------
 
@@ -1119,7 +1821,41 @@ INSERT INTO `main_orders` (`id`, `order_type`, `name`, `amount`, `date`, `unique
 (15, 'Debit', 'Restock', 0, '2023-12-29', NULL, NULL, NULL),
 (16, 'Debit', 'Restock', 0, '2023-12-29', NULL, NULL, NULL),
 (17, 'Debit', 'Restock', 0, '2023-12-30', NULL, NULL, NULL),
-(18, 'Debit', 'Restock', 0, '2023-12-30', NULL, NULL, NULL);
+(18, 'Debit', 'Restock', 0, '2023-12-30', NULL, NULL, NULL),
+(19, 'Debit', 'Restock', 0, '2024-01-02', NULL, NULL, NULL),
+(20, 'Debit', 'Restock', 0, '2024-01-02', NULL, NULL, NULL),
+(21, 'Debit', 'Restock', 0, '2024-01-02', NULL, NULL, NULL),
+(22, 'Debit', 'Restock', 337000, '2024-01-02', NULL, NULL, NULL),
+(23, 'Debit', 'Restock', 337000, '2024-01-02', NULL, NULL, NULL),
+(24, 'Debit', 'Restock', 337000, '2024-01-02', NULL, NULL, NULL),
+(25, 'Debit', 'Restock', 337000, '2024-01-02', NULL, NULL, NULL),
+(26, 'Debit', 'Restock', 337000, '2024-01-02', NULL, NULL, NULL),
+(27, 'Debit', 'Restock', 390000, '2024-01-02', NULL, NULL, NULL),
+(28, 'Debit', 'Restock', 390000, '2024-01-02', NULL, NULL, NULL),
+(29, 'Debit', 'Restock', 390000, '2024-01-02', NULL, NULL, NULL),
+(30, 'Debit', 'Restock', 390000, '2024-01-02', NULL, NULL, NULL),
+(31, 'Debit', 'Restock', 390000, '2024-01-02', NULL, NULL, NULL),
+(32, 'Debit', 'Restock', 390000, '2024-01-02', NULL, NULL, NULL),
+(33, 'Debit', 'Restock', 390000, '2024-01-02', NULL, NULL, NULL),
+(34, 'Debit', 'Restock', 390000, '2024-01-02', NULL, NULL, NULL),
+(35, 'Debit', 'Restock', 390000, '2024-01-02', NULL, NULL, NULL),
+(36, 'Debit', 'Restock', 508000, '2024-01-02', NULL, NULL, NULL),
+(37, 'Debit', 'Restock', 508000, '2024-01-02', NULL, NULL, NULL),
+(38, 'Debit', 'Restock', 508000, '2024-01-02', NULL, NULL, NULL),
+(41, 'M-pesa', 'Panthra', 20000, '2024-01-03', NULL, 94154113, 0),
+(42, 'Debit', 'Restock', 508000, '2024-01-03', NULL, NULL, NULL),
+(43, 'Debit', 'Restock', 634000, '2024-01-03', NULL, NULL, NULL),
+(47, 'Debit', 'Restock', 634000, '2024-01-04', NULL, NULL, NULL),
+(48, 'Debit', 'Restock', 634000, '2024-01-04', NULL, NULL, NULL),
+(50, 'Credit', 'Tets', 20000, '2024-01-04', 'INVOICE', 10265555, 20000),
+(51, 'Credit', 'Erick', 8500, '2024-01-04', NULL, 89310563, 8500),
+(52, 'Debit', 'Restock', 634000, '2024-01-04', NULL, NULL, NULL),
+(53, 'Debit', 'TT Global', 0, '2024-01-04', NULL, NULL, NULL),
+(54, 'Debit', 'Restock', 634000, '2024-01-05', NULL, NULL, NULL),
+(55, 'Debit', 'TT Global', 0, '2024-01-05', NULL, NULL, NULL),
+(106, 'M-pesa', 'Panthra', 8500, '2024-01-08', NULL, 21172655, 0),
+(107, 'Cash', 'James', 8500, '2024-01-08', NULL, 16368150, 0),
+(108, 'Debit', 'Tets', 5000, '2024-01-09', 'SLIP CASH', 10265555, 15000);
 
 -- --------------------------------------------------------
 
@@ -1260,6 +1996,17 @@ CREATE TABLE `main_stockout` (
   `sprice` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `main_stockout`
+--
+
+INSERT INTO `main_stockout` (`id`, `type`, `serialno`, `model`, `cpu`, `ram`, `hdd`, `daterecieved`, `qty`, `dels`, `unit_price`, `total`, `vat`, `bprice`, `sub_total`, `terms`, `supplier_id`, `random`, `brand`, `gen`, `speed`, `screen`, `comment`, `datedelivered`, `sprice`) VALUES
+(3, 'Monitor', '3CQ9250H47', 'V194', '', '', '', '2024-01-03', '1', 'None', NULL, NULL, 560.00, 3500.00, 20000.00, 'Admin', 2, '94154113', 'hp', NULL, NULL, '19\"', NULL, '2024-01-03', 4000.00),
+(8, 'Monitor', 'CN0J257M7287223SAYPL', 'U2410F', '', '', '', '2024-01-04', '1', 'None', NULL, NULL, 1120.00, 7000.00, 20000.00, 'Admin', 2, '10265555', 'hp', NULL, NULL, '24\"', NULL, '2024-01-04', 7500.00),
+(9, 'Monitor', 'GSL9VX2', 'P2319H', '', '', '', '2024-01-04', '1', 'None', NULL, NULL, 1280.00, 8000.00, 8500.00, 'Admin', 2, '89310563', 'Dell', NULL, NULL, '23\"', NULL, '2024-01-04', 8500.00),
+(60, 'P.O.S', 'czc9247dv4', 'RP9 G1 9015', 'Intel Celeron', '4096', '128', '2024-01-08', '1', 'None', NULL, NULL, 3520.00, 22000.00, 8500.00, 'Admin', 6, '21172655', 'hp', NULL, NULL, '15\"', NULL, '2024-01-08', 28000.00),
+(61, 'P.O.S', 'czc83078sy', 'RP9 G1 9015', 'Intel Celeron', '4096', '128', '2024-01-08', '1', 'None', NULL, NULL, 3520.00, 22000.00, 8500.00, 'Admin', 6, '16368150', 'hp', NULL, NULL, '15\"', NULL, '2024-01-08', 28000.00);
+
 -- --------------------------------------------------------
 
 --
@@ -1299,7 +2046,35 @@ INSERT INTO `main_supplierorders` (`id`, `order_type`, `name`, `amount`, `date`,
 (15, 'Debit', 'Restock', 0, '2023-12-29', NULL, NULL, 0),
 (16, 'Debit', 'Restock', 0, '2023-12-29', NULL, NULL, 0),
 (17, 'Debit', 'Restock', 128500, '2023-12-30', NULL, NULL, 0),
-(18, 'Debit', 'Restock', 201500, '2023-12-30', NULL, NULL, 0);
+(18, 'Debit', 'Restock', 201500, '2023-12-30', NULL, NULL, 0),
+(19, 'Debit', 'Restock', 97000, '2024-01-02', NULL, NULL, 0),
+(20, 'Debit', 'Restock', 917000, '2024-01-02', NULL, NULL, 0),
+(21, 'Credit', 'Restock', 337000, '2024-01-02', NULL, NULL, 337000),
+(22, 'Debit', 'Restock', 1024000, '2024-01-02', NULL, NULL, 337000),
+(23, 'Debit', 'Restock', 440000, '2024-01-02', NULL, NULL, 337000),
+(24, 'Debit', 'Restock', 133100, '2024-01-02', NULL, NULL, 337000),
+(25, 'Debit', 'Restock', 355500, '2024-01-02', NULL, NULL, 337000),
+(26, 'Credit', 'Restock', 53000, '2024-01-02', NULL, NULL, 390000),
+(27, 'Debit', 'Restock', 7500, '2024-01-02', NULL, NULL, 390000),
+(28, 'Debit', 'Restock', 48500, '2024-01-02', NULL, NULL, 390000),
+(29, 'Debit', 'Restock', 136000, '2024-01-02', NULL, NULL, 390000),
+(30, 'Debit', 'Restock', 24000, '2024-01-02', NULL, NULL, 390000),
+(31, 'Debit', 'Restock', 44000, '2024-01-02', NULL, NULL, 390000),
+(32, 'Debit', 'Restock', 66000, '2024-01-02', NULL, NULL, 390000),
+(33, 'Debit', 'Restock', 208000, '2024-01-02', NULL, NULL, 390000),
+(34, 'Debit', 'Restock', 40000, '2024-01-02', NULL, NULL, 390000),
+(35, 'Credit', 'Restock', 118000, '2024-01-02', NULL, NULL, 508000),
+(36, 'Debit', 'Restock', 992000, '2024-01-02', NULL, NULL, 508000),
+(37, 'Debit', 'Restock', 36000, '2024-01-02', NULL, NULL, 508000),
+(38, 'Debit', 'Restock', 22000, '2024-01-02', NULL, NULL, 508000),
+(39, 'Credit', 'Restock', 126000, '2024-01-03', NULL, NULL, 634000),
+(40, 'Debit', 'Restock', 56000, '2024-01-03', NULL, NULL, 634000),
+(41, 'Debit', 'Restock', 203000, '2024-01-04', NULL, NULL, 634000),
+(42, 'Debit', 'Restock', 324500, '2024-01-04', NULL, NULL, 634000),
+(43, 'Debit', 'Restock', 225000, '2024-01-04', NULL, NULL, 634000),
+(44, 'Debit', 'TT Global', 1232500, '2024-01-04', NULL, NULL, 0),
+(45, 'Debit', 'Restock', 122100, '2024-01-05', NULL, NULL, 634000),
+(46, 'Credit', 'TT Global', 327000, '2024-01-05', NULL, NULL, 327000);
 
 -- --------------------------------------------------------
 
@@ -1368,6 +2143,42 @@ CREATE TABLE `main_templist` (
   `screen` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `main_templist`
+--
+
+INSERT INTO `main_templist` (`id`, `type`, `serialno`, `model`, `cpu`, `ram`, `hdd`, `daterecieved`, `qty`, `dels`, `unit_price`, `total`, `vat`, `supplier_id`, `bprice`, `sub_total`, `terms`, `d_type`, `is_active`, `random`, `datedelivered`, `brand`, `gen`, `sprice`, `screen`) VALUES
+(807, 'web camera', '2343LZ51WC89', 'c270', '', '', '', '2024-01-05', NULL, NULL, NULL, NULL, 480.00, 7, 3000.00, 3480.00, 'Admin', NULL, 1, NULL, NULL, 'Logitech', '', 3500.00, ''),
+(808, 'web camera', '2344LZ51QBF9', 'c270', '', '', '', '2024-01-05', NULL, NULL, NULL, NULL, 480.00, 7, 3000.00, 3480.00, 'Admin', NULL, 1, NULL, NULL, 'Logitech', '', 3500.00, ''),
+(809, 'web camera', '2343LZ51WC29', 'c270', '', '', '', '2024-01-05', NULL, NULL, NULL, NULL, 480.00, 7, 3000.00, 3480.00, 'Admin', NULL, 1, NULL, NULL, 'Logitech', '', 3500.00, ''),
+(810, 'web camera', '2344LZ519189', 'c270', '', '', '', '2024-01-05', NULL, NULL, NULL, NULL, 480.00, 7, 3000.00, 3480.00, 'Admin', NULL, 1, NULL, NULL, 'Logitech', '', 3500.00, ''),
+(811, 'web camera', '2343LZ51W919', 'c270', '', '', '', '2024-01-05', NULL, NULL, NULL, NULL, 480.00, 7, 3000.00, 3480.00, 'Admin', NULL, 1, NULL, NULL, 'Logitech', '', 3500.00, ''),
+(812, 'web camera', '2344LZ519169', 'c270', '', '', '', '2024-01-05', NULL, NULL, NULL, NULL, 480.00, 7, 3000.00, 3480.00, 'Admin', NULL, 1, NULL, NULL, 'Logitech', '', 3500.00, ''),
+(813, 'web camera', '2344LZ5190C9', 'c270', '', '', '', '2024-01-05', NULL, NULL, NULL, NULL, 480.00, 7, 3000.00, 3480.00, 'Admin', NULL, 1, NULL, NULL, 'Logitech', '', 3500.00, ''),
+(814, 'web camera', '2344LZ519149', 'c270', '', '', '', '2024-01-05', NULL, NULL, NULL, NULL, 480.00, 7, 3000.00, 3480.00, 'Admin', NULL, 1, NULL, NULL, 'Logitech', '', 3500.00, ''),
+(815, 'web camera', '2344LZ51QB99', 'c270', '', '', '', '2024-01-05', NULL, NULL, NULL, NULL, 480.00, 7, 3000.00, 3480.00, 'Admin', NULL, 1, NULL, NULL, 'Logitech', '', 3500.00, ''),
+(816, 'web camera', '2344LZ51QAZ9', 'c270', '', '', '', '2024-01-05', NULL, NULL, NULL, NULL, 480.00, 7, 3000.00, 3480.00, 'Admin', NULL, 1, NULL, NULL, 'Logitech', '', 3500.00, ''),
+(817, 'web camera', '2344LZ51QB59', 'c270', '', '', '', '2024-01-05', NULL, NULL, NULL, NULL, 480.00, 7, 3000.00, 3480.00, 'Admin', NULL, 1, NULL, NULL, 'Logitech', '', 3500.00, ''),
+(818, 'web camera', '2343LZ51W6F9', 'c270', '', '', '', '2024-01-05', NULL, NULL, NULL, NULL, 480.00, 7, 3000.00, 3480.00, 'Admin', NULL, 1, NULL, NULL, 'Logitech', '', 3500.00, ''),
+(819, 'web camera', '2343LZ51W6K9', 'c270', '', '', '', '2024-01-05', NULL, NULL, NULL, NULL, 480.00, 7, 3000.00, 3480.00, 'Admin', NULL, 1, NULL, NULL, 'Logitech', '', 3500.00, ''),
+(820, 'web camera', '2343LZ51WC49', 'c270', '', '', '', '2024-01-05', NULL, NULL, NULL, NULL, 480.00, 7, 3000.00, 3480.00, 'Admin', NULL, 1, NULL, NULL, 'Logitech', '', 3500.00, ''),
+(821, 'web camera', '2343LZ51W6M9', 'c270', '', '', '', '2024-01-05', NULL, NULL, NULL, NULL, 480.00, 7, 3000.00, 3480.00, 'Admin', NULL, 1, NULL, NULL, 'Logitech', '', 3500.00, ''),
+(822, 'web camera', '2343LZ51W6P9', 'c270', '', '', '', '2024-01-05', NULL, NULL, NULL, NULL, 480.00, 7, 3000.00, 3480.00, 'Admin', NULL, 1, NULL, NULL, 'Logitech', '', 3500.00, ''),
+(823, 'web camera', '2344LZ518YS9', 'c270', '', '', '', '2024-01-05', NULL, NULL, NULL, NULL, 480.00, 7, 3000.00, 3480.00, 'Admin', NULL, 1, NULL, NULL, 'Logitech', '', 3500.00, ''),
+(824, 'web camera', '2344LZ518YJ9', 'c270', '', '', '', '2024-01-05', NULL, NULL, NULL, NULL, 480.00, 7, 3000.00, 3480.00, 'Admin', NULL, 1, NULL, NULL, 'Logitech', '', 3500.00, ''),
+(825, 'web camera', '2344LZ518YW9', 'c270', '', '', '', '2024-01-05', NULL, NULL, NULL, NULL, 480.00, 7, 3000.00, 3480.00, 'Admin', NULL, 1, NULL, NULL, 'Logitech', '', 3500.00, ''),
+(826, 'web camera', '2344LZ518Y69', 'c270', '', '', '', '2024-01-05', NULL, NULL, NULL, NULL, 480.00, 7, 3000.00, 3480.00, 'Admin', NULL, 1, NULL, NULL, 'Logitech', '', 3500.00, ''),
+(827, 'Monitor', 'CN0UW9997426182O7YVU', '1708FPB', '', '', '', '2024-01-09', NULL, NULL, NULL, NULL, 352.00, 7, 2200.00, 2552.00, 'Admin', NULL, 1, NULL, NULL, 'Dell', '', 2500.00, '17\"'),
+(828, 'Monitor', '3CQ9250H55', 'V194', '', '', '', '2024-01-09', NULL, NULL, NULL, NULL, 512.00, 7, 3200.00, 3712.00, 'Admin', NULL, 1, NULL, NULL, 'hp', '', 4000.00, '19\"'),
+(829, 'Monitor', '3CQ925033M', 'V194', '', '', '', '2024-01-09', NULL, NULL, NULL, NULL, 512.00, 7, 3200.00, 3712.00, 'Admin', NULL, 1, NULL, NULL, 'hp', '', 4000.00, '19\"'),
+(830, 'Monitor', '3CQ9250372', 'V194', '', '', '', '2024-01-09', NULL, NULL, NULL, NULL, 512.00, 7, 3200.00, 3712.00, 'Admin', NULL, 1, NULL, NULL, 'hp', '', 4000.00, '19\"'),
+(831, 'Monitor', '3CQ9250393', 'V194', '', '', '', '2024-01-09', NULL, NULL, NULL, NULL, 512.00, 7, 3200.00, 3712.00, 'Admin', NULL, 1, NULL, NULL, 'hp', '', 4000.00, '19\"'),
+(832, 'Monitor', '3CQ92504TY', 'V194', '', '', '', '2024-01-09', NULL, NULL, NULL, NULL, 512.00, 7, 3200.00, 3712.00, 'Admin', NULL, 1, NULL, NULL, 'hp', '', 4000.00, '19\"'),
+(833, 'Monitor', '3CQ92504WR', 'V194', '', '', '', '2024-01-09', NULL, NULL, NULL, NULL, 512.00, 7, 3200.00, 3712.00, 'Admin', NULL, 1, NULL, NULL, 'hp', '', 4000.00, '19\"'),
+(834, 'Monitor', '3CQ9250347', 'V194', '', '', '', '2024-01-09', NULL, NULL, NULL, NULL, 512.00, 7, 3200.00, 3712.00, 'Admin', NULL, 1, NULL, NULL, 'hp', '', 4000.00, '19\"'),
+(835, 'Monitor', '3CQ03204SM', 'V194', '', '', '', '2024-01-09', NULL, NULL, NULL, NULL, 512.00, 7, 3200.00, 3712.00, 'Admin', NULL, 1, NULL, NULL, 'hp', '', 4000.00, '19\"'),
+(836, 'Monitor', ' CN0XW9TF7426113S2KAC', '1708FPT', '', '', '', '2024-01-09', NULL, NULL, NULL, NULL, 352.00, 7, 2200.00, 2552.00, 'Admin', NULL, 1, NULL, NULL, 'hp', '', 3000.00, '17\"');
+
 -- --------------------------------------------------------
 
 --
@@ -1400,7 +2211,16 @@ INSERT INTO `main_type` (`id`, `type`, `created_at`) VALUES
 (16, 'Discount', '2023-12-29'),
 (17, 'OTHERS', '2023-12-29'),
 (18, 'Monitor', '2023-12-29'),
-(19, 'P.O.S', '2023-12-29');
+(19, 'P.O.S', '2023-12-29'),
+(20, 'Workstation', '2024-01-02'),
+(21, 'Mini-Tower', '2024-01-02'),
+(22, 'Tower', '2024-01-02'),
+(23, 'Elite Desk', '2024-01-02'),
+(24, 'Core 2 Duo', '2024-01-02'),
+(26, 'Core 2 Duo', '2024-01-02'),
+(27, 'Thermal Receipt Printer', '2024-01-02'),
+(28, 'Printer', '2024-01-02'),
+(29, 'web camera', '2024-01-05');
 
 -- --------------------------------------------------------
 
@@ -1429,7 +2249,7 @@ CREATE TABLE `main_vendor` (
 
 INSERT INTO `main_vendor` (`id`, `fname`, `lname`, `phone`, `location`, `email`, `user_created_at`, `random`, `username`, `id_no`, `status`, `invono`) VALUES
 (2, 'restock', 'restock', '', '', 'restock@restock.com', NULL, NULL, 'Restock', '', NULL, NULL),
-(3, 'westhome', 'hub', '', 'Nairobi', 'westhome@gmail.com', NULL, NULL, 'westhome hub', '', NULL, NULL),
+(3, 'Westcom Hub', 'hub', '', 'Nairobi', 'westhome@gmail.com', NULL, NULL, 'Westcom Hub', '', NULL, NULL),
 (4, 'smartsoft', 'smartsoft', '', 'Nairobi', 'smartsoft@gmail.com', NULL, NULL, 'Smartsoft ', '', NULL, NULL),
 (5, 'Adepta ', 'technologies', '', '', 'adepta@gmail.com', NULL, NULL, 'Adepta Technologies', '', NULL, NULL),
 (6, 'TT', 'TTGlobal', '', 'Nairobi', 'ttglobal@gmail.com', NULL, NULL, 'TT Global', '', NULL, NULL),
@@ -1837,6 +2657,17 @@ CREATE TABLE `product` (
   `bprice` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `product`
+--
+
+INSERT INTO `product` (`id`, `fname`, `lname`, `vendor`, `customer`, `email`, `username`, `user_name`, `id_no`, `document`, `ref`, `random`, `address`, `phone`, `delvnote`, `location`, `date`, `invono`, `total`, `sold_to`, `amount`, `mode`, `bprice`) VALUES
+(3, 'Pant5hra', 'Panthra', NULL, NULL, 'panthra@gmauil.com', 'Panthra', 'Admin', '94154113_Panthra.xls', 'PanthraAA000', '94154113', '94154113', NULL, NULL, 'AA000', 'Nairobi', '2024-01-03', 'M-pesa', 1, 'Customer object (2)', 20000, 'M-pesa', 3500),
+(8, 'None', 'None', NULL, NULL, 'None', 'Tets', 'Admin', '10265555_Tets.xls', 'TetsAA001', '10265555', '10265555', NULL, NULL, 'AA001', 'None', '2024-01-04', 'Credit', 1, 'Tets', 20000, 'Credit', 7000),
+(9, 'erick', '', NULL, NULL, 'erick@gmail.com', 'Erick', 'Admin', '89310563_Erick.xls', 'ErickAA002', '89310563', '89310563', NULL, NULL, 'AA002', '', '2024-01-04', 'Credit', 1, 'Customer object (3)', 8500, 'Credit', 8000),
+(60, 'Pant5hra', 'Panthra', NULL, NULL, 'panthra@gmauil.com', 'Panthra', 'sales', '21172655_Panthra.xls', 'PanthraAA003.pdf', '21172655', '21172655', NULL, NULL, 'AA003', 'Nairobi', '2024-01-08', 'M-pesa', 1, 'Customer object (2)', 8500, 'M-pesa', 22000),
+(61, 'None', 'None', NULL, NULL, 'None', 'James', 'sales', '16368150_James.xls', 'JamesAA004.pdf', '16368150', '16368150', NULL, NULL, 'AA004', 'None', '2024-01-08', 'Cash', 1, 'James', 8500, 'Cash', 22000);
+
 -- --------------------------------------------------------
 
 --
@@ -2052,7 +2883,7 @@ CREATE TABLE `users_subscription` (
 --
 
 INSERT INTO `users_subscription` (`id`, `plan`, `expiration_date`, `user_id`) VALUES
-(1, 'basic', '2024-01-05', 1),
+(1, 'basic', '2024-01-15', 1),
 (2, 'basic', '2024-01-05', 2);
 
 -- --------------------------------------------------------
@@ -2235,8 +3066,10 @@ CREATE TABLE `users_user` (
 --
 
 INSERT INTO `users_user` (`id`, `password`, `type`, `email`, `firstname`, `username`, `lastname`, `is_staff`, `is_superuser`, `is_active`, `last_login`, `date_joined`) VALUES
-(1, 'pbkdf2_sha256$720000$Oa4iuTV5lL3WyGhbPRmi3g$vo3VrYjUmo2jFJDgrWukCrGEK9ifs5PhU6eXGbCaGmc=', 'ADMIN', 'test@admin.com', 'Admin', 'Admin', 'Admin', 1, 1, 1, '2023-12-30 11:02:08.606308', '2023-12-29 10:46:23.990002'),
-(2, 'pbkdf2_sha256$720000$hFUonQMkHgL1XXq6KwJOQQ$uTVkHNEtlJ/vksu3ZG/ydl0olOCkfia8mGbMPNZeaMU=', 'SALES', 'test@sales.com', 'Maina', 'sales', 'Test', 0, 0, 1, '2023-12-29 10:48:37.620456', '2023-12-29 10:46:24.703592');
+(1, 'pbkdf2_sha256$720000$Oa4iuTV5lL3WyGhbPRmi3g$vo3VrYjUmo2jFJDgrWukCrGEK9ifs5PhU6eXGbCaGmc=', 'ADMIN', 'test@admin.com', 'Admin', 'Admin', 'Admin', 1, 1, 1, '2024-01-09 09:59:17.694975', '2023-12-29 10:46:23.990002'),
+(2, 'pbkdf2_sha256$720000$hFUonQMkHgL1XXq6KwJOQQ$uTVkHNEtlJ/vksu3ZG/ydl0olOCkfia8mGbMPNZeaMU=', 'SALES', 'test@sales.com', 'Maina', 'sales', 'Test', 0, 0, 1, '2023-12-30 13:13:25.168130', '2023-12-29 10:46:24.703592'),
+(5, 'pbkdf2_sha256$720000$9zgVGwtYULwCgBOxYgX9av$hmPQL3lO/aa76Rm3MW2twOJZf94XGoPF4HPkqI6okoY=', 'SALES', 'sales@onetechcomputers', 'FAITH', 'Faith', 'FAITH', 0, 0, 1, '2024-01-09 04:43:54.406001', '2024-01-09 04:43:55.049651'),
+(8, 'pbkdf2_sha256$720000$xgXQDRoKaUUKAtvLH7DpOc$K4TWefv0VOA6dne6sYwrtAMKRFpFJTO4CPMalzbw4WE=', 'SALES', 'ephantus@gmail.com', 'EPHANTUS', 'EPHANTUS', 'NDUNG\'U', 0, 0, 1, '2024-01-09 09:59:09.297193', '2024-01-09 09:59:09.939828');
 
 -- --------------------------------------------------------
 
@@ -2707,7 +3540,7 @@ ALTER TABLE `auth_permission`
 -- AUTO_INCREMENT for table `dcustomer`
 --
 ALTER TABLE `dcustomer`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT for table `django_admin_log`
@@ -2725,7 +3558,7 @@ ALTER TABLE `django_content_type`
 -- AUTO_INCREMENT for table `django_migrations`
 --
 ALTER TABLE `django_migrations`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- AUTO_INCREMENT for table `main_accessory`
@@ -2737,25 +3570,25 @@ ALTER TABLE `main_accessory`
 -- AUTO_INCREMENT for table `main_agents_records`
 --
 ALTER TABLE `main_agents_records`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `main_brand`
 --
 ALTER TABLE `main_brand`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `main_cpu`
 --
 ALTER TABLE `main_cpu`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `main_customer`
 --
 ALTER TABLE `main_customer`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `main_expense`
@@ -2767,7 +3600,7 @@ ALTER TABLE `main_expense`
 -- AUTO_INCREMENT for table `main_expense_description`
 --
 ALTER TABLE `main_expense_description`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `main_gen`
@@ -2785,7 +3618,7 @@ ALTER TABLE `main_hdd`
 -- AUTO_INCREMENT for table `main_masterlist`
 --
 ALTER TABLE `main_masterlist`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=201;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=994;
 
 --
 -- AUTO_INCREMENT for table `main_mode`
@@ -2797,7 +3630,7 @@ ALTER TABLE `main_mode`
 -- AUTO_INCREMENT for table `main_narations`
 --
 ALTER TABLE `main_narations`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 
 --
 -- AUTO_INCREMENT for table `main_newcondition`
@@ -2809,7 +3642,7 @@ ALTER TABLE `main_newcondition`
 -- AUTO_INCREMENT for table `main_orders`
 --
 ALTER TABLE `main_orders`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
 
 --
 -- AUTO_INCREMENT for table `main_ram`
@@ -2833,31 +3666,31 @@ ALTER TABLE `main_speed`
 -- AUTO_INCREMENT for table `main_stockout`
 --
 ALTER TABLE `main_stockout`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT for table `main_supplierorders`
 --
 ALTER TABLE `main_supplierorders`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `main_temp`
 --
 ALTER TABLE `main_temp`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
 
 --
 -- AUTO_INCREMENT for table `main_templist`
 --
 ALTER TABLE `main_templist`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=217;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=837;
 
 --
 -- AUTO_INCREMENT for table `main_type`
 --
 ALTER TABLE `main_type`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `main_vendor`
@@ -2869,7 +3702,7 @@ ALTER TABLE `main_vendor`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT for table `users_custompermission`
@@ -2887,7 +3720,7 @@ ALTER TABLE `users_module`
 -- AUTO_INCREMENT for table `users_subscription`
 --
 ALTER TABLE `users_subscription`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users_typecode`
@@ -2899,13 +3732,13 @@ ALTER TABLE `users_typecode`
 -- AUTO_INCREMENT for table `users_user`
 --
 ALTER TABLE `users_user`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `users_user_custom_permissions`
 --
 ALTER TABLE `users_user_custom_permissions`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=653;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=911;
 
 --
 -- AUTO_INCREMENT for table `users_user_groups`

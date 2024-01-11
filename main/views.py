@@ -22,6 +22,51 @@ from fpdf import FPDF
 from django.http import FileResponse
 from rest_framework.response import Response
 from django.http import HttpResponseRedirect
+import sys
+from apscheduler.schedulers.background import BackgroundScheduler
+from zipfile import ZipFile
+
+
+def export_database():
+    try:
+        export_directory = "DataFiles/database"
+        if not os.path.exists(export_directory):
+            os.makedirs(export_directory)
+
+        today = date.today()
+        date2 = today.strftime("%Y%m%d")
+        export_file = os.path.join(export_directory, f"{date2}backup.sql")
+        
+        # Use relative path to mysqldump
+        os.system(f"./mysqldump -u root backends --host=localhost --port=3306 --protocol=tcp > {export_file}")
+    except Exception as e:
+        print("Error exporting database:", e)
+
+    try:
+        zip_file = os.path.join(export_directory, f"{date2}backup.zip")
+        with ZipFile(zip_file, "w") as zf:
+            zf.write(export_file)
+    except Exception as e:
+        print("Error creating zip archive:", e)
+
+    # Delete the export file
+    try:
+        os.remove(export_file)
+    except Exception as e:
+        print("Error deleting export file:", e)
+
+scheduler = BackgroundScheduler()
+scheduler.add_job(export_database, "cron", hour=1, minute=18)
+scheduler.start()
+
+# Keep the script running
+try:
+    while True:
+        pass
+except (KeyboardInterrupt, SystemExit):
+    # Shut down the scheduler gracefully
+    scheduler.shutdown()
+
 
 @login_required
 
